@@ -1,0 +1,142 @@
+name: Deploy iCanCare Healthcare App
+
+on:
+  push:
+    branches:
+      - icancare-custom
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Production Server
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            echo "🚀 Starting iCanCare Healthcare App Deployment..."
+            
+            # Create backup and deployment script with error handling
+            cat > /tmp/deploy_healthcare.sh << 'DEPLOY_SCRIPT'
+            #!/bin/bash
+            set -e  # Exit on any error
+            
+            echo "🚀 Starting Healthcare deployment with error handling..."
+            
+            # Function to handle errors
+            handle_error() {
+                echo "❌ Error occurred during Healthcare deployment!"
+                echo "🔄 Rolling back changes..."
+                
+                # Rollback git changes
+                cd /home/frappe/icancare-bench/apps/healthcare
+                git reset --hard HEAD~1 2>/dev/null || echo "No rollback needed"
+                
+                # Restart services to ensure stability
+                sudo supervisorctl restart all || echo "Supervisor restart failed"
+                sudo systemctl restart nginx || echo "Nginx restart failed"
+                
+                echo "🛡️ Healthcare rollback completed. Server should be stable."
+                exit 1
+            }
+            
+            # Set error trap
+            trap handle_error ERR
+            
+            # Switch to frappe user and activate environment
+            sudo su - frappe << 'EOF'
+            set -e  # Exit on any error in frappe session
+            source frappe-env/bin/activate
+            cd icancare-bench
+            
+            # Check if site is accessible before deployment
+            echo "🔍 Pre-deployment health check..."
+            bench --site icancare.com doctor || echo "Warning: Site health check failed"
+            
+            # Create backup before deployment
+            echo "💾 Creating backup before Healthcare deployment..."
+            bench --site icancare.com backup --with-files || echo "Backup failed, continuing..."
+            
+            # Pull latest changes from Healthcare app
+            echo "📥 Pulling latest changes for Healthcare..."
+            cd apps/healthcare
+            git pull origin icancare-custom || exit 1
+            cd ../..
+            
+            # Build assets with error checking
+            echo "🔨 Building assets..."
+            bench build --force || exit 1
+            
+            # Migrate database if needed with error checking
+            echo "⬆️ Running migrations..."
+            bench migrate || exit 1
+            
+            # Clear all caches
+            echo "🧹 Clearing caches..."
+            bench --site icancare.com clear-cache || echo "Cache clear failed, continuing..."
+            bench --site icancare.com clear-website-cache || echo "Website cache clear failed, continuing..."
+            
+            echo "✅ iCanCare Healthcare App operations completed successfully!"
+            EOF
+            
+            echo "✅ Healthcare deployment script completed!"
+            DEPLOY_SCRIPT
+            
+            # Make script executable and run it
+            chmod +x /tmp/deploy_healthcare.sh
+            /tmp/deploy_healthcare.sh
+            
+            # Restart services (production method - as ubuntu user)
+            echo "🔄 Restarting production services..."
+            sudo supervisorctl restart all || {
+                echo "❌ Supervisor restart failed! Manual intervention needed."
+                exit 1
+            }
+            
+            sudo systemctl restart nginx || {
+                echo "❌ Nginx restart failed! Manual intervention needed."
+                exit 1
+            }
+            
+            echo "✅ Services restarted successfully!"
+            
+            # Final health check
+            echo "🏥 Final health check..."
+            sleep 5  # Wait for services to start
+            curl -f http://localhost/api/method/ping || {
+                echo "❌ Site not responding after Healthcare deployment!"
+                echo "🚨 CRITICAL: Manual check required!"
+                exit 1
+            }
+            
+            echo "🎉 Healthcare deployment completed successfully and site is responding!"
+            
+      - name: Verify Deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            echo "🔍 Verifying Healthcare deployment..."
+            curl -f http://localhost/api/method/ping || echo "❌ Server not responding"
+            echo "✅ Healthcare deployment verification completed"
+            
+      - name: Notify Success
+        if: success()
+        run: |
+          echo "🎉 iCanCare Healthcare App deployed successfully!"
+          echo "🌐 Access your site at: http://${{ secrets.SERVER_HOST }}"
+          
+      - name: Notify Failure
+        if: failure()
+        run: |
+          echo "❌ Healthcare deployment failed! Check the logs above."

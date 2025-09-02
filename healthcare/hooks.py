@@ -1,9 +1,9 @@
 from . import __version__ as app_version  # noqa
 
 app_name = "healthcare"
-app_title = "Marley Health"
-app_publisher = "earthians Health Informatics Pvt. Ltd."
-app_description = "Modern, Open Source HIS built on Frappe and ERPNext"
+app_title = "iCanCare Healthcare"
+app_publisher = "Dwrko Technologies"
+app_description = "Comprehensive Healthcare Information System by iCanCare"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "info@earthianslive.com"
