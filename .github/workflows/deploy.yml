@@ -111,7 +111,7 @@ jobs:
             # Final health check
             echo "🏥 Final health check..."
             sleep 5  # Wait for services to start
-            curl -f http://localhost/api/method/ping || {
+            curl -f https://health.dev.icancare.com/api/method/ping || {
                 echo "❌ Site not responding after Healthcare deployment!"
                 echo "🚨 CRITICAL: Manual check required!"
                 exit 1
@@ -127,16 +127,17 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             echo "🔍 Verifying Healthcare deployment..."
-            curl -f http://localhost/api/method/ping || echo "❌ Server not responding"
+            curl -f https://health.dev.icancare.com/api/method/ping || echo "❌ Server not responding"
             echo "✅ Healthcare deployment verification completed"
             
       - name: Notify Success
         if: success()
         run: |
           echo "🎉 iCanCare Healthcare App deployed successfully!"
-          echo "🌐 Access your site at: http://${{ secrets.SERVER_HOST }}"
+          echo "🌐 Access your site at: https://health.dev.icancare.com"
           
       - name: Notify Failure
         if: failure()
         run: |
           echo "❌ Healthcare deployment failed! Check the logs above."
+
