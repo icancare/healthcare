@@ -1,0 +1,96 @@
+{
+ "actions": [],
+ "creation": "2025-11-27 17:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "vaccine_name",
+  "manufacturer",
+  "administered_date",
+  "dose",
+  "dose_uom",
+  "route",
+  "site",
+  "location",
+  "product",
+  "lot",
+  "ndc"
+ ],
+ "fields": [
+  {
+   "fieldname": "vaccine_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Vaccine Name",
+   "options": "Medication"
+  },
+  {
+   "fieldname": "manufacturer",
+   "fieldtype": "Data",
+   "label": "Manufacturer"
+  },
+  {
+   "fieldname": "administered_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Administered Date"
+  },
+  {
+   "fieldname": "dose",
+   "fieldtype": "Float",
+   "label": "Dose"
+  },
+  {
+   "fieldname": "dose_uom",
+   "fieldtype": "Data",
+   "label": "Dose UOM"
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Select",
+   "label": "Route",
+   "options": "\nOral\nIntravenous\nIntramuscular\nSubcutaneous\nTopical\nInhalation\nRectal\nIntradermal"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Select",
+   "label": "Site",
+   "options": "\nLeft Upper Arm\nRight Upper Arm\nLeft Thigh\nRight Thigh\nLeft Buttock\nRight Buttock"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Data",
+   "label": "Product"
+  },
+  {
+   "fieldname": "lot",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Lot#"
+  },
+  {
+   "fieldname": "ndc",
+   "fieldtype": "Data",
+   "label": "NDC#"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-11-27 17:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Patient Encounter Immunization",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
+

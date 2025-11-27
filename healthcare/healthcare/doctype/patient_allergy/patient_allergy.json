@@ -1,0 +1,84 @@
+{
+ "actions": [],
+ "creation": "2025-11-27 15:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "allergen",
+  "reaction",
+  "severity",
+  "column_break_4",
+  "start_date",
+  "end_date",
+  "section_break_7",
+  "comments"
+ ],
+ "fields": [
+  {
+   "fieldname": "allergen",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Allergen",
+   "options": "Allergen",
+   "reqd": 1,
+   "description": "Auto-completed from the predefined List of Allergens or Manually entered if not in the predefined list"
+  },
+  {
+   "fieldname": "reaction",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Reaction",
+   "options": "Allergen Reaction",
+   "reqd": 1,
+   "description": "One or more reactions (symptoms) from the allergen. Select from Allergen Reaction list or type manually"
+  },
+  {
+   "fieldname": "severity",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Severity",
+   "options": "\nMild\nMild to moderate\nModerate\nModerate to severe\nSevere\nLife threatening\nFatal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "description": "Date when started"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date",
+   "description": "If the Allergy has been resolved, and is no more an issue"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Small Text",
+   "label": "Comments",
+   "description": "Additional comments if any"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-11-27 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Patient Allergy",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
+

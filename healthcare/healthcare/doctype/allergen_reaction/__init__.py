@@ -1,0 +1,2 @@
+# Allergen Reaction DocType
+

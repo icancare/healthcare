@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "creation": "2025-11-27 15:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "vaccine_name",
+  "administered_date",
+  "column_break_3",
+  "dose",
+  "dose_uom",
+  "section_break_6",
+  "route",
+  "site",
+  "column_break_9",
+  "location",
+  "section_break_11",
+  "manufacturer",
+  "product",
+  "column_break_14",
+  "lot",
+  "ndc"
+ ],
+ "fields": [
+  {
+   "fieldname": "vaccine_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Vaccine Name",
+   "options": "Medication",
+   "reqd": 1,
+   "description": "Auto-completed from the predefined List of Vaccines (from Medications list) or Manually entered if not in the predefined list"
+  },
+  {
+   "fieldname": "administered_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Administered Date",
+   "reqd": 1,
+   "description": "When the vaccine was administered (given)"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dose",
+   "fieldtype": "Float",
+   "label": "Dose",
+   "description": "Floating number, eg: 0.5, 1.0 etc."
+  },
+  {
+   "fieldname": "dose_uom",
+   "fieldtype": "Data",
+   "label": "Dose UOM",
+   "description": "Unit of measure for the dose. Ex: ml"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Select",
+   "label": "Route",
+   "options": "\nOral\nIntramuscular\nIntravenous\nSubcutaneous\nIntranasal\nOther",
+   "description": "List of Route"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Select",
+   "label": "Site",
+   "options": "\nLeft Upper Arm\nRight Upper Arm\nLeft Thigh\nRight Thigh\nOther",
+   "description": "List of sites"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location",
+   "description": "Location (clinic name/address) where administered"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "manufacturer",
+   "fieldtype": "Data",
+   "label": "Manufacturer",
+   "description": "Manufacturer of the vaccine. Ex: Glaxo Smith Kline"
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Data",
+   "label": "Product",
+   "description": "What is the name of the product. Ex: FLUARIX QUADRIVALENT"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "lot",
+   "fieldtype": "Data",
+   "label": "Lot#",
+   "description": "Lot# when the vaccine was manufactured. Ex: 5G223"
+  },
+  {
+   "fieldname": "ndc",
+   "fieldtype": "Data",
+   "label": "NDC#",
+   "description": "Ex: 58160-896-41"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-11-27 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Patient Immunization",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
+
