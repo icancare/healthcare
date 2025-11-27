@@ -183,13 +183,13 @@ function load_patient_medical_history(frm) {
 					frm.clear_table("custom_allergy");
 					r.message.patient_allergy.forEach(function(allergy) {
 						let row = frm.add_child("custom_allergy");
-						// Map Patient Allergy fields to Allergy child table fields
-						row.substance = allergy.allergen;  // allergen -> substance
+						// Map Patient Allergy fields to Patient Encounter Allergy fields
+						row.allergen = allergy.allergen;
 						row.reaction = allergy.reaction;
 						row.severity = allergy.severity;
 						row.start_date = allergy.start_date;
 						row.end_date = allergy.end_date;
-						row.notes = allergy.comments;  // comments -> notes
+						row.comments = allergy.comments;
 					});
 					frm.refresh_field("custom_allergy");
 				}
