@@ -7,7 +7,10 @@
  "field_order": [
   "allergen",
   "reaction",
-  "severity"
+  "severity",
+  "start_date",
+  "end_date",
+  "comments"
  ],
  "fields": [
   {
@@ -15,24 +18,36 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Allergen",
-   "options": "Allergen",
-   "reqd": 1
+   "options": "Allergen"
   },
   {
    "fieldname": "reaction",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Reaction",
-   "options": "Allergen Reaction",
-   "reqd": 1
+   "options": "Allergen Reaction"
   },
   {
    "fieldname": "severity",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Severity",
-   "options": "\nMild\nMild to moderate\nModerate\nModerate to severe\nSevere\nLife threatening\nFatal",
-   "reqd": 1
+   "options": "\nMild\nMild to moderate\nModerate\nModerate to severe\nSevere\nLife threatening\nFatal"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Small Text",
+   "label": "Comments"
   }
  ],
  "index_web_pages_for_search": 1,
