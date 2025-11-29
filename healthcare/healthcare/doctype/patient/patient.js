@@ -125,6 +125,34 @@ frappe.ui.form.on('Patient Substance Abuse History', {
 	}
 });
 
+// Extended Social History - Oral Habits
+frappe.ui.form.on('Patient Oral Habits History', {
+	patient_oral_habits_history_add: function(frm) {
+		set_who_field_query(frm, 'patient_oral_habits_history');
+	}
+});
+
+// Extended Social History - Diet
+frappe.ui.form.on('Patient Diet History', {
+	patient_diet_history_add: function(frm) {
+		set_who_field_query(frm, 'patient_diet_history');
+	}
+});
+
+// Extended Social History - Occupational Exposure
+frappe.ui.form.on('Patient Occupational Exposure History', {
+	patient_occupational_exposure_history_add: function(frm) {
+		set_who_field_query(frm, 'patient_occupational_exposure_history');
+	}
+});
+
+// Extended Social History - Environmental Factors
+frappe.ui.form.on('Patient Environmental Factors History', {
+	patient_environmental_factors_history_add: function(frm) {
+		set_who_field_query(frm, 'patient_environmental_factors_history');
+	}
+});
+
 function set_who_field_query(frm, fieldname) {
 	frm.fields_dict[fieldname].grid.get_field('who').get_query = function(doc) {
 		// Get list of related patients from patient_relation

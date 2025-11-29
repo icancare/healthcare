@@ -1,0 +1,19 @@
+type_name,description,enabled
+Chemical Exposure,Exposure to solvents or disinfectants,1
+Biological Exposure,Exposure to pathogens or blood-borne materials,1
+Radiation (Ionising/Non-Ionising),Exposure to radiation sources,1
+Ergonomic Risk,Repetitive tasks or awkward posture,1
+Physical Hazard,Noise vibration heat or cold exposure,1
+Mechanical Injury Risk,Sharp instruments or moving equipment,1
+Psychosocial Risk,Work stress shift work or assault,1
+Slip/Trip/Fall Hazard,Workplace surface hazards,1
+Fire/Explosion Hazard,Exposure to fire or explosion risks,1
+Confined Space Risk,Working in confined spaces,1
+Dust/Fume Exposure,Exposure to dust particles or fumes,1
+Asbestos Exposure,Exposure to asbestos materials,1
+Lead Exposure,Exposure to lead,1
+Pesticide Exposure,Exposure to agricultural chemicals,1
+Heavy Metal Exposure,Exposure to mercury cadmium or other heavy metals,1
+Welding Fume Exposure,Exposure to welding fumes,1
+Other,Other occupational exposures,1
+

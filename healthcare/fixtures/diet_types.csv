@@ -1,0 +1,21 @@
+type_name,description,enabled
+Vegan,Plant-based diet excluding all animal products,1
+Vegetarian,Diet excluding meat but may include dairy and eggs,1
+Non-Vegetarian,Diet including meat and animal products,1
+Pescatarian,Vegetarian diet that includes fish,1
+Lacto-Vegetarian,Vegetarian diet that includes dairy products,1
+Ovo-Vegetarian,Vegetarian diet that includes eggs,1
+Lacto-Ovo Vegetarian,Vegetarian diet that includes dairy and eggs,1
+Flexitarian,Primarily vegetarian with occasional meat consumption,1
+Ketogenic,High-fat low-carb diet,1
+Paleo,Diet based on foods presumed to be eaten by early humans,1
+Gluten-Free,Diet excluding gluten,1
+Low-Carb,Diet restricting carbohydrate consumption,1
+Mediterranean,Diet inspired by eating habits of Mediterranean countries,1
+Diabetic Diet,Diet for managing diabetes,1
+Low-Sodium,Diet restricting sodium intake,1
+High-Protein,Diet emphasizing protein consumption,1
+Raw Food,Diet consisting primarily of uncooked foods,1
+Whole Food Plant-Based,Diet based on whole unprocessed plant foods,1
+Other,Other diet types,1
+

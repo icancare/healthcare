@@ -325,6 +325,50 @@ function load_patient_medical_history(frm) {
 					});
 					frm.refresh_field("custom_substance_abuse_history");
 				}
+
+				// Auto-fill Oral Habits History
+				if (frm.fields_dict.custom_oral_habits_history && r.message.patient_oral_habits_history && r.message.patient_oral_habits_history.length > 0) {
+					console.log("Loading oral habits history:", r.message.patient_oral_habits_history.length);
+					frm.clear_table("custom_oral_habits_history");
+					r.message.patient_oral_habits_history.forEach(function(history) {
+						let row = frm.add_child("custom_oral_habits_history");
+						Object.assign(row, history); // Copy all fields
+					});
+					frm.refresh_field("custom_oral_habits_history");
+				}
+
+				// Auto-fill Diet History
+				if (frm.fields_dict.custom_diet_history && r.message.patient_diet_history && r.message.patient_diet_history.length > 0) {
+					console.log("Loading diet history:", r.message.patient_diet_history.length);
+					frm.clear_table("custom_diet_history");
+					r.message.patient_diet_history.forEach(function(history) {
+						let row = frm.add_child("custom_diet_history");
+						Object.assign(row, history); // Copy all fields
+					});
+					frm.refresh_field("custom_diet_history");
+				}
+
+				// Auto-fill Occupational Exposure History
+				if (frm.fields_dict.custom_occupational_exposure_history && r.message.patient_occupational_exposure_history && r.message.patient_occupational_exposure_history.length > 0) {
+					console.log("Loading occupational exposure history:", r.message.patient_occupational_exposure_history.length);
+					frm.clear_table("custom_occupational_exposure_history");
+					r.message.patient_occupational_exposure_history.forEach(function(history) {
+						let row = frm.add_child("custom_occupational_exposure_history");
+						Object.assign(row, history); // Copy all fields
+					});
+					frm.refresh_field("custom_occupational_exposure_history");
+				}
+
+				// Auto-fill Environmental Factors History
+				if (frm.fields_dict.custom_environmental_factors_history && r.message.patient_environmental_factors_history && r.message.patient_environmental_factors_history.length > 0) {
+					console.log("Loading environmental factors history:", r.message.patient_environmental_factors_history.length);
+					frm.clear_table("custom_environmental_factors_history");
+					r.message.patient_environmental_factors_history.forEach(function(history) {
+						let row = frm.add_child("custom_environmental_factors_history");
+						Object.assign(row, history); // Copy all fields
+					});
+					frm.refresh_field("custom_environmental_factors_history");
+				}
 			}
 		}
 	});
@@ -460,6 +504,27 @@ function setup_who_field_queries(frm) {
 						};
 					};
 				}
+
+				// Set query for Social History tables "who" field
+				const social_history_tables = [
+					'custom_smokeless_tobacco_history',
+					'custom_smoking_tobacco_history',
+					'custom_substance_abuse_history',
+					'custom_oral_habits_history',
+					'custom_diet_history',
+					'custom_occupational_exposure_history',
+					'custom_environmental_factors_history'
+				];
+
+				social_history_tables.forEach(function(table_fieldname) {
+					if (frm.fields_dict[table_fieldname]) {
+						frm.fields_dict[table_fieldname].grid.get_field('who').get_query = function() {
+							return {
+								filters: [['Patient', 'name', 'in', patient_list]]
+							};
+						};
+					}
+				});
 			}
 		}
 	});

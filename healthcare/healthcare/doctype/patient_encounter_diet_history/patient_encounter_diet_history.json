@@ -1,0 +1,66 @@
+{
+ "actions": [],
+ "creation": "2025-11-29 16:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "diet_type",
+  "who",
+  "relation_type",
+  "column_break_4",
+  "started_when",
+  "comment"
+ ],
+ "fields": [
+  {
+   "fieldname": "diet_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Diet Type",
+   "options": "Diet Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "who",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Who",
+   "options": "Patient"
+  },
+  {
+   "fieldname": "relation_type",
+   "fieldtype": "Select",
+   "label": "Relation",
+   "options": "\nSelf\nFather\nMother\nSpouse\nSiblings\nFamily\nOther"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "started_when",
+   "fieldtype": "Data",
+   "label": "Started When",
+   "description": "e.g., 'Since childhood', 'From 2020'"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Comment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-11-29 16:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Patient Encounter Diet History",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
+
