@@ -13,17 +13,32 @@ frappe.ui.form.on('Patient', {
 					.insurance-card-preview {
 						display: inline-block;
 						margin: 5px;
-						border: 2px solid #d1d8dd;
-						border-radius: 6px;
-						padding: 5px;
-						background: #f5f7fa;
+						border-radius: 8px;
+						padding: 8px;
 						cursor: pointer;
-						transition: all 0.3s;
+						transition: all 0.3s ease;
+						position: relative;
+						overflow: hidden;
+					}
+					.insurance-card-preview::before {
+						content: '';
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						background: linear-gradient(135deg, rgba(36,144,239,0.1) 0%, rgba(118,75,162,0.1) 100%);
+						opacity: 0;
+						transition: opacity 0.3s ease;
+						pointer-events: none;
+					}
+					.insurance-card-preview:hover::before {
+						opacity: 1;
 					}
 					.insurance-card-preview:hover {
-						border-color: #2490ef;
-						box-shadow: 0 2px 8px rgba(36,144,239,0.3);
-						transform: scale(1.02);
+						border-color: #2490ef !important;
+						box-shadow: 0 8px 25px rgba(36,144,239,0.4);
+						transform: translateY(-5px) scale(1.03);
 					}
 					.insurance-card-preview img {
 						display: block;
@@ -31,14 +46,19 @@ frappe.ui.form.on('Patient', {
 						max-height: 200px;
 						width: auto;
 						height: auto;
-						border-radius: 4px;
+						border-radius: 6px;
+						position: relative;
+						z-index: 1;
 					}
 					.insurance-card-label {
 						font-size: 11px;
-						color: #6c757d;
-						margin-top: 5px;
+						margin-top: 8px;
 						text-align: center;
 						font-weight: 600;
+						text-transform: uppercase;
+						letter-spacing: 0.5px;
+						position: relative;
+						z-index: 1;
 					}
 					.insurance-card-modal {
 						display: none;
@@ -90,55 +110,91 @@ frappe.ui.form.on('Patient', {
 			let insurance_html = '<div style="margin-top: 15px;">';
 			
 			frm.doc.patient_insurance.forEach((insurance, idx) => {
-				insurance_html += `
-					<div style="border: 1px solid #d1d8dd; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff;">
-						<div style="display: flex; justify-content: space-between; align-items: start;">
-							<div style="flex: 1;">
-								<h4 style="margin: 0 0 10px 0; color: #2490ef;">
-									${insurance.insurance_company || 'Insurance Company'}
-								</h4>
-								<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-									<div>
-										<strong>Member Number:</strong> ${insurance.member_number || 'N/A'}
-									</div>
-									<div>
-										<strong>Status:</strong> 
-										<span class="indicator ${insurance.status === 'Active' ? 'green' : 'orange'}">
-											${insurance.status || 'Pending'}
-										</span>
-									</div>
-									${insurance.policy_start_date ? `
-										<div><strong>Valid From:</strong> ${frappe.datetime.str_to_user(insurance.policy_start_date)}</div>
-									` : ''}
-									${insurance.policy_end_date ? `
-										<div><strong>Valid Till:</strong> ${frappe.datetime.str_to_user(insurance.policy_end_date)}</div>
-									` : ''}
-									${insurance.coverage_amount ? `
-										<div><strong>Coverage:</strong> ${format_currency(insurance.coverage_amount)}</div>
-									` : ''}
-									${insurance.verified ? `
-										<div><span class="indicator green">✓ Verified</span></div>
-									` : ''}
+			// Get theme colors
+			const isDarkTheme = document.body.classList.contains('dark') || 
+								document.documentElement.getAttribute('data-theme') === 'dark';
+			
+			const cardBg = isDarkTheme ? 'rgba(30, 30, 30, 0.8)' : '#fff';
+			const cardBorder = isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : '#d1d8dd';
+			const textColor = isDarkTheme ? '#e0e0e0' : '#333';
+			const labelColor = isDarkTheme ? '#b0b0b0' : '#6c757d';
+			
+			insurance_html += `
+				<div style="
+					border: 1px solid ${cardBorder}; 
+					border-radius: 12px; 
+					padding: 20px; 
+					margin-bottom: 15px; 
+					background: ${cardBg};
+					backdrop-filter: blur(10px);
+					box-shadow: 0 4px 15px rgba(0,0,0,${isDarkTheme ? '0.5' : '0.1'});
+					transition: all 0.3s ease;
+				" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,${isDarkTheme ? '0.7' : '0.2'})';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,${isDarkTheme ? '0.5' : '0.1'})';">
+					<div style="display: flex; justify-content: space-between; align-items: start; gap: 20px;">
+						<div style="flex: 1; min-width: 0;">
+							<h4 style="margin: 0 0 15px 0; color: #2490ef; font-size: 18px; font-weight: 600;">
+								📋 ${insurance.insurance_company || 'Insurance Company'}
+							</h4>
+							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; color: ${textColor};">
+								<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
+									<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Member Number</span><br>
+									<strong style="font-size: 14px;">${insurance.member_number || 'N/A'}</strong>
 								</div>
-							</div>
-							<div style="display: flex; gap: 10px;">
-								${insurance.card_front_photo ? `
-									<div class="insurance-card-preview" data-image="${insurance.card_front_photo}" data-label="Card Front - ${insurance.insurance_company}">
-										<img src="${insurance.card_front_photo}" alt="Card Front" />
-										<div class="insurance-card-label">📄 Front</div>
+								<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
+									<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span><br>
+									<span class="indicator ${insurance.status === 'Active' ? 'green' : 'orange'}">
+										${insurance.status || 'Pending'}
+									</span>
+								</div>
+								${insurance.policy_start_date ? `
+									<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
+										<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Valid From</span><br>
+										<strong style="font-size: 14px;">${frappe.datetime.str_to_user(insurance.policy_start_date)}</strong>
 									</div>
-								` : '<div style="width: 150px; text-align: center; color: #999;">No Front Card</div>'}
-								
-								${insurance.card_back_photo ? `
-									<div class="insurance-card-preview" data-image="${insurance.card_back_photo}" data-label="Card Back - ${insurance.insurance_company}">
-										<img src="${insurance.card_back_photo}" alt="Card Back" />
-										<div class="insurance-card-label">📄 Back</div>
+								` : ''}
+								${insurance.policy_end_date ? `
+									<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
+										<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Valid Till</span><br>
+										<strong style="font-size: 14px;">${frappe.datetime.str_to_user(insurance.policy_end_date)}</strong>
 									</div>
-								` : '<div style="width: 150px; text-align: center; color: #999;">No Back Card</div>'}
+								` : ''}
+								${insurance.coverage_amount ? `
+									<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px; grid-column: span 2;">
+										<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Coverage Amount</span><br>
+										<strong style="font-size: 16px; color: #2490ef;">${format_currency(insurance.coverage_amount)}</strong>
+									</div>
+								` : ''}
+								${insurance.verified ? `
+									<div style="padding: 8px;">
+										<span class="indicator green" style="font-size: 13px;">✓ Verified</span>
+									</div>
+								` : ''}
 							</div>
 						</div>
+						<div style="display: flex; gap: 15px; flex-shrink: 0;">
+							${insurance.card_front_photo ? `
+								<div class="insurance-card-preview" data-image="${insurance.card_front_photo}" data-label="Card Front - ${insurance.insurance_company}" style="
+									background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : '#f5f7fa'};
+									border: 2px solid ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#d1d8dd'};
+								">
+									<img src="${insurance.card_front_photo}" alt="Card Front" />
+									<div class="insurance-card-label" style="color: ${labelColor};">📄 Front</div>
+								</div>
+							` : `<div style="width: 150px; text-align: center; color: ${labelColor}; padding: 20px; border: 2px dashed ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#ddd'}; border-radius: 8px;">No Front Card</div>`}
+							
+							${insurance.card_back_photo ? `
+								<div class="insurance-card-preview" data-image="${insurance.card_back_photo}" data-label="Card Back - ${insurance.insurance_company}" style="
+									background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : '#f5f7fa'};
+									border: 2px solid ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#d1d8dd'};
+								">
+									<img src="${insurance.card_back_photo}" alt="Card Back" />
+									<div class="insurance-card-label" style="color: ${labelColor};">📄 Back</div>
+								</div>
+							` : `<div style="width: 150px; text-align: center; color: ${labelColor}; padding: 20px; border: 2px dashed ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#ddd'}; border-radius: 8px;">No Back Card</div>`}
+						</div>
 					</div>
-				`;
+				</div>
+			`;
 			});
 			
 			insurance_html += '</div>';
