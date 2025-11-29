@@ -55,6 +55,11 @@ frappe.ui.form.on("Patient Encounter", {
 			};
 		});
 
+		// Set query for "who" field in Medical and Surgical History
+		if (frm.doc.patient) {
+			setup_who_field_queries(frm);
+		}
+
 		if (frm.doc.docstatus == 1) {
 			frm.add_custom_button(__("Order"), function() {
 				frappe.new_doc("Service Request");
@@ -94,6 +99,9 @@ frappe.ui.form.on("Patient Encounter", {
 
 			// Auto-fill allergies and immunizations from Patient
 			load_patient_medical_history(frm);
+			
+			// Setup who field queries
+			setup_who_field_queries(frm);
 		}
 	},
 
@@ -226,6 +234,40 @@ function load_patient_medical_history(frm) {
 				} else {
 					console.log("custom_immunization field does not exist");
 				}
+
+				// Auto-fill Medical History if custom_medical_history field exists
+				if (frm.fields_dict.custom_medical_history && r.message.patient_medical_history && r.message.patient_medical_history.length > 0) {
+					console.log("Loading medical history:", r.message.patient_medical_history.length);
+					frm.clear_table("custom_medical_history");
+					r.message.patient_medical_history.forEach(function(history) {
+						let row = frm.add_child("custom_medical_history");
+						row.diagnosis = history.diagnosis;
+						row.diagnosis_name = history.diagnosis_name;
+						row.who = history.who;
+						row.relation_type = history.relation_type;
+						row.when = history.when;
+						row.undergoing_treatment = history.undergoing_treatment;
+						row.comment = history.comment;
+					});
+					frm.refresh_field("custom_medical_history");
+				}
+
+				// Auto-fill Surgical History if custom_surgical_history field exists
+				if (frm.fields_dict.custom_surgical_history && r.message.patient_surgical_history && r.message.patient_surgical_history.length > 0) {
+					console.log("Loading surgical history:", r.message.patient_surgical_history.length);
+					frm.clear_table("custom_surgical_history");
+					r.message.patient_surgical_history.forEach(function(history) {
+						let row = frm.add_child("custom_surgical_history");
+						row.procedure = history.procedure;
+						row.procedure_name = history.procedure_name;
+						row.who = history.who;
+						row.relation_type = history.relation_type;
+						row.when = history.when;
+						row.undergoing_treatment = history.undergoing_treatment;
+						row.comment = history.comment;
+					});
+					frm.refresh_field("custom_surgical_history");
+				}
 			}
 		}
 	});
@@ -320,3 +362,48 @@ frappe.ui.form.on("Procedure Prescription", {
 		}
 	}
 });
+
+// Setup who field queries to show patient and related patients
+function setup_who_field_queries(frm) {
+	if (!frm.doc.patient) return;
+
+	frappe.call({
+		method: "frappe.client.get",
+		args: {
+			doctype: "Patient",
+			name: frm.doc.patient
+		},
+		callback: function(r) {
+			if (r.message) {
+				let patient_list = [r.message.name]; // Include self
+				
+				// Add related patients from patient_relation
+				if (r.message.patient_relation) {
+					r.message.patient_relation.forEach(function(rel) {
+						if (rel.patient) {
+							patient_list.push(rel.patient);
+						}
+					});
+				}
+
+				// Set query for Medical History "who" field
+				if (frm.fields_dict.custom_medical_history) {
+					frm.fields_dict.custom_medical_history.grid.get_field('who').get_query = function() {
+						return {
+							filters: [['Patient', 'name', 'in', patient_list]]
+						};
+					};
+				}
+
+				// Set query for Surgical History "who" field
+				if (frm.fields_dict.custom_surgical_history) {
+					frm.fields_dict.custom_surgical_history.grid.get_field('who').get_query = function() {
+						return {
+							filters: [['Patient', 'name', 'in', patient_list]]
+						};
+					};
+				}
+			}
+		}
+	});
+}

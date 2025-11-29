@@ -93,6 +93,36 @@ frappe.ui.form.on('Patient Relation', {
 	}
 });
 
+// Set query for "who" field in Medical History to show related patients
+frappe.ui.form.on('Patient Medical History', {
+	medical_history_add: function(frm) {
+		set_who_field_query(frm, 'medical_history');
+	}
+});
+
+frappe.ui.form.on('Patient Surgical History', {
+	surgical_history_add: function(frm) {
+		set_who_field_query(frm, 'surgical_history');
+	}
+});
+
+function set_who_field_query(frm, fieldname) {
+	frm.fields_dict[fieldname].grid.get_field('who').get_query = function(doc) {
+		// Get list of related patients from patient_relation
+		let patient_list = [doc.name]; // Include self
+		if (doc.patient_relation) {
+			doc.patient_relation.forEach(function(rel) {
+				if (rel.patient) {
+					patient_list.push(rel.patient);
+				}
+			});
+		}
+		return {
+			filters: [['Patient', 'name', 'in', patient_list]]
+		};
+	};
+}
+
 let create_medical_record = function (frm) {
 	frappe.route_options = {
 		'patient': frm.doc.name,
