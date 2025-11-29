@@ -40,3 +40,4 @@ healthcare.patches.v15_0.fix_patient_basic_profile_field_positions #29-11-2024
 healthcare.patches.v15_0.move_personal_info_before_customer_details #29-11-2024
 healthcare.patches.v15_0.convert_occupation_to_dropdown #29-11-2024
 healthcare.patches.v15_0.fix_all_patient_fields_final #29-11-2024
+healthcare.patches.v15_0.force_add_patient_fields_production #29-11-2024
