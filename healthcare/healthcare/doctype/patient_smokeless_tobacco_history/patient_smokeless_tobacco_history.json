@@ -1,0 +1,109 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-29 14:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type",
+  "who",
+  "relation_type",
+  "column_break_3",
+  "frequency",
+  "quantity",
+  "quantity_unit",
+  "section_break_7",
+  "discontinued_since",
+  "discontinued_since_unit",
+  "section_break_10",
+  "comment"
+ ],
+ "fields": [
+  {
+   "fieldname": "type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "Smokeless Tobacco Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "who",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Who",
+   "options": "Patient"
+  },
+  {
+   "fieldname": "relation_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Relation",
+   "options": "\nSelf\nFather\nMother\nSpouse\nSiblings\nFamily\nOther"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "label": "Frequency",
+   "options": "Daily\nOccasionally\nWeekly\nMonthly\nYearly"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "quantity_unit",
+   "fieldtype": "Select",
+   "label": "Quantity Unit",
+   "options": "Grams\nPackets\nNumbers\nPieces"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break",
+   "label": "Discontinuation Details"
+  },
+  {
+   "description": "Enter date or text like '2 years ago', 'Last month', etc.",
+   "fieldname": "discontinued_since",
+   "fieldtype": "Data",
+   "label": "Discontinued Since"
+  },
+  {
+   "fieldname": "discontinued_since_unit",
+   "fieldtype": "Select",
+   "label": "Discontinued Since Unit",
+   "options": "Days\nWeeks\nMonths\nYears"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "label": "Additional Information"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Comment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-11-29 14:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Patient Smokeless Tobacco History",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
+

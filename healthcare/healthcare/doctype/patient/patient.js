@@ -106,6 +106,25 @@ frappe.ui.form.on('Patient Surgical History', {
 	}
 });
 
+// Set query for "who" field in Social History to show related patients
+frappe.ui.form.on('Patient Smokeless Tobacco History', {
+	patient_smokeless_tobacco_history_add: function(frm) {
+		set_who_field_query(frm, 'patient_smokeless_tobacco_history');
+	}
+});
+
+frappe.ui.form.on('Patient Smoking Tobacco History', {
+	patient_smoking_tobacco_history_add: function(frm) {
+		set_who_field_query(frm, 'patient_smoking_tobacco_history');
+	}
+});
+
+frappe.ui.form.on('Patient Substance Abuse History', {
+	patient_substance_abuse_history_add: function(frm) {
+		set_who_field_query(frm, 'patient_substance_abuse_history');
+	}
+});
+
 function set_who_field_query(frm, fieldname) {
 	frm.fields_dict[fieldname].grid.get_field('who').get_query = function(doc) {
 		// Get list of related patients from patient_relation

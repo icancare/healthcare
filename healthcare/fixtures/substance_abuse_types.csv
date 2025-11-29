@@ -1,0 +1,33 @@
+type_name,category,description,enabled
+Alcohol,Alcohol,Alcoholic beverages,1
+Cocaine,Stimulants,Stimulant drug derived from coca plant,1
+Methamphetamine,Stimulants,Highly addictive stimulant,1
+Marijuana,Cannabis,Cannabis/Hemp products,1
+Hashish,Cannabis,Concentrated cannabis resin,1
+Solvents,Inhalants,Volatile substances inhaled for intoxication,1
+Aerosol Sprays,Inhalants,Inhalant substances in spray form,1
+Nitrites,Inhalants,Inhalant nitrite compounds,1
+Gases,Inhalants,Inhalable gases for intoxication,1
+LSD,Hallucinogens,Lysergic acid diethylamide,1
+Mescaline,Hallucinogens,Hallucinogenic alkaloid,1
+PCP,Hallucinogens,Phencyclidine,1
+DMT,Hallucinogens,Dimethyltryptamine,1
+Ketamine,Club Drugs,Dissociative anesthetic,1
+Ecstasy,Club Drugs,MDMA/Methylenedioxymethamphetamine,1
+GHB,Club Drugs,Gamma-hydroxybutyrate,1
+Flunitrazepam,Club Drugs,Rohypnol/Date rape drug,1
+Heroin,Opioids,Highly addictive opioid,1
+Oxycodone,Opioids,Prescription opioid painkiller,1
+Codeine,Opioids,Opioid medication,1
+Morphine,Opioids,Opioid pain medication,1
+Other Prescription Painkillers,Opioids,Various prescription opioids,1
+Cough Syrups with Dextromethorphan,Prescription Drugs,Over-the-counter cough medicine,1
+Anti-anxiety Drugs,Sedatives,Benzodiazepines and similar,1
+Hypnotics,Sedatives,Sleep medications,1
+Anabolic Steroids,Anabolic Steroids,Synthetic testosterone derivatives,1
+Bath Salts,Synthetic Drugs,Synthetic cathinones,1
+Spice/K2,Synthetic Drugs,Synthetic cannabinoids,1
+Krokodil,Synthetic Drugs,Desomorphine (toxic homemade opioid),1
+Tobacco from Cigarettes,Other,Nicotine from cigarette/cigar/vaping,1
+Others,Other,Other substance abuse,1
+

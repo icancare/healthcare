@@ -268,6 +268,63 @@ function load_patient_medical_history(frm) {
 					});
 					frm.refresh_field("custom_surgical_history");
 				}
+
+				// Auto-fill Smokeless Tobacco History
+				if (frm.fields_dict.custom_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history.length > 0) {
+					console.log("Loading smokeless tobacco history:", r.message.patient_smokeless_tobacco_history.length);
+					frm.clear_table("custom_smokeless_tobacco_history");
+					r.message.patient_smokeless_tobacco_history.forEach(function(history) {
+						let row = frm.add_child("custom_smokeless_tobacco_history");
+						row.type = history.type;
+						row.who = history.who;
+						row.relation_type = history.relation_type;
+						row.frequency = history.frequency;
+						row.quantity = history.quantity;
+						row.quantity_unit = history.quantity_unit;
+						row.discontinued_since = history.discontinued_since;
+						row.discontinued_since_unit = history.discontinued_since_unit;
+						row.comment = history.comment;
+					});
+					frm.refresh_field("custom_smokeless_tobacco_history");
+				}
+
+				// Auto-fill Smoking Tobacco History
+				if (frm.fields_dict.custom_smoking_tobacco_history && r.message.patient_smoking_tobacco_history && r.message.patient_smoking_tobacco_history.length > 0) {
+					console.log("Loading smoking tobacco history:", r.message.patient_smoking_tobacco_history.length);
+					frm.clear_table("custom_smoking_tobacco_history");
+					r.message.patient_smoking_tobacco_history.forEach(function(history) {
+						let row = frm.add_child("custom_smoking_tobacco_history");
+						row.type = history.type;
+						row.who = history.who;
+						row.relation_type = history.relation_type;
+						row.frequency = history.frequency;
+						row.quantity = history.quantity;
+						row.quantity_unit = history.quantity_unit;
+						row.discontinued_since = history.discontinued_since;
+						row.discontinued_since_unit = history.discontinued_since_unit;
+						row.comment = history.comment;
+					});
+					frm.refresh_field("custom_smoking_tobacco_history");
+				}
+
+				// Auto-fill Substance Abuse History
+				if (frm.fields_dict.custom_substance_abuse_history && r.message.patient_substance_abuse_history && r.message.patient_substance_abuse_history.length > 0) {
+					console.log("Loading substance abuse history:", r.message.patient_substance_abuse_history.length);
+					frm.clear_table("custom_substance_abuse_history");
+					r.message.patient_substance_abuse_history.forEach(function(history) {
+						let row = frm.add_child("custom_substance_abuse_history");
+						row.type = history.type;
+						row.who = history.who;
+						row.relation_type = history.relation_type;
+						row.frequency = history.frequency;
+						row.quantity = history.quantity;
+						row.quantity_unit = history.quantity_unit;
+						row.discontinued_since = history.discontinued_since;
+						row.discontinued_since_unit = history.discontinued_since_unit;
+						row.comment = history.comment;
+					});
+					frm.refresh_field("custom_substance_abuse_history");
+				}
 			}
 		}
 	});
