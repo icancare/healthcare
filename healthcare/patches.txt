@@ -34,3 +34,8 @@ healthcare.patches.v15_0.remove_duplicate_social_history_labels
 healthcare.patches.v15_0.hide_social_history_table_labels_complete
 healthcare.patches.v15_0.remove_social_history_heading_fields
 healthcare.patches.v15_0.restore_social_history_table_labels
+healthcare.patches.v15_0.add_patient_emergency_contact_field #29-11-2024
+healthcare.patches.v15_0.add_patient_basic_profile_fields #29-11-2024
+healthcare.patches.v15_0.fix_patient_basic_profile_field_positions #29-11-2024
+healthcare.patches.v15_0.move_personal_info_before_customer_details #29-11-2024
+healthcare.patches.v15_0.convert_occupation_to_dropdown #29-11-2024
