@@ -1,0 +1,232 @@
+{
+ "actions": [],
+ "creation": "2024-11-29 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "quick_entry": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "insurance_company",
+  "member_number",
+  "column_break_1",
+  "group_number",
+  "status",
+  "verified",
+  "policy_holder_section",
+  "is_policy_holder",
+  "column_break_2",
+  "policy_holder_relationship",
+  "subscriber_section",
+  "subscriber_first_name",
+  "subscriber_last_name",
+  "column_break_3",
+  "subscriber_date_of_birth",
+  "subscriber_number",
+  "card_section",
+  "card_front_photo",
+  "column_break_4",
+  "card_back_photo",
+  "validity_section",
+  "policy_start_date",
+  "column_break_5",
+  "policy_end_date",
+  "coverage_section",
+  "coverage_amount",
+  "column_break_6",
+  "copay_percentage",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "fieldname": "insurance_company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Insurance Company",
+   "options": "Insurance Company",
+   "reqd": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "member_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Member Number",
+   "reqd": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "group_number",
+   "fieldtype": "Data",
+   "label": "Group Number",
+   "description": "Insurance companies usually have a group number associated with the member"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nExpired\nSuspended\nPending Verification",
+   "default": "Pending Verification",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "verified",
+   "fieldtype": "Check",
+   "label": "Verified",
+   "default": 0,
+   "description": "Mark as verified after manual verification of insurance details"
+  },
+  {
+   "fieldname": "policy_holder_section",
+   "fieldtype": "Section Break",
+   "label": "Policy Holder Information"
+  },
+  {
+   "fieldname": "is_policy_holder",
+   "fieldtype": "Check",
+   "label": "Are You Policy Holder?",
+   "default": 1,
+   "description": "Check if the patient is the policy holder"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "policy_holder_relationship",
+   "fieldtype": "Select",
+   "label": "Relationship to Policy Holder",
+   "options": "\nSelf\nSpouse\nChild\nParent\nSibling\nOther",
+   "depends_on": "eval:doc.is_policy_holder==0",
+   "mandatory_depends_on": "eval:doc.is_policy_holder==0"
+  },
+  {
+   "fieldname": "subscriber_section",
+   "fieldtype": "Section Break",
+   "label": "Subscriber Details (If Not Policy Holder)",
+   "depends_on": "eval:doc.is_policy_holder==0"
+  },
+  {
+   "fieldname": "subscriber_first_name",
+   "fieldtype": "Data",
+   "label": "Subscriber First Name",
+   "mandatory_depends_on": "eval:doc.is_policy_holder==0"
+  },
+  {
+   "fieldname": "subscriber_last_name",
+   "fieldtype": "Data",
+   "label": "Subscriber Last Name",
+   "mandatory_depends_on": "eval:doc.is_policy_holder==0"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subscriber_date_of_birth",
+   "fieldtype": "Date",
+   "label": "Subscriber Date of Birth",
+   "mandatory_depends_on": "eval:doc.is_policy_holder==0"
+  },
+  {
+   "fieldname": "subscriber_number",
+   "fieldtype": "Data",
+   "label": "Subscriber Number",
+   "mandatory_depends_on": "eval:doc.is_policy_holder==0"
+  },
+  {
+   "fieldname": "card_section",
+   "fieldtype": "Section Break",
+   "label": "Insurance Card Photos"
+  },
+  {
+   "fieldname": "card_front_photo",
+   "fieldtype": "Attach Image",
+   "label": "Card Front Photo"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "card_back_photo",
+   "fieldtype": "Attach Image",
+   "label": "Card Back Photo"
+  },
+  {
+   "fieldname": "validity_section",
+   "fieldtype": "Section Break",
+   "label": "Policy Validity Period"
+  },
+  {
+   "fieldname": "policy_start_date",
+   "fieldtype": "Date",
+   "label": "Policy Start Date"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "policy_end_date",
+   "fieldtype": "Date",
+   "label": "Policy End Date"
+  },
+  {
+   "fieldname": "coverage_section",
+   "fieldtype": "Section Break",
+   "label": "Coverage Details"
+  },
+  {
+   "fieldname": "coverage_amount",
+   "fieldtype": "Currency",
+   "label": "Coverage Amount (Sum Insured)",
+   "description": "Maximum coverage amount/sum insured"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "copay_percentage",
+   "fieldtype": "Percent",
+   "label": "Co-pay Percentage",
+   "description": "Percentage of cost patient needs to pay"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-11-29 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Patient Insurance",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
+

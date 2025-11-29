@@ -1,0 +1,2 @@
+# Insurance Company DocType
+

@@ -4,6 +4,175 @@
 
 frappe.ui.form.on('Patient', {
 	refresh: function (frm) {
+		// Setup insurance card preview handlers
+		setup_insurance_card_previews(frm);
+		// Add custom CSS for card image preview
+		if (!$('#insurance-card-preview-css').length) {
+			$('head').append(`
+				<style id="insurance-card-preview-css">
+					.insurance-card-preview {
+						display: inline-block;
+						margin: 5px;
+						border: 2px solid #d1d8dd;
+						border-radius: 6px;
+						padding: 5px;
+						background: #f5f7fa;
+						cursor: pointer;
+						transition: all 0.3s;
+					}
+					.insurance-card-preview:hover {
+						border-color: #2490ef;
+						box-shadow: 0 2px 8px rgba(36,144,239,0.3);
+						transform: scale(1.02);
+					}
+					.insurance-card-preview img {
+						display: block;
+						max-width: 300px;
+						max-height: 200px;
+						width: auto;
+						height: auto;
+						border-radius: 4px;
+					}
+					.insurance-card-label {
+						font-size: 11px;
+						color: #6c757d;
+						margin-top: 5px;
+						text-align: center;
+						font-weight: 600;
+					}
+					.insurance-card-modal {
+						display: none;
+						position: fixed;
+						z-index: 9999;
+						left: 0;
+						top: 0;
+						width: 100%;
+						height: 100%;
+						background-color: rgba(0,0,0,0.9);
+						cursor: zoom-out;
+					}
+					.insurance-card-modal img {
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						max-width: 90%;
+						max-height: 90%;
+						border-radius: 8px;
+						box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+					}
+					.insurance-card-modal .close-modal {
+						position: absolute;
+						top: 20px;
+						right: 40px;
+						color: #fff;
+						font-size: 40px;
+						font-weight: bold;
+						cursor: pointer;
+					}
+					.insurance-card-modal .modal-caption {
+						position: absolute;
+						bottom: 20px;
+						left: 50%;
+						transform: translateX(-50%);
+						color: #fff;
+						font-size: 16px;
+						background: rgba(0,0,0,0.7);
+						padding: 10px 20px;
+						border-radius: 4px;
+					}
+				</style>
+			`);
+		}
+		
+		// Show insurance card summary with image previews
+		if (frm.doc.patient_insurance && frm.doc.patient_insurance.length > 0) {
+			let insurance_html = '<div style="margin-top: 15px;">';
+			
+			frm.doc.patient_insurance.forEach((insurance, idx) => {
+				insurance_html += `
+					<div style="border: 1px solid #d1d8dd; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff;">
+						<div style="display: flex; justify-content: space-between; align-items: start;">
+							<div style="flex: 1;">
+								<h4 style="margin: 0 0 10px 0; color: #2490ef;">
+									${insurance.insurance_company || 'Insurance Company'}
+								</h4>
+								<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+									<div>
+										<strong>Member Number:</strong> ${insurance.member_number || 'N/A'}
+									</div>
+									<div>
+										<strong>Status:</strong> 
+										<span class="indicator ${insurance.status === 'Active' ? 'green' : 'orange'}">
+											${insurance.status || 'Pending'}
+										</span>
+									</div>
+									${insurance.policy_start_date ? `
+										<div><strong>Valid From:</strong> ${frappe.datetime.str_to_user(insurance.policy_start_date)}</div>
+									` : ''}
+									${insurance.policy_end_date ? `
+										<div><strong>Valid Till:</strong> ${frappe.datetime.str_to_user(insurance.policy_end_date)}</div>
+									` : ''}
+									${insurance.coverage_amount ? `
+										<div><strong>Coverage:</strong> ${format_currency(insurance.coverage_amount)}</div>
+									` : ''}
+									${insurance.verified ? `
+										<div><span class="indicator green">✓ Verified</span></div>
+									` : ''}
+								</div>
+							</div>
+							<div style="display: flex; gap: 10px;">
+								${insurance.card_front_photo ? `
+									<div class="insurance-card-preview" data-image="${insurance.card_front_photo}" data-label="Card Front - ${insurance.insurance_company}">
+										<img src="${insurance.card_front_photo}" alt="Card Front" />
+										<div class="insurance-card-label">📄 Front</div>
+									</div>
+								` : '<div style="width: 150px; text-align: center; color: #999;">No Front Card</div>'}
+								
+								${insurance.card_back_photo ? `
+									<div class="insurance-card-preview" data-image="${insurance.card_back_photo}" data-label="Card Back - ${insurance.insurance_company}">
+										<img src="${insurance.card_back_photo}" alt="Card Back" />
+										<div class="insurance-card-label">📄 Back</div>
+									</div>
+								` : '<div style="width: 150px; text-align: center; color: #999;">No Back Card</div>'}
+							</div>
+						</div>
+					</div>
+				`;
+			});
+			
+			insurance_html += '</div>';
+			
+			// Update Insurance Summary section
+			frm.fields_dict.primary_insurance_html.$wrapper.html(insurance_html);
+			
+			// Add click handlers for image preview modal
+			$('.insurance-card-preview').off('click').on('click', function() {
+				const imageUrl = $(this).data('image');
+				const label = $(this).data('label');
+				
+				// Create modal if not exists
+				if (!$('#insurance-card-modal').length) {
+					$('body').append(`
+						<div id="insurance-card-modal" class="insurance-card-modal">
+							<span class="close-modal">&times;</span>
+							<img id="modal-insurance-img" src="" alt="Insurance Card">
+							<div class="modal-caption" id="modal-caption"></div>
+						</div>
+					`);
+					
+					// Close modal on click
+					$('#insurance-card-modal, .close-modal').on('click', function() {
+						$('#insurance-card-modal').fadeOut(300);
+					});
+				}
+				
+				// Show modal with image
+				$('#modal-insurance-img').attr('src', imageUrl);
+				$('#modal-caption').text(label);
+				$('#insurance-card-modal').fadeIn(300);
+			});
+		}
 		frm.set_query('patient', 'patient_relation', function () {
 			return {
 				filters: [
@@ -221,3 +390,164 @@ let invoice_registration = function (frm) {
 		}
 	});
 };
+
+// Insurance Card Preview Handler for Child Table
+frappe.ui.form.on('Patient Insurance', {
+	form_render: function(frm, cdt, cdn) {
+		const row = locals[cdt][cdn];
+		setTimeout(() => {
+			show_insurance_card_in_dialog(row, cdn);
+		}, 500);
+	},
+	
+	card_front_photo: function(frm, cdt, cdn) {
+		const row = locals[cdt][cdn];
+		setTimeout(() => {
+			show_insurance_card_in_dialog(row, cdn);
+		}, 300);
+	},
+	
+	card_back_photo: function(frm, cdt, cdn) {
+		const row = locals[cdt][cdn];
+		setTimeout(() => {
+			show_insurance_card_in_dialog(row, cdn);
+		}, 300);
+	}
+});
+
+function show_insurance_card_in_dialog(row, cdn) {
+	if (!cur_dialog) return;
+	
+	// Find the dialog fields for card photos
+	const fields = ['card_front_photo', 'card_back_photo'];
+	
+	fields.forEach(fieldname => {
+		const image_url = row[fieldname];
+		if (!image_url) return;
+		
+		const label = fieldname === 'card_front_photo' ? 'Front Card' : 'Back Card';
+		const field_wrapper = cur_dialog.fields_dict[fieldname]?.$wrapper;
+		
+		if (!field_wrapper) return;
+		
+		// Remove old preview
+		field_wrapper.find('.insurance-card-inline-preview').remove();
+		
+		// Create beautiful card preview box
+		const preview_html = `
+			<div class="insurance-card-inline-preview" style="
+				margin-bottom: 15px;
+				padding: 12px;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				border-radius: 12px;
+				box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+			">
+				<div style="
+					background: white;
+					border-radius: 8px;
+					padding: 12px;
+					box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+				">
+					<div style="
+						text-align: center;
+						font-weight: 600;
+						color: #667eea;
+						margin-bottom: 10px;
+						font-size: 13px;
+						text-transform: uppercase;
+						letter-spacing: 1px;
+					">
+						📄 ${label}
+					</div>
+					<div style="text-align: center;">
+						<img src="${image_url}" 
+							 style="
+								max-width: 100%;
+								max-height: 350px;
+								width: auto;
+								height: auto;
+								border-radius: 6px;
+								border: 3px solid #f0f0f0;
+								cursor: zoom-in;
+								transition: all 0.3s ease;
+								display: inline-block;
+							"
+							 onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)';"
+							 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
+							 onclick="show_card_fullscreen('${image_url}', '${label}')" />
+					</div>
+					<div style="
+						text-align: center;
+						margin-top: 10px;
+						padding: 8px;
+						background: #f8f9fa;
+						border-radius: 6px;
+					">
+						<span style="font-size: 11px; color: #6c757d;">
+							🔍 Click image to view full size
+						</span>
+					</div>
+				</div>
+			</div>
+		`;
+		
+		// Insert preview BEFORE the control wrapper
+		const control_wrapper = field_wrapper.find('.control-input-wrapper');
+		if (control_wrapper.length) {
+			control_wrapper.before(preview_html);
+		} else {
+			field_wrapper.find('.frappe-control').prepend(preview_html);
+		}
+		
+		// Style the file path to be less prominent
+		field_wrapper.find('.control-value a').css({
+			'font-size': '10px',
+			'color': '#999',
+			'text-decoration': 'none'
+		});
+	});
+}
+
+window.show_card_fullscreen = function(image_url, label) {
+	frappe.msgprint({
+		title: `Insurance Card - ${label}`,
+		message: `
+			<div style="text-align: center; padding: 20px;">
+				<div style="
+					background: white;
+					display: inline-block;
+					padding: 15px;
+					border-radius: 12px;
+					box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+				">
+					<img src="${image_url}" 
+						 style="max-width: 80vw; max-height: 70vh; border-radius: 8px; display: block;" />
+				</div>
+				<div style="margin-top: 20px;">
+					<a href="${image_url}" target="_blank" class="btn btn-primary btn-sm">
+						<i class="fa fa-external-link"></i> Open in New Tab
+					</a>
+				</div>
+			</div>
+		`,
+		wide: true
+	});
+};
+
+function setup_insurance_card_previews(frm) {
+	// Setup grid to show card previews
+	if (frm.fields_dict.patient_insurance) {
+		frm.fields_dict.patient_insurance.grid.wrapper.on('click', '.grid-row', function() {
+			// When row is clicked, wait for dialog to open then show previews
+			setTimeout(() => {
+				if (cur_dialog) {
+					const row_index = $(this).attr('data-idx');
+					const row = frm.fields_dict.patient_insurance.grid.grid_rows[row_index - 1];
+					if (row && row.doc) {
+						show_insurance_card_in_dialog(row.doc, row.doc.name);
+					}
+				}
+			}, 600);
+		});
+	}
+}

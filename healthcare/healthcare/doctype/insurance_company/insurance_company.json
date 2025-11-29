@@ -1,0 +1,197 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:insurance_company_name",
+ "creation": "2024-11-29 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "insurance_company_name",
+  "company_code",
+  "column_break_3",
+  "company_type",
+  "status",
+  "contact_details_section",
+  "contact_number",
+  "email",
+  "column_break_8",
+  "website",
+  "address",
+  "tpa_section",
+  "has_tpa",
+  "tpa_name",
+  "column_break_13",
+  "tpa_contact_number",
+  "tpa_email",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "insurance_company_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Insurance Company Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "company_code",
+   "fieldtype": "Data",
+   "label": "Company Code",
+   "description": "Short code for the company (e.g., LIC, STAR, ICICI)"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company_type",
+   "fieldtype": "Select",
+   "label": "Company Type",
+   "options": "\nPrivate Insurance\nGovernment Scheme\nCorporate Group\nTPA",
+   "default": "Private Insurance"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nInactive",
+   "default": "Active",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Details"
+  },
+  {
+   "fieldname": "contact_number",
+   "fieldtype": "Data",
+   "label": "Contact Number"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website",
+   "options": "URL"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "tpa_section",
+   "fieldtype": "Section Break",
+   "label": "Third Party Administrator (TPA) Details"
+  },
+  {
+   "fieldname": "has_tpa",
+   "fieldtype": "Check",
+   "label": "Has TPA",
+   "default": 0
+  },
+  {
+   "fieldname": "tpa_name",
+   "fieldtype": "Data",
+   "label": "TPA Name",
+   "depends_on": "eval:doc.has_tpa==1"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tpa_contact_number",
+   "fieldtype": "Data",
+   "label": "TPA Contact Number",
+   "depends_on": "eval:doc.has_tpa==1"
+  },
+  {
+   "fieldname": "tpa_email",
+   "fieldtype": "Data",
+   "label": "TPA Email",
+   "options": "Email",
+   "depends_on": "eval:doc.has_tpa==1"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-11-29 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Insurance Company",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Healthcare Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Physician",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Nursing User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
+
