@@ -34,5 +34,6 @@ healthcare.patches.v15_0.remove_duplicate_social_history_labels
 healthcare.patches.v15_0.hide_social_history_table_labels_complete
 healthcare.patches.v15_0.remove_social_history_heading_fields
 healthcare.patches.v15_0.restore_social_history_table_labels
+healthcare.patches.v15_0.fix_social_history_section_position
 healthcare.patches.v15_0.add_patient_emergency_contact_field #29-11-2024
 healthcare.patches.v15_0.force_add_patient_fields_production #29-11-2024
