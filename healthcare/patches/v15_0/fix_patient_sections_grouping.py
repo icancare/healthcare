@@ -161,3 +161,4 @@ def cleanup_and_recreate_sections():
 	create_custom_fields(custom_fields, update=True)
 	frappe.db.commit()
 
+

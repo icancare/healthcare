@@ -103,3 +103,4 @@ def cleanup_custom_fields(doctype, fieldnames):
 			frappe.msgprint(f"✓ Deleted old field: {fieldname} from {doctype}")
 	frappe.db.commit()
 
+

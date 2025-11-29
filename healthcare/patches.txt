@@ -40,3 +40,4 @@ healthcare.patches.v15_0.force_add_patient_fields_production #29-11-2024
 healthcare.patches.v15_0.add_patient_insurance_fields #29-11-2024
 healthcare.patches.v15_0.add_indian_insurance_companies #29-11-2024
 healthcare.patches.v15_0.fix_health_insurance_tab_position #29-11-2024
+healthcare.healthcare.patches.v15_0.generate_icancare_uid_for_existing_patients #29-11-2024

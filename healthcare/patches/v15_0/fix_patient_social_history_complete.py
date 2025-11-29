@@ -147,3 +147,4 @@ def reorder_social_history_tables():
 	# Now add headings before each table (optional, for better UI)
 	# We'll skip headings for now as tables themselves have labels
 
+

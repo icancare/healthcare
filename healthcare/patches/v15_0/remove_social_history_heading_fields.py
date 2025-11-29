@@ -51,3 +51,4 @@ def execute():
 	
 	frappe.msgprint("✓ All social history heading fields removed - tables will show without duplicate labels")
 
+

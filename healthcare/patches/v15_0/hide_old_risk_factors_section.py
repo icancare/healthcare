@@ -48,3 +48,4 @@ def execute():
 	frappe.db.commit()
 	frappe.msgprint("✓ Old Risk Factors section hidden successfully")
 
+

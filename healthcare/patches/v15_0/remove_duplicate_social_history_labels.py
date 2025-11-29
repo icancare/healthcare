@@ -35,3 +35,4 @@ def execute():
 	frappe.db.commit()
 	frappe.msgprint("✓ Duplicate social history labels removed - fields now show under section headings only")
 
+

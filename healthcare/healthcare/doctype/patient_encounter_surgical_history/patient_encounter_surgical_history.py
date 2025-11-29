@@ -8,3 +8,4 @@ from frappe.model.document import Document
 class PatientEncounterSurgicalHistory(Document):
 	pass
 
+

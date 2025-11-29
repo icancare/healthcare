@@ -4,6 +4,7 @@
 
 
 import dateutil
+import random
 
 import frappe
 from frappe import _
@@ -11,7 +12,7 @@ from frappe.contacts.address_and_contact import load_address_and_contact
 from frappe.contacts.doctype.contact.contact import get_default_contact
 from frappe.model.document import Document
 from frappe.model.naming import set_name_by_naming_series, set_name_from_naming_options
-from frappe.utils import cint, cstr, getdate
+from frappe.utils import cint, cstr, getdate, now_datetime
 from frappe.utils.nestedset import get_root_of
 
 from erpnext import get_default_currency
@@ -38,6 +39,7 @@ class Patient(Document):
 
 	def before_insert(self):
 		self.set_missing_customer_details()
+		self.generate_icancare_uid()
 
 	def after_insert(self):
 		if frappe.db.get_single_value("Healthcare Settings", "collect_registration_fee"):
@@ -76,6 +78,66 @@ class Patient(Document):
 		self.patient_name = " ".join(
 			[name for name in [self.first_name, self.middle_name, self.last_name] if name]
 		)
+
+	def generate_icancare_uid(self):
+		"""
+		Generate unique ICanCare UID in format: ICC-YYCCCC<6-Digit Random>
+		Example: ICC-250001456789
+		- YY = Current year (25 for 2025)
+		- CCCC = Sequential counter (resets yearly)
+		- 6-Digit Random = Random number for uniqueness
+		"""
+		if self.uid:
+			# UID already set, skip generation
+			return
+
+		current_year = now_datetime().strftime("%y")  # Get last 2 digits of year
+		
+		# Get the counter for this year
+		counter = self.get_next_uid_counter(current_year)
+		
+		# Generate 6-digit random number
+		max_attempts = 100
+		for attempt in range(max_attempts):
+			random_suffix = random.randint(100000, 999999)
+			uid = f"ICC-{current_year}{counter:04d}{random_suffix}"
+			
+			# Check if UID is unique
+			if not frappe.db.exists("Patient", {"uid": uid}):
+				self.uid = uid
+				return
+		
+		# If all attempts fail, use timestamp-based suffix
+		timestamp_suffix = int(now_datetime().timestamp() * 1000) % 1000000
+		uid = f"ICC-{current_year}{counter:04d}{timestamp_suffix:06d}"
+		self.uid = uid
+
+	def get_next_uid_counter(self, year):
+		"""
+		Get next sequential counter for the given year
+		Counters are stored in a custom SingleDocType or Series
+		"""
+		# Try to get the last UID for this year
+		last_uid = frappe.db.sql(
+			"""
+			SELECT uid FROM `tabPatient`
+			WHERE uid LIKE %s
+			ORDER BY creation DESC
+			LIMIT 1
+			""",
+			f"ICC-{year}%",
+			as_dict=True
+		)
+		
+		if last_uid and last_uid[0].uid:
+			# Extract counter from UID (positions 7-10: ICC-YYCCCC)
+			try:
+				last_counter = int(last_uid[0].uid[5:9])
+				return last_counter + 1
+			except (ValueError, IndexError):
+				return 1
+		
+		return 1
 
 	def set_missing_customer_details(self):
 		if not self.customer_group:
