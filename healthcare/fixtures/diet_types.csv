@@ -2,7 +2,7 @@ type_name,description,enabled
 Vegan,Plant-based diet excluding all animal products,1
 Vegetarian,Diet excluding meat but may include dairy and eggs,1
 Non-Vegetarian,Diet including meat and animal products,1
-Pescatarian,Vegetarian diet that includes fish,1
+Pescatarian,Vegetarian diet that includes fish and seafood,1
 Lacto-Vegetarian,Vegetarian diet that includes dairy products,1
 Ovo-Vegetarian,Vegetarian diet that includes eggs,1
 Lacto-Ovo Vegetarian,Vegetarian diet that includes dairy and eggs,1
@@ -18,7 +18,3 @@ High-Protein,Diet emphasizing protein consumption,1
 Raw Food,Diet consisting primarily of uncooked foods,1
 Whole Food Plant-Based,Diet based on whole unprocessed plant foods,1
 Other,Other diet types,1
-
-
-
-

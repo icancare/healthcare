@@ -47,3 +47,5 @@ healthcare.patches.v15_0.add_administration_route_and_site_data #03-12-2024
 healthcare.patches.v15_0.add_relation_type_data #03-12-2024
 healthcare.patches.v15_0.fix_additional_details_position #03-12-2024
 healthcare.patches.v15_0.fix_medical_history_tab_field_order #03-12-2024
+healthcare.patches.v15_0.update_social_history_type_data #03-12-2024
+healthcare.patches.v15_0.fix_medical_history_tab_field_order_v2 #03-12-2024

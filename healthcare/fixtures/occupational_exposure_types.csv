@@ -1,7 +1,7 @@
 type_name,description,enabled
-Chemical Exposure,Exposure to solvents or disinfectants,1
+Chemical Exposure,Exposure to solvents disinfectants and chemicals,1
 Biological Exposure,Exposure to pathogens or blood-borne materials,1
-Radiation (Ionising/Non-Ionising),Exposure to radiation sources,1
+Radiation (Ionising/Non-Ionising),Exposure to ionising or non-ionising radiation,1
 Ergonomic Risk,Repetitive tasks or awkward posture,1
 Physical Hazard,Noise vibration heat or cold exposure,1
 Mechanical Injury Risk,Sharp instruments or moving equipment,1
@@ -16,7 +16,3 @@ Pesticide Exposure,Exposure to agricultural chemicals,1
 Heavy Metal Exposure,Exposure to mercury cadmium or other heavy metals,1
 Welding Fume Exposure,Exposure to welding fumes,1
 Other,Other occupational exposures,1
-
-
-
-

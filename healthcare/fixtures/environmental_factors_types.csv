@@ -2,13 +2,13 @@ type_name,description,enabled
 Indoor Air Quality,Ventilation and CO2 levels,1
 Ambient Noise Levels,Noise pollution exposure,1
 Lighting (Insufficient/Excess),Poor lighting conditions,1
-Temperature/Humidity Extremes,Extreme temperature or humidity,1
+Temperature/Humidity Extremes,Extreme temperature or humidity exposure,1
 Radiation Environment,Environmental radiation exposure,1
 Chemical Contamination,Surface or airborne chemical contamination,1
 Ergonomic Environment,Workspace layout concerns,1
 Biological Contamination,Mould pests or other biological hazards,1
-Waste Disposal/Hygiene,Inadequate waste disposal or hygiene,1
-Shift/Over-Time/Circadian Disruption,Work schedule disruptions,1
+Waste Disposal/Hygiene Environment,Inadequate waste disposal or hygiene,1
+Shift/Over-Time/Circadian Disruption,Work schedule disruptions affecting health,1
 Mold Exposure,Exposure to mold in environment,1
 Radon Exposure,Exposure to radon gas,1
 Air Pollution,Outdoor air pollution exposure,1
@@ -16,7 +16,3 @@ Water Contamination,Contaminated water source,1
 Secondhand Smoke,Exposure to secondhand tobacco smoke,1
 Allergen Exposure,Exposure to environmental allergens,1
 Other,Other environmental factors,1
-
-
-
-
