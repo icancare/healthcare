@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-12-03 22:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "child_number",
+  "age_at_delivery",
+  "column_break_3",
+  "delivery_type",
+  "comment"
+ ],
+ "fields": [
+  {
+   "fieldname": "child_number",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Child #",
+   "reqd": 1
+  },
+  {
+   "description": "Age of mother at time of delivery",
+   "fieldname": "age_at_delivery",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Age At Delivery"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "delivery_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Delivery Type",
+   "options": "\nVaginal Delivery\nC-Section Delivery\nAssisted Vaginal Delivery\nVBAC (Vaginal Birth After Cesarean)"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Comment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-12-03 22:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Patient Encounter Children Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
+

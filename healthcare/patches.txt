@@ -56,3 +56,7 @@ healthcare.patches.v15_0.add_family_medical_history_fields #03-12-2024
 healthcare.patches.v15_0.fix_encounter_family_history_position #03-12-2024
 healthcare.patches.v15_0.make_history_sections_collapsible #03-12-2024
 healthcare.patches.v15_0.fix_allergy_immunization_collapsible #03-12-2024
+healthcare.patches.v15_0.add_women_health_fields #03-12-2024
+healthcare.patches.v15_0.fix_women_health_structure #03-12-2024
+healthcare.patches.v15_0.fix_women_health_layout #03-12-2024
+healthcare.patches.v15_0.fix_women_health_inside_section #03-12-2024

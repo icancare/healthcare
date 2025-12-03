@@ -399,6 +399,52 @@ function load_patient_medical_history(frm) {
 					});
 					frm.refresh_field("encounter_family_medical_history");
 				}
+
+				// Auto-fill Women Health fields (only for Female patients)
+				if (r.message.sex === "Female") {
+					// Direct fields
+					if (frm.fields_dict.encounter_breast_fed) {
+						frm.set_value("encounter_breast_fed", r.message.breast_fed || "");
+					}
+					if (frm.fields_dict.encounter_contraceptive_pills) {
+						frm.set_value("encounter_contraceptive_pills", r.message.contraceptive_pills || "");
+					}
+					if (frm.fields_dict.encounter_hormone_replacement_rx) {
+						frm.set_value("encounter_hormone_replacement_rx", r.message.hormone_replacement_rx || "");
+					}
+					if (frm.fields_dict.encounter_breast_symptoms) {
+						frm.set_value("encounter_breast_symptoms", r.message.breast_symptoms || "");
+					}
+					if (frm.fields_dict.encounter_age_at_menarche) {
+						frm.set_value("encounter_age_at_menarche", r.message.age_at_menarche || "");
+					}
+					if (frm.fields_dict.encounter_age_at_menopause) {
+						frm.set_value("encounter_age_at_menopause", r.message.age_at_menopause || "");
+					}
+					if (frm.fields_dict.encounter_abortion_count) {
+						frm.set_value("encounter_abortion_count", r.message.abortion_count || "");
+					}
+					if (frm.fields_dict.encounter_genitourinary_symptoms) {
+						frm.set_value("encounter_genitourinary_symptoms", r.message.genitourinary_symptoms || "");
+					}
+					if (frm.fields_dict.encounter_women_health_note) {
+						frm.set_value("encounter_women_health_note", r.message.women_health_note || "");
+					}
+
+					// Children Details table
+					if (frm.fields_dict.encounter_children_details && r.message.patient_children_details && r.message.patient_children_details.length > 0) {
+						console.log("Loading children details:", r.message.patient_children_details.length);
+						frm.clear_table("encounter_children_details");
+						r.message.patient_children_details.forEach(function(child) {
+							let row = frm.add_child("encounter_children_details");
+							row.child_number = child.child_number;
+							row.age_at_delivery = child.age_at_delivery;
+							row.delivery_type = child.delivery_type;
+							row.comment = child.comment;
+						});
+						frm.refresh_field("encounter_children_details");
+					}
+				}
 			}
 		}
 	});

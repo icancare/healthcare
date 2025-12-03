@@ -155,6 +155,12 @@ class PatientEncounter(Document):
 				          "treatment_status", "cardiovascular", "metabolic", "cancer_type",
 				          "genetic_disorder", "mental_health", "neurological", "autoimmune",
 				          "respiratory", "other_condition", "comment"]
+			},
+			# Children Details (Women Health)
+			{
+				"encounter_field": "encounter_children_details",
+				"patient_field": "patient_children_details",
+				"fields": ["child_number", "age_at_delivery", "delivery_type", "comment"]
 			}
 		]
 		
@@ -173,6 +179,25 @@ class PatientEncounter(Document):
 						if hasattr(row, field):
 							setattr(new_row, field, getattr(row, field))
 				
+				updated = True
+		
+		# Sync Women Health direct fields
+		women_health_fields = [
+			("encounter_breast_fed", "breast_fed"),
+			("encounter_contraceptive_pills", "contraceptive_pills"),
+			("encounter_hormone_replacement_rx", "hormone_replacement_rx"),
+			("encounter_breast_symptoms", "breast_symptoms"),
+			("encounter_age_at_menarche", "age_at_menarche"),
+			("encounter_age_at_menopause", "age_at_menopause"),
+			("encounter_abortion_count", "abortion_count"),
+			("encounter_genitourinary_symptoms", "genitourinary_symptoms"),
+			("encounter_women_health_note", "women_health_note"),
+		]
+		
+		for encounter_field, patient_field in women_health_fields:
+			encounter_value = self.get(encounter_field)
+			if encounter_value is not None:
+				patient.set(patient_field, encounter_value)
 				updated = True
 		
 		if updated:
