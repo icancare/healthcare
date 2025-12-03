@@ -6,17 +6,18 @@
  "engine": "InnoDB",
  "field_order": [
   "vaccine_name",
+  "relation_type",
   "administered_date",
   "column_break_3",
   "dose",
   "dose_uom",
+  "manufacturer",
   "section_break_6",
   "route",
   "site",
   "column_break_9",
   "location",
   "section_break_11",
-  "manufacturer",
   "product",
   "column_break_14",
   "lot",
@@ -31,6 +32,13 @@
    "options": "Medication",
    "reqd": 1,
    "description": "Auto-completed from the predefined List of Vaccines (from Medications list) or Manually entered if not in the predefined list"
+  },
+  {
+   "fieldname": "relation_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Who",
+   "options": "Relation Type"
   },
   {
    "fieldname": "administered_date",
@@ -48,13 +56,25 @@
    "fieldname": "dose",
    "fieldtype": "Float",
    "label": "Dose",
-   "description": "Floating number, eg: 0.5, 1.0 etc."
+   "fetch_from": "vaccine_name.strength",
+   "fetch_if_empty": 1,
+   "description": "Floating number, eg: 0.5, 1.0 etc. Auto-fetched from Medication"
   },
   {
    "fieldname": "dose_uom",
    "fieldtype": "Data",
    "label": "Dose UOM",
-   "description": "Unit of measure for the dose. Ex: ml"
+   "fetch_from": "vaccine_name.strength_uom",
+   "fetch_if_empty": 1,
+   "description": "Unit of measure for the dose. Auto-fetched from Medication"
+  },
+  {
+   "fieldname": "manufacturer",
+   "fieldtype": "Data",
+   "label": "Manufacturer",
+   "fetch_from": "vaccine_name.custom_manufacturer_name",
+   "fetch_if_empty": 1,
+   "description": "Manufacturer of the vaccine. Auto-fetched from Medication"
   },
   {
    "fieldname": "section_break_6",
@@ -62,17 +82,17 @@
   },
   {
    "fieldname": "route",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Route",
-   "options": "\nOral\nIntramuscular\nIntravenous\nSubcutaneous\nIntranasal\nOther",
-   "description": "List of Route"
+   "options": "Administration Route",
+   "description": "Route of administration"
   },
   {
    "fieldname": "site",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Site",
-   "options": "\nLeft Upper Arm\nRight Upper Arm\nLeft Thigh\nRight Thigh\nOther",
-   "description": "List of sites"
+   "options": "Administration Site",
+   "description": "Site of administration"
   },
   {
    "fieldname": "column_break_9",
@@ -89,16 +109,10 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "manufacturer",
-   "fieldtype": "Data",
-   "label": "Manufacturer",
-   "description": "Manufacturer of the vaccine. Ex: Glaxo Smith Kline"
-  },
-  {
    "fieldname": "product",
    "fieldtype": "Data",
    "label": "Product",
-   "description": "What is the name of the product. Ex: FLUARIX QUADRIVALENT"
+   "description": "Product name used for the vaccine"
   },
   {
    "fieldname": "column_break_14",
@@ -120,7 +134,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-11-27 15:00:00.000000",
+ "modified": "2025-12-03 14:00:00.000000",
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Patient Immunization",
@@ -130,4 +144,3 @@
  "sort_order": "DESC",
  "states": []
 }
-

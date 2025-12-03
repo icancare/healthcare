@@ -1,0 +1,39 @@
+reaction_name,description
+Altered mental status,Changes in consciousness or mental state
+Anaphylaxis,Severe life-threatening allergic reaction
+Angioedema,Swelling beneath the skin
+Anxiety,Feelings of anxiety or panic
+Blood product incompatibility,Reaction to blood products
+Cardiovascular Arrest,Heart stops beating
+Constipation,Difficulty passing stool
+Cough,Persistent coughing
+Delirium Red Man Syndrome,Red flushing reaction
+Diaphoresis,Excessive sweating
+Diarrhea,Loose or watery stools
+Dizziness,Feeling lightheaded or unsteady
+Fever,Elevated body temperature
+Headache,Pain in head
+Hematologic,Blood-related reaction
+Hives 3 or more,Multiple hives/urticaria
+Hives/urticaria,Itchy welts on skin
+Hypertension,High blood pressure
+Hypotension,Low blood pressure
+Insomnia,Difficulty sleeping
+Interstitial nephritis,Kidney inflammation
+Itching, pruritus,Skin itching
+Lightheadedness,Feeling faint
+Malignant hyperthermia,Dangerous rise in body temperature
+Migraine,Severe headache
+Nausea, Vomiting,Feeling sick or vomiting
+Palpitations,Rapid or irregular heartbeat
+Rash,Skin eruption
+Rhinitis,Nasal inflammation
+Serum sickness,Immune reaction to medications
+Shortness of Breath,Difficulty breathing
+Stridor,High-pitched breathing sound
+Swelling,Tissue swelling
+Wheezing/bronchospasm,Airway constriction
+Unknown,Unknown reaction type
+Other mild (Specify with Comments),Other mild reaction - specify in comments
+Other (Specify with Comments),Other reaction - specify in comments
+

@@ -51,24 +51,16 @@
   "sb_relation",
   "patient_relation",
   "medical_history_tab",
-  "personal_and_social_history",
-  "occupation",
-  "column_break_25",
-  "marital_status",
   "allergy_medical_and_surgical_history",
   "allergies",
   "medication",
   "column_break_20",
   "medical_history",
   "surgical_history",
-  "risk_factors",
-  "tobacco_past_use",
-  "tobacco_current_use",
-  "alcohol_past_use",
-  "alcohol_current_use",
-  "column_break_32",
-  "surrounding_factors",
-  "other_risk_factors"
+  "personal_and_social_history",
+  "occupation",
+  "column_break_25",
+  "marital_status"
  ],
  "fields": [
   {
@@ -289,57 +281,6 @@
    "label": "Marital Status",
    "no_copy": 1,
    "options": "\nSingle\nMarried\nDivorced\nWidow"
-  },
-  {
-   "fieldname": "risk_factors",
-   "fieldtype": "Section Break",
-   "label": "Risk Factors"
-  },
-  {
-   "fieldname": "tobacco_past_use",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
-   "label": "Tobacco Consumption (Past)",
-   "no_copy": 1
-  },
-  {
-   "fieldname": "tobacco_current_use",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
-   "label": "Tobacco Consumption (Present)",
-   "no_copy": 1
-  },
-  {
-   "fieldname": "alcohol_past_use",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
-   "label": "Alcohol Consumption (Past)",
-   "no_copy": 1
-  },
-  {
-   "fieldname": "alcohol_current_use",
-   "fieldtype": "Data",
-   "ignore_user_permissions": 1,
-   "label": "Alcohol Consumption (Present)",
-   "no_copy": 1
-  },
-  {
-   "fieldname": "column_break_32",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "surrounding_factors",
-   "fieldtype": "Small Text",
-   "ignore_xss_filter": 1,
-   "label": "Occupational Hazards and Environmental Factors",
-   "no_copy": 1
-  },
-  {
-   "fieldname": "other_risk_factors",
-   "fieldtype": "Small Text",
-   "ignore_xss_filter": 1,
-   "label": "Other Risk Factors",
-   "no_copy": 1
   },
   {
    "collapsible_depends_on": "patient_details",

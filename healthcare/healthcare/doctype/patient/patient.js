@@ -318,67 +318,14 @@ frappe.ui.form.on('Patient Relation', {
 	}
 });
 
-// Set query for "who" field in Medical History to show related patients
-frappe.ui.form.on('Patient Medical History', {
-	medical_history_add: function(frm) {
-		set_who_field_query(frm, 'medical_history');
-	}
-});
-
-frappe.ui.form.on('Patient Surgical History', {
-	surgical_history_add: function(frm) {
-		set_who_field_query(frm, 'surgical_history');
-	}
-});
-
-// Set query for "who" field in Social History to show related patients
-frappe.ui.form.on('Patient Smokeless Tobacco History', {
-	patient_smokeless_tobacco_history_add: function(frm) {
-		set_who_field_query(frm, 'patient_smokeless_tobacco_history');
-	}
-});
-
-frappe.ui.form.on('Patient Smoking Tobacco History', {
-	patient_smoking_tobacco_history_add: function(frm) {
-		set_who_field_query(frm, 'patient_smoking_tobacco_history');
-	}
-});
-
-frappe.ui.form.on('Patient Substance Abuse History', {
-	patient_substance_abuse_history_add: function(frm) {
-		set_who_field_query(frm, 'patient_substance_abuse_history');
-	}
-});
-
-// Extended Social History - Oral Habits
-frappe.ui.form.on('Patient Oral Habits History', {
-	patient_oral_habits_history_add: function(frm) {
-		set_who_field_query(frm, 'patient_oral_habits_history');
-	}
-});
-
-// Extended Social History - Diet
-frappe.ui.form.on('Patient Diet History', {
-	patient_diet_history_add: function(frm) {
-		set_who_field_query(frm, 'patient_diet_history');
-	}
-});
-
-// Extended Social History - Occupational Exposure
-frappe.ui.form.on('Patient Occupational Exposure History', {
-	patient_occupational_exposure_history_add: function(frm) {
-		set_who_field_query(frm, 'patient_occupational_exposure_history');
-	}
-});
-
-// Extended Social History - Environmental Factors
-frappe.ui.form.on('Patient Environmental Factors History', {
-	patient_environmental_factors_history_add: function(frm) {
-		set_who_field_query(frm, 'patient_environmental_factors_history');
-	}
-});
+// Note: All History tables (Medical, Surgical, Social History) no longer have 'who' field
+// They now use 'relation_type' field (labeled as 'Who') instead
 
 function set_who_field_query(frm, fieldname) {
+	// Check if the 'who' field exists in the grid
+	if (!frm.fields_dict[fieldname] || !frm.fields_dict[fieldname].grid.get_field('who')) {
+		return;
+	}
 	frm.fields_dict[fieldname].grid.get_field('who').get_query = function(doc) {
 		// Get list of related patients from patient_relation
 		let patient_list = [doc.name]; // Include self

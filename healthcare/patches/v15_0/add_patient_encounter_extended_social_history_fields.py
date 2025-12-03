@@ -78,3 +78,5 @@ def execute():
 	frappe.msgprint("✓ Extended Social History fields added to Patient Encounter (grouped in Social History)")
 
 
+
+

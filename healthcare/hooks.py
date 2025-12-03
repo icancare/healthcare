@@ -10,6 +10,23 @@ app_email = "info@earthianslive.com"
 app_license = "GNU GPL V3"
 required_apps = ["erpnext"]
 
+# Fixtures
+# --------
+fixtures = [
+	{"dt": "Allergen", "filters": []},
+	{"dt": "Allergen Reaction", "filters": []},
+	{"dt": "Administration Route", "filters": []},
+	{"dt": "Administration Site", "filters": []},
+	{"dt": "Relation Type", "filters": []},
+	{"dt": "Smokeless Tobacco Type", "filters": []},
+	{"dt": "Smoking Tobacco Type", "filters": []},
+	{"dt": "Substance Abuse Type", "filters": []},
+	{"dt": "Oral Habits Type", "filters": []},
+	{"dt": "Diet Type", "filters": []},
+	{"dt": "Occupational Exposure Type", "filters": []},
+	{"dt": "Environmental Factors Type", "filters": []},
+]
+
 # Includes in <head>
 # ------------------
 

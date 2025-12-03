@@ -29,6 +29,10 @@ class PatientEncounter(Document):
 	def on_update(self):
 		if self.appointment:
 			frappe.db.set_value("Patient Appointment", self.appointment, "status", "Closed")
+		
+		# Sync all medical history (allergy, immunization, medical, surgical, social) back to Patient
+		if self.patient:
+			self.sync_medical_history_to_patient()
 
 	def on_submit(self):
 		if self.therapies:
@@ -59,6 +63,111 @@ class PatientEncounter(Document):
 		self.title = _("{0} with {1}").format(
 			self.patient_name or self.patient, self.practitioner_name or self.practitioner
 		)[:100]
+
+	def sync_medical_history_to_patient(self):
+		"""Sync all medical history from Encounter back to Patient"""
+		if not self.patient:
+			return
+		
+		patient = frappe.get_doc("Patient", self.patient)
+		
+		# Define mapping between Encounter and Patient child tables
+		history_mapping = [
+			# Allergy
+			{
+				"encounter_field": "custom_allergy",
+				"patient_field": "patient_allergy",
+				"fields": ["allergen", "reaction", "severity", "relation_type", "start_date", "end_date", "comments"]
+			},
+			# Immunization
+			{
+				"encounter_field": "custom_immunization",
+				"patient_field": "patient_immunization",
+				"fields": ["vaccine_name", "relation_type", "manufacturer", "administered_date", "dose", "dose_uom",
+				          "route", "site", "location", "product", "lot", "ndc"]
+			},
+			# Medical History
+			{
+				"encounter_field": "custom_medical_history",
+				"patient_field": "patient_medical_history",
+				"fields": ["diagnosis", "diagnosis_name", "relation_type", "when", 
+				          "undergoing_treatment", "comment"]
+			},
+			# Surgical History
+			{
+				"encounter_field": "custom_surgical_history",
+				"patient_field": "patient_surgical_history",
+				"fields": ["procedure", "procedure_name", "relation_type", "when",
+				          "undergoing_treatment", "comment"]
+			},
+			# Social History - Smokeless Tobacco
+			{
+				"encounter_field": "custom_smokeless_tobacco_history",
+				"patient_field": "patient_smokeless_tobacco_history",
+				"fields": ["type", "relation_type", "frequency", "quantity", "quantity_unit", 
+				          "discontinued_since", "discontinued_since_unit", "comment"]
+			},
+			# Social History - Smoking Tobacco
+			{
+				"encounter_field": "custom_smoking_tobacco_history",
+				"patient_field": "patient_smoking_tobacco_history",
+				"fields": ["type", "relation_type", "frequency", "quantity", "quantity_unit",
+				          "discontinued_since", "discontinued_since_unit", "comment"]
+			},
+			# Social History - Substance Abuse
+			{
+				"encounter_field": "custom_substance_abuse_history",
+				"patient_field": "patient_substance_abuse_history",
+				"fields": ["type", "relation_type", "frequency", "quantity", "quantity_unit",
+				          "discontinued_since", "discontinued_since_unit", "comment"]
+			},
+			# Social History - Oral Habits
+			{
+				"encounter_field": "custom_oral_habits_history",
+				"patient_field": "patient_oral_habits_history",
+				"fields": ["type", "relation_type", "oral_hygiene_practice", "dental_visits_frequency",
+				          "mouth_wash_use", "restricted_mouth_opening", "comment"]
+			},
+			# Social History - Diet
+			{
+				"encounter_field": "custom_diet_history",
+				"patient_field": "patient_diet_history",
+				"fields": ["diet_type", "relation_type", "started_when", "comment"]
+			},
+			# Social History - Occupational Exposure
+			{
+				"encounter_field": "custom_occupational_exposure_history",
+				"patient_field": "patient_occupational_exposure_history",
+				"fields": ["type", "relation_type", "duration", "comment"]
+			},
+			# Social History - Environmental Factors
+			{
+				"encounter_field": "custom_environmental_factors_history",
+				"patient_field": "patient_environmental_factors_history",
+				"fields": ["type", "relation_type", "exposure_level", "comment"]
+			}
+		]
+		
+		updated = False
+		
+		for mapping in history_mapping:
+			encounter_data = self.get(mapping["encounter_field"]) or []
+			
+			if encounter_data:
+				# Clear existing patient data and replace with encounter data
+				patient.set(mapping["patient_field"], [])
+				
+				for row in encounter_data:
+					new_row = patient.append(mapping["patient_field"], {})
+					for field in mapping["fields"]:
+						if hasattr(row, field):
+							setattr(new_row, field, getattr(row, field))
+				
+				updated = True
+		
+		if updated:
+			patient.flags.ignore_permissions = True
+			patient.save()
 
 	@staticmethod
 	@frappe.whitelist()

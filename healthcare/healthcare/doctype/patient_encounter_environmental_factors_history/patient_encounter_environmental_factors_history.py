@@ -9,3 +9,5 @@ class PatientEncounterEnvironmentalFactorsHistory(Document):
 	pass
 
 
+
+

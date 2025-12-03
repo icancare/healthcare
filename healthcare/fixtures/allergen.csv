@@ -1,0 +1,34 @@
+allergen_name,description
+Penicillin,Antibiotic allergy
+Sulfa Drugs,Sulfonamide antibiotics allergy
+NSAIDs,Non-steroidal anti-inflammatory drugs allergy
+Latex,Natural rubber latex allergy
+Contrast Dye (Iodinated),Iodine-based contrast media allergy
+Shellfish,Shellfish allergy
+Seafood,Seafood allergy
+Peanuts,Peanut allergy
+Tree Nuts,Tree nuts allergy (almonds, cashews, walnuts, etc.)
+Eggs,Egg allergy
+Milk,Milk/dairy allergy
+Gluten,Gluten intolerance/allergy
+Bee/Wasp Sting,Insect sting allergy
+Pollen,Pollen allergy (hay fever)
+Dust Mites,Dust mite allergy
+Animal Dander,Pet dander allergy
+Mold/Fungi,Mold and fungi allergy
+Fish,Fish allergy
+Soy,Soy allergy
+Wheat,Wheat allergy
+Sesame Seeds,Sesame allergy
+MSG/Additives,Food additives allergy
+Fragrances,Fragrance/perfume allergy
+Nickel,Nickel metal allergy
+Cosmetics/Hair Dye,Cosmetic products allergy
+Food Colourings,Food dye allergy
+ACE-Inhibitors,ACE inhibitor medication allergy
+ARBs,Angiotensin receptor blocker allergy
+Cockroach Allergen,Cockroach allergy
+Aspirin,Aspirin allergy
+Codeine,Codeine/opioid allergy
+Local Anesthetics,Local anesthetic allergy
+

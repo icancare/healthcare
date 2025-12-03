@@ -37,3 +37,5 @@ def execute():
 	frappe.msgprint("✓ Social history table labels restored properly")
 
 
+
+

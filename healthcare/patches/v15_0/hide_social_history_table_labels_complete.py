@@ -51,3 +51,5 @@ def execute():
 	frappe.msgprint("✓ Social history table labels completely cleaned up")
 
 
+
+
