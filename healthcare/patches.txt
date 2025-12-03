@@ -50,3 +50,4 @@ healthcare.patches.v15_0.fix_medical_history_tab_field_order #03-12-2024
 healthcare.patches.v15_0.update_social_history_type_data #03-12-2024
 healthcare.patches.v15_0.fix_medical_history_tab_field_order_v2 #03-12-2024
 healthcare.patches.v15_0.fix_patient_custom_field_idx #03-12-2024
+healthcare.patches.v15_0.fix_patient_field_order_final #03-12-2024
