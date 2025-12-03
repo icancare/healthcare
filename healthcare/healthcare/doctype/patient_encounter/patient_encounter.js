@@ -195,7 +195,6 @@ function load_patient_medical_history(frm) {
 						row.allergen = allergy.allergen;
 						row.reaction = allergy.reaction;
 						row.severity = allergy.severity;
-						row.relation_type = allergy.relation_type;
 						row.start_date = allergy.start_date;
 						row.end_date = allergy.end_date;
 						row.comments = allergy.comments;
@@ -216,7 +215,6 @@ function load_patient_medical_history(frm) {
 							let row = frm.add_child("custom_immunization");
 							// Map all Patient Immunization fields to Patient Encounter Immunization
 							row.vaccine_name = imm.vaccine_name;
-							row.relation_type = imm.relation_type;
 							row.manufacturer = imm.manufacturer;
 							row.administered_date = imm.administered_date;
 							row.dose = imm.dose;
@@ -245,7 +243,6 @@ function load_patient_medical_history(frm) {
 						let row = frm.add_child("custom_medical_history");
 						row.diagnosis = history.diagnosis;
 						row.diagnosis_name = history.diagnosis_name;
-						row.relation_type = history.relation_type;
 						row.when = history.when;
 						row.undergoing_treatment = history.undergoing_treatment;
 						row.comment = history.comment;
@@ -261,7 +258,6 @@ function load_patient_medical_history(frm) {
 						let row = frm.add_child("custom_surgical_history");
 						row.procedure = history.procedure;
 						row.procedure_name = history.procedure_name;
-						row.relation_type = history.relation_type;
 						row.when = history.when;
 						row.undergoing_treatment = history.undergoing_treatment;
 						row.comment = history.comment;
@@ -276,7 +272,6 @@ function load_patient_medical_history(frm) {
 					r.message.patient_smokeless_tobacco_history.forEach(function(history) {
 						let row = frm.add_child("custom_smokeless_tobacco_history");
 						row.type = history.type;
-						row.relation_type = history.relation_type;
 						row.frequency = history.frequency;
 						row.quantity = history.quantity;
 						row.quantity_unit = history.quantity_unit;
@@ -294,7 +289,6 @@ function load_patient_medical_history(frm) {
 					r.message.patient_smoking_tobacco_history.forEach(function(history) {
 						let row = frm.add_child("custom_smoking_tobacco_history");
 						row.type = history.type;
-						row.relation_type = history.relation_type;
 						row.frequency = history.frequency;
 						row.quantity = history.quantity;
 						row.quantity_unit = history.quantity_unit;
@@ -312,7 +306,6 @@ function load_patient_medical_history(frm) {
 					r.message.patient_substance_abuse_history.forEach(function(history) {
 						let row = frm.add_child("custom_substance_abuse_history");
 						row.type = history.type;
-						row.relation_type = history.relation_type;
 						row.frequency = history.frequency;
 						row.quantity = history.quantity;
 						row.quantity_unit = history.quantity_unit;
@@ -330,7 +323,6 @@ function load_patient_medical_history(frm) {
 					r.message.patient_oral_habits_history.forEach(function(history) {
 						let row = frm.add_child("custom_oral_habits_history");
 						row.type = history.type;
-						row.relation_type = history.relation_type;
 						row.oral_hygiene_practice = history.oral_hygiene_practice;
 						row.dental_visits_frequency = history.dental_visits_frequency;
 						row.mouth_wash_use = history.mouth_wash_use;
@@ -347,7 +339,6 @@ function load_patient_medical_history(frm) {
 					r.message.patient_diet_history.forEach(function(history) {
 						let row = frm.add_child("custom_diet_history");
 						row.diet_type = history.diet_type;
-						row.relation_type = history.relation_type;
 						row.started_when = history.started_when;
 						row.comment = history.comment;
 					});
@@ -361,7 +352,6 @@ function load_patient_medical_history(frm) {
 					r.message.patient_occupational_exposure_history.forEach(function(history) {
 						let row = frm.add_child("custom_occupational_exposure_history");
 						row.type = history.type;
-						row.relation_type = history.relation_type;
 						row.duration = history.duration;
 						row.comment = history.comment;
 					});
@@ -375,11 +365,39 @@ function load_patient_medical_history(frm) {
 					r.message.patient_environmental_factors_history.forEach(function(history) {
 						let row = frm.add_child("custom_environmental_factors_history");
 						row.type = history.type;
-						row.relation_type = history.relation_type;
 						row.exposure_level = history.exposure_level;
 						row.comment = history.comment;
 					});
 					frm.refresh_field("custom_environmental_factors_history");
+				}
+
+				// Auto-fill Family Medical History
+				if (frm.fields_dict.encounter_family_medical_history && r.message.patient_family_medical_history && r.message.patient_family_medical_history.length > 0) {
+					console.log("Loading family medical history:", r.message.patient_family_medical_history.length);
+					frm.clear_table("encounter_family_medical_history");
+					r.message.patient_family_medical_history.forEach(function(history) {
+						let row = frm.add_child("encounter_family_medical_history");
+						row.relation = history.relation;
+						row.diagnosis = history.diagnosis;
+						row.diagnosis_name = history.diagnosis_name;
+						row.age_at_diagnosis = history.age_at_diagnosis;
+						row.current_status = history.current_status;
+						row.cause_of_death = history.cause_of_death;
+						row.is_hereditary = history.is_hereditary;
+						row.severity = history.severity;
+						row.treatment_status = history.treatment_status;
+						row.cardiovascular = history.cardiovascular;
+						row.metabolic = history.metabolic;
+						row.cancer_type = history.cancer_type;
+						row.genetic_disorder = history.genetic_disorder;
+						row.mental_health = history.mental_health;
+						row.neurological = history.neurological;
+						row.autoimmune = history.autoimmune;
+						row.respiratory = history.respiratory;
+						row.other_condition = history.other_condition;
+						row.comment = history.comment;
+					});
+					frm.refresh_field("encounter_family_medical_history");
 				}
 			}
 		}
@@ -517,8 +535,7 @@ function setup_who_field_queries(frm) {
 					};
 				}
 
-				// Note: All Social History tables now use 'relation_type' field (labeled as 'Who')
-				// instead of the old 'who' Patient link field
+				// Note: relation_type (Who) field has been removed from all tables as per client request
 			}
 		}
 	});

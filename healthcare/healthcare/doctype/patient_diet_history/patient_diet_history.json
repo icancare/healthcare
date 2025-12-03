@@ -6,7 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "diet_type",
-  "relation_type",
   "column_break_4",
   "started_when",
   "comment"
@@ -21,19 +20,13 @@
    "reqd": 1
   },
   {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
-  },
-  {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "started_when",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Started When",
    "description": "e.g., 'Since childhood', 'From 2020'"
   },

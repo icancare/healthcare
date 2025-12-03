@@ -8,7 +8,6 @@
  "field_order": [
   "procedure",
   "procedure_name",
-  "relation_type",
   "column_break_3",
   "when",
   "undergoing_treatment",
@@ -31,13 +30,6 @@
    "in_list_view": 1,
    "label": "Procedure Name",
    "read_only": 1
-  },
-  {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
   },
   {
    "fieldname": "column_break_3",

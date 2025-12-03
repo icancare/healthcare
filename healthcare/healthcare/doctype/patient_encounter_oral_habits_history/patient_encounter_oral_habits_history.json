@@ -6,7 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "type",
-  "relation_type",
   "column_break_4",
   "oral_hygiene_practice",
   "dental_visits_frequency",
@@ -24,25 +23,20 @@
    "reqd": 1
   },
   {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
-  },
-  {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "oral_hygiene_practice",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Oral Hygiene Practice",
    "options": "\nGood\nModerate\nPoor"
   },
   {
    "fieldname": "dental_visits_frequency",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Frequency of Dental Visits",
    "options": "\nNever\nFrequent\nOccasional\nAnnual\nOther"
   },

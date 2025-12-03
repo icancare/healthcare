@@ -8,7 +8,6 @@
   "allergen",
   "reaction",
   "severity",
-  "relation_type",
   "column_break_4",
   "start_date",
   "end_date",
@@ -41,13 +40,6 @@
    "label": "Severity",
    "options": "\nMild\nMild to moderate\nModerate\nModerate to severe\nSevere\nLife threatening\nFatal",
    "reqd": 1
-  },
-  {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
   },
   {
    "fieldname": "column_break_4",

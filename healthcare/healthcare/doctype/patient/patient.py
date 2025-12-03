@@ -36,6 +36,7 @@ class Patient(Document):
 		self.set_full_name()
 		self.flags.is_new_doc = self.is_new()
 		self.flags.existing_customer = self.is_new() and bool(self.customer)
+		self.validate_primary_emergency_contact()
 
 	def before_insert(self):
 		self.set_missing_customer_details()
@@ -78,6 +79,19 @@ class Patient(Document):
 		self.patient_name = " ".join(
 			[name for name in [self.first_name, self.middle_name, self.last_name] if name]
 		)
+
+	def validate_primary_emergency_contact(self):
+		"""Ensure only one emergency contact is marked as primary"""
+		if not self.get("patient_emergency_contact"):
+			return
+		
+		primary_count = 0
+		for contact in self.patient_emergency_contact:
+			if contact.is_primary_contact:
+				primary_count += 1
+		
+		if primary_count > 1:
+			frappe.throw(_("Only one emergency contact can be marked as primary"))
 
 	def generate_icancare_uid(self):
 		"""

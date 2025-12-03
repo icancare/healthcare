@@ -24,10 +24,10 @@
   },
   {
    "fieldname": "relation",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Relation",
-   "options": "\nFather\nMother\nSpouse\nSibling\nChild\nFriend\nOther",
+   "options": "Relation Type",
    "reqd": 1
   },
   {

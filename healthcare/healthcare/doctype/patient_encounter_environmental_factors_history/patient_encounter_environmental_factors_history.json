@@ -6,7 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "type",
-  "relation_type",
   "column_break_4",
   "exposure_level",
   "comment"
@@ -21,19 +20,13 @@
    "reqd": 1
   },
   {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
-  },
-  {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "exposure_level",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Exposure Level",
    "options": "\nLow\nModerate\nHigh\nSevere"
   },

@@ -6,7 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "type",
-  "relation_type",
   "column_break_4",
   "duration",
   "comment"
@@ -21,19 +20,13 @@
    "reqd": 1
   },
   {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
-  },
-  {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "duration",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Duration",
    "description": "e.g., '5 years', '2010-2020'"
   },

@@ -77,74 +77,84 @@ class PatientEncounter(Document):
 			{
 				"encounter_field": "custom_allergy",
 				"patient_field": "patient_allergy",
-				"fields": ["allergen", "reaction", "severity", "relation_type", "start_date", "end_date", "comments"]
+				"fields": ["allergen", "reaction", "severity", "start_date", "end_date", "comments"]
 			},
 			# Immunization
 			{
 				"encounter_field": "custom_immunization",
 				"patient_field": "patient_immunization",
-				"fields": ["vaccine_name", "relation_type", "manufacturer", "administered_date", "dose", "dose_uom",
+				"fields": ["vaccine_name", "manufacturer", "administered_date", "dose", "dose_uom",
 				          "route", "site", "location", "product", "lot", "ndc"]
 			},
 			# Medical History
 			{
 				"encounter_field": "custom_medical_history",
 				"patient_field": "patient_medical_history",
-				"fields": ["diagnosis", "diagnosis_name", "relation_type", "when", 
+				"fields": ["diagnosis", "diagnosis_name", "when", 
 				          "undergoing_treatment", "comment"]
 			},
 			# Surgical History
 			{
 				"encounter_field": "custom_surgical_history",
 				"patient_field": "patient_surgical_history",
-				"fields": ["procedure", "procedure_name", "relation_type", "when",
+				"fields": ["procedure", "procedure_name", "when",
 				          "undergoing_treatment", "comment"]
 			},
 			# Social History - Smokeless Tobacco
 			{
 				"encounter_field": "custom_smokeless_tobacco_history",
 				"patient_field": "patient_smokeless_tobacco_history",
-				"fields": ["type", "relation_type", "frequency", "quantity", "quantity_unit", 
+				"fields": ["type", "frequency", "quantity", "quantity_unit", 
 				          "discontinued_since", "discontinued_since_unit", "comment"]
 			},
 			# Social History - Smoking Tobacco
 			{
 				"encounter_field": "custom_smoking_tobacco_history",
 				"patient_field": "patient_smoking_tobacco_history",
-				"fields": ["type", "relation_type", "frequency", "quantity", "quantity_unit",
+				"fields": ["type", "frequency", "quantity", "quantity_unit",
 				          "discontinued_since", "discontinued_since_unit", "comment"]
 			},
 			# Social History - Substance Abuse
 			{
 				"encounter_field": "custom_substance_abuse_history",
 				"patient_field": "patient_substance_abuse_history",
-				"fields": ["type", "relation_type", "frequency", "quantity", "quantity_unit",
+				"fields": ["type", "frequency", "quantity", "quantity_unit",
 				          "discontinued_since", "discontinued_since_unit", "comment"]
 			},
 			# Social History - Oral Habits
 			{
 				"encounter_field": "custom_oral_habits_history",
 				"patient_field": "patient_oral_habits_history",
-				"fields": ["type", "relation_type", "oral_hygiene_practice", "dental_visits_frequency",
+				"fields": ["type", "oral_hygiene_practice", "dental_visits_frequency",
 				          "mouth_wash_use", "restricted_mouth_opening", "comment"]
 			},
 			# Social History - Diet
 			{
 				"encounter_field": "custom_diet_history",
 				"patient_field": "patient_diet_history",
-				"fields": ["diet_type", "relation_type", "started_when", "comment"]
+				"fields": ["diet_type", "started_when", "comment"]
 			},
 			# Social History - Occupational Exposure
 			{
 				"encounter_field": "custom_occupational_exposure_history",
 				"patient_field": "patient_occupational_exposure_history",
-				"fields": ["type", "relation_type", "duration", "comment"]
+				"fields": ["type", "duration", "comment"]
 			},
 			# Social History - Environmental Factors
 			{
 				"encounter_field": "custom_environmental_factors_history",
 				"patient_field": "patient_environmental_factors_history",
-				"fields": ["type", "relation_type", "exposure_level", "comment"]
+				"fields": ["type", "exposure_level", "comment"]
+			},
+			# Family Medical History
+			{
+				"encounter_field": "encounter_family_medical_history",
+				"patient_field": "patient_family_medical_history",
+				"fields": ["relation", "diagnosis", "diagnosis_name", "age_at_diagnosis",
+				          "current_status", "cause_of_death", "is_hereditary", "severity",
+				          "treatment_status", "cardiovascular", "metabolic", "cancer_type",
+				          "genetic_disorder", "mental_health", "neurological", "autoimmune",
+				          "respiratory", "other_condition", "comment"]
 			}
 		]
 		

@@ -6,7 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "vaccine_name",
-  "relation_type",
   "administered_date",
   "column_break_3",
   "dose",
@@ -32,13 +31,6 @@
    "options": "Medication",
    "reqd": 1,
    "description": "Auto-completed from the predefined List of Vaccines (from Medications list) or Manually entered if not in the predefined list"
-  },
-  {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
   },
   {
    "fieldname": "administered_date",

@@ -51,3 +51,8 @@ healthcare.patches.v15_0.update_social_history_type_data #03-12-2024
 healthcare.patches.v15_0.fix_medical_history_tab_field_order_v2 #03-12-2024
 healthcare.patches.v15_0.fix_patient_custom_field_idx #03-12-2024
 healthcare.patches.v15_0.fix_patient_field_order_final #03-12-2024
+healthcare.patches.v15_0.add_emergency_contact_relation_types #03-12-2024
+healthcare.patches.v15_0.add_family_medical_history_fields #03-12-2024
+healthcare.patches.v15_0.fix_encounter_family_history_position #03-12-2024
+healthcare.patches.v15_0.make_history_sections_collapsible #03-12-2024
+healthcare.patches.v15_0.fix_allergy_immunization_collapsible #03-12-2024

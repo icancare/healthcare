@@ -24,6 +24,10 @@ def execute():
         ("Uncle", "Patient's uncle"),
         ("Aunt", "Patient's aunt"),
         ("Cousin", "Patient's cousin"),
+        ("Friend", "Patient's friend"),
+        ("Neighbor", "Patient's neighbor"),
+        ("Caregiver", "Patient's caregiver"),
+        ("Guardian", "Patient's legal guardian"),
         ("Family", "General family member"),
         ("Other", "Other relation"),
     ]

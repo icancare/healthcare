@@ -7,7 +7,6 @@
  "engine": "InnoDB",
  "field_order": [
   "type",
-  "relation_type",
   "column_break_3",
   "frequency",
   "quantity",
@@ -28,25 +27,20 @@
    "reqd": 1
   },
   {
-   "fieldname": "relation_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Who",
-   "options": "Relation Type"
-  },
-  {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "frequency",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Frequency",
    "options": "Daily\nOccasionally\nWeekly\nMonthly\nYearly"
   },
   {
    "fieldname": "quantity",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Quantity"
   },
   {
