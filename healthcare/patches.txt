@@ -60,3 +60,5 @@ healthcare.patches.v15_0.add_women_health_fields #03-12-2024
 healthcare.patches.v15_0.fix_women_health_structure #03-12-2024
 healthcare.patches.v15_0.fix_women_health_layout #03-12-2024
 healthcare.patches.v15_0.fix_women_health_inside_section #03-12-2024
+healthcare.patches.v15_0.add_diagnosis_categories #04-12-2024
+healthcare.patches.v15_0.merge_family_medical_history_section #04-12-2024

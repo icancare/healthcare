@@ -6,17 +6,13 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "relation",
+  "diagnosis_category",
   "diagnosis",
   "diagnosis_name",
+  "relation",
   "column_break_4",
-  "age_at_diagnosis",
-  "current_status",
-  "cause_of_death",
-  "section_break_8",
-  "is_hereditary",
-  "severity",
-  "treatment_status",
+  "when",
+  "undergoing_treatment",
   "common_conditions_section",
   "cardiovascular",
   "metabolic",
@@ -34,12 +30,11 @@
  ],
  "fields": [
   {
-   "fieldname": "relation",
+   "fieldname": "diagnosis_category",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Relation",
-   "options": "Relation Type",
-   "reqd": 1
+   "label": "Diagnosis Category",
+   "options": "Diagnosis Category"
   },
   {
    "fieldname": "diagnosis",
@@ -57,57 +52,35 @@
    "read_only": 1
   },
   {
+   "fieldname": "relation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Relation",
+   "options": "Relation Type",
+   "reqd": 1
+  },
+  {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
   {
-   "description": "e.g., '40 years', 'Childhood', 'Unknown'",
-   "fieldname": "age_at_diagnosis",
+   "description": "Enter approximate date or number of years",
+   "fieldname": "when",
    "fieldtype": "Data",
-   "label": "Age at Diagnosis"
-  },
-  {
-   "default": "Alive",
-   "fieldname": "current_status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Current Status",
-   "options": "\nAlive\nDeceased\nUnknown"
-  },
-  {
-   "depends_on": "eval:doc.current_status=='Deceased'",
-   "fieldname": "cause_of_death",
-   "fieldtype": "Data",
-   "label": "Cause of Death"
-  },
-  {
-   "fieldname": "section_break_8",
-   "fieldtype": "Section Break",
-   "label": "Additional Details"
+   "label": "When"
   },
   {
    "default": "0",
-   "fieldname": "is_hereditary",
+   "fieldname": "undergoing_treatment",
    "fieldtype": "Check",
-   "label": "Is Hereditary"
-  },
-  {
-   "fieldname": "severity",
-   "fieldtype": "Select",
-   "label": "Severity",
-   "options": "\nMild\nModerate\nSevere"
-  },
-  {
-   "fieldname": "treatment_status",
-   "fieldtype": "Select",
-   "label": "Treatment Status",
-   "options": "\nOngoing\nCompleted\nNot Treated\nUnknown"
+   "in_list_view": 1,
+   "label": "Undergoing Treatment"
   },
   {
    "collapsible": 1,
    "fieldname": "common_conditions_section",
    "fieldtype": "Section Break",
-   "label": "Common Family Medical Conditions"
+   "label": "Common Medical Conditions"
   },
   {
    "fieldname": "cardiovascular",
@@ -183,7 +156,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-03 14:00:00.000000",
+ "modified": "2025-12-04 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Patient Family Medical History",
@@ -193,4 +166,3 @@
  "sort_order": "DESC",
  "states": []
 }
-

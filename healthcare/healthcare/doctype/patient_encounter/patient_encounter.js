@@ -241,10 +241,20 @@ function load_patient_medical_history(frm) {
 					frm.clear_table("custom_medical_history");
 					r.message.patient_medical_history.forEach(function(history) {
 						let row = frm.add_child("custom_medical_history");
+						row.diagnosis_category = history.diagnosis_category;
 						row.diagnosis = history.diagnosis;
 						row.diagnosis_name = history.diagnosis_name;
 						row.when = history.when;
 						row.undergoing_treatment = history.undergoing_treatment;
+						row.cardiovascular = history.cardiovascular;
+						row.metabolic = history.metabolic;
+						row.cancer_type = history.cancer_type;
+						row.genetic_disorder = history.genetic_disorder;
+						row.mental_health = history.mental_health;
+						row.neurological = history.neurological;
+						row.autoimmune = history.autoimmune;
+						row.respiratory = history.respiratory;
+						row.other_condition = history.other_condition;
 						row.comment = history.comment;
 					});
 					frm.refresh_field("custom_medical_history");
@@ -377,15 +387,12 @@ function load_patient_medical_history(frm) {
 					frm.clear_table("encounter_family_medical_history");
 					r.message.patient_family_medical_history.forEach(function(history) {
 						let row = frm.add_child("encounter_family_medical_history");
+						row.diagnosis_category = history.diagnosis_category;
 						row.relation = history.relation;
 						row.diagnosis = history.diagnosis;
 						row.diagnosis_name = history.diagnosis_name;
-						row.age_at_diagnosis = history.age_at_diagnosis;
-						row.current_status = history.current_status;
-						row.cause_of_death = history.cause_of_death;
-						row.is_hereditary = history.is_hereditary;
-						row.severity = history.severity;
-						row.treatment_status = history.treatment_status;
+						row.when = history.when;
+						row.undergoing_treatment = history.undergoing_treatment;
 						row.cardiovascular = history.cardiovascular;
 						row.metabolic = history.metabolic;
 						row.cancer_type = history.cancer_type;

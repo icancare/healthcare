@@ -6,229 +6,22 @@ frappe.ui.form.on('Patient', {
 	refresh: function (frm) {
 		// Setup insurance card preview handlers
 		setup_insurance_card_previews(frm);
-		// Add custom CSS for card image preview
-		if (!$('#insurance-card-preview-css').length) {
-			$('head').append(`
-				<style id="insurance-card-preview-css">
-					.insurance-card-preview {
-						display: inline-block;
-						margin: 5px;
-						border-radius: 8px;
-						padding: 8px;
-						cursor: pointer;
-						transition: all 0.3s ease;
-						position: relative;
-						overflow: hidden;
-					}
-					.insurance-card-preview::before {
-						content: '';
-						position: absolute;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						background: linear-gradient(135deg, rgba(36,144,239,0.1) 0%, rgba(118,75,162,0.1) 100%);
-						opacity: 0;
-						transition: opacity 0.3s ease;
-						pointer-events: none;
-					}
-					.insurance-card-preview:hover::before {
-						opacity: 1;
-					}
-					.insurance-card-preview:hover {
-						border-color: #2490ef !important;
-						box-shadow: 0 8px 25px rgba(36,144,239,0.4);
-						transform: translateY(-5px) scale(1.03);
-					}
-					.insurance-card-preview img {
-						display: block;
-						max-width: 300px;
-						max-height: 200px;
-						width: auto;
-						height: auto;
-						border-radius: 6px;
-						position: relative;
-						z-index: 1;
-					}
-					.insurance-card-label {
-						font-size: 11px;
-						margin-top: 8px;
-						text-align: center;
-						font-weight: 600;
-						text-transform: uppercase;
-						letter-spacing: 0.5px;
-						position: relative;
-						z-index: 1;
-					}
-					.insurance-card-modal {
-						display: none;
-						position: fixed;
-						z-index: 9999;
-						left: 0;
-						top: 0;
-						width: 100%;
-						height: 100%;
-						background-color: rgba(0,0,0,0.9);
-						cursor: zoom-out;
-					}
-					.insurance-card-modal img {
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						transform: translate(-50%, -50%);
-						max-width: 90%;
-						max-height: 90%;
-						border-radius: 8px;
-						box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-					}
-					.insurance-card-modal .close-modal {
-						position: absolute;
-						top: 20px;
-						right: 40px;
-						color: #fff;
-						font-size: 40px;
-						font-weight: bold;
-						cursor: pointer;
-					}
-					.insurance-card-modal .modal-caption {
-						position: absolute;
-						bottom: 20px;
-						left: 50%;
-						transform: translateX(-50%);
-						color: #fff;
-						font-size: 16px;
-						background: rgba(0,0,0,0.7);
-						padding: 10px 20px;
-						border-radius: 4px;
-					}
-				</style>
-			`);
+		// Setup diagnosis category filters
+		setup_diagnosis_filters(frm);
+		
+		// Render Quick Diagnosis Selection Panel above Medical History table
+		if (!frm.is_new()) {
+			render_diagnosis_quick_select_panel(frm);
 		}
+		
+		// Add custom CSS for diagnosis panel and card image preview
+		add_custom_styles();
 		
 		// Show insurance card summary with image previews
 		if (frm.doc.patient_insurance && frm.doc.patient_insurance.length > 0) {
-			let insurance_html = '<div style="margin-top: 15px;">';
-			
-			frm.doc.patient_insurance.forEach((insurance, idx) => {
-			// Get theme colors
-			const isDarkTheme = document.body.classList.contains('dark') || 
-								document.documentElement.getAttribute('data-theme') === 'dark';
-			
-			const cardBg = isDarkTheme ? 'rgba(30, 30, 30, 0.8)' : '#fff';
-			const cardBorder = isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : '#d1d8dd';
-			const textColor = isDarkTheme ? '#e0e0e0' : '#333';
-			const labelColor = isDarkTheme ? '#b0b0b0' : '#6c757d';
-			
-			insurance_html += `
-				<div style="
-					border: 1px solid ${cardBorder}; 
-					border-radius: 12px; 
-					padding: 20px; 
-					margin-bottom: 15px; 
-					background: ${cardBg};
-					backdrop-filter: blur(10px);
-					box-shadow: 0 4px 15px rgba(0,0,0,${isDarkTheme ? '0.5' : '0.1'});
-					transition: all 0.3s ease;
-				" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,${isDarkTheme ? '0.7' : '0.2'})';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,${isDarkTheme ? '0.5' : '0.1'})';">
-					<div style="display: flex; justify-content: space-between; align-items: start; gap: 20px;">
-						<div style="flex: 1; min-width: 0;">
-							<h4 style="margin: 0 0 15px 0; color: #2490ef; font-size: 18px; font-weight: 600;">
-								📋 ${insurance.insurance_company || 'Insurance Company'}
-							</h4>
-							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; color: ${textColor};">
-								<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
-									<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Member Number</span><br>
-									<strong style="font-size: 14px;">${insurance.member_number || 'N/A'}</strong>
-								</div>
-								<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
-									<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span><br>
-									<span class="indicator ${insurance.status === 'Active' ? 'green' : 'orange'}">
-										${insurance.status || 'Pending'}
-									</span>
-								</div>
-								${insurance.policy_start_date ? `
-									<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
-										<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Valid From</span><br>
-										<strong style="font-size: 14px;">${frappe.datetime.str_to_user(insurance.policy_start_date)}</strong>
-									</div>
-								` : ''}
-								${insurance.policy_end_date ? `
-									<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
-										<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Valid Till</span><br>
-										<strong style="font-size: 14px;">${frappe.datetime.str_to_user(insurance.policy_end_date)}</strong>
-									</div>
-								` : ''}
-								${insurance.coverage_amount ? `
-									<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px; grid-column: span 2;">
-										<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Coverage Amount</span><br>
-										<strong style="font-size: 16px; color: #2490ef;">${format_currency(insurance.coverage_amount)}</strong>
-									</div>
-								` : ''}
-								${insurance.verified ? `
-									<div style="padding: 8px;">
-										<span class="indicator green" style="font-size: 13px;">✓ Verified</span>
-									</div>
-								` : ''}
-							</div>
-						</div>
-						<div style="display: flex; gap: 15px; flex-shrink: 0;">
-							${insurance.card_front_photo ? `
-								<div class="insurance-card-preview" data-image="${insurance.card_front_photo}" data-label="Card Front - ${insurance.insurance_company}" style="
-									background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : '#f5f7fa'};
-									border: 2px solid ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#d1d8dd'};
-								">
-									<img src="${insurance.card_front_photo}" alt="Card Front" />
-									<div class="insurance-card-label" style="color: ${labelColor};">📄 Front</div>
-								</div>
-							` : `<div style="width: 150px; text-align: center; color: ${labelColor}; padding: 20px; border: 2px dashed ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#ddd'}; border-radius: 8px;">No Front Card</div>`}
-							
-							${insurance.card_back_photo ? `
-								<div class="insurance-card-preview" data-image="${insurance.card_back_photo}" data-label="Card Back - ${insurance.insurance_company}" style="
-									background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : '#f5f7fa'};
-									border: 2px solid ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#d1d8dd'};
-								">
-									<img src="${insurance.card_back_photo}" alt="Card Back" />
-									<div class="insurance-card-label" style="color: ${labelColor};">📄 Back</div>
-								</div>
-							` : `<div style="width: 150px; text-align: center; color: ${labelColor}; padding: 20px; border: 2px dashed ${isDarkTheme ? 'rgba(255,255,255,0.1)' : '#ddd'}; border-radius: 8px;">No Back Card</div>`}
-						</div>
-					</div>
-				</div>
-			`;
-			});
-			
-			insurance_html += '</div>';
-			
-			// Update Insurance Summary section
-			frm.fields_dict.primary_insurance_html.$wrapper.html(insurance_html);
-			
-			// Add click handlers for image preview modal
-			$('.insurance-card-preview').off('click').on('click', function() {
-				const imageUrl = $(this).data('image');
-				const label = $(this).data('label');
-				
-				// Create modal if not exists
-				if (!$('#insurance-card-modal').length) {
-					$('body').append(`
-						<div id="insurance-card-modal" class="insurance-card-modal">
-							<span class="close-modal">&times;</span>
-							<img id="modal-insurance-img" src="" alt="Insurance Card">
-							<div class="modal-caption" id="modal-caption"></div>
-						</div>
-					`);
-					
-					// Close modal on click
-					$('#insurance-card-modal, .close-modal').on('click', function() {
-						$('#insurance-card-modal').fadeOut(300);
-					});
-				}
-				
-				// Show modal with image
-				$('#modal-insurance-img').attr('src', imageUrl);
-				$('#modal-caption').text(label);
-				$('#insurance-card-modal').fadeIn(300);
-			});
+			render_insurance_summary(frm);
 		}
+		
 		frm.set_query('patient', 'patient_relation', function () {
 			return {
 				filters: [
@@ -318,17 +111,697 @@ frappe.ui.form.on('Patient Relation', {
 	}
 });
 
-// Note: All History tables (Medical, Surgical, Social History) no longer have 'who' field
-// They now use 'relation_type' field (labeled as 'Who') instead
+// Patient Medical History child table events
+frappe.ui.form.on('Patient Medical History', {
+	diagnosis_category: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		// Clear diagnosis when category changes
+		frappe.model.set_value(cdt, cdn, 'diagnosis', '');
+		frappe.model.set_value(cdt, cdn, 'diagnosis_name', '');
+	},
+	diagnosis: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		if (row.diagnosis) {
+			// Auto-fill category when diagnosis is selected
+			frappe.db.get_value('Diagnosis', row.diagnosis, ['diagnosis_category', 'diagnosis'], function(r) {
+				if (r) {
+					if (r.diagnosis_category && !row.diagnosis_category) {
+						frappe.model.set_value(cdt, cdn, 'diagnosis_category', r.diagnosis_category);
+					}
+					frappe.model.set_value(cdt, cdn, 'diagnosis_name', r.diagnosis);
+				}
+			});
+		}
+	}
+});
+
+// Patient Family Medical History child table events
+frappe.ui.form.on('Patient Family Medical History', {
+	diagnosis_category: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		// Clear diagnosis when category changes
+		frappe.model.set_value(cdt, cdn, 'diagnosis', '');
+		frappe.model.set_value(cdt, cdn, 'diagnosis_name', '');
+	},
+	diagnosis: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		if (row.diagnosis) {
+			// Auto-fill category when diagnosis is selected
+			frappe.db.get_value('Diagnosis', row.diagnosis, ['diagnosis_category', 'diagnosis'], function(r) {
+				if (r) {
+					if (r.diagnosis_category && !row.diagnosis_category) {
+						frappe.model.set_value(cdt, cdn, 'diagnosis_category', r.diagnosis_category);
+					}
+					frappe.model.set_value(cdt, cdn, 'diagnosis_name', r.diagnosis);
+				}
+			});
+		}
+	}
+});
+
+// Setup diagnosis category filters for child tables
+function setup_diagnosis_filters(frm) {
+	// Filter for Patient Medical History
+	if (frm.fields_dict.patient_medical_history) {
+		frm.fields_dict.patient_medical_history.grid.get_field('diagnosis').get_query = function(doc, cdt, cdn) {
+			let row = locals[cdt][cdn];
+			let filters = {};
+			if (row.diagnosis_category) {
+				filters['diagnosis_category'] = row.diagnosis_category;
+			}
+			return { filters: filters };
+		};
+	}
+	
+	// Filter for Patient Family Medical History
+	if (frm.fields_dict.patient_family_medical_history) {
+		frm.fields_dict.patient_family_medical_history.grid.get_field('diagnosis').get_query = function(doc, cdt, cdn) {
+			let row = locals[cdt][cdn];
+			let filters = {};
+			if (row.diagnosis_category) {
+				filters['diagnosis_category'] = row.diagnosis_category;
+			}
+			return { filters: filters };
+		};
+	}
+}
+
+// ============================================
+// QUICK DIAGNOSIS SELECTION PANEL
+// ============================================
+
+// Common diagnoses to show in quick selection (as per the form)
+const QUICK_DIAGNOSES = [
+	{ category: "Cardiovascular", name: "Blood Pressure (Hypertension)", short: "Blood Pressure (Hypertension)" },
+	{ category: "Metabolic", name: "Diabetes", short: "Diabetes" },
+	{ category: "Cardiovascular", name: "Heart Disease", short: "Heart Disease - Cardiovascular Disease" },
+	{ category: "Neurological", name: "Neurological disease (Epilepsy)", short: "Neurological disease (Epilepsy)" },
+	{ category: "Respiratory", name: "Asthma", short: "Respiratory Disease (e.g., COPD, Asthma)" },
+	{ category: "Respiratory", name: "COPD", short: "" },
+	{ category: "Gastrointestinal", name: "Liver Disease", short: "Liver Disease" },
+	{ category: "Gastrointestinal", name: "Renal Disease", short: "Renal Disease" },
+	{ category: "Ophthalmological", name: "Eye Problem", short: "Eye Problem" },
+	{ category: "Immunosuppressive Conditions", name: "Immunosuppressive Condition HIV, transplant, steroids", short: "Immunosuppressive Condition" },
+	{ category: "Other", name: "Other Relevant Conditions e.g., Autoimmune, anemia, thyroid", short: "Other Relevant Conditions" },
+	{ category: "Allergic Conditions", name: "Allergies Drug / food / chemical sensitivity", short: "Allergies (Drug/Food/Chemical)" },
+	{ category: "Other", name: "Medical Disease", short: "Medical Disease" },
+	{ category: "Other", name: "Any Surgery Done", short: "Any Surgery Done" },
+	{ category: "Reproductive", name: "Infertility", short: "Infertility" },
+	{ category: "Oral/Dental", name: "ORAL PML - on treatment", short: "ORAL PML - on treatment" },
+	{ category: "Oral/Dental", name: "Restricted Mouth Opening", short: "Restricted Mouth Opening" },
+	{ category: "Oncological", name: "CANCER PAST - on treatment", short: "CANCER PAST - on treatment" }
+];
+
+function render_diagnosis_quick_select_panel(frm) {
+	// Find the Medical History table - this is a custom field
+	if (!frm.fields_dict.patient_medical_history) {
+		return;
+	}
+	
+	let table_wrapper = frm.fields_dict.patient_medical_history.$wrapper;
+	
+	// Remove existing panel if any
+	table_wrapper.parent().find('.diagnosis-quick-panel').remove();
+	
+	// Get existing diagnoses in both tables
+	let existing_self = (frm.doc.patient_medical_history || []).map(d => d.diagnosis);
+	let existing_family = (frm.doc.patient_family_medical_history || []).map(d => d.diagnosis);
+	
+	// Create the panel HTML
+	let panel_html = `
+		<div class="diagnosis-quick-panel">
+			<div class="panel-header">
+				<h5>📋 Medical History & Comorbidities - Quick Selection</h5>
+				<p class="text-muted">Click on diagnosis to add. Select SELF for patient's own history or FAMILY for family history.</p>
+			</div>
+			<div class="diagnosis-table">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th style="width: 35%;">DIAGNOSIS</th>
+							<th style="width: 12%; text-align: center;">WHEN</th>
+							<th style="width: 13%; text-align: center;">TREATMENT<br><small>ONGOING</small></th>
+							<th style="width: 20%; text-align: center;">SELF<br><small>NO / YES</small></th>
+							<th style="width: 20%; text-align: center;">FAMILY<br><small>NO / YES</small></th>
+						</tr>
+					</thead>
+					<tbody>
+	`;
+	
+	QUICK_DIAGNOSES.forEach((diag, idx) => {
+		let is_self = existing_self.includes(diag.name);
+		let is_family = existing_family.includes(diag.name);
+		let display_name = diag.short || diag.name;
+		
+		panel_html += `
+			<tr class="diagnosis-row" data-diagnosis="${diag.name}" data-category="${diag.category}">
+				<td class="diagnosis-name">${display_name}</td>
+				<td class="text-center">
+					<input type="text" class="form-control form-control-sm when-input" placeholder="e.g. 2020" style="width: 70px; margin: 0 auto;">
+				</td>
+				<td class="text-center">
+					<div class="btn-group btn-group-sm" role="group">
+						<button type="button" class="btn btn-outline-secondary btn-treatment-no" data-value="no">N</button>
+						<button type="button" class="btn btn-outline-warning btn-treatment-yes" data-value="yes">Y</button>
+					</div>
+				</td>
+				<td class="text-center">
+					<div class="btn-group btn-group-sm" role="group">
+						<button type="button" class="btn ${!is_self ? 'btn-outline-secondary' : 'btn-secondary'} btn-self-no" data-type="self" data-value="no">NO</button>
+						<button type="button" class="btn ${is_self ? 'btn-primary' : 'btn-outline-primary'} btn-self-yes" data-type="self" data-value="yes">YES</button>
+					</div>
+				</td>
+				<td class="text-center">
+					<div class="btn-group btn-group-sm" role="group">
+						<button type="button" class="btn ${!is_family ? 'btn-outline-secondary' : 'btn-secondary'} btn-family-no" data-type="family" data-value="no">NO</button>
+						<button type="button" class="btn ${is_family ? 'btn-success' : 'btn-outline-success'} btn-family-yes" data-type="family" data-value="yes">YES</button>
+					</div>
+				</td>
+			</tr>
+		`;
+	});
+	
+	panel_html += `
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-footer">
+				<small class="text-muted">
+					<strong>Note:</strong> Clicking YES will automatically add the diagnosis to the respective table below.
+				</small>
+			</div>
+		</div>
+	`;
+	
+	// Insert panel BEFORE the Medical History table
+	table_wrapper.before(panel_html);
+	
+	// Attach event handlers
+	attach_quick_panel_events(frm, table_wrapper.parent());
+}
+
+function attach_quick_panel_events(frm, wrapper) {
+	// Handle SELF YES click
+	wrapper.find('.btn-self-yes').off('click').on('click', function() {
+		let row = $(this).closest('.diagnosis-row');
+		let diagnosis = row.data('diagnosis');
+		let category = row.data('category');
+		let when_val = row.find('.when-input').val();
+		let treatment = row.find('.btn-treatment-yes').hasClass('active') || row.find('.btn-treatment-yes').hasClass('btn-warning');
+		
+		// Check if already exists
+		let exists = (frm.doc.patient_medical_history || []).some(d => d.diagnosis === diagnosis);
+		if (exists) {
+			frappe.show_alert({message: __('Already added to Medical History'), indicator: 'orange'});
+			return;
+		}
+		
+		// Add to Medical History
+		add_to_medical_history(frm, diagnosis, category, when_val, treatment);
+		
+		// Update button states
+		$(this).removeClass('btn-outline-primary').addClass('btn-primary');
+		row.find('.btn-self-no').removeClass('btn-secondary').addClass('btn-outline-secondary');
+	});
+	
+	// Handle SELF NO click
+	wrapper.find('.btn-self-no').off('click').on('click', function() {
+		let row = $(this).closest('.diagnosis-row');
+		let diagnosis = row.data('diagnosis');
+		
+		// Remove from Medical History if exists
+		remove_from_medical_history(frm, diagnosis);
+		
+		// Update button states
+		$(this).removeClass('btn-outline-secondary').addClass('btn-secondary');
+		row.find('.btn-self-yes').removeClass('btn-primary').addClass('btn-outline-primary');
+	});
+	
+	// Handle FAMILY YES click
+	wrapper.find('.btn-family-yes').off('click').on('click', function() {
+		let row = $(this).closest('.diagnosis-row');
+		let diagnosis = row.data('diagnosis');
+		let category = row.data('category');
+		
+		// Check if already exists
+		let exists = (frm.doc.patient_family_medical_history || []).some(d => d.diagnosis === diagnosis);
+		if (exists) {
+			frappe.show_alert({message: __('Already added to Family Medical History'), indicator: 'orange'});
+			return;
+		}
+		
+		// Show relation dialog
+		show_family_relation_dialog(frm, diagnosis, category, $(this), row);
+	});
+	
+	// Handle FAMILY NO click
+	wrapper.find('.btn-family-no').off('click').on('click', function() {
+		let row = $(this).closest('.diagnosis-row');
+		let diagnosis = row.data('diagnosis');
+		
+		// Remove from Family Medical History if exists
+		remove_from_family_history(frm, diagnosis);
+		
+		// Update button states
+		$(this).removeClass('btn-outline-secondary').addClass('btn-secondary');
+		row.find('.btn-family-yes').removeClass('btn-success').addClass('btn-outline-success');
+	});
+	
+	// Handle Treatment buttons
+	wrapper.find('.btn-treatment-yes, .btn-treatment-no').off('click').on('click', function() {
+		let row = $(this).closest('.diagnosis-row');
+		let diagnosis = row.data('diagnosis');
+		let isYes = $(this).hasClass('btn-treatment-yes');
+		
+		row.find('.btn-treatment-yes, .btn-treatment-no').removeClass('active btn-warning btn-secondary')
+			.addClass('btn-outline-secondary btn-outline-warning');
+		
+		if (isYes) {
+			$(this).removeClass('btn-outline-warning').addClass('btn-warning active');
+		} else {
+			$(this).removeClass('btn-outline-secondary').addClass('btn-secondary active');
+		}
+		
+		// Update existing row if already added
+		update_existing_medical_history_row(frm, diagnosis, 'undergoing_treatment', isYes ? 1 : 0);
+	});
+	
+	// Handle When input change - update existing row
+	wrapper.find('.when-input').off('change blur').on('change blur', function() {
+		let row = $(this).closest('.diagnosis-row');
+		let diagnosis = row.data('diagnosis');
+		let when_val = $(this).val();
+		
+		// Update existing row if already added
+		update_existing_medical_history_row(frm, diagnosis, 'when', when_val);
+	});
+}
+
+function add_to_medical_history(frm, diagnosis, category, years, treatment) {
+	let row = frm.add_child('patient_medical_history', {
+		diagnosis_category: category,
+		diagnosis: diagnosis,
+		when: years || '',
+		undergoing_treatment: treatment ? 1 : 0
+	});
+	
+	// Fetch diagnosis name
+	frappe.db.get_value('Diagnosis', diagnosis, 'diagnosis', function(r) {
+		if (r) {
+			frappe.model.set_value(row.doctype, row.name, 'diagnosis_name', r.diagnosis);
+		}
+	});
+	
+	frm.refresh_field('patient_medical_history');
+	frm.dirty();
+	
+	frappe.show_alert({
+		message: __('Added {0} to Medical History', [diagnosis]),
+		indicator: 'green'
+	});
+}
+
+function remove_from_medical_history(frm, diagnosis) {
+	let rows = frm.doc.patient_medical_history || [];
+	let idx_to_remove = rows.findIndex(d => d.diagnosis === diagnosis);
+	
+	if (idx_to_remove > -1) {
+		frm.doc.patient_medical_history.splice(idx_to_remove, 1);
+		frm.refresh_field('patient_medical_history');
+		frm.dirty();
+		
+		frappe.show_alert({
+			message: __('Removed {0} from Medical History', [diagnosis]),
+			indicator: 'orange'
+		});
+	}
+}
+
+function update_existing_medical_history_row(frm, diagnosis, field, value) {
+	// Check in Medical History (Self)
+	let rows = frm.doc.patient_medical_history || [];
+	let existing_row = rows.find(d => d.diagnosis === diagnosis);
+	
+	if (existing_row) {
+		frappe.model.set_value(existing_row.doctype, existing_row.name, field, value);
+		frm.refresh_field('patient_medical_history');
+		frm.dirty();
+		return true;
+	}
+	
+	// Check in Family Medical History
+	let family_rows = frm.doc.patient_family_medical_history || [];
+	let existing_family_row = family_rows.find(d => d.diagnosis === diagnosis);
+	
+	if (existing_family_row) {
+		frappe.model.set_value(existing_family_row.doctype, existing_family_row.name, field, value);
+		frm.refresh_field('patient_family_medical_history');
+		frm.dirty();
+		return true;
+	}
+	
+	return false;
+}
+
+function show_family_relation_dialog(frm, diagnosis, category, btn, row) {
+	// Get values from quick panel row
+	let when_val = row.find('.when-input').val();
+	let treatment = row.find('.btn-treatment-yes').hasClass('active') || row.find('.btn-treatment-yes').hasClass('btn-warning');
+	
+	let d = new frappe.ui.Dialog({
+		title: __('Add to Family Medical History'),
+		fields: [
+			{
+				fieldname: 'diagnosis_display',
+				fieldtype: 'Data',
+				label: __('Diagnosis'),
+				default: diagnosis,
+				read_only: 1
+			},
+			{
+				fieldname: 'relation',
+				fieldtype: 'Link',
+				label: __('Relation'),
+				options: 'Relation Type',
+				reqd: 1,
+				description: __('Select the family member relation (e.g., Father, Mother, etc.)')
+			},
+			{
+				fieldname: 'when',
+				fieldtype: 'Data',
+				label: __('When'),
+				default: when_val || '',
+				description: __('Enter approximate date or number of years')
+			},
+			{
+				fieldname: 'undergoing_treatment',
+				fieldtype: 'Check',
+				label: __('Undergoing Treatment'),
+				default: treatment ? 1 : 0
+			}
+		],
+		primary_action_label: __('Add'),
+		primary_action: function(values) {
+			// Add to Family Medical History
+			let new_row = frm.add_child('patient_family_medical_history', {
+				diagnosis_category: category,
+				diagnosis: diagnosis,
+				relation: values.relation,
+				when: values.when || '',
+				undergoing_treatment: values.undergoing_treatment ? 1 : 0
+			});
+			
+			// Fetch diagnosis name
+			frappe.db.get_value('Diagnosis', diagnosis, 'diagnosis', function(r) {
+				if (r) {
+					frappe.model.set_value(new_row.doctype, new_row.name, 'diagnosis_name', r.diagnosis);
+				}
+			});
+			
+			frm.refresh_field('patient_family_medical_history');
+			frm.dirty();
+			
+			// Update button states
+			btn.removeClass('btn-outline-success').addClass('btn-success');
+			row.find('.btn-family-no').removeClass('btn-secondary').addClass('btn-outline-secondary');
+			
+			frappe.show_alert({
+				message: __('Added {0} to Family Medical History ({1})', [diagnosis, values.relation]),
+				indicator: 'green'
+			});
+			
+			d.hide();
+		}
+	});
+	
+	d.show();
+}
+
+function remove_from_family_history(frm, diagnosis) {
+	let rows = frm.doc.patient_family_medical_history || [];
+	let idx_to_remove = rows.findIndex(d => d.diagnosis === diagnosis);
+	
+	if (idx_to_remove > -1) {
+		frm.doc.patient_family_medical_history.splice(idx_to_remove, 1);
+		frm.refresh_field('patient_family_medical_history');
+		frm.dirty();
+		
+		frappe.show_alert({
+			message: __('Removed {0} from Family Medical History', [diagnosis]),
+			indicator: 'orange'
+		});
+	}
+}
+
+// ============================================
+// STYLES
+// ============================================
+
+function add_custom_styles() {
+	if ($('#patient-custom-styles').length) return;
+	
+	$('head').append(`
+		<style id="patient-custom-styles">
+			/* Diagnosis Quick Panel Styles */
+			.diagnosis-quick-panel {
+				background: var(--card-bg);
+				border: 1px solid var(--border-color);
+				border-radius: 8px;
+				margin: 15px 0;
+				padding: 15px;
+				box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+			}
+			
+			.diagnosis-quick-panel .panel-header {
+				border-bottom: 1px solid var(--border-color);
+				padding-bottom: 10px;
+				margin-bottom: 15px;
+			}
+			
+			.diagnosis-quick-panel .panel-header h5 {
+				margin: 0 0 5px 0;
+				color: var(--heading-color);
+				font-weight: 600;
+			}
+			
+			.diagnosis-quick-panel .panel-header p {
+				margin: 0;
+				font-size: 12px;
+			}
+			
+			.diagnosis-quick-panel .diagnosis-table {
+				overflow-x: auto;
+			}
+			
+			.diagnosis-quick-panel table {
+				margin-bottom: 0;
+				font-size: 13px;
+			}
+			
+			.diagnosis-quick-panel table th {
+				background: var(--bg-color);
+				font-weight: 600;
+				font-size: 11px;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				padding: 10px 8px;
+				border-bottom: 2px solid var(--border-color);
+			}
+			
+			.diagnosis-quick-panel table td {
+				vertical-align: middle;
+				padding: 8px;
+			}
+			
+			.diagnosis-quick-panel .diagnosis-name {
+				font-weight: 500;
+				color: var(--text-color);
+			}
+			
+			.diagnosis-quick-panel .diagnosis-row:hover {
+				background: var(--bg-light-gray);
+			}
+			
+			.diagnosis-quick-panel .btn-group .btn {
+				padding: 4px 8px;
+				font-size: 11px;
+				font-weight: 600;
+			}
+			
+			.diagnosis-quick-panel .years-input {
+				text-align: center;
+				font-size: 12px;
+			}
+			
+			.diagnosis-quick-panel .panel-footer {
+				border-top: 1px solid var(--border-color);
+				padding-top: 10px;
+				margin-top: 15px;
+			}
+			
+			/* Insurance Card Preview Styles */
+			.insurance-card-preview {
+				display: inline-block;
+				margin: 5px;
+				border-radius: 8px;
+				padding: 8px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				position: relative;
+				overflow: hidden;
+			}
+			.insurance-card-preview::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(135deg, rgba(36,144,239,0.1) 0%, rgba(118,75,162,0.1) 100%);
+				opacity: 0;
+				transition: opacity 0.3s ease;
+				pointer-events: none;
+			}
+			.insurance-card-preview:hover::before {
+				opacity: 1;
+			}
+			.insurance-card-preview:hover {
+				border-color: #2490ef !important;
+				box-shadow: 0 8px 25px rgba(36,144,239,0.4);
+				transform: translateY(-5px) scale(1.03);
+			}
+			.insurance-card-preview img {
+				display: block;
+				max-width: 300px;
+				max-height: 200px;
+				width: auto;
+				height: auto;
+				border-radius: 6px;
+				position: relative;
+				z-index: 1;
+			}
+			.insurance-card-label {
+				font-size: 11px;
+				margin-top: 8px;
+				text-align: center;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				position: relative;
+				z-index: 1;
+			}
+			.insurance-card-modal {
+				display: none;
+				position: fixed;
+				z-index: 9999;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,0.9);
+				cursor: zoom-out;
+			}
+			.insurance-card-modal img {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				max-width: 90%;
+				max-height: 90%;
+				border-radius: 8px;
+				box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+			}
+			.insurance-card-modal .close-modal {
+				position: absolute;
+				top: 20px;
+				right: 40px;
+				color: #fff;
+				font-size: 40px;
+				font-weight: bold;
+				cursor: pointer;
+			}
+			.insurance-card-modal .modal-caption {
+				position: absolute;
+				bottom: 20px;
+				left: 50%;
+				transform: translateX(-50%);
+				color: #fff;
+				font-size: 16px;
+				background: rgba(0,0,0,0.7);
+				padding: 10px 20px;
+				border-radius: 4px;
+			}
+		</style>
+	`);
+}
+
+// ============================================
+// INSURANCE SUMMARY
+// ============================================
+
+function render_insurance_summary(frm) {
+	let insurance_html = '<div style="margin-top: 15px;">';
+	
+	frm.doc.patient_insurance.forEach((insurance, idx) => {
+		const isDarkTheme = document.body.classList.contains('dark') || 
+							document.documentElement.getAttribute('data-theme') === 'dark';
+		
+		const cardBg = isDarkTheme ? 'rgba(30, 30, 30, 0.8)' : '#fff';
+		const cardBorder = isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : '#d1d8dd';
+		const textColor = isDarkTheme ? '#e0e0e0' : '#333';
+		const labelColor = isDarkTheme ? '#b0b0b0' : '#6c757d';
+		
+		insurance_html += `
+			<div style="
+				border: 1px solid ${cardBorder}; 
+				border-radius: 12px; 
+				padding: 20px; 
+				margin-bottom: 15px; 
+				background: ${cardBg};
+				backdrop-filter: blur(10px);
+				box-shadow: 0 4px 15px rgba(0,0,0,${isDarkTheme ? '0.5' : '0.1'});
+				transition: all 0.3s ease;
+			">
+				<div style="display: flex; justify-content: space-between; align-items: start; gap: 20px;">
+					<div style="flex: 1; min-width: 0;">
+						<h4 style="margin: 0 0 15px 0; color: #2490ef; font-size: 18px; font-weight: 600;">
+							📋 ${insurance.insurance_company || 'Insurance Company'}
+						</h4>
+						<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; color: ${textColor};">
+							<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
+								<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Member Number</span><br>
+								<strong style="font-size: 14px;">${insurance.member_number || 'N/A'}</strong>
+							</div>
+							<div style="padding: 8px; background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'}; border-radius: 6px;">
+								<span style="color: ${labelColor}; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">Status</span><br>
+								<span class="indicator ${insurance.status === 'Active' ? 'green' : 'orange'}">
+									${insurance.status || 'Pending'}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+	});
+	
+	insurance_html += '</div>';
+	
+	if (frm.fields_dict.primary_insurance_html) {
+		frm.fields_dict.primary_insurance_html.$wrapper.html(insurance_html);
+	}
+}
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
 
 function set_who_field_query(frm, fieldname) {
-	// Check if the 'who' field exists in the grid
 	if (!frm.fields_dict[fieldname] || !frm.fields_dict[fieldname].grid.get_field('who')) {
 		return;
 	}
 	frm.fields_dict[fieldname].grid.get_field('who').get_query = function(doc) {
-		// Get list of related patients from patient_relation
-		let patient_list = [doc.name]; // Include self
+		let patient_list = [doc.name];
 		if (doc.patient_relation) {
 			doc.patient_relation.forEach(function(rel) {
 				if (rel.patient) {
@@ -421,7 +894,6 @@ frappe.ui.form.on('Patient Insurance', {
 function show_insurance_card_in_dialog(row, cdn) {
 	if (!cur_dialog) return;
 	
-	// Find the dialog fields for card photos
 	const fields = ['card_front_photo', 'card_back_photo'];
 	
 	fields.forEach(fieldname => {
@@ -433,10 +905,8 @@ function show_insurance_card_in_dialog(row, cdn) {
 		
 		if (!field_wrapper) return;
 		
-		// Remove old preview
 		field_wrapper.find('.insurance-card-inline-preview').remove();
 		
-		// Create beautiful card preview box
 		const preview_html = `
 			<div class="insurance-card-inline-preview" style="
 				margin-bottom: 15px;
@@ -475,39 +945,18 @@ function show_insurance_card_in_dialog(row, cdn) {
 								transition: all 0.3s ease;
 								display: inline-block;
 							"
-							 onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)';"
-							 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
 							 onclick="show_card_fullscreen('${image_url}', '${label}')" />
-					</div>
-					<div style="
-						text-align: center;
-						margin-top: 10px;
-						padding: 8px;
-						background: #f8f9fa;
-						border-radius: 6px;
-					">
-						<span style="font-size: 11px; color: #6c757d;">
-							🔍 Click image to view full size
-						</span>
 					</div>
 				</div>
 			</div>
 		`;
 		
-		// Insert preview BEFORE the control wrapper
 		const control_wrapper = field_wrapper.find('.control-input-wrapper');
 		if (control_wrapper.length) {
 			control_wrapper.before(preview_html);
 		} else {
 			field_wrapper.find('.frappe-control').prepend(preview_html);
 		}
-		
-		// Style the file path to be less prominent
-		field_wrapper.find('.control-value a').css({
-			'font-size': '10px',
-			'color': '#999',
-			'text-decoration': 'none'
-		});
 	});
 }
 
@@ -526,11 +975,6 @@ window.show_card_fullscreen = function(image_url, label) {
 					<img src="${image_url}" 
 						 style="max-width: 80vw; max-height: 70vh; border-radius: 8px; display: block;" />
 				</div>
-				<div style="margin-top: 20px;">
-					<a href="${image_url}" target="_blank" class="btn btn-primary btn-sm">
-						<i class="fa fa-external-link"></i> Open in New Tab
-					</a>
-				</div>
 			</div>
 		`,
 		wide: true
@@ -538,10 +982,8 @@ window.show_card_fullscreen = function(image_url, label) {
 };
 
 function setup_insurance_card_previews(frm) {
-	// Setup grid to show card previews
 	if (frm.fields_dict.patient_insurance) {
 		frm.fields_dict.patient_insurance.grid.wrapper.on('click', '.grid-row', function() {
-			// When row is clicked, wait for dialog to open then show previews
 			setTimeout(() => {
 				if (cur_dialog) {
 					const row_index = $(this).attr('data-idx');

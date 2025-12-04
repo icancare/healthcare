@@ -1,24 +1,33 @@
 {
  "actions": [],
+ "allow_copy": 1,
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:type_name",
- "creation": "2025-11-29 16:00:00.000000",
+ "autoname": "field:category_name",
+ "creation": "2025-12-04 10:00:00.000000",
  "doctype": "DocType",
+ "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "type_name",
+  "category_name",
+  "column_break_2",
   "description",
-  "enabled"
+  "section_break_4",
+  "is_active"
  ],
  "fields": [
   {
-   "fieldname": "type_name",
+   "fieldname": "category_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Type Name",
+   "in_standard_filter": 1,
+   "label": "Category Name",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "description",
@@ -26,18 +35,23 @@
    "label": "Description"
   },
   {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
    "default": "1",
-   "fieldname": "enabled",
+   "fieldname": "is_active",
    "fieldtype": "Check",
-   "label": "Enabled"
+   "in_list_view": 1,
+   "label": "Is Active"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-29 16:00:00.000000",
+ "modified": "2025-12-04 10:00:00.000000",
  "modified_by": "Administrator",
  "module": "Healthcare",
- "name": "Environmental Factors Type",
+ "name": "Diagnosis Category",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
@@ -49,7 +63,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "System Manager",
+   "role": "Healthcare Administrator",
    "share": 1,
    "write": 1
   },
@@ -66,22 +80,17 @@
    "write": 1
   },
   {
-   "create": 1,
    "read": 1,
-   "report": 1,
-   "role": "Nursing User",
-   "write": 1
+   "role": "Nursing User"
   }
  ],
  "quick_entry": 1,
  "restrict_to_domain": "Healthcare",
- "sort_field": "modified",
+ "search_fields": "category_name",
+ "sort_field": "category_name",
  "sort_order": "ASC",
  "states": [],
+ "title_field": "category_name",
  "track_changes": 1
 }
-
-
-
-
 

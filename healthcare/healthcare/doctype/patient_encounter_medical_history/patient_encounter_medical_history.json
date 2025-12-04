@@ -6,15 +6,35 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "diagnosis_category",
   "diagnosis",
   "diagnosis_name",
   "column_break_3",
   "when",
   "undergoing_treatment",
-  "section_break_6",
+  "common_conditions_section",
+  "cardiovascular",
+  "metabolic",
+  "cancer_type",
+  "column_break_14",
+  "genetic_disorder",
+  "mental_health",
+  "neurological",
+  "column_break_18",
+  "autoimmune",
+  "respiratory",
+  "other_condition",
+  "section_break_22",
   "comment"
  ],
  "fields": [
+  {
+   "fieldname": "diagnosis_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Diagnosis Category",
+   "options": "Diagnosis Category"
+  },
   {
    "fieldname": "diagnosis",
    "fieldtype": "Link",
@@ -45,10 +65,78 @@
    "default": "0",
    "fieldname": "undergoing_treatment",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Undergoing Treatment"
   },
   {
-   "fieldname": "section_break_6",
+   "collapsible": 1,
+   "fieldname": "common_conditions_section",
+   "fieldtype": "Section Break",
+   "label": "Common Medical Conditions"
+  },
+  {
+   "fieldname": "cardiovascular",
+   "fieldtype": "Select",
+   "label": "Cardiovascular",
+   "options": "\nHeart Disease\nHypertension\nStroke\nCoronary Artery Disease\nHeart Failure\nArrhythmia"
+  },
+  {
+   "fieldname": "metabolic",
+   "fieldtype": "Select",
+   "label": "Metabolic",
+   "options": "\nDiabetes Type 1\nDiabetes Type 2\nThyroid Disorder\nObesity\nHigh Cholesterol"
+  },
+  {
+   "fieldname": "cancer_type",
+   "fieldtype": "Select",
+   "label": "Cancer Type",
+   "options": "\nBreast Cancer\nColon Cancer\nLung Cancer\nProstate Cancer\nOvarian Cancer\nSkin Cancer\nLeukemia\nLymphoma\nOther Cancer"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "genetic_disorder",
+   "fieldtype": "Select",
+   "label": "Genetic Disorder",
+   "options": "\nSickle Cell Disease\nThalassemia\nHemophilia\nCystic Fibrosis\nDown Syndrome\nMuscular Dystrophy\nHuntington's Disease"
+  },
+  {
+   "fieldname": "mental_health",
+   "fieldtype": "Select",
+   "label": "Mental Health",
+   "options": "\nDepression\nAnxiety\nBipolar Disorder\nSchizophrenia\nOCD\nPTSD\nDementia"
+  },
+  {
+   "fieldname": "neurological",
+   "fieldtype": "Select",
+   "label": "Neurological",
+   "options": "\nAlzheimer's Disease\nParkinson's Disease\nEpilepsy\nMultiple Sclerosis\nMigraine\nNeuropathy"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "autoimmune",
+   "fieldtype": "Select",
+   "label": "Autoimmune",
+   "options": "\nRheumatoid Arthritis\nLupus\nPsoriasis\nCrohn's Disease\nCeliac Disease\nType 1 Diabetes"
+  },
+  {
+   "fieldname": "respiratory",
+   "fieldtype": "Select",
+   "label": "Respiratory",
+   "options": "\nAsthma\nCOPD\nPulmonary Fibrosis\nSleep Apnea\nTuberculosis"
+  },
+  {
+   "fieldname": "other_condition",
+   "fieldtype": "Data",
+   "label": "Other Condition"
+  },
+  {
+   "fieldname": "section_break_22",
    "fieldtype": "Section Break"
   },
   {
@@ -60,7 +148,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-03 12:00:00.000000",
+ "modified": "2025-12-04 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Patient Encounter Medical History",
