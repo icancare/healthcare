@@ -92,6 +92,40 @@
   "abdomen",
   "reflexes",
   "vital_signs_note",
+  "sb_tobacco_health",
+  "tobacco_health_html",
+  "sb_spirometer",
+  "spirometer_fvc",
+  "spirometer_fev1",
+  "cb_spirometer1",
+  "spirometer_fev1_fvc",
+  "spirometer_pef",
+  "spirometer_note",
+  "sb_diagnostic_tests",
+  "ecg_done",
+  "ecg_attachment",
+  "ecg_preview_html",
+  "cb_diag1",
+  "echo_done",
+  "echo_attachment",
+  "echo_preview_html",
+  "cb_diag2",
+  "dexascan_done",
+  "dexascan_attachment",
+  "dexascan_preview_html",
+  "diagnostic_note",
+  "sb_oral_exam",
+  "mouth_opening_fingers",
+  "mouth_opening_mm",
+  "cb_oral1",
+  "oral_note",
+  "sb_peak_flow",
+  "peak_flow_current",
+  "peak_flow_personal_best",
+  "cb_peak1",
+  "peak_flow_percentage",
+  "peak_flow_status",
+  "peak_flow_note",
   "sb_references",
   "amended_from"
  ],
@@ -618,6 +652,210 @@
    "fieldname": "vital_signs_note",
    "fieldtype": "Small Text",
    "label": "Notes"
+  },
+  {
+   "fieldname": "sb_tobacco_health",
+   "fieldtype": "Section Break",
+   "label": "Tobacco Health Checkup"
+  },
+  {
+   "fieldname": "tobacco_health_html",
+   "fieldtype": "HTML",
+   "label": "Tobacco Health Summary"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_spirometer",
+   "fieldtype": "Section Break",
+   "label": "Spirometer Test"
+  },
+  {
+   "description": "Liters - Forced Vital Capacity",
+   "fieldname": "spirometer_fvc",
+   "fieldtype": "Float",
+   "label": "FVC",
+   "precision": "2"
+  },
+  {
+   "description": "Liters - Forced Expiratory Volume in 1 sec",
+   "fieldname": "spirometer_fev1",
+   "fieldtype": "Float",
+   "label": "FEV1",
+   "precision": "2"
+  },
+  {
+   "fieldname": "cb_spirometer1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "% - Normal: >70%",
+   "fieldname": "spirometer_fev1_fvc",
+   "fieldtype": "Float",
+   "label": "FEV1/FVC Ratio",
+   "precision": "1",
+   "read_only": 1
+  },
+  {
+   "description": "L/min - Peak Expiratory Flow",
+   "fieldname": "spirometer_pef",
+   "fieldtype": "Float",
+   "label": "PEF",
+   "precision": "1"
+  },
+  {
+   "fieldname": "spirometer_note",
+   "fieldtype": "Small Text",
+   "label": "Spirometer Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_diagnostic_tests",
+   "fieldtype": "Section Break",
+   "label": "Diagnostic Tests"
+  },
+  {
+   "default": "No",
+   "fieldname": "ecg_done",
+   "fieldtype": "Select",
+   "label": "ECG",
+   "options": "No\nYes"
+  },
+  {
+   "depends_on": "eval:doc.ecg_done=='Yes'",
+   "fieldname": "ecg_attachment",
+   "fieldtype": "Attach Image",
+   "label": "ECG Report"
+  },
+  {
+   "depends_on": "eval:doc.ecg_done=='Yes'",
+   "fieldname": "ecg_preview_html",
+   "fieldtype": "HTML",
+   "label": "ECG Preview"
+  },
+  {
+   "fieldname": "cb_diag1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "No",
+   "fieldname": "echo_done",
+   "fieldtype": "Select",
+   "label": "ECHO",
+   "options": "No\nYes"
+  },
+  {
+   "depends_on": "eval:doc.echo_done=='Yes'",
+   "fieldname": "echo_attachment",
+   "fieldtype": "Attach Image",
+   "label": "ECHO Report"
+  },
+  {
+   "depends_on": "eval:doc.echo_done=='Yes'",
+   "fieldname": "echo_preview_html",
+   "fieldtype": "HTML",
+   "label": "ECHO Preview"
+  },
+  {
+   "fieldname": "cb_diag2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "No",
+   "fieldname": "dexascan_done",
+   "fieldtype": "Select",
+   "label": "DExascan",
+   "options": "No\nYes"
+  },
+  {
+   "depends_on": "eval:doc.dexascan_done=='Yes'",
+   "fieldname": "dexascan_attachment",
+   "fieldtype": "Attach Image",
+   "label": "DExascan Report"
+  },
+  {
+   "depends_on": "eval:doc.dexascan_done=='Yes'",
+   "fieldname": "dexascan_preview_html",
+   "fieldtype": "HTML",
+   "label": "DExascan Preview"
+  },
+  {
+   "fieldname": "diagnostic_note",
+   "fieldtype": "Small Text",
+   "label": "Diagnostic Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_oral_exam",
+   "fieldtype": "Section Break",
+   "label": "Oral Examination"
+  },
+  {
+   "default": "",
+   "description": "Select number of fingers",
+   "fieldname": "mouth_opening_fingers",
+   "fieldtype": "Select",
+   "label": "Mouth Opening (Fingers)",
+   "options": "\n1 Finger\n2 Fingers\n3 Fingers\n4+ Fingers"
+  },
+  {
+   "description": "mm - Normal: >35mm",
+   "fieldname": "mouth_opening_mm",
+   "fieldtype": "Float",
+   "label": "Mouth Opening (mm)",
+   "precision": "1"
+  },
+  {
+   "fieldname": "cb_oral1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "oral_note",
+   "fieldtype": "Small Text",
+   "label": "Oral Exam Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_peak_flow",
+   "fieldtype": "Section Break",
+   "label": "Peak Flow Meter"
+  },
+  {
+   "description": "L/min - Current reading",
+   "fieldname": "peak_flow_current",
+   "fieldtype": "Float",
+   "label": "Current Peak Flow",
+   "precision": "0"
+  },
+  {
+   "description": "L/min - Best recorded value",
+   "fieldname": "peak_flow_personal_best",
+   "fieldtype": "Float",
+   "label": "Personal Best",
+   "precision": "0"
+  },
+  {
+   "fieldname": "cb_peak1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "% of Personal Best",
+   "fieldname": "peak_flow_percentage",
+   "fieldtype": "Float",
+   "label": "% of Best",
+   "precision": "1",
+   "read_only": 1
+  },
+  {
+   "description": "Green >80%, Yellow 50-80%, Red <50%",
+   "fieldname": "peak_flow_status",
+   "fieldtype": "Data",
+   "label": "Zone",
+   "read_only": 1
+  },
+  {
+   "fieldname": "peak_flow_note",
+   "fieldtype": "Small Text",
+   "label": "Peak Flow Notes"
   },
   {
    "fieldname": "company",

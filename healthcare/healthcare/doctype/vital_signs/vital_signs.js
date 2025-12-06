@@ -3,11 +3,15 @@ frappe.ui.form.on('Vital Signs', {
 	refresh: function(frm) {
 		render_table(frm);
 		render_vital_signs_table(frm);
+		render_tobacco_health_table(frm);
+		render_diagnostic_previews(frm);
 		toggle_skinfold_fields(frm);
 	},
 	onload: function(frm) {
 		render_table(frm);
 		render_vital_signs_table(frm);
+		render_tobacco_health_table(frm);
+		render_diagnostic_previews(frm);
 		toggle_skinfold_fields(frm);
 	},
 	patient: function(frm) {
@@ -70,7 +74,24 @@ frappe.ui.form.on('Vital Signs', {
 	pulse: function(frm) { render_vital_signs_table(frm); },
 	spo2: function(frm) { render_vital_signs_table(frm); },
 	respiratory_rate: function(frm) { render_vital_signs_table(frm); },
-	blood_sugar: function(frm) { render_vital_signs_table(frm); }
+	blood_sugar: function(frm) { render_vital_signs_table(frm); },
+	// Spirometer
+	spirometer_fvc: function(frm) { calc_spirometer(frm); render_tobacco_health_table(frm); },
+	spirometer_fev1: function(frm) { calc_spirometer(frm); render_tobacco_health_table(frm); },
+	spirometer_pef: function(frm) { render_tobacco_health_table(frm); },
+	// Diagnostic tests
+	ecg_done: function(frm) { render_tobacco_health_table(frm); },
+	ecg_attachment: function(frm) { render_diagnostic_previews(frm); },
+	echo_done: function(frm) { render_tobacco_health_table(frm); },
+	echo_attachment: function(frm) { render_diagnostic_previews(frm); },
+	dexascan_done: function(frm) { render_tobacco_health_table(frm); },
+	dexascan_attachment: function(frm) { render_diagnostic_previews(frm); },
+	// Oral exam
+	mouth_opening_fingers: function(frm) { render_tobacco_health_table(frm); },
+	mouth_opening_mm: function(frm) { render_tobacco_health_table(frm); },
+	// Peak flow
+	peak_flow_current: function(frm) { calc_peak_flow(frm); render_tobacco_health_table(frm); },
+	peak_flow_personal_best: function(frm) { calc_peak_flow(frm); render_tobacco_health_table(frm); }
 });
 
 function to_cm(v, u) { return !v ? 0 : u === 'inch' ? v * 2.54 : u === 'feet' ? v * 30.48 : v; }
@@ -482,5 +503,205 @@ function render_vital_signs_table(frm) {
 	
 	if (frm.fields_dict.vital_signs_html) {
 		frm.fields_dict.vital_signs_html.$wrapper.html(html);
+	}
+}
+
+// Spirometer calculations
+function calc_spirometer(frm) {
+	if (frm.doc.spirometer_fvc && frm.doc.spirometer_fev1) {
+		let ratio = (frm.doc.spirometer_fev1 / frm.doc.spirometer_fvc) * 100;
+		frm.set_value('spirometer_fev1_fvc', ratio.toFixed(1));
+	}
+}
+
+// Peak Flow calculations
+function calc_peak_flow(frm) {
+	if (frm.doc.peak_flow_current && frm.doc.peak_flow_personal_best) {
+		let pct = (frm.doc.peak_flow_current / frm.doc.peak_flow_personal_best) * 100;
+		frm.set_value('peak_flow_percentage', pct.toFixed(1));
+		
+		let zone = 'Green Zone';
+		if (pct < 50) zone = 'Red Zone';
+		else if (pct < 80) zone = 'Yellow Zone';
+		frm.set_value('peak_flow_status', zone);
+	}
+}
+
+// Render Tobacco Health Summary Table
+function render_tobacco_health_table(frm) {
+	let data = [];
+	
+	// Spirometer - FEV1/FVC Ratio
+	if (frm.doc.spirometer_fev1_fvc) {
+		let v = parseFloat(frm.doc.spirometer_fev1_fvc);
+		let st = v >= 70 ? 'Normal' : v >= 60 ? 'Mild Obstruction' : v >= 50 ? 'Moderate' : 'Severe';
+		let cls = st === 'Normal' ? 'av-g' : st === 'Mild Obstruction' ? 'av-o' : 'av-r';
+		data.push({ p: 'FEV1/FVC Ratio', u: '%', v: v.toFixed(1), n: '>70%', st: st, cls: cls, cat: 'Spirometer' });
+	}
+	
+	// Spirometer - FVC
+	if (frm.doc.spirometer_fvc) {
+		data.push({ p: 'FVC', u: 'L', v: frm.doc.spirometer_fvc, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer' });
+	}
+	
+	// Spirometer - FEV1
+	if (frm.doc.spirometer_fev1) {
+		data.push({ p: 'FEV1', u: 'L', v: frm.doc.spirometer_fev1, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer' });
+	}
+	
+	// Spirometer - PEF
+	if (frm.doc.spirometer_pef) {
+		data.push({ p: 'PEF (Spirometer)', u: 'L/min', v: frm.doc.spirometer_pef, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer' });
+	}
+	
+	// ECG
+	if (frm.doc.ecg_done === 'Yes') {
+		let st = frm.doc.ecg_attachment ? 'Done ✓' : 'Pending Upload';
+		let cls = frm.doc.ecg_attachment ? 'av-g' : 'av-o';
+		data.push({ p: 'ECG', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic' });
+	}
+	
+	// ECHO
+	if (frm.doc.echo_done === 'Yes') {
+		let st = frm.doc.echo_attachment ? 'Done ✓' : 'Pending Upload';
+		let cls = frm.doc.echo_attachment ? 'av-g' : 'av-o';
+		data.push({ p: 'ECHO', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic' });
+	}
+	
+	// DExascan
+	if (frm.doc.dexascan_done === 'Yes') {
+		let st = frm.doc.dexascan_attachment ? 'Done ✓' : 'Pending Upload';
+		let cls = frm.doc.dexascan_attachment ? 'av-g' : 'av-o';
+		data.push({ p: 'DExascan', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic' });
+	}
+	
+	// Mouth Opening
+	if (frm.doc.mouth_opening_mm || frm.doc.mouth_opening_fingers) {
+		let v = frm.doc.mouth_opening_mm ? frm.doc.mouth_opening_mm + ' mm' : '';
+		if (frm.doc.mouth_opening_fingers) {
+			v = v ? v + ' (' + frm.doc.mouth_opening_fingers + ')' : frm.doc.mouth_opening_fingers;
+		}
+		let st = 'Normal';
+		let cls = 'av-g';
+		if (frm.doc.mouth_opening_mm) {
+			let mm = parseFloat(frm.doc.mouth_opening_mm);
+			if (mm < 20) { st = 'Severe Restriction'; cls = 'av-r'; }
+			else if (mm < 30) { st = 'Moderate Restriction'; cls = 'av-o'; }
+			else if (mm < 35) { st = 'Mild Restriction'; cls = 'av-o'; }
+		}
+		data.push({ p: 'Mouth Opening', u: 'mm/fingers', v: v, n: '>35mm / 3+ fingers', st: st, cls: cls, cat: 'Oral' });
+	}
+	
+	// Peak Flow
+	if (frm.doc.peak_flow_current) {
+		let v = frm.doc.peak_flow_current;
+		let st = 'Recorded';
+		let cls = 'av-g';
+		if (frm.doc.peak_flow_percentage) {
+			let pct = parseFloat(frm.doc.peak_flow_percentage);
+			if (pct >= 80) { st = 'Green Zone'; cls = 'av-g'; }
+			else if (pct >= 50) { st = 'Yellow Zone'; cls = 'av-o'; }
+			else { st = 'Red Zone'; cls = 'av-r'; }
+			v = v + ' (' + pct.toFixed(0) + '%)';
+		}
+		data.push({ p: 'Peak Flow', u: 'L/min', v: v, n: '>80% of best', st: st, cls: cls, cat: 'Peak Flow' });
+	}
+	
+	// Personal Best
+	if (frm.doc.peak_flow_personal_best) {
+		data.push({ p: 'Personal Best', u: 'L/min', v: frm.doc.peak_flow_personal_best, n: 'Reference', st: 'Stored', cls: 'av-g', cat: 'Peak Flow' });
+	}
+	
+	if (data.length === 0) {
+		if (frm.fields_dict.tobacco_health_html) {
+			frm.fields_dict.tobacco_health_html.$wrapper.html('<p style="color:var(--text-muted);font-size:12px;">Enter tobacco health checkup data below to see summary</p>');
+		}
+		return;
+	}
+	
+	let html = `<style>
+		.th-tbl { width:100%; border-collapse:collapse; font-size:12px; margin-bottom:10px; }
+		.th-tbl th, .th-tbl td { padding:6px 10px; border:1px solid var(--border-color); text-align:left; }
+		.th-tbl th { background:var(--subtle-fg); color:var(--text-muted); font-weight:600; font-size:11px; text-transform:uppercase; }
+		.th-tbl td { background:var(--card-bg); color:var(--text-color); }
+		.th-tbl tr:hover td { background:var(--bg-color); }
+		.th-cat { font-size:10px; color:var(--text-muted); text-transform:uppercase; }
+	</style>
+	<table class="th-tbl">
+		<thead><tr>
+			<th style="width:25%">Parameter</th>
+			<th style="width:20%">Value</th>
+			<th style="width:12%">Unit</th>
+			<th style="width:18%">Normal</th>
+			<th style="width:25%">Status</th>
+		</tr></thead><tbody>`;
+	
+	let lastCat = '';
+	data.forEach(r => {
+		if (r.cat !== lastCat) {
+			html += `<tr><td colspan="5" style="background:var(--bg-color);padding:4px 10px;"><span class="th-cat">${r.cat}</span></td></tr>`;
+			lastCat = r.cat;
+		}
+		html += `<tr>
+			<td><strong>${r.p}</strong></td>
+			<td>${r.v}</td>
+			<td>${r.u}</td>
+			<td><small>${r.n}</small></td>
+			<td><span class="av-st ${r.cls}">${r.st}</span></td>
+		</tr>`;
+	});
+	
+	html += `</tbody></table>`;
+	
+	if (frm.fields_dict.tobacco_health_html) {
+		frm.fields_dict.tobacco_health_html.$wrapper.html(html);
+	}
+}
+
+// Render diagnostic image previews
+function render_diagnostic_previews(frm) {
+	// ECG Preview
+	if (frm.fields_dict.ecg_preview_html) {
+		if (frm.doc.ecg_attachment) {
+			frm.fields_dict.ecg_preview_html.$wrapper.html(`
+				<div style="margin:5px 0;">
+					<a href="${frm.doc.ecg_attachment}" target="_blank">
+						<img src="${frm.doc.ecg_attachment}" style="max-width:100%;max-height:200px;border:1px solid var(--border-color);border-radius:4px;cursor:pointer;" title="Click to view full size">
+					</a>
+				</div>
+			`);
+		} else {
+			frm.fields_dict.ecg_preview_html.$wrapper.html('');
+		}
+	}
+	
+	// ECHO Preview
+	if (frm.fields_dict.echo_preview_html) {
+		if (frm.doc.echo_attachment) {
+			frm.fields_dict.echo_preview_html.$wrapper.html(`
+				<div style="margin:5px 0;">
+					<a href="${frm.doc.echo_attachment}" target="_blank">
+						<img src="${frm.doc.echo_attachment}" style="max-width:100%;max-height:200px;border:1px solid var(--border-color);border-radius:4px;cursor:pointer;" title="Click to view full size">
+					</a>
+				</div>
+			`);
+		} else {
+			frm.fields_dict.echo_preview_html.$wrapper.html('');
+		}
+	}
+	
+	// DExascan Preview
+	if (frm.fields_dict.dexascan_preview_html) {
+		if (frm.doc.dexascan_attachment) {
+			frm.fields_dict.dexascan_preview_html.$wrapper.html(`
+				<div style="margin:5px 0;">
+					<a href="${frm.doc.dexascan_attachment}" target="_blank">
+						<img src="${frm.doc.dexascan_attachment}" style="max-width:100%;max-height:200px;border:1px solid var(--border-color);border-radius:4px;cursor:pointer;" title="Click to view full size">
+					</a>
+				</div>
+			`);
+		} else {
+			frm.fields_dict.dexascan_preview_html.$wrapper.html('');
+		}
 	}
 }
