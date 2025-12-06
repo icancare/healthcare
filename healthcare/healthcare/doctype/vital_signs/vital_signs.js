@@ -5,6 +5,7 @@ frappe.ui.form.on('Vital Signs', {
 		render_vital_signs_table(frm);
 		render_tobacco_health_table(frm);
 		render_diagnostic_previews(frm);
+		render_ecog_status(frm);
 		toggle_skinfold_fields(frm);
 	},
 	onload: function(frm) {
@@ -12,6 +13,7 @@ frappe.ui.form.on('Vital Signs', {
 		render_vital_signs_table(frm);
 		render_tobacco_health_table(frm);
 		render_diagnostic_previews(frm);
+		render_ecog_status(frm);
 		toggle_skinfold_fields(frm);
 	},
 	patient: function(frm) {
@@ -91,7 +93,23 @@ frappe.ui.form.on('Vital Signs', {
 	mouth_opening_mm: function(frm) { render_tobacco_health_table(frm); },
 	// Peak flow
 	peak_flow_current: function(frm) { calc_peak_flow(frm); render_tobacco_health_table(frm); },
-	peak_flow_personal_best: function(frm) { calc_peak_flow(frm); render_tobacco_health_table(frm); }
+	peak_flow_personal_best: function(frm) { calc_peak_flow(frm); render_tobacco_health_table(frm); },
+	// Breath & CO Monitor
+	breath_holding_time: function(frm) { render_tobacco_health_table(frm); },
+	co_reading: function(frm) { render_tobacco_health_table(frm); },
+	cohb_percentage: function(frm) { render_tobacco_health_table(frm); },
+	urinal_nicotine: function(frm) { render_tobacco_health_table(frm); },
+	// Audiometry & Optical
+	left_ear_abnormality: function(frm) { render_tobacco_health_table(frm); },
+	right_ear_abnormality: function(frm) { render_tobacco_health_table(frm); },
+	left_eye_pupil_dilation: function(frm) { render_tobacco_health_table(frm); },
+	left_eye_opacity: function(frm) { render_tobacco_health_table(frm); },
+	left_eye_sightedness: function(frm) { render_tobacco_health_table(frm); },
+	right_eye_pupil_dilation: function(frm) { render_tobacco_health_table(frm); },
+	right_eye_opacity: function(frm) { render_tobacco_health_table(frm); },
+	right_eye_sightedness: function(frm) { render_tobacco_health_table(frm); },
+	// ECOG
+	ecog_score: function(frm) { render_ecog_status(frm); }
 });
 
 function to_cm(v, u) { return !v ? 0 : u === 'inch' ? v * 2.54 : u === 'feet' ? v * 30.48 : v; }
@@ -612,6 +630,77 @@ function render_tobacco_health_table(frm) {
 		data.push({ p: 'Personal Best', u: 'L/min', v: frm.doc.peak_flow_personal_best, n: 'Reference', st: 'Stored', cls: 'av-g', cat: 'Peak Flow' });
 	}
 	
+	// Breath Holding Time
+	if (frm.doc.breath_holding_time) {
+		let v = parseFloat(frm.doc.breath_holding_time);
+		let st = v > 40 ? 'Normal' : v >= 30 ? 'Mild Respiratory Disorder' : 'Severe Respiratory Disorder';
+		let cls = st === 'Normal' ? 'av-g' : st.includes('Mild') ? 'av-o' : 'av-r';
+		data.push({ p: 'Breath Holding Time', u: 'sec', v: v, n: '>40s', st: st, cls: cls, cat: 'Breath & CO Tests' });
+	}
+	
+	// CO Reading
+	if (frm.doc.co_reading) {
+		let v = parseFloat(frm.doc.co_reading);
+		let st = 'Non Smoker';
+		let cls = 'av-g';
+		if (v > 30) { st = 'Very Heavy Smoker'; cls = 'av-r'; }
+		else if (v >= 25) { st = 'Heavy Smoker'; cls = 'av-r'; }
+		else if (v >= 10) { st = 'Regular Smoker'; cls = 'av-o'; }
+		else if (v >= 7) { st = 'Light Smoker'; cls = 'av-o'; }
+		else if (v > 6) { st = 'Light Smoker'; cls = 'av-o'; }
+		data.push({ p: 'CO Reading', u: 'ppm', v: v, n: '0-6 ppm', st: st, cls: cls, cat: 'Breath & CO Tests' });
+	}
+	
+	// COHb Percentage
+	if (frm.doc.cohb_percentage) {
+		let v = parseFloat(frm.doc.cohb_percentage);
+		let st = 'Non Smoker';
+		let cls = 'av-g';
+		if (v > 3) { st = 'Very Heavy Smoker'; cls = 'av-r'; }
+		else if (v >= 2) { st = 'Heavy Smoker'; cls = 'av-r'; }
+		else if (v >= 1) { st = 'Regular Smoker'; cls = 'av-o'; }
+		else if (v >= 0.01) { st = 'Light Smoker'; cls = 'av-o'; }
+		data.push({ p: '% Carboxyhaemoglobin', u: '%COHb', v: v, n: '<1%', st: st, cls: cls, cat: 'Breath & CO Tests' });
+	}
+	
+	// Urinal Nicotine
+	if (frm.doc.urinal_nicotine) {
+		let v = parseFloat(frm.doc.urinal_nicotine);
+		let st = 'Non Smoker';
+		let cls = 'av-g';
+		if (v > 500) { st = 'Heavy Smoker'; cls = 'av-r'; }
+		else if (v >= 100) { st = 'Light/Passive Smoker'; cls = 'av-o'; }
+		data.push({ p: 'Urinal Nicotine', u: 'ng/ml', v: v, n: '<100', st: st, cls: cls, cat: 'Breath & CO Tests' });
+	}
+	
+	// Audiometry - Left Ear
+	if (frm.doc.left_ear_abnormality === 'Yes') {
+		data.push({ p: 'Left Ear Abnormality', u: '-', v: 'Yes', n: 'No', st: 'Abnormal', cls: 'av-r', cat: 'Audiometry & Optical' });
+	}
+	
+	// Audiometry - Right Ear
+	if (frm.doc.right_ear_abnormality === 'Yes') {
+		data.push({ p: 'Right Ear Abnormality', u: '-', v: 'Yes', n: 'No', st: 'Abnormal', cls: 'av-r', cat: 'Audiometry & Optical' });
+	}
+	
+	// Left Eye
+	let leftEyeIssues = [];
+	if (frm.doc.left_eye_pupil_dilation === 'Yes') leftEyeIssues.push('Pupil Dilation');
+	if (frm.doc.left_eye_opacity === 'Yes') leftEyeIssues.push('Opacity');
+	if (frm.doc.left_eye_sightedness && frm.doc.left_eye_sightedness !== 'Normal') leftEyeIssues.push(frm.doc.left_eye_sightedness + ' Sighted');
+	if (leftEyeIssues.length > 0) {
+		data.push({ p: 'Left Eye', u: '-', v: leftEyeIssues.join(', '), n: 'Normal', st: 'Abnormal', cls: 'av-o', cat: 'Audiometry & Optical' });
+	}
+	
+	// Right Eye
+	let rightEyeIssues = [];
+	if (frm.doc.right_eye_pupil_dilation === 'Yes') rightEyeIssues.push('Pupil Dilation');
+	if (frm.doc.right_eye_opacity === 'Yes') rightEyeIssues.push('Opacity');
+	if (frm.doc.right_eye_sightedness && frm.doc.right_eye_sightedness !== 'Normal') rightEyeIssues.push(frm.doc.right_eye_sightedness + ' Sighted');
+	if (rightEyeIssues.length > 0) {
+		data.push({ p: 'Right Eye', u: '-', v: rightEyeIssues.join(', '), n: 'Normal', st: 'Abnormal', cls: 'av-o', cat: 'Audiometry & Optical' });
+	}
+	
 	if (data.length === 0) {
 		if (frm.fields_dict.tobacco_health_html) {
 			frm.fields_dict.tobacco_health_html.$wrapper.html('<p style="color:var(--text-muted);font-size:12px;">Enter tobacco health checkup data below to see summary</p>');
@@ -656,6 +745,59 @@ function render_tobacco_health_table(frm) {
 	if (frm.fields_dict.tobacco_health_html) {
 		frm.fields_dict.tobacco_health_html.$wrapper.html(html);
 	}
+}
+
+// Render ECOG Performance Status
+function render_ecog_status(frm) {
+	if (!frm.fields_dict.ecog_status_html) return;
+	
+	const ecogData = [
+		{ score: 0, status: 'Asymptomatic', desc: 'Fully active, able to carry on all pre-disease activities without restriction', cls: 'av-g' },
+		{ score: 1, status: 'Symptomatic but ambulatory', desc: 'Restricted in physically strenuous activity but ambulatory and able to carry out light work', cls: 'av-g' },
+		{ score: 2, status: 'Symptomatic, <50% in bed', desc: 'Ambulatory and capable of all self-care but unable to carry out any work activities; up and about >50% of waking hours', cls: 'av-o' },
+		{ score: 3, status: 'Symptomatic, >50% in bed', desc: 'Capable of only limited self-care; confined to bed or chair >50% of waking hours', cls: 'av-o' },
+		{ score: 4, status: 'Bedbound', desc: 'Completely disabled; cannot carry on any self-care; totally confined to bed or chair', cls: 'av-r' },
+		{ score: 5, status: 'Death', desc: 'Dead', cls: 'av-r' }
+	];
+	
+	let html = `<style>
+		.ecog-tbl { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+		.ecog-tbl th, .ecog-tbl td { padding:8px 10px; border:1px solid var(--border-color); text-align:left; }
+		.ecog-tbl th { background:var(--subtle-fg); color:var(--text-muted); font-weight:600; font-size:11px; text-transform:uppercase; }
+		.ecog-tbl td { background:var(--card-bg); color:var(--text-color); }
+		.ecog-tbl tr.ecog-active td { background:var(--yellow-highlight); font-weight:600; }
+		.ecog-tbl tr:hover td { background:var(--bg-color); }
+	</style>
+	<table class="ecog-tbl">
+		<thead><tr>
+			<th style="width:10%">Score</th>
+			<th style="width:25%">Status</th>
+			<th style="width:50%">Description</th>
+			<th style="width:15%">Indicator</th>
+		</tr></thead><tbody>`;
+	
+	let currentScore = frm.doc.ecog_score;
+	ecogData.forEach(e => {
+		let isActive = currentScore !== null && currentScore !== undefined && parseInt(currentScore) === e.score;
+		html += `<tr class="${isActive ? 'ecog-active' : ''}">
+			<td><strong>${e.score}</strong></td>
+			<td>${e.status}</td>
+			<td><small>${e.desc}</small></td>
+			<td>${isActive ? `<span class="av-st ${e.cls}">${e.status}</span>` : ''}</td>
+		</tr>`;
+	});
+	
+	html += `</tbody></table>`;
+	
+	if (currentScore !== null && currentScore !== undefined && currentScore >= 0 && currentScore <= 5) {
+		let selected = ecogData[currentScore];
+		html = `<div style="padding:10px;background:var(--bg-color);border-radius:4px;margin-bottom:10px;">
+			<strong>Current Score: ${currentScore}</strong> - <span class="av-st ${selected.cls}">${selected.status}</span>
+			<p style="margin:5px 0 0;font-size:12px;color:var(--text-muted);">${selected.desc}</p>
+		</div>` + html;
+	}
+	
+	frm.fields_dict.ecog_status_html.$wrapper.html(html);
 }
 
 // Render diagnostic image previews

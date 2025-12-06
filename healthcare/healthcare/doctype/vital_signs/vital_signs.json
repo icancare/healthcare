@@ -126,6 +126,28 @@
   "peak_flow_percentage",
   "peak_flow_status",
   "peak_flow_note",
+  "sb_breath_co",
+  "breath_holding_time",
+  "co_reading",
+  "cb_breath1",
+  "cohb_percentage",
+  "urinal_nicotine",
+  "smoker_tests_note",
+  "sb_audiometry_optical",
+  "left_ear_abnormality",
+  "right_ear_abnormality",
+  "cb_audio1",
+  "left_eye_pupil_dilation",
+  "left_eye_opacity",
+  "left_eye_sightedness",
+  "cb_audio2",
+  "right_eye_pupil_dilation",
+  "right_eye_opacity",
+  "right_eye_sightedness",
+  "audio_optical_note",
+  "sb_ecog",
+  "ecog_score",
+  "ecog_status_html",
   "sb_references",
   "amended_from"
  ],
@@ -856,6 +878,141 @@
    "fieldname": "peak_flow_note",
    "fieldtype": "Small Text",
    "label": "Peak Flow Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_breath_co",
+   "fieldtype": "Section Break",
+   "label": "Breath & CO Monitor Tests"
+  },
+  {
+   "description": "sec - Normal: >40s, Mild: 30-40s, Severe: <30s",
+   "fieldname": "breath_holding_time",
+   "fieldtype": "Float",
+   "label": "Breath Holding Time",
+   "precision": "0"
+  },
+  {
+   "description": "ppm - Non-smoker: 0-6, Light: 7-10, Regular: 10-20, Heavy: 25-30",
+   "fieldname": "co_reading",
+   "fieldtype": "Float",
+   "label": "CO Reading",
+   "precision": "1"
+  },
+  {
+   "fieldname": "cb_breath1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "% - Non-smoker: <1%, Light: 0.01, Regular: 1-2%, Heavy: 2-3%",
+   "fieldname": "cohb_percentage",
+   "fieldtype": "Float",
+   "label": "% Carboxyhaemoglobin (COHb)",
+   "precision": "2"
+  },
+  {
+   "description": "ng/ml - Non-smoker: <100, Light: 100-500, Heavy: >500",
+   "fieldname": "urinal_nicotine",
+   "fieldtype": "Float",
+   "label": "Urinal Nicotine",
+   "precision": "0"
+  },
+  {
+   "fieldname": "smoker_tests_note",
+   "fieldtype": "Small Text",
+   "label": "Smoker Tests Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_audiometry_optical",
+   "fieldtype": "Section Break",
+   "label": "Audiometry & Optical Examination"
+  },
+  {
+   "default": "No",
+   "fieldname": "left_ear_abnormality",
+   "fieldtype": "Select",
+   "label": "Left Ear Abnormality",
+   "options": "No\nYes"
+  },
+  {
+   "default": "No",
+   "fieldname": "right_ear_abnormality",
+   "fieldtype": "Select",
+   "label": "Right Ear Abnormality",
+   "options": "No\nYes"
+  },
+  {
+   "fieldname": "cb_audio1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "No",
+   "fieldname": "left_eye_pupil_dilation",
+   "fieldtype": "Select",
+   "label": "Left Eye - Pupil Dilation",
+   "options": "No\nYes"
+  },
+  {
+   "default": "No",
+   "fieldname": "left_eye_opacity",
+   "fieldtype": "Select",
+   "label": "Left Eye - Opacity",
+   "options": "No\nYes"
+  },
+  {
+   "default": "Normal",
+   "fieldname": "left_eye_sightedness",
+   "fieldtype": "Select",
+   "label": "Left Eye - Sightedness",
+   "options": "Normal\nFar\nNear"
+  },
+  {
+   "fieldname": "cb_audio2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "No",
+   "fieldname": "right_eye_pupil_dilation",
+   "fieldtype": "Select",
+   "label": "Right Eye - Pupil Dilation",
+   "options": "No\nYes"
+  },
+  {
+   "default": "No",
+   "fieldname": "right_eye_opacity",
+   "fieldtype": "Select",
+   "label": "Right Eye - Opacity",
+   "options": "No\nYes"
+  },
+  {
+   "default": "Normal",
+   "fieldname": "right_eye_sightedness",
+   "fieldtype": "Select",
+   "label": "Right Eye - Sightedness",
+   "options": "Normal\nFar\nNear"
+  },
+  {
+   "fieldname": "audio_optical_note",
+   "fieldtype": "Small Text",
+   "label": "Audiometry & Optical Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_ecog",
+   "fieldtype": "Section Break",
+   "label": "ECOG Performance Status"
+  },
+  {
+   "description": "Enter 0-5 score",
+   "fieldname": "ecog_score",
+   "fieldtype": "Int",
+   "label": "ECOG Score"
+  },
+  {
+   "fieldname": "ecog_status_html",
+   "fieldtype": "HTML",
+   "label": "ECOG Status Display"
   },
   {
    "fieldname": "company",
