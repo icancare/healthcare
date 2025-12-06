@@ -12,6 +12,8 @@
   "title",
   "patient",
   "patient_name",
+  "patient_age",
+  "patient_sex",
   "inpatient_record",
   "appointment",
   "encounter",
@@ -19,24 +21,77 @@
   "company",
   "signs_date",
   "signs_time",
+  "sb_anthropometric",
+  "col_height",
+  "height",
+  "height_unit",
+  "col_weight",
+  "weight",
+  "weight_unit",
+  "col_waist",
+  "waist_circumference",
+  "waist_unit",
+  "col_hip",
+  "hip_circumference",
+  "hip_unit",
+  "sb_computed",
+  "computed_values_html",
+  "sb_computed_data",
+  "bmi",
+  "bmi_manual",
+  "whr",
+  "whr_manual",
+  "body_fat_percentage",
+  "bfp_manual",
+  "lean_body_mass",
+  "lbm_manual",
+  "muscle_mass",
+  "muscle_mass_manual",
+  "bone_mass",
+  "bone_mass_manual",
+  "bone_mineral_content",
+  "bmc_manual",
+  "total_body_water",
+  "tbw_manual",
+  "protein_percentage",
+  "protein_manual",
+  "bmr",
+  "bmr_manual",
+  "metabolic_age",
+  "metabolic_age_manual",
+  "subcutaneous_fat",
+  "subcutaneous_fat_manual",
+  "anthropometric_note",
+  "sb_skinfold",
+  "skinfold_chest",
+  "skinfold_abdomen",
+  "skinfold_triceps",
+  "cb_skinfold",
+  "skinfold_suprailiac",
+  "skinfold_thigh",
+  "sb_additional",
+  "muac",
+  "bilateral_pitting_edema",
+  "cb_additional",
+  "additional_note",
   "sb_vs",
+  "vital_signs_html",
+  "sb_vs_input",
   "temperature",
   "pulse",
+  "spo2",
+  "cb_vs1",
   "respiratory_rate",
-  "tongue",
-  "abdomen",
-  "column_break_8",
-  "reflexes",
+  "blood_sugar",
+  "sb_vs_bp",
   "bp_systolic",
   "bp_diastolic",
   "bp",
+  "cb_vs2",
+  "tongue",
+  "abdomen",
+  "reflexes",
   "vital_signs_note",
-  "sb_nutrition_values",
-  "height",
-  "weight",
-  "bmi",
-  "column_break_14",
-  "nutrition_note",
   "sb_references",
   "amended_from"
  ],
@@ -67,10 +122,24 @@
    "read_only": 1
   },
   {
+   "fieldname": "patient_age",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Age"
+  },
+  {
+   "fetch_from": "patient.sex",
+   "fieldname": "patient_sex",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Sex",
+   "options": "Gender"
+  },
+  {
    "fieldname": "appointment",
    "fieldtype": "Link",
    "in_filter": 1,
-   "label": "Patient Appointment",
+   "label": "Appointment",
    "options": "Patient Appointment",
    "print_hide": 1,
    "read_only": 1
@@ -79,7 +148,7 @@
    "fieldname": "encounter",
    "fieldtype": "Link",
    "in_filter": 1,
-   "label": "Patient Encounter",
+   "label": "Encounter",
    "options": "Patient Encounter",
    "print_hide": 1,
    "read_only": 1
@@ -103,39 +172,435 @@
    "reqd": 1
   },
   {
+   "fieldname": "sb_anthropometric",
+   "fieldtype": "Section Break",
+   "label": "Anthropometric Examination"
+  },
+  {
+   "fieldname": "col_height",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "height",
+   "fieldtype": "Float",
+   "label": "Height",
+   "precision": "2"
+  },
+  {
+   "default": "cm",
+   "fieldname": "height_unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "cm\ninch\nfeet"
+  },
+  {
+   "fieldname": "col_weight",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "label": "Weight",
+   "precision": "2"
+  },
+  {
+   "default": "kg",
+   "fieldname": "weight_unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "kg\nlbs"
+  },
+  {
+   "fieldname": "col_waist",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "waist_circumference",
+   "fieldtype": "Float",
+   "label": "Waist",
+   "precision": "2"
+  },
+  {
+   "default": "cm",
+   "fieldname": "waist_unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "cm\ninch"
+  },
+  {
+   "fieldname": "col_hip",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "hip_circumference",
+   "fieldtype": "Float",
+   "label": "Hip",
+   "precision": "2"
+  },
+  {
+   "default": "cm",
+   "fieldname": "hip_unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "cm\ninch"
+  },
+  {
+   "fieldname": "sb_computed",
+   "fieldtype": "Section Break",
+   "label": "Computed Values"
+  },
+  {
+   "fieldname": "computed_values_html",
+   "fieldtype": "HTML",
+   "label": "Computed Values Display"
+  },
+  {
+   "fieldname": "sb_computed_data",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "bmi",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "BMI",
+   "precision": "2"
+  },
+  {
+   "fieldname": "bmi_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "BMI Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "whr",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "WHR",
+   "precision": "2"
+  },
+  {
+   "fieldname": "whr_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "WHR Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "body_fat_percentage",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Body Fat %",
+   "precision": "2"
+  },
+  {
+   "fieldname": "bfp_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "BFP Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "lean_body_mass",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "LBM",
+   "precision": "2"
+  },
+  {
+   "fieldname": "lbm_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "LBM Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "muscle_mass",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Muscle Mass",
+   "precision": "2"
+  },
+  {
+   "fieldname": "muscle_mass_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Muscle Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "bone_mass",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Bone Mass",
+   "precision": "2"
+  },
+  {
+   "fieldname": "bone_mass_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Bone Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "bone_mineral_content",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "BMC",
+   "precision": "2"
+  },
+  {
+   "fieldname": "bmc_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "BMC Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "total_body_water",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "TBW",
+   "precision": "2"
+  },
+  {
+   "fieldname": "tbw_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "TBW Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "protein_percentage",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Protein %",
+   "precision": "2"
+  },
+  {
+   "fieldname": "protein_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Protein Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "bmr",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "BMR",
+   "precision": "0"
+  },
+  {
+   "fieldname": "bmr_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "BMR Manual",
+   "precision": "0"
+  },
+  {
+   "fieldname": "metabolic_age",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Metabolic Age",
+   "precision": "1"
+  },
+  {
+   "fieldname": "metabolic_age_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Meta Age Manual",
+   "precision": "1"
+  },
+  {
+   "fieldname": "subcutaneous_fat",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Subcutaneous Fat",
+   "precision": "2"
+  },
+  {
+   "fieldname": "subcutaneous_fat_manual",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Subcut Manual",
+   "precision": "2"
+  },
+  {
+   "fieldname": "anthropometric_note",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_skinfold",
+   "fieldtype": "Section Break",
+   "label": "Skinfold Measurements (Caliper)"
+  },
+  {
+   "description": "mm - Measure using calipers",
+   "fieldname": "skinfold_chest",
+   "fieldtype": "Float",
+   "label": "Chest",
+   "precision": "1"
+  },
+  {
+   "description": "mm",
+   "fieldname": "skinfold_abdomen",
+   "fieldtype": "Float",
+   "label": "Abdomen",
+   "precision": "1"
+  },
+  {
+   "description": "mm",
+   "fieldname": "skinfold_triceps",
+   "fieldtype": "Float",
+   "label": "Triceps",
+   "precision": "1"
+  },
+  {
+   "fieldname": "cb_skinfold",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "mm",
+   "fieldname": "skinfold_suprailiac",
+   "fieldtype": "Float",
+   "label": "Suprailiac",
+   "precision": "1"
+  },
+  {
+   "description": "mm",
+   "fieldname": "skinfold_thigh",
+   "fieldtype": "Float",
+   "label": "Thigh",
+   "precision": "1"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_additional",
+   "fieldtype": "Section Break",
+   "label": "Additional Measurements"
+  },
+  {
+   "description": "mm",
+   "fieldname": "muac",
+   "fieldtype": "Float",
+   "label": "MUAC",
+   "precision": "1"
+  },
+  {
+   "default": "No",
+   "fieldname": "bilateral_pitting_edema",
+   "fieldtype": "Select",
+   "label": "Bilateral Pitting Edema",
+   "options": "No\nYes"
+  },
+  {
+   "fieldname": "cb_additional",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "additional_note",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
    "fieldname": "sb_vs",
    "fieldtype": "Section Break",
    "label": "Vital Signs"
   },
   {
-   "description": "Presence of a fever (temp &gt; 38.5 \u00b0C/101.3 \u00b0F or sustained temp &gt; 38 \u00b0C/100.4 \u00b0F)",
+   "fieldname": "vital_signs_html",
+   "fieldtype": "HTML",
+   "label": "Vital Signs Display"
+  },
+  {
+   "fieldname": "sb_vs_input",
+   "fieldtype": "Section Break",
+   "label": "Input Values"
+  },
+  {
+   "description": "°C or °F - Fever: >38.5°C",
    "fieldname": "temperature",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Body Temperature"
+   "label": "Temperature",
+   "precision": "1"
   },
   {
-   "description": "Adults' pulse rate is anywhere between 50 and 80 beats per minute.",
+   "description": "bpm - Normal: 60-100",
    "fieldname": "pulse",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
+   "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Heart Rate / Pulse"
+   "label": "Pulse (Heart Rate)"
   },
   {
-   "description": "Normal reference range for an adult is 16\u201320 breaths/minute (RCP 2012)",
+   "description": "% - Normal: 95-100%",
+   "fieldname": "spo2",
+   "fieldtype": "Float",
+   "label": "SpO2",
+   "precision": "1"
+  },
+  {
+   "fieldname": "cb_vs1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "/min - Normal: 12-20",
    "fieldname": "respiratory_rate",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
+   "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Respiratory rate"
+   "label": "Respiratory Rate"
+  },
+  {
+   "description": "mg/dl - Normal: 80-110",
+   "fieldname": "blood_sugar",
+   "fieldtype": "Float",
+   "label": "Blood Sugar",
+   "precision": "1"
+  },
+  {
+   "fieldname": "sb_vs_bp",
+   "fieldtype": "Section Break",
+   "label": "Blood Pressure & General"
+  },
+  {
+   "description": "mmHg - Normal: <120",
+   "fieldname": "bp_systolic",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "BP Systolic"
+  },
+  {
+   "description": "mmHg - Normal: <80",
+   "fieldname": "bp_diastolic",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "BP Diastolic"
+  },
+  {
+   "description": "Combined reading",
+   "fieldname": "bp",
+   "fieldtype": "Data",
+   "label": "Blood Pressure",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_vs2",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "tongue",
    "fieldtype": "Select",
    "label": "Tongue",
-   "options": "\nCoated\nVery Coated\nNormal\nFurry\nCuts"
+   "options": "\nNormal\nCoated\nVery Coated\nFurry\nCuts"
   },
   {
    "fieldname": "abdomen",
@@ -144,75 +609,14 @@
    "options": "\nNormal\nBloated\nFull\nFluid\nConstipated"
   },
   {
-   "fieldname": "column_break_8",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "reflexes",
    "fieldtype": "Select",
    "label": "Reflexes",
    "options": "\nNormal\nHyper\nVery Hyper\nOne Sided"
   },
   {
-   "fieldname": "bp_systolic",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
-   "in_list_view": 1,
-   "label": "Blood Pressure (systolic)"
-  },
-  {
-   "fieldname": "bp_diastolic",
-   "fieldtype": "Data",
-   "ignore_xss_filter": 1,
-   "in_list_view": 1,
-   "label": "Blood Pressure (diastolic)"
-  },
-  {
-   "description": "Normal resting blood pressure in an adult is approximately 120 mmHg systolic, and 80 mmHg diastolic, abbreviated \"120/80 mmHg\"",
-   "fieldname": "bp",
-   "fieldtype": "Data",
-   "label": "Blood Pressure",
-   "read_only": 1
-  },
-  {
    "fieldname": "vital_signs_note",
    "fieldtype": "Small Text",
-   "ignore_xss_filter": 1,
-   "label": "Notes"
-  },
-  {
-   "fieldname": "sb_nutrition_values",
-   "fieldtype": "Section Break",
-   "label": "Nutrition Values"
-  },
-  {
-   "fieldname": "height",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Height (In Meter)"
-  },
-  {
-   "fieldname": "weight",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Weight (In Kilogram)"
-  },
-  {
-   "default": "0.00",
-   "fieldname": "bmi",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "BMI",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_14",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "nutrition_note",
-   "fieldtype": "Small Text",
-   "ignore_xss_filter": 1,
    "label": "Notes"
   },
   {
