@@ -69,3 +69,7 @@ healthcare.patches.v15_0.add_diagnosis_icd_link_field #08-12-2024
 healthcare.patches.v15_0.cleanup_diagnosis_fields #08-12-2024
 healthcare.patches.v15_0.remove_photo_medicine_field #08-12-2024
 healthcare.patches.v15_0.import_diagnosis_data #08-12-2024
+healthcare.patches.v15_0.add_practitioner_prefix_field #08-12-2024
+healthcare.patches.v15_0.import_healthcare_practitioners #08-12-2024
+healthcare.patches.v15_0.assign_practitioner_schedules #08-12-2024
+healthcare.patches.v15_0.assign_practitioner_schedules_v2 #08-12-2024
