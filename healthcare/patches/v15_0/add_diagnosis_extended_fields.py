@@ -22,8 +22,9 @@ def execute():
     print("Adding Extended Fields to Diagnosis")
     print("="*60)
     
-    # Create Clinical Category options if not exists
-    create_clinical_categories()
+    # NOTE: Removed create_clinical_categories() - not needed
+    # Diagnosis Category doctype already exists and user manages it manually
+    print("\n--- Skipping Clinical Categories Creation (User Managed) ---")
     
     # Add custom fields to Diagnosis
     add_diagnosis_custom_fields()
@@ -113,26 +114,12 @@ def add_diagnosis_custom_fields():
                 "in_list_view": 1,
                 "in_standard_filter": 1
             },
-            {
-                "fieldname": "is_chronic",
-                "fieldtype": "Check",
-                "label": "Is Chronic",
-                "insert_after": "chronic_or_acute",
-                "default": "0",
-                "description": "Check if this is a chronic condition"
-            },
-            {
-                "fieldname": "clinical_category",
-                "fieldtype": "Select",
-                "label": "Clinical Category",
-                "insert_after": "is_chronic",
-                "options": "\nGastrointestinal\nMedical Disease\nRespiratory\nEndocrine/Metabolic\nCardiovascular\nNeurology\nDermatology\nMusculoskeletal\nInfectious Disease\nOncology\nHematology\nNephrology\nOphthalmology\nENT\nPsychiatry\nOral/Dental\nGynecology\nPediatrics\nOther",
-                "in_standard_filter": 1
-            },
+            # NOTE: Removed is_chronic - not needed
+            # NOTE: Removed clinical_category - using Diagnosis Category instead
             {
                 "fieldname": "classification_column",
                 "fieldtype": "Column Break",
-                "insert_after": "clinical_category"
+                "insert_after": "chronic_or_acute"
             },
             {
                 "fieldname": "common_name",
@@ -149,48 +136,14 @@ def add_diagnosis_custom_fields():
                 "description": "Alternative names separated by comma"
             },
             
-            # ICD Coding Section
-            {
-                "fieldname": "icd_coding_section",
-                "fieldtype": "Section Break",
-                "label": "ICD-11 Coding",
-                "insert_after": "synonyms",
-                "collapsible": 1
-            },
-            {
-                "fieldname": "icd11_code_value",
-                "fieldtype": "Link",
-                "label": "ICD-11 Code",
-                "insert_after": "icd_coding_section",
-                "options": "Code Value",
-                "description": "Select ICD-11 code from Code Value",
-                "get_query": "healthcare.healthcare.doctype.diagnosis.diagnosis.get_icd11_codes"
-            },
-            {
-                "fieldname": "icd11_code",
-                "fieldtype": "Data",
-                "label": "ICD-11 Code (Text)",
-                "insert_after": "icd11_code_value",
-                "fetch_from": "icd11_code_value.code_value",
-                "read_only": 1,
-                "description": "Auto-fetched from ICD-11 Code selection"
-            },
-            {
-                "fieldname": "icd11_uri",
-                "fieldtype": "Data",
-                "label": "ICD-11 URI",
-                "insert_after": "icd11_code",
-                "fetch_from": "icd11_code_value.official_url",
-                "read_only": 1,
-                "description": "Auto-fetched WHO ICD-11 URI link"
-            },
+            # NOTE: Removed ICD-11 Coding Section - already in Medical Coding child table
             
             # Department & Settings Section
             {
                 "fieldname": "department_section",
                 "fieldtype": "Section Break",
                 "label": "Department & Settings",
-                "insert_after": "icd11_uri",
+                "insert_after": "synonyms",
                 "collapsible": 1
             },
             {
@@ -280,19 +233,7 @@ def add_diagnosis_custom_fields():
                 "default": "0",
                 "description": "Check if this is a notifiable disease"
             },
-            {
-                "fieldname": "reporting_column",
-                "fieldtype": "Column Break",
-                "insert_after": "notifiable"
-            },
-            {
-                "fieldname": "is_photo_medicine_eligible",
-                "fieldtype": "Check",
-                "label": "Photo Medicine Eligible",
-                "insert_after": "reporting_column",
-                "default": "0",
-                "description": "Check if eligible for photo medicine treatment"
-            }
+            # NOTE: Removed is_photo_medicine_eligible - not needed
         ]
     }
     

@@ -66,3 +66,6 @@ healthcare.patches.v15_0.setup_healthcare_master_data #08-12-2024
 healthcare.patches.v15_0.setup_appointment_types #08-12-2024
 healthcare.patches.v15_0.add_diagnosis_extended_fields #08-12-2024
 healthcare.patches.v15_0.add_diagnosis_icd_link_field #08-12-2024
+healthcare.patches.v15_0.cleanup_diagnosis_fields #08-12-2024
+healthcare.patches.v15_0.remove_photo_medicine_field #08-12-2024
+healthcare.patches.v15_0.import_diagnosis_data #08-12-2024
