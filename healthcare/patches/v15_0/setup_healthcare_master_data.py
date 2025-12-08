@@ -173,52 +173,66 @@ def create_healthcare_practitioners():
     ]
     
     for prac in practitioners:
-        practitioner_name = f"Dr. {prac['first_name']} {prac['last_name']}"
+        # Check multiple conditions to see if practitioner already exists
+        practitioner_name = f"{prac['first_name']} {prac['last_name']}"
         
-        # Check if practitioner already exists by name
+        # Check by name (with or without Dr. prefix)
         existing = frappe.db.exists("Healthcare Practitioner", {"practitioner_name": practitioner_name})
+        if not existing:
+            existing = frappe.db.exists("Healthcare Practitioner", {"practitioner_name": f"Dr. {practitioner_name}"})
+        
+        # Also check by user_id if provided
+        if not existing and prac.get("user_id"):
+            existing = frappe.db.exists("Healthcare Practitioner", {"user_id": prac["user_id"]})
+        
+        # Also check by first_name and last_name combination
+        if not existing:
+            existing = frappe.db.exists("Healthcare Practitioner", {
+                "first_name": prac["first_name"],
+                "last_name": prac["last_name"]
+            })
         
         if not existing:
-            doc = frappe.new_doc("Healthcare Practitioner")
-            doc.first_name = prac["first_name"]
-            doc.last_name = prac["last_name"]
-            doc.gender = prac["gender"]
-            doc.status = "Active"
-            doc.practitioner_type = "Internal"
-            
-            # Department
-            if prac["department"] and frappe.db.exists("Medical Department", prac["department"]):
-                doc.department = prac["department"]
-            
-            # Designation - need to check if it's set properly
-            if prac["designation"] and frappe.db.exists("Designation", prac["designation"]):
-                # Note: designation field is read_only and fetched from employee
-                # We'll set it directly for now
-                pass
-            
-            # Contact
-            doc.mobile_phone = prac["mobile_phone"]
-            
-            # Charges
-            if prac["op_consulting_charge_item"]:
-                doc.op_consulting_charge_item = prac["op_consulting_charge_item"]
-                doc.op_consulting_charge = prac["op_consulting_charge"]
-            
-            # User link
-            if prac["user_id"]:
-                doc.user_id = prac["user_id"]
-            
-            doc.flags.ignore_permissions = True
-            doc.insert()
-            
-            # Add schedule after insert
-            if prac["schedule"] and frappe.db.exists("Practitioner Schedule", prac["schedule"]):
-                doc.append("practitioner_schedules", {
-                    "schedule": prac["schedule"]
-                })
-                doc.save()
-            
-            print(f"  ✓ Created Practitioner: {practitioner_name}")
+            try:
+                doc = frappe.new_doc("Healthcare Practitioner")
+                doc.first_name = prac["first_name"]
+                doc.last_name = prac["last_name"]
+                doc.gender = prac["gender"]
+                doc.status = "Active"
+                doc.practitioner_type = "Internal"
+                
+                # Department
+                if prac["department"] and frappe.db.exists("Medical Department", prac["department"]):
+                    doc.department = prac["department"]
+                
+                # Contact
+                doc.mobile_phone = prac["mobile_phone"]
+                
+                # Charges
+                if prac.get("op_consulting_charge_item") and frappe.db.exists("Item", prac["op_consulting_charge_item"]):
+                    doc.op_consulting_charge_item = prac["op_consulting_charge_item"]
+                    doc.op_consulting_charge = prac["op_consulting_charge"]
+                
+                # User link - only if user exists and not already assigned
+                if prac.get("user_id") and frappe.db.exists("User", prac["user_id"]):
+                    # Check if user is already assigned to another practitioner
+                    user_assigned = frappe.db.exists("Healthcare Practitioner", {"user_id": prac["user_id"]})
+                    if not user_assigned:
+                        doc.user_id = prac["user_id"]
+                
+                doc.flags.ignore_permissions = True
+                doc.insert()
+                
+                # Add schedule after insert
+                if prac.get("schedule") and frappe.db.exists("Practitioner Schedule", prac["schedule"]):
+                    doc.append("practitioner_schedules", {
+                        "schedule": prac["schedule"]
+                    })
+                    doc.save()
+                
+                print(f"  ✓ Created Practitioner: {practitioner_name}")
+            except Exception as e:
+                print(f"  ✗ Error creating {practitioner_name}: {str(e)}")
         else:
             print(f"  - Practitioner exists: {practitioner_name}")
 

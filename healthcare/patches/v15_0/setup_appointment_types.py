@@ -234,24 +234,16 @@ def create_missing_departments():
 
 
 def delete_existing_appointment_types():
-    """Delete all existing appointment types"""
+    """Skip deletion - only create new appointment types, don't delete existing"""
     
-    print("\n--- Deleting Existing Appointment Types ---")
+    print("\n--- Checking Existing Appointment Types (No Deletion) ---")
     
-    # Get all existing appointment types
-    existing_types = frappe.get_all("Appointment Type", pluck="name")
+    # Count existing appointment types
+    existing_count = frappe.db.count("Appointment Type")
+    print(f"  - Found {existing_count} existing appointment types (keeping them)")
     
-    for apt_type in existing_types:
-        try:
-            # First delete child table entries
-            frappe.db.delete("Appointment Type Service Item", {"parent": apt_type})
-            # Then delete the appointment type
-            frappe.delete_doc("Appointment Type", apt_type, force=True, ignore_permissions=True)
-            print(f"  ✓ Deleted: {apt_type}")
-        except Exception as e:
-            print(f"  ✗ Could not delete {apt_type}: {str(e)}")
-    
-    frappe.db.commit()
+    # We no longer delete existing appointment types
+    # Only new ones will be created if they don't exist
 
 
 def create_appointment_types():
