@@ -85,6 +85,11 @@ def create_healthcare_items():
         doc.insert()
         print("  ✓ Created Item Group: Services")
     
+    # Get HSN code for healthcare services (9963 - Human health services)
+    hsn_code = "9963"
+    if not frappe.db.exists("GST HSN Code", hsn_code):
+        hsn_code = None  # Skip HSN if not available
+    
     # Healthcare Service Items
     items = [
         {
@@ -95,7 +100,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 1200,
-            "description": "Quit Tobacco Specialist Consultation Fee"
+            "description": "Quit Tobacco Specialist Consultation Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-TOBACCO-COACH",
@@ -105,7 +111,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 800,
-            "description": "Quit Tobacco Coach Counselling Fee"
+            "description": "Quit Tobacco Coach Counselling Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-ORAL-CONSULTATION",
@@ -115,7 +122,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 1000,
-            "description": "Oral/Dental Specialist Consultation Fee"
+            "description": "Oral/Dental Specialist Consultation Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-HEALTH-SCREENING",
@@ -125,7 +133,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 300,
-            "description": "Health/Oral Screening Fee"
+            "description": "Health/Oral Screening Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-PHOTODIAGNOSTICS",
@@ -135,7 +144,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 1800,
-            "description": "Oral PhotoDiagnostics Procedure Fee"
+            "description": "Oral PhotoDiagnostics Procedure Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-NUTRITIONIST",
@@ -145,7 +155,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 1200,
-            "description": "Nutritionist/Dietitian Consultation Fee"
+            "description": "Nutritionist/Dietitian Consultation Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-AYURVEDA",
@@ -155,7 +166,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 1200,
-            "description": "Ayurveda Consultation Fee"
+            "description": "Ayurveda Consultation Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-NATUROPATH",
@@ -165,7 +177,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 1200,
-            "description": "Naturopath Consultation Fee"
+            "description": "Naturopath Consultation Fee",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-PROCEDURE",
@@ -175,7 +188,8 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 0,
-            "description": "Clinical Procedure Fee - Rate as per procedure template"
+            "description": "Clinical Procedure Fee - Rate as per procedure template",
+            "gst_hsn_code": hsn_code
         },
         {
             "item_code": "HC-FOLLOWUP-FREE",
@@ -185,24 +199,33 @@ def create_healthcare_items():
             "is_stock_item": 0,
             "is_sales_item": 1,
             "standard_rate": 0,
-            "description": "Free Follow-up Consultation"
+            "description": "Free Follow-up Consultation",
+            "gst_hsn_code": hsn_code
         }
     ]
     
     for item_data in items:
         if not frappe.db.exists("Item", item_data["item_code"]):
-            doc = frappe.new_doc("Item")
-            doc.item_code = item_data["item_code"]
-            doc.item_name = item_data["item_name"]
-            doc.item_group = item_data["item_group"]
-            doc.stock_uom = item_data["stock_uom"]
-            doc.is_stock_item = item_data["is_stock_item"]
-            doc.is_sales_item = item_data["is_sales_item"]
-            doc.standard_rate = item_data["standard_rate"]
-            doc.description = item_data["description"]
-            doc.flags.ignore_permissions = True
-            doc.insert()
-            print(f"  ✓ Created Item: {item_data['item_code']} - {item_data['item_name']} (₹{item_data['standard_rate']})")
+            try:
+                doc = frappe.new_doc("Item")
+                doc.item_code = item_data["item_code"]
+                doc.item_name = item_data["item_name"]
+                doc.item_group = item_data["item_group"]
+                doc.stock_uom = item_data["stock_uom"]
+                doc.is_stock_item = item_data["is_stock_item"]
+                doc.is_sales_item = item_data["is_sales_item"]
+                doc.standard_rate = item_data["standard_rate"]
+                doc.description = item_data["description"]
+                
+                # Set GST HSN Code for India Compliance
+                if item_data.get("gst_hsn_code"):
+                    doc.gst_hsn_code = item_data["gst_hsn_code"]
+                
+                doc.flags.ignore_permissions = True
+                doc.insert()
+                print(f"  ✓ Created Item: {item_data['item_code']} - {item_data['item_name']} (₹{item_data['standard_rate']})")
+            except Exception as e:
+                print(f"  ✗ Error creating {item_data['item_code']}: {str(e)}")
         else:
             print(f"  - Item exists: {item_data['item_code']}")
 
