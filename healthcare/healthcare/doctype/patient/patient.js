@@ -190,26 +190,27 @@ function setup_diagnosis_filters(frm) {
 // QUICK DIAGNOSIS SELECTION PANEL
 // ============================================
 
-// Common diagnoses to show in quick selection (as per the form)
+// Common diagnoses to show in quick selection - as per client's ICanCaRe TOBACCO USERS ORAL Screening Form
 const QUICK_DIAGNOSES = [
-	{ category: "Cardiovascular", name: "Blood Pressure (Hypertension)", short: "Blood Pressure (Hypertension)" },
-	{ category: "Metabolic", name: "Diabetes", short: "Diabetes" },
-	{ category: "Cardiovascular", name: "Heart Disease", short: "Heart Disease - Cardiovascular Disease" },
-	{ category: "Neurological", name: "Neurological disease (Epilepsy)", short: "Neurological disease (Epilepsy)" },
+	// Medical History - as per client document
+	{ category: "Cardiovascular", name: "Essential hypertension", short: "Blood Pressure (Hypertension)" },
+	{ category: "Endocrine/Metabolic", name: "Type 2 diabetes mellitus", short: "Diabetes" },
+	{ category: "Cardiovascular", name: "Ischaemic heart disease", short: "Heart Disease - Cardiovascular Disease" },
+	{ category: "Neurology", name: "Epilepsy", short: "Neurological disease (Epilepsy)" },
 	{ category: "Respiratory", name: "Asthma", short: "Respiratory Disease (e.g., COPD, Asthma)" },
-	{ category: "Respiratory", name: "COPD", short: "" },
-	{ category: "Gastrointestinal", name: "Liver Disease", short: "Liver Disease" },
-	{ category: "Gastrointestinal", name: "Renal Disease", short: "Renal Disease" },
-	{ category: "Ophthalmological", name: "Eye Problem", short: "Eye Problem" },
-	{ category: "Immunosuppressive Conditions", name: "Immunosuppressive Condition HIV, transplant, steroids", short: "Immunosuppressive Condition" },
-	{ category: "Other", name: "Other Relevant Conditions e.g., Autoimmune, anemia, thyroid", short: "Other Relevant Conditions" },
-	{ category: "Allergic Conditions", name: "Allergies Drug / food / chemical sensitivity", short: "Allergies (Drug/Food/Chemical)" },
-	{ category: "Other", name: "Medical Disease", short: "Medical Disease" },
-	{ category: "Other", name: "Any Surgery Done", short: "Any Surgery Done" },
-	{ category: "Reproductive", name: "Infertility", short: "Infertility" },
-	{ category: "Oral/Dental", name: "ORAL PML - on treatment", short: "ORAL PML - on treatment" },
-	{ category: "Oral/Dental", name: "Restricted Mouth Opening", short: "Restricted Mouth Opening" },
-	{ category: "Oncological", name: "CANCER PAST - on treatment", short: "CANCER PAST - on treatment" }
+	{ category: "Respiratory", name: "Chronic obstructive pulmonary disease", short: "COPD" },
+	{ category: "Gastrointestinal", name: "Chronic liver disease", short: "Liver Disease" },
+	{ category: "Genitourinary", name: "Chronic kidney disease", short: "Renal Disease" },
+	{ category: "Ophthalmology", name: "Cataract", short: "Eye Problem" },
+	{ category: "Infectious Disease", name: "HIV/AIDS", short: "Immunosuppressive Condition" },
+	{ category: "Autoimmune", name: "Systemic lupus erythematosus", short: "Other Relevant Conditions" },
+	{ category: "Allergy", name: "Drug allergy", short: "Allergies (Drug/Food/Chemical)" },
+	{ category: "Medical Disease", name: "Tension headache", short: "Medical Disease" },
+	{ category: "Trauma", name: "Fracture", short: "Any Surgery Done" },
+	{ category: "Gynecology", name: "Female infertility", short: "Infertility" },
+	{ category: "Oral/Dental", name: "Leukoplakia", short: "ORAL PML - on treatment" },
+	{ category: "Oral/Dental", name: "Oral submucous fibrosis", short: "Restricted Mouth Opening" },
+	{ category: "Oncology", name: "Oral cancer", short: "CANCER PAST - on treatment" }
 ];
 
 function render_diagnosis_quick_select_panel(frm) {
@@ -239,10 +240,10 @@ function render_diagnosis_quick_select_panel(frm) {
 					<thead>
 						<tr>
 							<th style="width: 35%;">DIAGNOSIS</th>
-							<th style="width: 12%; text-align: center;">WHEN</th>
-							<th style="width: 13%; text-align: center;">TREATMENT<br><small>ONGOING</small></th>
-							<th style="width: 20%; text-align: center;">SELF<br><small>NO / YES</small></th>
-							<th style="width: 20%; text-align: center;">FAMILY<br><small>NO / YES</small></th>
+							<th class="self-column-header" style="width: 12%; text-align: center; background: rgba(59, 130, 246, 0.15);">WHEN</th>
+							<th class="self-column-header" style="width: 13%; text-align: center; background: rgba(59, 130, 246, 0.15);">TREATMENT<br><small>ONGOING</small></th>
+							<th class="self-column-header" style="width: 20%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF<br><small>NO / YES</small></th>
+							<th class="family-column-header" style="width: 20%; text-align: center; background: rgba(34, 197, 94, 0.15);">FAMILY<br><small>NO / YES</small></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -256,22 +257,22 @@ function render_diagnosis_quick_select_panel(frm) {
 		panel_html += `
 			<tr class="diagnosis-row" data-diagnosis="${diag.name}" data-category="${diag.category}">
 				<td class="diagnosis-name">${display_name}</td>
-				<td class="text-center">
+				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
 					<input type="text" class="form-control form-control-sm when-input" placeholder="e.g. 2020" style="width: 70px; margin: 0 auto;">
 				</td>
-				<td class="text-center">
+				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
 					<div class="btn-group btn-group-sm" role="group">
 						<button type="button" class="btn btn-outline-secondary btn-treatment-no" data-value="no">N</button>
 						<button type="button" class="btn btn-outline-warning btn-treatment-yes" data-value="yes">Y</button>
 					</div>
 				</td>
-				<td class="text-center">
+				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
 					<div class="btn-group btn-group-sm" role="group">
 						<button type="button" class="btn ${!is_self ? 'btn-outline-secondary' : 'btn-secondary'} btn-self-no" data-type="self" data-value="no">NO</button>
 						<button type="button" class="btn ${is_self ? 'btn-primary' : 'btn-outline-primary'} btn-self-yes" data-type="self" data-value="yes">YES</button>
 					</div>
 				</td>
-				<td class="text-center">
+				<td class="text-center family-column" style="background: rgba(34, 197, 94, 0.05);">
 					<div class="btn-group btn-group-sm" role="group">
 						<button type="button" class="btn ${!is_family ? 'btn-outline-secondary' : 'btn-secondary'} btn-family-no" data-type="family" data-value="no">NO</button>
 						<button type="button" class="btn ${is_family ? 'btn-success' : 'btn-outline-success'} btn-family-yes" data-type="family" data-value="yes">YES</button>
