@@ -64,3 +64,5 @@ healthcare.patches.v15_0.add_diagnosis_categories #04-12-2024
 healthcare.patches.v15_0.merge_family_medical_history_section #04-12-2024
 healthcare.patches.v15_0.setup_healthcare_master_data #08-12-2024
 healthcare.patches.v15_0.setup_appointment_types #08-12-2024
+healthcare.patches.v15_0.add_diagnosis_extended_fields #08-12-2024
+healthcare.patches.v15_0.add_diagnosis_icd_link_field #08-12-2024
