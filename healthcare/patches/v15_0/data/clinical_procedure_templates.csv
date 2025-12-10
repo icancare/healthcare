@@ -1,0 +1,1302 @@
+Template Name,Medical Department,Link existing Item,Item,Is Billable,Description,Patient Care Type,Allow Stock Consumption,Sample,Item Group,HSN/SAC
+Mucositis Management - Grade 1 - 2 Mucositis,Photo Medicine,1,PBM-201-1,1,"Description:
+
+Indications: Grade 1 - 2 Mucositis
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12",OPD,1,,PBM,999312
+Mucositis Management - Grade 3 Mucositis,Photo Medicine,1,PBM-201-3,1,"Description:
+
+Indications: Grade 3 Mucositis
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12",OPD,1,,PBM,999312
+Mucositis Management - Grade 4 Mucositis,Photo Medicine,1,PBM-201-4,1,"Description:
+
+Indications: Grade 4 Mucositis
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12",OPD,1,,PBM,999312
+"Pain Relief in Oral Cancer - Acute Pain - Localized pain, small treatment area, shorter sessions",Photo Medicine,1,PBM-202-1S,1,"Description:
+
+Indications: Localized pain, small treatment area, shorter sessions
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  6",OPD,1,,PBM,999312
+Pain Relief in Oral Cancer - Acute Pain - Localised pain with 2 sites,Photo Medicine,1,PBM-202-2S,1,"Description:
+
+Indications: Localised pain with 2 sites
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  6",OPD,1,,PBM,999312
+"Pain Relief in Oral Cancer - Acute Pain - Widespread pain, multiple sites treated, longer session duration",Photo Medicine,1,PBM-202-MS,1,"Description:
+
+Indications: Widespread pain, multiple sites treated, longer session duration
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  6",OPD,1,,PBM,999312
+"Pain Relief in Oral Cancer - Chronic Pain - Localized pain, small treatment area, shorter sessions",Photo Medicine,1,PBM-203-1S,1,"Description:
+
+Indications: Localized pain, small treatment area, shorter sessions
+Frequency:   2-3 times weekly
+Alternate days recommended.
+Repeat For:  4-6 weeks
+# Sessions:  8 to 24",OPD,1,,PBM,999312
+Pain Relief in Oral Cancer - Chronic Pain - Localised pain with 2 sites,Photo Medicine,1,PBM-203-2S,1,"Description:
+
+Indications: Localised pain with 2 sites
+Frequency:   2-3 times weekly
+Alternate days recommended.
+Repeat For:  4-6 weeks
+# Sessions:  8 to 24",OPD,1,,PBM,999312
+"Pain Relief in Oral Cancer - Chronic Pain - Widespread pain, multiple sites treated, longer session duration",Photo Medicine,1,PBM-203-MS,1,"Description:
+
+Indications: Widespread pain, multiple sites treated, longer session duration
+Frequency:   2-3 times weekly
+Alternate days recommended.
+Repeat For:  4-6 weeks
+# Sessions:  8 to 24",OPD,1,,PBM,999312
+"Post-Surgical Wound Healing - Simple surgical wounds, single application.",Photo Medicine,1,PBM-204-1,1,"Description:
+
+Indications: Simple surgical wounds, single application.
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  7",OPD,1,,PBM,999312
+Post-Surgical Wound Healing - Large Wounds,Photo Medicine,1,PBM-203-2,1,"Description:
+
+Indications: Large Wounds
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  7",OPD,1,,PBM,999312
+Post-Surgical Wound Healing - Complex Large Wounds,Photo Medicine,1,PBM-203-3,1,"Description:
+
+Indications: Complex Large Wounds
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  7",OPD,1,,PBM,999312
+"Xerostomia Management - Mild dry mouth, minimal gland dysfunction.",Photo Medicine,1,PBM-204-1,1,"Description:
+
+Indications: Mild dry mouth, minimal gland dysfunction.
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PBM,999312
+"Xerostomia Management - Moderate dry mouth, moderate gland dysfunction.",Photo Medicine,1,PBM-204-2,1,"Description:
+
+Indications: Moderate dry mouth, moderate gland dysfunction.
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PBM,999312
+"Xerostomia Management - Severe xerostomia, multiple gland involvement, advanced stage.",Photo Medicine,1,PBM-204-3,1,"Description:
+
+Indications: Severe xerostomia, multiple gland involvement, advanced stage.
+Frequency:   Once a week
+Repeat For:  6 weeks
+# Sessions:  6",OPD,1,,PBM,999312
+"Trismus SMF Management  - Grade 1 Early-stage trismus, mild muscle restriction.",Photo Medicine,1,PBM-205-1,1,"Description:
+
+Indications: Grade 1 Early-stage trismus, mild muscle restriction.
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12",OPD,1,,PBM,999312
+Trismus SMF Management  - Grade 2 Moderate trismus,Photo Medicine,1,PBM-205-2,1,"Description:
+
+Indications: Grade 2 Moderate trismus
+Frequency:   2-3 times a week
+Repeat For:  8 weeks
+# Sessions:  16 to 24",OPD,1,,PBM,999312
+"Trismus SMF Management  - Severe trismus, post-radiation fibrosis, requiring extended therapy.",Photo Medicine,1,PBM-205-3,1,"Description:
+
+Indications: Severe trismus, post-radiation fibrosis, requiring extended therapy.
+Frequency:   Daily for 4 weeks
+Twice a week for 4 weeks
+Repeat For:  8 weeks
+# Sessions:  32",OPD,1,,PBM,999312
+Neuropathy Management - Peripheral Neuropathy post Chemotherapy - 1 site,Photo Medicine,1,PBM-206-1S,1,"Description:
+
+Indications: 1 site
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PBM,999312
+Neuropathy Management - Peripheral Neuropathy post Chemotherapy - 2 site,Photo Medicine,1,PBM-206-2S,1,"Description:
+
+Indications: 2 site
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PBM,999312
+Neuropathy Management - Peripheral Neuropathy post Chemotherapy - Mutiple site,Photo Medicine,1,PBM-206-MS,1,"Description:
+
+Indications: Mutiple site
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - 1 Site - Mild - no epithelial break,Photo Medicine,1,PBM-207-1S-1,1,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Daily
+Repeat For:  4 days
+# Sessions:  4",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - 1 Site - moderate - few areas of epithelial break,Photo Medicine,1,PBM-207-1S-2,1,"Description:
+
+Indications: moderate - few areas of epithelial break
+Frequency:   Daily
+Repeat For:  8 days
+# Sessions:  8",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - 1 Site - Severe - with ulceration,Photo Medicine,1,PBM-207-1S-3,1,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Daily
+Repeat For:  12 days
+# Sessions:  12",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - 2 Sites - Mild - no epithelial break,Photo Medicine,1,PBM-207-2S-1,1,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Daily
+Repeat For:  4 days
+# Sessions:  4",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - 2 Sites - moderate - few ares of epithelial break,Photo Medicine,1,PBM-207-2S-2,1,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Daily
+Repeat For:  8 days
+# Sessions:  8",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - 2 Sites - Severe - with ulceration,Photo Medicine,1,PBM-207-2S-3,1,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Daily
+Repeat For:  12 days
+# Sessions:  12",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - Multiple Sites - Mild - no epithelial break,Photo Medicine,1,PBM-207-MS-1,1,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Daily
+Repeat For:  4 days
+# Sessions:  4",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - Multiple Sites - moderate - few ares of epithelial break,Photo Medicine,1,PBM-207-MS-2,1,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Daily
+Repeat For:  8 days
+# Sessions:  8",OPD,1,,PBM,999312
+Radiation-Induced Dermatitis - Multiple Sites - Severe - with ulceration,Photo Medicine,1,PBM-207-MS-3,1,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Daily
+Repeat For:  12 days
+# Sessions:  12",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - 1 Site - Mild - no epithelial break,Photo Medicine,1,PBM-208-1S-1,1,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - 1 Site - moderate - few areas of epithelial break,Photo Medicine,1,PBM-208-1S-2,1,"Description:
+
+Indications: moderate - few areas of epithelial break
+Frequency:   Once a week
+Repeat For:  8 weeks
+# Sessions:  8",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - 1 Site - Severe - with ulceration,Photo Medicine,1,PBM-208-1S-3,1,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Once a week
+Repeat For:  12 weeks
+# Sessions:  12",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - 2 Sites - Mild - no epithelial break,Photo Medicine,1,PBM-208-2S-1,1,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - 2 Sites - moderate - few ares of epithelial break,Photo Medicine,1,PBM-208-2S-2,1,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Once a week
+Repeat For:  8 weeks
+# Sessions:  8",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - 2 Sites - Severe - with ulceration,Photo Medicine,1,PBM-208-2S-3,1,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Once a week
+Repeat For:  12 weeks
+# Sessions:  12",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - Multiple Sites - Mild - no epithelial break,Photo Medicine,1,PBM-208-MS-1,1,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - Multiple Sites - moderate - few ares of epithelial break,Photo Medicine,1,PBM-208-MS-2,1,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Once a week
+Repeat For:  8 weeks
+# Sessions:  8",OPD,1,,PBM,999312
+Oral Lichen Planus Treatment - Multiple Sites - Severe - with ulceration,Photo Medicine,1,PBM-208-MS-3,1,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Once a week
+Repeat For:  12 weeks
+# Sessions:  12",OPD,1,,PBM,999312
+Osteoradionecrosis Prevention - Pre and post Radiation,Photo Medicine,1,PBM-209,1,"Description:
+
+Indications: Pre and post Radiation
+Frequency:   Daily (includes before and after radiation)
+Repeat For:  10 weeks
+# Sessions:  10",OPD,1,,PBM,999312
+Improved Dental Implant Healing - Laser applied to implant site before and after surgery to aid healing,Photo Medicine,1,PBM-210,1,"Description:
+
+Indications: Laser applied to implant site before and after surgery to aid healing
+Frequency:   per implant, once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Teeth Whitening for Tobacco Users - Mild,Photo Medicine,1,PBM-211-1,1,"Description:
+
+Indications: Mild
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Teeth Whitening for Tobacco Users - Moderate,Photo Medicine,1,PBM-211-2,1,"Description:
+
+Indications: Moderate
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PBM,999312
+Teeth Whitening for Tobacco Users - Severe/Deep stains ,Photo Medicine,1,PBM-211-3,1,"Description:
+
+Indications: Severe/Deep stains 
+Frequency:   Once a week
+Repeat For:  3-4 weeks
+# Sessions:  3 to 4",OPD,1,,PBM,999312
+Teeth Scaling for tobacco users - Ultarasonic scaling required before teeth whitening - Grade 1 Mild,Photo Medicine,1,PBM-212-1,1,"Description:
+
+Indications: Grade 1 Mild
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+"Teeth Scaling for tobacco users - Ultarasonic scaling required before teeth whitening - Grade II, moderate",Photo Medicine,1,PBM-212-2,1,"Description:
+
+Indications: Grade II, moderate
+Frequency:   Multiple sittings
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+"Teeth Scaling for tobacco users - Ultarasonic scaling required before teeth whitening - Grade III, Severe",Photo Medicine,1,PBM-212-3,1,"Description:
+
+Indications: Grade III, Severe
+Frequency:   Multiple sittings
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Oral Full Mouth Polishing - Full mouth,Photo Medicine,1,PBM-213,1,"Description:
+
+Indications: Full mouth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Photobiomodulation for TMJ Disorders - Mild unilateral,Photo Medicine,1,PBM-214-U-1,1,"Description:
+
+Indications: Mild unilateral
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PBM,999312
+Photobiomodulation for TMJ Disorders - Moderate unilateral,Photo Medicine,1,PBM-214-U-2,1,"Description:
+
+Indications: Moderate unilateral
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PBM,999312
+Photobiomodulation for TMJ Disorders - Severe unilateral,Photo Medicine,1,PBM-214-U-3,1,"Description:
+
+Indications: Severe unilateral
+Frequency:   Once a week
+Repeat For:  8-10 weeks
+# Sessions:  8 to 10",OPD,1,,PBM,999312
+Photobiomodulation for TMJ Disorders - Mild bilateral,Photo Medicine,1,PBM-214-B-1,1,"Description:
+
+Indications: Mild bilateral
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PBM,999312
+Photobiomodulation for TMJ Disorders - Moderate bilateral,Photo Medicine,1,PBM-214-B-2,1,"Description:
+
+Indications: Moderate bilateral
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PBM,999312
+Photobiomodulation for TMJ Disorders - Severe bilateral,Photo Medicine,1,PBM-214-B-3,1,"Description:
+
+Indications: Severe bilateral
+Frequency:   Once a week
+Repeat For:  8-10 weeks
+# Sessions:  8 to 10",OPD,1,,PBM,999312
+Photo Desensitisation for Hypersensitivity- Oral Mucosa - Partial Mouth /Regional /One site Oral Mucosa,Photo Medicine,1,PBM-215-1S,1,"Description:
+
+Indications: Partial Mouth /Regional /One site Oral Mucosa
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Photo Desensitisation for Hypersensitivity- Oral Mucosa - Partial Mouth /Regional /Two site Oral Mucosa,Photo Medicine,1,PBM-215-2S,1,"Description:
+
+Indications: Partial Mouth /Regional /Two site Oral Mucosa
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Photo Desensitisation for Hypersensitivity- Oral Mucosa - Full Mouth/ Multiple sites Oral Mucosa,Photo Medicine,1,PBM-215-MS,1,"Description:
+
+Indications: Full Mouth/ Multiple sites Oral Mucosa
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Photo Desensitisation for Hypersensitivity - Tooth - 1 Tooth,Photo Medicine,1,PBM-216-1T,1,"Description:
+
+Indications: 1 Tooth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Photo Desensitisation for Hypersensitivity - Tooth - 2 Teeth,Photo Medicine,1,PBM-216-2T,1,"Description:
+
+Indications: 2 Teeth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Photo Desensitisation for Hypersensitivity - Tooth - Upto 4 Teeth,Photo Medicine,1,PBM-216-4T,1,"Description:
+
+Indications: Upto 4 Teeth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+Photo Desensitisation for Hypersensitivity - Tooth - Additional Tooth,Photo Medicine,1,PBM-216-AT,1,"Description:
+
+Indications: Additional Tooth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PBM,999312
+TOBACCO CESSATION with PBM - Early-stage addiction,Photo Medicine,1,PBM-217-TC-1,1,"Description:
+
+Indications: Early-stage addiction
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PBM,999312
+TOBACCO CESSATION with PBM - Strong nicotine dependency,Photo Medicine,1,PBM-217-TC-2,1,"Description:
+
+Indications: Strong nicotine dependency
+Frequency:   Once a week
+Repeat For:  6-8 weeks
+# Sessions:  6 to 8",OPD,1,,PBM,999312
+Quit Tobacco Consultation by Doctor,Public Health,1,TC-401,1,"Description:
+
+Indications: -
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Other,999312
+Quit Tobacco Assessment by Quit Coach,Public Health,1,TC-402,1,"Description:
+
+Indications: -
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Other,999312
+Quit Tobacco - 1 month package - Mild addiction: Less than 10 cigarettes / 2 pouches per day,Public Health,1,TC-403-1,1,"Description:
+
+Indications: Mild addiction: Less than 10 cigarettes / 2 pouches per day
+Frequency:   Once a week for 4 weeks
+Repeat For:  None
+# Sessions:  4",OPD,1,,Other,999312
+Quit Tobacco - 2 month package - Moderate addiction: 11-20 cigarettes / 2-5 pouches per day,Public Health,1,TC-403-2,1,"Description:
+
+Indications: Moderate addiction: 11-20 cigarettes / 2-5 pouches per day
+Frequency:   Once a week for 4 weeks
+Once in 2 weeks for 4 weeks
+Repeat For:  None
+# Sessions:  6",OPD,1,,Other,999312
+Quit Tobacco - 3 Month Package - Severe addiction: Greater than 20 cigarettes / 5 pouches per day,Public Health,1,TC-403-3,1,"Description:
+
+Indications: Severe addiction: Greater than 20 cigarettes / 5 pouches per day
+Frequency:   Once a week for 4 weeks
+Once in 2 weeks for 8 weeks
+Repeat For:  None
+# Sessions:  8",OPD,1,,Other,999312
+Self Quit book - Self Quit book,Public Health,1,TC-404,1,"Description:
+
+Indications: Self Quit book
+Frequency:   per book
+Repeat For:  None
+# Sessions:  1",OPD,1,,Other,999312
+"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size",Photo Medicine,1,PDT-301-1,1,"Description:
+
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Larger lesions, deeper invasion, higher photosensitizer dose.",Photo Medicine,1,PDT-301-2,1,"Description:
+
+Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"Recurrent Cancers IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size",Photo Medicine,1,PDT-302-1,1,"Description:
+
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"Recurrent Cancers IPD - Larger lesions, deeper invasion, higher photosensitizer dose.",Photo Medicine,1,PDT-302-2,1,"Description:
+
+Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Oral Leukoplakia - Small, localized leukoplakia patch. <1 cm",Photo Medicine,1,PDT-303-1,1,"Description:
+
+Indications: Small, localized leukoplakia patch. <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Oral Leukoplakia - Moderate localized leukoplakia 1-2 cm, 2-3 sites",Photo Medicine,1,PDT-303-2,1,"Description:
+
+Indications: Moderate localized leukoplakia 1-2 cm, 2-3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PDT,999312
+PDT for Oral Leukoplakia - Extensive leukoplakia covering multiple sites,Photo Medicine,1,PDT-303-3,1,"Description:
+
+Indications: Extensive leukoplakia covering multiple sites
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDT,999312
+"PDT for Oral Erythroplakia - Small, localized Erythroleukoplakia patch. <1 cm",Photo Medicine,1,PDT-304-1S,1,"Description:
+
+Indications: Small, localized Erythroleukoplakia patch. <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Oral Erythroplakia - Moderate localized Erythro-leukoplakia 1-2 cm, 2 sites",Photo Medicine,1,PDT-304-2S,1,"Description:
+
+Indications: Moderate localized Erythro-leukoplakia 1-2 cm, 2 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PDT,999312
+PDT for Oral Erythroplakia - Extensive Erythro-leukoplakia covering multiple sites,Photo Medicine,1,PDT-304-MS,1,"Description:
+
+Indications: Extensive Erythro-leukoplakia covering multiple sites
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDT,999312
+"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 1 site",Photo Medicine,1,PDT-305-1S-1,1,"Description:
+
+Indications: Mild < 1 cm, 1 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 2-3 site",Photo Medicine,1,PDT-305-2S-1,1,"Description:
+
+Indications: Mild < 1 cm, 2-3 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, multiple sites",Photo Medicine,1,PDT-305-MS-1,1,"Description:
+
+Indications: Mild < 1 cm, multiple sites
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Dysplasia, Early-stage lesion - Moderate 1-2 cm, one site",Photo Medicine,1,PDT-305-1S-2,1,"Description:
+
+Indications: Moderate 1-2 cm, one site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Dysplasia, Early-stage lesion - Moderate 1-2 cm, two site",Photo Medicine,1,PDT-305-2S-2,1,"Description:
+
+Indications: Moderate 1-2 cm, two site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Dysplasia, Early-stage lesion - Moderate 1-2 cm, multiple sites",Photo Medicine,1,PDT-305-MS-2,1,"Description:
+
+Indications: Moderate 1-2 cm, multiple sites
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Severe Dysplasia, high-grade premalignant lesion - Single or multiple",Photo Medicine,1,PDT-306,1,"Description:
+
+Indications: Single or multiple
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDT,999312
+"PDT for Oral Lichen Planus - Few oral lesions, single-site application.",Photo Medicine,1,PDT-307-1S,1,"Description:
+
+Indications: Few oral lesions, single-site application.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+PDT for Oral Lichen Planus - Bilateral oral lesion 2-3 sites,Photo Medicine,1,PDT-307-2S,1,"Description:
+
+Indications: Bilateral oral lesion 2-3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PDT,999312
+"PDT for Oral Lichen Planus - Severe case, multi-site involvement, repeated sessions.",Photo Medicine,1,PDT-307-MS,1,"Description:
+
+Indications: Severe case, multi-site involvement, repeated sessions.
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDT,999312
+"PDT for Verrucous Carcinoma - Few oral lesions, single-site application.",Photo Medicine,1,PDT-308-1S,1,"Description:
+
+Indications: Few oral lesions, single-site application.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+PDT for Verrucous Carcinoma - Bilateral oral lesion 2 -3 sites,Photo Medicine,1,PDT-308-2S,1,"Description:
+
+Indications: Bilateral oral lesion 2 -3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PDT,999312
+"PDT for Verrucous Carcinoma - Severe case, multi-site involvement, repeated sessions.",Photo Medicine,1,PDT-308-MS,1,"Description:
+
+Indications: Severe case, multi-site involvement, repeated sessions.
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDT,999312
+PDT for Field Cancerization - Multifocal dysplasia or carcinoma in situ,Photo Medicine,1,PDT-309-1,1,"Description:
+
+Indications: Multifocal dysplasia or carcinoma in situ
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+"PDT for Field Cancerization - Few oral lesions, single-site application.",Photo Medicine,1,PDT-309-1S-2,1,"Description:
+
+Indications: Few oral lesions, single-site application.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+PDT for Field Cancerization - Bilateral oral lesion 2 -3 sites,Photo Medicine,1,PDT-309-2S-2,1,"Description:
+
+Indications: Bilateral oral lesion 2 -3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PDT,999312
+"PDT for Field Cancerization - Severe case, multi-site, multiple sessions",Photo Medicine,1,PDT-309-MS-3,1,"Description:
+
+Indications: Severe case, multi-site, multiple sessions
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDT,999312
+"PDT for Field Cancerization - Large lesions > 4cm, multiple sites, multiple sessions",Photo Medicine,1,PDT-309-MS-4,1,"Description:
+
+Indications: Large lesions > 4cm, multiple sites, multiple sessions
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDT,999312
+PDT for SMF TRISMUS - Mild,Photo Medicine,1,PDT-310-1,1,"Description:
+
+Indications: Mild
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDT,999312
+PDT for SMF TRISMUS - Moderate,Photo Medicine,1,PDT-310-2,1,"Description:
+
+Indications: Moderate
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4",OPD,1,,PDT,999312
+PDT for SMF TRISMUS - Severe,Photo Medicine,1,PDT-310-3,1,"Description:
+
+Indications: Severe
+Frequency:   Once a week
+Repeat For:  6 weeks
+# Sessions:  6",OPD,1,,PDT,999312
+Integrated Management of SMF TRISMUS - Moderate,Photo Medicine,1,PDT-311-2,1,"Description:
+
+Indications: Moderate
+Frequency:   PBM twice weekly for 6 weeks
+PDT starting 3rd week weekly for 4 weeks
+Repeat For:  None
+# Sessions:  PBM - 12
+PDT - 4",OPD,1,,PBMPDT,999312
+Integrated Management of SMF TRISMUS - Severe,Photo Medicine,1,PDT-311-3,1,"Description:
+
+Indications: Severe
+Frequency:   PBM daily for 2 weeks then twice weekly for 6 weeks
+PDT starting 3 rd week weekly for 6 weeks
+Repeat For:  None
+# Sessions:  PBM - 22
+PDT - 6",OPD,1,,PBMPDT,999312
+"PDT for Oral Candidiasis - Mild, single site and single session",Photo Medicine,1,PDTI-501-1,1,"Description:
+
+Indications: Mild, single site and single session
+Frequency:   Once a week
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2",OPD,1,,PDTI,999312
+"PDT for Oral Candidiasis - Moderate, needs longer duration per session, 2 sites",Photo Medicine,1,PDTI-501-2,1,"Description:
+
+Indications: Moderate, needs longer duration per session, 2 sites
+Frequency:   Once a week
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2",OPD,1,,PDTI,999312
+"PDT for Oral Candidiasis - Severe, needs longer duration, multiple sites",Photo Medicine,1,PDTI-501-3,1,"Description:
+
+Indications: Severe, needs longer duration, multiple sites
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDTI,999312
+"PDT for Palliative Pain Management in Oral Cancer - Mild pain, local tumor site.",Photo Medicine,1,PDTI-502-1,1,"Description:
+
+Indications: Mild pain, local tumor site.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDTI,999312
+PDT for Palliative Pain Management in Oral Cancer - Moderate pain,Photo Medicine,1,PDTI-502-2,1,"Description:
+
+Indications: Moderate pain
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDTI,999312
+"PDT for Palliative Pain Management in Oral Cancer - Severe pain, large tumor burden, multiple applications",Photo Medicine,1,PDTI-502-3,1,"Description:
+
+Indications: Severe pain, large tumor burden, multiple applications
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDTI,999312
+PDT for Actinic Cheilitis - 1 site,Photo Medicine,1,PDTI-503-1,1,"Description:
+
+Indications: 1 site
+Frequency:   Once a week
+Repeat For:  4-6 weeks
+# Sessions:  4 to 6",OPD,1,,PDTI,999312
+PDT for Actinic Cheilitis - 2 -3 sites,Photo Medicine,1,PDTI-503-2,1,"Description:
+
+Indications: 2 -3 sites
+Frequency:   Once a week
+Repeat For:  4-6 weeks
+# Sessions:  4 to 6",OPD,1,,PDTI,999312
+"PDT for Actinic Cheilitis - Multiple, both lips",Photo Medicine,1,PDTI-503-3,1,"Description:
+
+Indications: Multiple, both lips
+Frequency:   Once a week
+Repeat For:  4-6 weeks
+# Sessions:  4 to 6",OPD,1,,PDTI,999312
+PDT for Oral Verrucae - 1 site,Photo Medicine,1,PDTI-504-1S,1,"Description:
+
+Indications: 1 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDTI,999312
+PDT for Oral Verrucae - 2-3 sites,Photo Medicine,1,PDTI-504-2S,1,"Description:
+
+Indications: 2-3 sites
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2 weeks
+# Sessions:  2",OPD,1,,PDTI,999312
+PDT for Oral Verrucae - Multiple,Photo Medicine,1,PDTI-504-MS,1,"Description:
+
+Indications: Multiple
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDTI,999312
+PDT for Gingival Hyperplasia - Mild ,Photo Medicine,1,PDTI-505-1,1,"Description:
+
+Indications: Mild 
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDTI,999312
+PDT for Gingival Hyperplasia - Moderate,Photo Medicine,1,PDTI-505-2,1,"Description:
+
+Indications: Moderate
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2",OPD,1,,PDTI,999312
+PDT for Gingival Hyperplasia - Severe,Photo Medicine,1,PDTI-505-3,1,"Description:
+
+Indications: Severe
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDTI,999312
+"PDT for Peri-Implantitis - Inflammation and infection around dental implants, 1 site",Photo Medicine,1,PDTI-506-1S,1,"Description:
+
+Indications: Inflammation and infection around dental implants, 1 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PDTI,999312
+"PDT for Peri-Implantitis - Inflammation and infection around dental implants, multi-site",Photo Medicine,1,PDTI-505-MS,1,"Description:
+
+Indications: Inflammation and infection around dental implants, multi-site
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PDTI,999312
+Laser Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,Photo Medicine,1,PS-601-1,1,"Description:
+
+Indications: Grade 1 Lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Laser Vapourisation of PML/ Benign lesions - Grade 2 Lesion 1-2 cm,Photo Medicine,1,PS-601-2,1,"Description:
+
+Indications: Grade 2 Lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Laser Vapourisation of PML/ Benign lesions - Grade 3 lesion 2-4 cm,Photo Medicine,1,PS-601-3,1,"Description:
+
+Indications: Grade 3 lesion 2-4 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Laser Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,Photo Medicine,1,PS-601-4,1,"Description:
+
+Indications: Grade 4 Mulitple lesion <2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Laser Vapourisation of PML/ Benign lesions - Grade 5 Muliple lesion of various size,Photo Medicine,1,PS-601-5,1,"Description:
+
+Indications: Grade 5 Muliple lesion of various size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Electro Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,Photo Medicine,1,PS-602-1,1,"Description:
+
+Indications: Grade 1 Lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Electro Vapourisation of PML/ Benign lesions - Grade 2 Lesion 1-2 cm,Photo Medicine,1,PS-602-2,1,"Description:
+
+Indications: Grade 2 Lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Electro Vapourisation of PML/ Benign lesions - Grade 3 lesion 2-4 cm,Photo Medicine,1,PS-602-3,1,"Description:
+
+Indications: Grade 3 lesion 2-4 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Electro Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,Photo Medicine,1,PS-602-4,1,"Description:
+
+Indications: Grade 4 Mulitple lesion <2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Electro Vapourisation of PML/ Benign lesions - Grade 5 Muliple lesion of various size,Photo Medicine,1,PS-602-5,1,"Description:
+
+Indications: Grade 5 Muliple lesion of various size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+PLASMA Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,Photo Medicine,1,PS-603-1,1,"Description:
+
+Indications: Grade 1 Lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+PLASMA Vapourisation of PML/ Benign lesions - Grade 2 Lesion 1-2 cm,Photo Medicine,1,PS-603-2,1,"Description:
+
+Indications: Grade 2 Lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+PLASMA Vapourisation of PML/ Benign lesions - Grade 3 lesion 2-4 cm,Photo Medicine,1,PS-603-3,1,"Description:
+
+Indications: Grade 3 lesion 2-4 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+PLASMA Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,Photo Medicine,1,PS-603-4,1,"Description:
+
+Indications: Grade 4 Mulitple lesion <2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+PLASMA Vapourisation of PML/ Benign lesions - Grade 5 Muliple lesion of various size,Photo Medicine,1,PS-603-5,1,"Description:
+
+Indications: Grade 5 Muliple lesion of various size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Photo - Fibrotomy - Grade 1 minor band unilateral,Photo Medicine,1,PS-604-1,1,"Description:
+
+Indications: Grade 1 minor band unilateral
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Photo - Fibrotomy - Grade 2 minor bands bilateral or mulitple,Photo Medicine,1,PS-604-2,1,"Description:
+
+Indications: Grade 2 minor bands bilateral or mulitple
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Photo - Fibrotomy - Grade 3 major bands unilateral,Photo Medicine,1,PS-604-3,1,"Description:
+
+Indications: Grade 3 major bands unilateral
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,PS,999312
+Photo - Fibrotomy - Grade 4 major bands bilateral,Photo Medicine,1,PS-604-4,1,"Description:
+
+Indications: Grade 4 major bands bilateral
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2",OPD,1,,PS,999312
+Photo - Fibrotomy - Grade 5 major bands multiple,Photo Medicine,1,PS-604-5,1,"Description:
+
+Indications: Grade 5 major bands multiple
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,,PS,999312
+Laser Excision of Benign/PML lesion - Grade 1 <1 cm,Photo Medicine,1,PS-605-1,1,"Description:
+
+Indications: Grade 1 <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Laser Excision of Benign/PML lesion - Grade 2 lesion 1-2 cm,Photo Medicine,1,PS-605-2,1,"Description:
+
+Indications: Grade 2 lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Laser Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,Photo Medicine,1,PS-605-3,1,"Description:
+
+Indications: Grade 3 Multiple lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+"Laser Excision of Benign/PML lesion - Grade 4  lesion 2- 4 cm, multiple sessions",Photo Medicine,1,PS-605-4,1,"Description:
+
+Indications: Grade 4  lesion 2- 4 cm, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2",OPD,1,TISSUE,PS,999312
+"Laser Excision of Benign/PML lesion - Grade 5 Multiple lesion varied size, multiple sessions",Photo Medicine,1,PS-605-5,1,"Description:
+
+Indications: Grade 5 Multiple lesion varied size, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,TISSUE,PS,999312
+Electro Excision of Benign/PML lesion - Grade 1 <1 cm,Photo Medicine,1,PS-606-1,1,"Description:
+
+Indications: Grade 1 <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Electro Excision of Benign/PML lesion - Grade 2 lesion 1-2 cm,Photo Medicine,1,PS-606-2,1,"Description:
+
+Indications: Grade 2 lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Electro Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,Photo Medicine,1,PS-606-3,1,"Description:
+
+Indications: Grade 3 Multiple lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+"Electro Excision of Benign/PML lesion - Grade 4  lesion 2- 4 cm, multiple sessions",Photo Medicine,1,PS-606-4,1,"Description:
+
+Indications: Grade 4  lesion 2- 4 cm, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2",OPD,1,TISSUE,PS,999312
+"Electro Excision of Benign/PML lesion - Grade 5 Multiple lesion varied size, multiple sessions",Photo Medicine,1,PS-606-5,1,"Description:
+
+Indications: Grade 5 Multiple lesion varied size, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,Tissue,PS,999312
+Plasma Excision of Benign/PML lesion - Grade 1 <1 cm,Photo Medicine,1,PS-607-1,1,"Description:
+
+Indications: Grade 1 <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Plasma Excision of Benign/PML lesion - Grade 2 lesion 1-2 cm,Photo Medicine,1,PS-607-2,1,"Description:
+
+Indications: Grade 2 lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Plasma Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,Photo Medicine,1,PS-607-3,1,"Description:
+
+Indications: Grade 3 Multiple lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+"Plasma Excision of Benign/PML lesion - Grade 4  lesion 2- 4 cm, multiple sessions",Photo Medicine,1,PS-607-4,1,"Description:
+
+Indications: Grade 4  lesion 2- 4 cm, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2",OPD,1,TISSUE,PS,999312
+"Plasma Excision of Benign/PML lesion - Grade 5 Multiple lesion varied size, multiple sessions",Photo Medicine,1,PS-607-5,1,"Description:
+
+Indications: Grade 5 Multiple lesion varied size, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4",OPD,1,TISSUE,PS,999312
+Photo Wide Local Excision of Malignant Lesion/ Soft tissue Lesion - WLE Small,Photo Medicine,1,PS-608-1,1,"Description:
+
+Indications: WLE Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,Tissue,PS,999312
+Photo Wide Local Excision of Malignant Lesion/ Soft tissue Lesion - WLE intermediate,Photo Medicine,1,PS-608-2,1,"Description:
+
+Indications: WLE intermediate
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,Tissue,PS,999312
+Photo Wide Local Excision of Malignant Lesion/ Soft tissue Lesion - WLE LARGE,Photo Medicine,1,PS-608-3,1,"Description:
+
+Indications: WLE LARGE
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,Tissue,PS,999312
+Laser Photo biopsy - Small,Photo Medicine,1,PS-609-1,1,"Description:
+
+Indications: Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Laser Photo biopsy - Medium,Photo Medicine,1,PS-609-2,1,"Description:
+
+Indications: Medium
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Laser Photo biopsy - Large,Photo Medicine,1,PS-609-3,1,"Description:
+
+Indications: Large
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Electro Photo biopsy - Small,Photo Medicine,1,PS-610-1,1,"Description:
+
+Indications: Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Electro Photo biopsy - Medium,Photo Medicine,1,PS-610-2,1,"Description:
+
+Indications: Medium
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Electro Photo biopsy - Large,Photo Medicine,1,PS-610-3,1,"Description:
+
+Indications: Large
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Knife Photo biopsy - Small,Photo Medicine,1,PS-611-1,1,"Description:
+
+Indications: Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Knife Photo biopsy - Medium,Photo Medicine,1,PS-611-2,1,"Description:
+
+Indications: Medium
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,TISSUE,PS,999312
+Knife Photo biopsy - Large,Photo Medicine,1,PS-611-3,1,"Description:
+
+Indications: Large
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,Tissue,PS,999312
+ORAL CARE PRE/POST OP - Clinic PREP fee per visit,,1,DEN-701-1,1,"Description:
+
+Indications: Clinic PREP fee per visit
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - ORAL Post-operative syringing & suction H2O2 and betadine treatment-oral care.,,1,DEN-701-2,1,"Description:
+
+Indications: ORAL Post-operative syringing & suction H2O2 and betadine treatment-oral care.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Oral Full mouth polishing,,1,DEN-701-3,1,"Description:
+
+Indications: Oral Full mouth polishing
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Oral Filing for sharp teeth each unit,,1,DEN-701-4,1,"Description:
+
+Indications: Oral Filing for sharp teeth each unit
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Fluoride Treatment before and after Radiotherapy,,1,DEN-701-5,1,"Description:
+
+Indications: Fluoride Treatment before and after Radiotherapy
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Root Planning (Per Quadrant),,1,DEN-701-6,1,"Description:
+
+Indications: Root Planning (Per Quadrant)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Oral Packing Class 1,,1,DEN-701-7,1,"Description:
+
+Indications: Oral Packing Class 1
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Oral Packing Class 2,,1,DEN-701-8,1,"Description:
+
+Indications: Oral Packing Class 2
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Oral Packing Class 3,,1,DEN-701-9,1,"Description:
+
+Indications: Oral Packing Class 3
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Oral Minor Procedures,,1,DEN-701-10,1,"Description:
+
+Indications: Oral Minor Procedures
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL CARE PRE/POST OP - Oral Minor excisions,,1,DEN-701-11,1,"Description:
+
+Indications: Oral Minor excisions
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL PROPHYLAXIS - PRE or Postoperative/RT Dental Care I,,1,DEN-702-1,1,"Description:
+
+Indications: PRE or Postoperative/RT Dental Care I
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL PROPHYLAXIS - Pre or postoperative /RT Dental Care II,,1,DEN-702-2,1,"Description:
+
+Indications: Pre or postoperative /RT Dental Care II
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL PROPHYLAXIS - Pre or postoperative /RT Dental Care III,,1,DEN-702-3,1,"Description:
+
+Indications: Pre or postoperative /RT Dental Care III
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+ORAL REHABILITATION - Removal Partial Denture plate,Oral Rehabilitation,1,DEN-703-1,1,"Description:
+
+Indications: Removal Partial Denture plate
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Removal partial denture,Oral Rehabilitation,1,DEN-703-2,1,"Description:
+
+Indications: Removal partial denture
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Complete Denture,Oral Rehabilitation,1,DEN-703-3,1,"Description:
+
+Indications: Complete Denture
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Bite Guard (upper or lower),Oral Rehabilitation,1,DEN-703-4,1,"Description:
+
+Indications: Bite Guard (upper or lower)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Dental Guide Flange post Hemimandibulectomy G-I,Oral Rehabilitation,1,DEN-704-1,1,"Description:
+
+Indications: Dental Guide Flange post Hemimandibulectomy G-I
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Dental Guide Flange G-II,Oral Rehabilitation,1,DEN-704-2,1,"Description:
+
+Indications: Dental Guide Flange G-II
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Obturator post operative procedure,Oral Rehabilitation,1,DEN-705,1,"Description:
+
+Indications: Obturator post operative procedure
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Implants – Permanent tooth,Oral Rehabilitation,1,DEN-706,1,"Description:
+
+Indications: Implants – Permanent tooth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Bridge Crown:- Metallic (Porcelain Fused Metal),Oral Rehabilitation,1,DEN-707,1,"Description:
+
+Indications: Bridge Crown:- Metallic (Porcelain Fused Metal)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Metal Free Zirconia 5 years,Oral Rehabilitation,1,DEN-708-1,1,"Description:
+
+Indications: Metal Free Zirconia 5 years
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Metal free Zirconia 10 years,Oral Rehabilitation,1,DEN-708-2,1,"Description:
+
+Indications: Metal free Zirconia 10 years
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Metal Free Zirconia 15 years,Oral Rehabilitation,1,DEN-708-3,1,"Description:
+
+Indications: Metal Free Zirconia 15 years
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Root Canal Treatment(RCT) Anterior,Oral Rehabilitation,1,DEN-709-1,1,"Description:
+
+Indications: Root Canal Treatment(RCT) Anterior
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Root Canal Treatment(RCT) Posterior,Oral Rehabilitation,1,DEN-709-2,1,"Description:
+
+Indications: Root Canal Treatment(RCT) Posterior
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Zoom Advance Whitening - fulll mouth,Oral Rehabilitation,1,DEN-710-1,1,"Description:
+
+Indications: Zoom Advance Whitening - fulll mouth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Post and Cure,Oral Rehabilitation,1,DEN-710-2,1,"Description:
+
+Indications: Post and Cure
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Bleaching Full mouth,Oral Rehabilitation,1,DEN-710-3,1,"Description:
+
+Indications: Bleaching Full mouth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Dental Xray,Oral Rehabilitation,1,DEN-711,1,"Description:
+
+Indications: Dental Xray
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Veneer Metal Free,Oral Rehabilitation,1,DEN-712-1,1,"Description:
+
+Indications: Veneer Metal Free
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Dental Jewellery (Crystal),Oral Rehabilitation,1,DEN-712-2,1,"Description:
+
+Indications: Dental Jewellery (Crystal)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+ORAL REHABILITATION - Cosmetic Countering,Oral Rehabilitation,1,DEN-712-3,1,"Description:
+
+Indications: Cosmetic Countering
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",OPD,1,,Dental,999312
+Gum Treatment - Gum Flap Surgery,,1,DEN-713-1,1,"Description:
+
+Indications: Gum Flap Surgery
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Gum Treatment - Bone Grafting,,1,DEN-713-2,1,"Description:
+
+Indications: Bone Grafting
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Gum Treatment - Apicectomy,,1,DEN-713-3,1,"Description:
+
+Indications: Apicectomy
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Gum Treatment - Sinus Lift - one side,,1,DEN-713-4,1,"Description:
+
+Indications: Sinus Lift - one side
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Orthodontics - Braces Metallic,,1,DEN-714-1,1,"Description:
+
+Indications: Braces Metallic
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Orthodontics - Braces Ceramic,,1,DEN-714-2,1,"Description:
+
+Indications: Braces Ceramic
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Orthodontics - Clear Alligner Invisible Braces,,1,DEN-714-3,1,"Description:
+
+Indications: Clear Alligner Invisible Braces
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Orthodontics - Invisalign,,1,DEN-714-4,1,"Description:
+
+Indications: Invisalign
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Kids Oral Care - upto 12 years (Pediatric Oncology) - Oral Scaling and Polishing,,1,DEN-715-1,1,"Description:
+
+Indications: Oral Scaling and Polishing
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Kids Oral Care - upto 12 years (Pediatric Oncology) - Oral Filling,,1,DEN-715-2,1,"Description:
+
+Indications: Oral Filling
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Kids Oral Care - upto 12 years (Pediatric Oncology) - Dental Extraction,,1,DEN-715-3,1,"Description:
+
+Indications: Dental Extraction
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312
+Kids Oral Care - upto 12 years (Pediatric Oncology) - Root Canal Treatment,,1,DEN-715-4,1,"Description:
+
+Indications: Root Canal Treatment
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",,1,,Dental,999312

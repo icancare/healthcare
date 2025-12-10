@@ -76,3 +76,5 @@ healthcare.patches.v15_0.assign_practitioner_schedules_v2 #08-12-2024
 healthcare.patches.v15_0.setup_client_service_units #08-12-2024
 healthcare.patches.v15_0.update_practitioner_emails #08-12-2024
 healthcare.patches.v15_0.create_practitioner_contacts #10-12-2024
+healthcare.patches.v15_0.import_procedure_items #10-12-2024
+healthcare.patches.v15_0.import_clinical_procedure_templates #10-12-2024

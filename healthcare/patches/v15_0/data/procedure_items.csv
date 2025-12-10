@@ -1,0 +1,1302 @@
+Item Code,Item Group,Item Name,Description,Standard Selling Rate,Maintain Stock,Default Unit of Measure,HSN/SAC,Grant Commission,Allow Sales,Allow Purchase,Max Discount (%),Default Price List (Item Defaults),Item Tax Template (Taxes)
+PBM-201-1,PBM,Mucositis Management - Grade 1 - 2 Mucositis,"Description:
+
+Indications: Grade 1 - 2 Mucositis
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12","1200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-201-3,PBM,Mucositis Management - Grade 3 Mucositis,"Description:
+
+Indications: Grade 3 Mucositis
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12","2400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-201-4,PBM,Mucositis Management - Grade 4 Mucositis,"Description:
+
+Indications: Grade 4 Mucositis
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12","3600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-202-1S,PBM,"Pain Relief in Oral Cancer - Acute Pain - Localized pain, small treatment area, shorter sessions","Description:
+
+Indications: Localized pain, small treatment area, shorter sessions
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  6","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-202-2S,PBM,Pain Relief in Oral Cancer - Acute Pain - Localised pain with 2 sites,"Description:
+
+Indications: Localised pain with 2 sites
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  6","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-202-MS,PBM,"Pain Relief in Oral Cancer - Acute Pain - Widespread pain, multiple sites treated, longer session duration","Description:
+
+Indications: Widespread pain, multiple sites treated, longer session duration
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  6","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-203-1S,PBM,"Pain Relief in Oral Cancer - Chronic Pain - Localized pain, small treatment area, shorter sessions","Description:
+
+Indications: Localized pain, small treatment area, shorter sessions
+Frequency:   2-3 times weekly
+Alternate days recommended.
+Repeat For:  4-6 weeks
+# Sessions:  8 to 24","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-203-2S,PBM,Pain Relief in Oral Cancer - Chronic Pain - Localised pain with 2 sites,"Description:
+
+Indications: Localised pain with 2 sites
+Frequency:   2-3 times weekly
+Alternate days recommended.
+Repeat For:  4-6 weeks
+# Sessions:  8 to 24","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-203-MS,PBM,"Pain Relief in Oral Cancer - Chronic Pain - Widespread pain, multiple sites treated, longer session duration","Description:
+
+Indications: Widespread pain, multiple sites treated, longer session duration
+Frequency:   2-3 times weekly
+Alternate days recommended.
+Repeat For:  4-6 weeks
+# Sessions:  8 to 24","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-204-1,PBM,"Post-Surgical Wound Healing - Simple surgical wounds, single application.","Description:
+
+Indications: Simple surgical wounds, single application.
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  7","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-203-2,PBM,Post-Surgical Wound Healing - Large Wounds,"Description:
+
+Indications: Large Wounds
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  7","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-203-3,PBM,Post-Surgical Wound Healing - Complex Large Wounds,"Description:
+
+Indications: Complex Large Wounds
+Frequency:   daily
+Repeat For:  1 week
+# Sessions:  7","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-204-1,PBM,"Xerostomia Management - Mild dry mouth, minimal gland dysfunction.","Description:
+
+Indications: Mild dry mouth, minimal gland dysfunction.
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-204-2,PBM,"Xerostomia Management - Moderate dry mouth, moderate gland dysfunction.","Description:
+
+Indications: Moderate dry mouth, moderate gland dysfunction.
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-204-3,PBM,"Xerostomia Management - Severe xerostomia, multiple gland involvement, advanced stage.","Description:
+
+Indications: Severe xerostomia, multiple gland involvement, advanced stage.
+Frequency:   Once a week
+Repeat For:  6 weeks
+# Sessions:  6","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-205-1,PBM,"Trismus SMF Management  - Grade 1 Early-stage trismus, mild muscle restriction.","Description:
+
+Indications: Grade 1 Early-stage trismus, mild muscle restriction.
+Frequency:   2-3 times a week
+Repeat For:  4 weeks
+# Sessions:  8 to 12","1200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-205-2,PBM,Trismus SMF Management  - Grade 2 Moderate trismus,"Description:
+
+Indications: Grade 2 Moderate trismus
+Frequency:   2-3 times a week
+Repeat For:  8 weeks
+# Sessions:  16 to 24","1200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-205-3,PBM,"Trismus SMF Management  - Severe trismus, post-radiation fibrosis, requiring extended therapy.","Description:
+
+Indications: Severe trismus, post-radiation fibrosis, requiring extended therapy.
+Frequency:   Daily for 4 weeks
+Twice a week for 4 weeks
+Repeat For:  8 weeks
+# Sessions:  32","1200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-206-1S,PBM,Neuropathy Management - Peripheral Neuropathy post Chemotherapy - 1 site,"Description:
+
+Indications: 1 site
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-206-2S,PBM,Neuropathy Management - Peripheral Neuropathy post Chemotherapy - 2 site,"Description:
+
+Indications: 2 site
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","2400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-206-MS,PBM,Neuropathy Management - Peripheral Neuropathy post Chemotherapy - Mutiple site,"Description:
+
+Indications: Mutiple site
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-1S-1,PBM,Radiation-Induced Dermatitis - 1 Site - Mild - no epithelial break,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Daily
+Repeat For:  4 days
+# Sessions:  4","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-1S-2,PBM,Radiation-Induced Dermatitis - 1 Site - moderate - few areas of epithelial break,"Description:
+
+Indications: moderate - few areas of epithelial break
+Frequency:   Daily
+Repeat For:  8 days
+# Sessions:  8","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-1S-3,PBM,Radiation-Induced Dermatitis - 1 Site - Severe - with ulceration,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Daily
+Repeat For:  12 days
+# Sessions:  12","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-2S-1,PBM,Radiation-Induced Dermatitis - 2 Sites - Mild - no epithelial break,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Daily
+Repeat For:  4 days
+# Sessions:  4","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-2S-2,PBM,Radiation-Induced Dermatitis - 2 Sites - moderate - few ares of epithelial break,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Daily
+Repeat For:  8 days
+# Sessions:  8","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-2S-3,PBM,Radiation-Induced Dermatitis - 2 Sites - Severe - with ulceration,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Daily
+Repeat For:  12 days
+# Sessions:  12","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-MS-1,PBM,Radiation-Induced Dermatitis - Multiple Sites - Mild - no epithelial break,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Daily
+Repeat For:  4 days
+# Sessions:  4","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-MS-2,PBM,Radiation-Induced Dermatitis - Multiple Sites - moderate - few ares of epithelial break,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Daily
+Repeat For:  8 days
+# Sessions:  8","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-207-MS-3,PBM,Radiation-Induced Dermatitis - Multiple Sites - Severe - with ulceration,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Daily
+Repeat For:  12 days
+# Sessions:  12","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-1S-1,PBM,Oral Lichen Planus Treatment - 1 Site - Mild - no epithelial break,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-1S-2,PBM,Oral Lichen Planus Treatment - 1 Site - moderate - few areas of epithelial break,"Description:
+
+Indications: moderate - few areas of epithelial break
+Frequency:   Once a week
+Repeat For:  8 weeks
+# Sessions:  8","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-1S-3,PBM,Oral Lichen Planus Treatment - 1 Site - Severe - with ulceration,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Once a week
+Repeat For:  12 weeks
+# Sessions:  12","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-2S-1,PBM,Oral Lichen Planus Treatment - 2 Sites - Mild - no epithelial break,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-2S-2,PBM,Oral Lichen Planus Treatment - 2 Sites - moderate - few ares of epithelial break,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Once a week
+Repeat For:  8 weeks
+# Sessions:  8","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-2S-3,PBM,Oral Lichen Planus Treatment - 2 Sites - Severe - with ulceration,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Once a week
+Repeat For:  12 weeks
+# Sessions:  12","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-MS-1,PBM,Oral Lichen Planus Treatment - Multiple Sites - Mild - no epithelial break,"Description:
+
+Indications: Mild - no epithelial break
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-MS-2,PBM,Oral Lichen Planus Treatment - Multiple Sites - moderate - few ares of epithelial break,"Description:
+
+Indications: moderate - few ares of epithelial break
+Frequency:   Once a week
+Repeat For:  8 weeks
+# Sessions:  8","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-208-MS-3,PBM,Oral Lichen Planus Treatment - Multiple Sites - Severe - with ulceration,"Description:
+
+Indications: Severe - with ulceration
+Frequency:   Once a week
+Repeat For:  12 weeks
+# Sessions:  12","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-209,PBM,Osteoradionecrosis Prevention - Pre and post Radiation,"Description:
+
+Indications: Pre and post Radiation
+Frequency:   Daily (includes before and after radiation)
+Repeat For:  10 weeks
+# Sessions:  10","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-210,PBM,Improved Dental Implant Healing - Laser applied to implant site before and after surgery to aid healing,"Description:
+
+Indications: Laser applied to implant site before and after surgery to aid healing
+Frequency:   per implant, once
+Repeat For:  None
+# Sessions:  1","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-211-1,PBM,Teeth Whitening for Tobacco Users - Mild,"Description:
+
+Indications: Mild
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-211-2,PBM,Teeth Whitening for Tobacco Users - Moderate,"Description:
+
+Indications: Moderate
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","3600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-211-3,PBM,Teeth Whitening for Tobacco Users - Severe/Deep stains ,"Description:
+
+Indications: Severe/Deep stains 
+Frequency:   Once a week
+Repeat For:  3-4 weeks
+# Sessions:  3 to 4","3600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-212-1,PBM,Teeth Scaling for tobacco users - Ultarasonic scaling required before teeth whitening - Grade 1 Mild,"Description:
+
+Indications: Grade 1 Mild
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2650",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-212-2,PBM,"Teeth Scaling for tobacco users - Ultarasonic scaling required before teeth whitening - Grade II, moderate","Description:
+
+Indications: Grade II, moderate
+Frequency:   Multiple sittings
+Repeat For:  None
+# Sessions:  1","3780",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-212-3,PBM,"Teeth Scaling for tobacco users - Ultarasonic scaling required before teeth whitening - Grade III, Severe","Description:
+
+Indications: Grade III, Severe
+Frequency:   Multiple sittings
+Repeat For:  None
+# Sessions:  1","5760",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-213,PBM,Oral Full Mouth Polishing - Full mouth,"Description:
+
+Indications: Full mouth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1900",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-214-U-1,PBM,Photobiomodulation for TMJ Disorders - Mild unilateral,"Description:
+
+Indications: Mild unilateral
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","2400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-214-U-2,PBM,Photobiomodulation for TMJ Disorders - Moderate unilateral,"Description:
+
+Indications: Moderate unilateral
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","2400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-214-U-3,PBM,Photobiomodulation for TMJ Disorders - Severe unilateral,"Description:
+
+Indications: Severe unilateral
+Frequency:   Once a week
+Repeat For:  8-10 weeks
+# Sessions:  8 to 10","2400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-214-B-1,PBM,Photobiomodulation for TMJ Disorders - Mild bilateral,"Description:
+
+Indications: Mild bilateral
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","4200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-214-B-2,PBM,Photobiomodulation for TMJ Disorders - Moderate bilateral,"Description:
+
+Indications: Moderate bilateral
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","4200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-214-B-3,PBM,Photobiomodulation for TMJ Disorders - Severe bilateral,"Description:
+
+Indications: Severe bilateral
+Frequency:   Once a week
+Repeat For:  8-10 weeks
+# Sessions:  8 to 10","4200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-215-1S,PBM,Photo Desensitisation for Hypersensitivity- Oral Mucosa - Partial Mouth /Regional /One site Oral Mucosa,"Description:
+
+Indications: Partial Mouth /Regional /One site Oral Mucosa
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-215-2S,PBM,Photo Desensitisation for Hypersensitivity- Oral Mucosa - Partial Mouth /Regional /Two site Oral Mucosa,"Description:
+
+Indications: Partial Mouth /Regional /Two site Oral Mucosa
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-215-MS,PBM,Photo Desensitisation for Hypersensitivity- Oral Mucosa - Full Mouth/ Multiple sites Oral Mucosa,"Description:
+
+Indications: Full Mouth/ Multiple sites Oral Mucosa
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-216-1T,PBM,Photo Desensitisation for Hypersensitivity - Tooth - 1 Tooth,"Description:
+
+Indications: 1 Tooth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-216-2T,PBM,Photo Desensitisation for Hypersensitivity - Tooth - 2 Teeth,"Description:
+
+Indications: 2 Teeth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-216-4T,PBM,Photo Desensitisation for Hypersensitivity - Tooth - Upto 4 Teeth,"Description:
+
+Indications: Upto 4 Teeth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-216-AT,PBM,Photo Desensitisation for Hypersensitivity - Tooth - Additional Tooth,"Description:
+
+Indications: Additional Tooth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-217-TC-1,PBM,TOBACCO CESSATION with PBM - Early-stage addiction,"Description:
+
+Indications: Early-stage addiction
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","3600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PBM-217-TC-2,PBM,TOBACCO CESSATION with PBM - Strong nicotine dependency,"Description:
+
+Indications: Strong nicotine dependency
+Frequency:   Once a week
+Repeat For:  6-8 weeks
+# Sessions:  6 to 8","3600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+TC-401,Other,Quit Tobacco Consultation by Doctor,"Description:
+
+Indications: -
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1440",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+TC-402,Other,Quit Tobacco Assessment by Quit Coach,"Description:
+
+Indications: -
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+TC-403-1,Other,Quit Tobacco - 1 month package - Mild addiction: Less than 10 cigarettes / 2 pouches per day,"Description:
+
+Indications: Mild addiction: Less than 10 cigarettes / 2 pouches per day
+Frequency:   Once a week for 4 weeks
+Repeat For:  None
+# Sessions:  4","7800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+TC-403-2,Other,Quit Tobacco - 2 month package - Moderate addiction: 11-20 cigarettes / 2-5 pouches per day,"Description:
+
+Indications: Moderate addiction: 11-20 cigarettes / 2-5 pouches per day
+Frequency:   Once a week for 4 weeks
+Once in 2 weeks for 4 weeks
+Repeat For:  None
+# Sessions:  6","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+TC-403-3,Other,Quit Tobacco - 3 Month Package - Severe addiction: Greater than 20 cigarettes / 5 pouches per day,"Description:
+
+Indications: Severe addiction: Greater than 20 cigarettes / 5 pouches per day
+Frequency:   Once a week for 4 weeks
+Once in 2 weeks for 8 weeks
+Repeat For:  None
+# Sessions:  8","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+TC-404,Other,Self Quit book - Self Quit book,"Description:
+
+Indications: Self Quit book
+Frequency:   per book
+Repeat For:  None
+# Sessions:  1",₹400,0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-301-1,PDT,"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size","Description:
+
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-301-2,PDT,"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Larger lesions, deeper invasion, higher photosensitizer dose.","Description:
+
+Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","54000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-302-1,PDT,"Recurrent Cancers IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size","Description:
+
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-302-2,PDT,"Recurrent Cancers IPD - Larger lesions, deeper invasion, higher photosensitizer dose.","Description:
+
+Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","54000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-303-1,PDT,"PDT for Oral Leukoplakia - Small, localized leukoplakia patch. <1 cm","Description:
+
+Indications: Small, localized leukoplakia patch. <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","12000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-303-2,PDT,"PDT for Oral Leukoplakia - Moderate localized leukoplakia 1-2 cm, 2-3 sites","Description:
+
+Indications: Moderate localized leukoplakia 1-2 cm, 2-3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","18000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-303-3,PDT,PDT for Oral Leukoplakia - Extensive leukoplakia covering multiple sites,"Description:
+
+Indications: Extensive leukoplakia covering multiple sites
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-304-1S,PDT,"PDT for Oral Erythroplakia - Small, localized Erythroleukoplakia patch. <1 cm","Description:
+
+Indications: Small, localized Erythroleukoplakia patch. <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-304-2S,PDT,"PDT for Oral Erythroplakia - Moderate localized Erythro-leukoplakia 1-2 cm, 2 sites","Description:
+
+Indications: Moderate localized Erythro-leukoplakia 1-2 cm, 2 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","21600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-304-MS,PDT,PDT for Oral Erythroplakia - Extensive Erythro-leukoplakia covering multiple sites,"Description:
+
+Indications: Extensive Erythro-leukoplakia covering multiple sites
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","33600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-305-1S-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 1 site","Description:
+
+Indications: Mild < 1 cm, 1 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-305-2S-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 2-3 site","Description:
+
+Indications: Mild < 1 cm, 2-3 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","16800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-305-MS-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, multiple sites","Description:
+
+Indications: Mild < 1 cm, multiple sites
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-305-1S-2,PDT,"PDT for Dysplasia, Early-stage lesion - Moderate 1-2 cm, one site","Description:
+
+Indications: Moderate 1-2 cm, one site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","12000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-305-2S-2,PDT,"PDT for Dysplasia, Early-stage lesion - Moderate 1-2 cm, two site","Description:
+
+Indications: Moderate 1-2 cm, two site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-305-MS-2,PDT,"PDT for Dysplasia, Early-stage lesion - Moderate 1-2 cm, multiple sites","Description:
+
+Indications: Moderate 1-2 cm, multiple sites
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","26400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-306,PDT,"PDT for Severe Dysplasia, high-grade premalignant lesion - Single or multiple","Description:
+
+Indications: Single or multiple
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-307-1S,PDT,"PDT for Oral Lichen Planus - Few oral lesions, single-site application.","Description:
+
+Indications: Few oral lesions, single-site application.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-307-2S,PDT,PDT for Oral Lichen Planus - Bilateral oral lesion 2-3 sites,"Description:
+
+Indications: Bilateral oral lesion 2-3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","16800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-307-MS,PDT,"PDT for Oral Lichen Planus - Severe case, multi-site involvement, repeated sessions.","Description:
+
+Indications: Severe case, multi-site involvement, repeated sessions.
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-308-1S,PDT,"PDT for Verrucous Carcinoma - Few oral lesions, single-site application.","Description:
+
+Indications: Few oral lesions, single-site application.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-308-2S,PDT,PDT for Verrucous Carcinoma - Bilateral oral lesion 2 -3 sites,"Description:
+
+Indications: Bilateral oral lesion 2 -3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-308-MS,PDT,"PDT for Verrucous Carcinoma - Severe case, multi-site involvement, repeated sessions.","Description:
+
+Indications: Severe case, multi-site involvement, repeated sessions.
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","36000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-309-1,PDT,PDT for Field Cancerization - Multifocal dysplasia or carcinoma in situ,"Description:
+
+Indications: Multifocal dysplasia or carcinoma in situ
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-309-1S-2,PDT,"PDT for Field Cancerization - Few oral lesions, single-site application.","Description:
+
+Indications: Few oral lesions, single-site application.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-309-2S-2,PDT,PDT for Field Cancerization - Bilateral oral lesion 2 -3 sites,"Description:
+
+Indications: Bilateral oral lesion 2 -3 sites
+Frequency:   Once a week
+Repeat For:  2 weeks
+# Sessions:  2","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-309-MS-3,PDT,"PDT for Field Cancerization - Severe case, multi-site, multiple sessions","Description:
+
+Indications: Severe case, multi-site, multiple sessions
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","36000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-309-MS-4,PDT,"PDT for Field Cancerization - Large lesions > 4cm, multiple sites, multiple sessions","Description:
+
+Indications: Large lesions > 4cm, multiple sites, multiple sessions
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","60000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-310-1,PDT,PDT for SMF TRISMUS - Mild,"Description:
+
+Indications: Mild
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-310-2,PDT,PDT for SMF TRISMUS - Moderate,"Description:
+
+Indications: Moderate
+Frequency:   Once a week
+Repeat For:  4 weeks
+# Sessions:  4","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-310-3,PDT,PDT for SMF TRISMUS - Severe,"Description:
+
+Indications: Severe
+Frequency:   Once a week
+Repeat For:  6 weeks
+# Sessions:  6","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-311-2,PBMPDT,Integrated Management of SMF TRISMUS - Moderate,"Description:
+
+Indications: Moderate
+Frequency:   PBM twice weekly for 6 weeks
+PDT starting 3rd week weekly for 4 weeks
+Repeat For:  None
+# Sessions:  PBM - 12
+PDT - 4","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDT-311-3,PBMPDT,Integrated Management of SMF TRISMUS - Severe,"Description:
+
+Indications: Severe
+Frequency:   PBM daily for 2 weeks then twice weekly for 6 weeks
+PDT starting 3 rd week weekly for 6 weeks
+Repeat For:  None
+# Sessions:  PBM - 22
+PDT - 6","52800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-501-1,PDTI,"PDT for Oral Candidiasis - Mild, single site and single session","Description:
+
+Indications: Mild, single site and single session
+Frequency:   Once a week
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-501-2,PDTI,"PDT for Oral Candidiasis - Moderate, needs longer duration per session, 2 sites","Description:
+
+Indications: Moderate, needs longer duration per session, 2 sites
+Frequency:   Once a week
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-501-3,PDTI,"PDT for Oral Candidiasis - Severe, needs longer duration, multiple sites","Description:
+
+Indications: Severe, needs longer duration, multiple sites
+Frequency:   Once a week
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","18000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-502-1,PDTI,"PDT for Palliative Pain Management in Oral Cancer - Mild pain, local tumor site.","Description:
+
+Indications: Mild pain, local tumor site.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-502-2,PDTI,PDT for Palliative Pain Management in Oral Cancer - Moderate pain,"Description:
+
+Indications: Moderate pain
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-502-3,PDTI,"PDT for Palliative Pain Management in Oral Cancer - Severe pain, large tumor burden, multiple applications","Description:
+
+Indications: Severe pain, large tumor burden, multiple applications
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-503-1,PDTI,PDT for Actinic Cheilitis - 1 site,"Description:
+
+Indications: 1 site
+Frequency:   Once a week
+Repeat For:  4-6 weeks
+# Sessions:  4 to 6","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-503-2,PDTI,PDT for Actinic Cheilitis - 2 -3 sites,"Description:
+
+Indications: 2 -3 sites
+Frequency:   Once a week
+Repeat For:  4-6 weeks
+# Sessions:  4 to 6","16800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-503-3,PDTI,"PDT for Actinic Cheilitis - Multiple, both lips","Description:
+
+Indications: Multiple, both lips
+Frequency:   Once a week
+Repeat For:  4-6 weeks
+# Sessions:  4 to 6","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-504-1S,PDTI,PDT for Oral Verrucae - 1 site,"Description:
+
+Indications: 1 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-504-2S,PDTI,PDT for Oral Verrucae - 2-3 sites,"Description:
+
+Indications: 2-3 sites
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2 weeks
+# Sessions:  2","16800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-504-MS,PDTI,PDT for Oral Verrucae - Multiple,"Description:
+
+Indications: Multiple
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-505-1,PDTI,PDT for Gingival Hyperplasia - Mild ,"Description:
+
+Indications: Mild 
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-505-2,PDTI,PDT for Gingival Hyperplasia - Moderate,"Description:
+
+Indications: Moderate
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2","16800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-505-3,PDTI,PDT for Gingival Hyperplasia - Severe,"Description:
+
+Indications: Severe
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-506-1S,PDTI,"PDT for Peri-Implantitis - Inflammation and infection around dental implants, 1 site","Description:
+
+Indications: Inflammation and infection around dental implants, 1 site
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PDTI-505-MS,PDTI,"PDT for Peri-Implantitis - Inflammation and infection around dental implants, multi-site","Description:
+
+Indications: Inflammation and infection around dental implants, multi-site
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","36000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-601-1,PS,Laser Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,"Description:
+
+Indications: Grade 1 Lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-601-2,PS,Laser Vapourisation of PML/ Benign lesions - Grade 2 Lesion 1-2 cm,"Description:
+
+Indications: Grade 2 Lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-601-3,PS,Laser Vapourisation of PML/ Benign lesions - Grade 3 lesion 2-4 cm,"Description:
+
+Indications: Grade 3 lesion 2-4 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-601-4,PS,Laser Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,"Description:
+
+Indications: Grade 4 Mulitple lesion <2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-601-5,PS,Laser Vapourisation of PML/ Benign lesions - Grade 5 Muliple lesion of various size,"Description:
+
+Indications: Grade 5 Muliple lesion of various size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-602-1,PS,Electro Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,"Description:
+
+Indications: Grade 1 Lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-602-2,PS,Electro Vapourisation of PML/ Benign lesions - Grade 2 Lesion 1-2 cm,"Description:
+
+Indications: Grade 2 Lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-602-3,PS,Electro Vapourisation of PML/ Benign lesions - Grade 3 lesion 2-4 cm,"Description:
+
+Indications: Grade 3 lesion 2-4 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-602-4,PS,Electro Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,"Description:
+
+Indications: Grade 4 Mulitple lesion <2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-602-5,PS,Electro Vapourisation of PML/ Benign lesions - Grade 5 Muliple lesion of various size,"Description:
+
+Indications: Grade 5 Muliple lesion of various size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-603-1,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,"Description:
+
+Indications: Grade 1 Lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-603-2,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 2 Lesion 1-2 cm,"Description:
+
+Indications: Grade 2 Lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-603-3,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 3 lesion 2-4 cm,"Description:
+
+Indications: Grade 3 lesion 2-4 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-603-4,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,"Description:
+
+Indications: Grade 4 Mulitple lesion <2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-603-5,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 5 Muliple lesion of various size,"Description:
+
+Indications: Grade 5 Muliple lesion of various size
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-604-1,PS,Photo - Fibrotomy - Grade 1 minor band unilateral,"Description:
+
+Indications: Grade 1 minor band unilateral
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-604-2,PS,Photo - Fibrotomy - Grade 2 minor bands bilateral or mulitple,"Description:
+
+Indications: Grade 2 minor bands bilateral or mulitple
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","6000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-604-3,PS,Photo - Fibrotomy - Grade 3 major bands unilateral,"Description:
+
+Indications: Grade 3 major bands unilateral
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-604-4,PS,Photo - Fibrotomy - Grade 4 major bands bilateral,"Description:
+
+Indications: Grade 4 major bands bilateral
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2","16800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-604-5,PS,Photo - Fibrotomy - Grade 5 major bands multiple,"Description:
+
+Indications: Grade 5 major bands multiple
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-605-1,PS,Laser Excision of Benign/PML lesion - Grade 1 <1 cm,"Description:
+
+Indications: Grade 1 <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-605-2,PS,Laser Excision of Benign/PML lesion - Grade 2 lesion 1-2 cm,"Description:
+
+Indications: Grade 2 lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-605-3,PS,Laser Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,"Description:
+
+Indications: Grade 3 Multiple lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-605-4,PS,"Laser Excision of Benign/PML lesion - Grade 4  lesion 2- 4 cm, multiple sessions","Description:
+
+Indications: Grade 4  lesion 2- 4 cm, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-605-5,PS,"Laser Excision of Benign/PML lesion - Grade 5 Multiple lesion varied size, multiple sessions","Description:
+
+Indications: Grade 5 Multiple lesion varied size, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-606-1,PS,Electro Excision of Benign/PML lesion - Grade 1 <1 cm,"Description:
+
+Indications: Grade 1 <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-606-2,PS,Electro Excision of Benign/PML lesion - Grade 2 lesion 1-2 cm,"Description:
+
+Indications: Grade 2 lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-606-3,PS,Electro Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,"Description:
+
+Indications: Grade 3 Multiple lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-606-4,PS,"Electro Excision of Benign/PML lesion - Grade 4  lesion 2- 4 cm, multiple sessions","Description:
+
+Indications: Grade 4  lesion 2- 4 cm, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-606-5,PS,"Electro Excision of Benign/PML lesion - Grade 5 Multiple lesion varied size, multiple sessions","Description:
+
+Indications: Grade 5 Multiple lesion varied size, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-607-1,PS,Plasma Excision of Benign/PML lesion - Grade 1 <1 cm,"Description:
+
+Indications: Grade 1 <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-607-2,PS,Plasma Excision of Benign/PML lesion - Grade 2 lesion 1-2 cm,"Description:
+
+Indications: Grade 2 lesion 1-2 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-607-3,PS,Plasma Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,"Description:
+
+Indications: Grade 3 Multiple lesion <1 cm
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-607-4,PS,"Plasma Excision of Benign/PML lesion - Grade 4  lesion 2- 4 cm, multiple sessions","Description:
+
+Indications: Grade 4  lesion 2- 4 cm, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  1-2 weeks
+# Sessions:  1 to 2","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-607-5,PS,"Plasma Excision of Benign/PML lesion - Grade 5 Multiple lesion varied size, multiple sessions","Description:
+
+Indications: Grade 5 Multiple lesion varied size, multiple sessions
+Frequency:   Once a week
+repeat if needed
+Repeat For:  2-4 weeks
+# Sessions:  2 to 4","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-608-1,PS,Photo Wide Local Excision of Malignant Lesion/ Soft tissue Lesion - WLE Small,"Description:
+
+Indications: WLE Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-608-2,PS,Photo Wide Local Excision of Malignant Lesion/ Soft tissue Lesion - WLE intermediate,"Description:
+
+Indications: WLE intermediate
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","21600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-608-3,PS,Photo Wide Local Excision of Malignant Lesion/ Soft tissue Lesion - WLE LARGE,"Description:
+
+Indications: WLE LARGE
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-609-1,PS,Laser Photo biopsy - Small,"Description:
+
+Indications: Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3840",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-609-2,PS,Laser Photo biopsy - Medium,"Description:
+
+Indications: Medium
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-609-3,PS,Laser Photo biopsy - Large,"Description:
+
+Indications: Large
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","5760",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-610-1,PS,Electro Photo biopsy - Small,"Description:
+
+Indications: Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3840",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-610-2,PS,Electro Photo biopsy - Medium,"Description:
+
+Indications: Medium
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-610-3,PS,Electro Photo biopsy - Large,"Description:
+
+Indications: Large
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","5760",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-611-1,PS,Knife Photo biopsy - Small,"Description:
+
+Indications: Small
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3840",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-611-2,PS,Knife Photo biopsy - Medium,"Description:
+
+Indications: Medium
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+PS-611-3,PS,Knife Photo biopsy - Large,"Description:
+
+Indications: Large
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","5760",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-1,Dental,ORAL CARE PRE/POST OP - Clinic PREP fee per visit,"Description:
+
+Indications: Clinic PREP fee per visit
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",₹600,0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-2,Dental,ORAL CARE PRE/POST OP - ORAL Post-operative syringing & suction H2O2 and betadine treatment-oral care.,"Description:
+
+Indications: ORAL Post-operative syringing & suction H2O2 and betadine treatment-oral care.
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-3,Dental,ORAL CARE PRE/POST OP - Oral Full mouth polishing,"Description:
+
+Indications: Oral Full mouth polishing
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1580",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-4,Dental,ORAL CARE PRE/POST OP - Oral Filing for sharp teeth each unit,"Description:
+
+Indications: Oral Filing for sharp teeth each unit
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",₹830,0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-5,Dental,ORAL CARE PRE/POST OP - Fluoride Treatment before and after Radiotherapy,"Description:
+
+Indications: Fluoride Treatment before and after Radiotherapy
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-6,Dental,ORAL CARE PRE/POST OP - Root Planning (Per Quadrant),"Description:
+
+Indications: Root Planning (Per Quadrant)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","8400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-7,Dental,ORAL CARE PRE/POST OP - Oral Packing Class 1,"Description:
+
+Indications: Oral Packing Class 1
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1580",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-8,Dental,ORAL CARE PRE/POST OP - Oral Packing Class 2,"Description:
+
+Indications: Oral Packing Class 2
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2630",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-9,Dental,ORAL CARE PRE/POST OP - Oral Packing Class 3,"Description:
+
+Indications: Oral Packing Class 3
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3680",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-10,Dental,ORAL CARE PRE/POST OP - Oral Minor Procedures,"Description:
+
+Indications: Oral Minor Procedures
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-701-11,Dental,ORAL CARE PRE/POST OP - Oral Minor excisions,"Description:
+
+Indications: Oral Minor excisions
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","6200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-702-1,Dental,ORAL PROPHYLAXIS - PRE or Postoperative/RT Dental Care I,"Description:
+
+Indications: PRE or Postoperative/RT Dental Care I
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2630",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-702-2,Dental,ORAL PROPHYLAXIS - Pre or postoperative /RT Dental Care II,"Description:
+
+Indications: Pre or postoperative /RT Dental Care II
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-702-3,Dental,ORAL PROPHYLAXIS - Pre or postoperative /RT Dental Care III,"Description:
+
+Indications: Pre or postoperative /RT Dental Care III
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","6300",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-703-1,Dental,ORAL REHABILITATION - Removal Partial Denture plate,"Description:
+
+Indications: Removal Partial Denture plate
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-703-2,Dental,ORAL REHABILITATION - Removal partial denture,"Description:
+
+Indications: Removal partial denture
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-703-3,Dental,ORAL REHABILITATION - Complete Denture,"Description:
+
+Indications: Complete Denture
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-703-4,Dental,ORAL REHABILITATION - Bite Guard (upper or lower),"Description:
+
+Indications: Bite Guard (upper or lower)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","5000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-704-1,Dental,ORAL REHABILITATION - Dental Guide Flange post Hemimandibulectomy G-I,"Description:
+
+Indications: Dental Guide Flange post Hemimandibulectomy G-I
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","9000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-704-2,Dental,ORAL REHABILITATION - Dental Guide Flange G-II,"Description:
+
+Indications: Dental Guide Flange G-II
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","12000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-705,Dental,ORAL REHABILITATION - Obturator post operative procedure,"Description:
+
+Indications: Obturator post operative procedure
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-706,Dental,ORAL REHABILITATION - Implants – Permanent tooth,"Description:
+
+Indications: Implants – Permanent tooth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","48000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-707,Dental,ORAL REHABILITATION - Bridge Crown:- Metallic (Porcelain Fused Metal),"Description:
+
+Indications: Bridge Crown:- Metallic (Porcelain Fused Metal)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","6300",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-708-1,Dental,ORAL REHABILITATION - Metal Free Zirconia 5 years,"Description:
+
+Indications: Metal Free Zirconia 5 years
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","8400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-708-2,Dental,ORAL REHABILITATION - Metal free Zirconia 10 years,"Description:
+
+Indications: Metal free Zirconia 10 years
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","12600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-708-3,Dental,ORAL REHABILITATION - Metal Free Zirconia 15 years,"Description:
+
+Indications: Metal Free Zirconia 15 years
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","15800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-709-1,Dental,ORAL REHABILITATION - Root Canal Treatment(RCT) Anterior,"Description:
+
+Indications: Root Canal Treatment(RCT) Anterior
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-709-2,Dental,ORAL REHABILITATION - Root Canal Treatment(RCT) Posterior,"Description:
+
+Indications: Root Canal Treatment(RCT) Posterior
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-710-1,Dental,ORAL REHABILITATION - Zoom Advance Whitening - fulll mouth,"Description:
+
+Indications: Zoom Advance Whitening - fulll mouth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","7000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-710-2,Dental,ORAL REHABILITATION - Post and Cure,"Description:
+
+Indications: Post and Cure
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-710-3,Dental,ORAL REHABILITATION - Bleaching Full mouth,"Description:
+
+Indications: Bleaching Full mouth
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","4000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-711,Dental,ORAL REHABILITATION - Dental Xray,"Description:
+
+Indications: Dental Xray
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1",₹200,0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-712-1,Dental,ORAL REHABILITATION - Veneer Metal Free,"Description:
+
+Indications: Veneer Metal Free
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","8000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-712-2,Dental,ORAL REHABILITATION - Dental Jewellery (Crystal),"Description:
+
+Indications: Dental Jewellery (Crystal)
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","3000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-712-3,Dental,ORAL REHABILITATION - Cosmetic Countering,"Description:
+
+Indications: Cosmetic Countering
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-713-1,Dental,Gum Treatment - Gum Flap Surgery,"Description:
+
+Indications: Gum Flap Surgery
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","8000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-713-2,Dental,Gum Treatment - Bone Grafting,"Description:
+
+Indications: Bone Grafting
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","10000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-713-3,Dental,Gum Treatment - Apicectomy,"Description:
+
+Indications: Apicectomy
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-713-4,Dental,Gum Treatment - Sinus Lift - one side,"Description:
+
+Indications: Sinus Lift - one side
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","8000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-714-1,Dental,Orthodontics - Braces Metallic,"Description:
+
+Indications: Braces Metallic
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","35000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-714-2,Dental,Orthodontics - Braces Ceramic,"Description:
+
+Indications: Braces Ceramic
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","50000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-714-3,Dental,Orthodontics - Clear Alligner Invisible Braces,"Description:
+
+Indications: Clear Alligner Invisible Braces
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","100000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-714-4,Dental,Orthodontics - Invisalign,"Description:
+
+Indications: Invisalign
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","150000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-715-1,Dental,Kids Oral Care - upto 12 years (Pediatric Oncology) - Oral Scaling and Polishing,"Description:
+
+Indications: Oral Scaling and Polishing
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-715-2,Dental,Kids Oral Care - upto 12 years (Pediatric Oncology) - Oral Filling,"Description:
+
+Indications: Oral Filling
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-715-3,Dental,Kids Oral Care - upto 12 years (Pediatric Oncology) - Dental Extraction,"Description:
+
+Indications: Dental Extraction
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","1000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
+DEN-715-4,Dental,Kids Oral Care - upto 12 years (Pediatric Oncology) - Root Canal Treatment,"Description:
+
+Indications: Root Canal Treatment
+Frequency:   Once
+Repeat For:  None
+# Sessions:  1","2500",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
