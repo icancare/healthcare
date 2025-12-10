@@ -419,9 +419,9 @@ Indications: Self Quit book
 Frequency:   per book
 Repeat For:  None
 # Sessions:  1",₹400,0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-301-1,PDT,"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size","Description:
+PDT-301-1,PDT,"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size","Description:
 
-Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -431,9 +431,9 @@ Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","54000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-302-1,PDT,"Recurrent Cancers IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size","Description:
+PDT-302-1,PDT,"Recurrent Cancers IPD - Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size","Description:
 
-Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -443,9 +443,9 @@ Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","54000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-303-1,PDT,"PDT for Oral Leukoplakia - Small, localized leukoplakia patch. <1 cm","Description:
+PDT-303-1,PDT,"PDT for Oral Leukoplakia - Small, localized leukoplakia patch. less than 1 cm","Description:
 
-Indications: Small, localized leukoplakia patch. <1 cm
+Indications: Small, localized leukoplakia patch. less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","12000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -461,9 +461,9 @@ Indications: Extensive leukoplakia covering multiple sites
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","30000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-304-1S,PDT,"PDT for Oral Erythroplakia - Small, localized Erythroleukoplakia patch. <1 cm","Description:
+PDT-304-1S,PDT,"PDT for Oral Erythroplakia - Small, localized Erythroleukoplakia patch. less than 1 cm","Description:
 
-Indications: Small, localized Erythroleukoplakia patch. <1 cm
+Indications: Small, localized Erythroleukoplakia patch. less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","14400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -479,21 +479,21 @@ Indications: Extensive Erythro-leukoplakia covering multiple sites
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","33600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-305-1S-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 1 site","Description:
+PDT-305-1S-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild less than  1 cm, 1 site","Description:
 
-Indications: Mild < 1 cm, 1 site
+Indications: Mild less than  1 cm, 1 site
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","9600",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-305-2S-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 2-3 site","Description:
+PDT-305-2S-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild less than  1 cm, 2-3 site","Description:
 
-Indications: Mild < 1 cm, 2-3 site
+Indications: Mild less than  1 cm, 2-3 site
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","16800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-305-MS-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, multiple sites","Description:
+PDT-305-MS-1,PDT,"PDT for Dysplasia, Early-stage lesion - Mild less than  1 cm, multiple sites","Description:
 
-Indications: Mild < 1 cm, multiple sites
+Indications: Mild less than  1 cm, multiple sites
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -581,9 +581,9 @@ Indications: Severe case, multi-site, multiple sessions
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","36000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PDT-309-MS-4,PDT,"PDT for Field Cancerization - Large lesions > 4cm, multiple sites, multiple sessions","Description:
+PDT-309-MS-4,PDT,"PDT for Field Cancerization - Large lesions greater than  4cm, multiple sites, multiple sessions","Description:
 
-Indications: Large lesions > 4cm, multiple sites, multiple sessions
+Indications: Large lesions greater than  4cm, multiple sites, multiple sessions
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","60000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -728,9 +728,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","36000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-601-1,PS,Laser Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,"Description:
+PS-601-1,PS,Laser Vapourisation of PML/ Benign lesions - Grade 1 Lesion less than 1 cm,"Description:
 
-Indications: Grade 1 Lesion <1 cm
+Indications: Grade 1 Lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -746,9 +746,9 @@ Indications: Grade 3 lesion 2-4 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-601-4,PS,Laser Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,"Description:
+PS-601-4,PS,Laser Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion less than 2 cm,"Description:
 
-Indications: Grade 4 Mulitple lesion <2 cm
+Indications: Grade 4 Mulitple lesion less than 2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -758,9 +758,9 @@ Indications: Grade 5 Muliple lesion of various size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-602-1,PS,Electro Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,"Description:
+PS-602-1,PS,Electro Vapourisation of PML/ Benign lesions - Grade 1 Lesion less than 1 cm,"Description:
 
-Indications: Grade 1 Lesion <1 cm
+Indications: Grade 1 Lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -776,9 +776,9 @@ Indications: Grade 3 lesion 2-4 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-602-4,PS,Electro Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,"Description:
+PS-602-4,PS,Electro Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion less than 2 cm,"Description:
 
-Indications: Grade 4 Mulitple lesion <2 cm
+Indications: Grade 4 Mulitple lesion less than 2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -788,9 +788,9 @@ Indications: Grade 5 Muliple lesion of various size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-603-1,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,"Description:
+PS-603-1,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 1 Lesion less than 1 cm,"Description:
 
-Indications: Grade 1 Lesion <1 cm
+Indications: Grade 1 Lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -806,9 +806,9 @@ Indications: Grade 3 lesion 2-4 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-603-4,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,"Description:
+PS-603-4,PS,PLASMA Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion less than 2 cm,"Description:
 
-Indications: Grade 4 Mulitple lesion <2 cm
+Indications: Grade 4 Mulitple lesion less than 2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","28800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -850,9 +850,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","24000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-605-1,PS,Laser Excision of Benign/PML lesion - Grade 1 <1 cm,"Description:
+PS-605-1,PS,Laser Excision of Benign/PML lesion - Grade 1 less than 1 cm,"Description:
 
-Indications: Grade 1 <1 cm
+Indications: Grade 1 less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -862,9 +862,9 @@ Indications: Grade 2 lesion 1-2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-605-3,PS,Laser Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,"Description:
+PS-605-3,PS,Laser Excision of Benign/PML lesion - Grade 3 Multiple lesion less than 1 cm,"Description:
 
-Indications: Grade 3 Multiple lesion <1 cm
+Indications: Grade 3 Multiple lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -882,9 +882,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-606-1,PS,Electro Excision of Benign/PML lesion - Grade 1 <1 cm,"Description:
+PS-606-1,PS,Electro Excision of Benign/PML lesion - Grade 1 less than 1 cm,"Description:
 
-Indications: Grade 1 <1 cm
+Indications: Grade 1 less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -894,9 +894,9 @@ Indications: Grade 2 lesion 1-2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-606-3,PS,Electro Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,"Description:
+PS-606-3,PS,Electro Excision of Benign/PML lesion - Grade 3 Multiple lesion less than 1 cm,"Description:
 
-Indications: Grade 3 Multiple lesion <1 cm
+Indications: Grade 3 Multiple lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -914,9 +914,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4","38400",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-607-1,PS,Plasma Excision of Benign/PML lesion - Grade 1 <1 cm,"Description:
+PS-607-1,PS,Plasma Excision of Benign/PML lesion - Grade 1 less than 1 cm,"Description:
 
-Indications: Grade 1 <1 cm
+Indications: Grade 1 less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","7200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -926,9 +926,9 @@ Indications: Grade 2 lesion 1-2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","10800",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-PS-607-3,PS,Plasma Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,"Description:
+PS-607-3,PS,Plasma Excision of Benign/PML lesion - Grade 3 Multiple lesion less than 1 cm,"Description:
 
-Indications: Grade 3 Multiple lesion <1 cm
+Indications: Grade 3 Multiple lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","19200",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
@@ -1144,9 +1144,9 @@ Indications: Obturator post operative procedure
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","10000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP
-DEN-706,Dental,ORAL REHABILITATION - Implants – Permanent tooth,"Description:
+DEN-706,Dental,ORAL REHABILITATION - Implants - Permanent tooth,"Description:
 
-Indications: Implants – Permanent tooth
+Indications: Implants - Permanent tooth
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1","48000",0,Visit,999312,1,1,0,30,Standard Selling,Nil-Rated - ICCARP

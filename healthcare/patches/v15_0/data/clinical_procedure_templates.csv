@@ -419,9 +419,9 @@ Indications: Self Quit book
 Frequency:   per book
 Repeat For:  None
 # Sessions:  1",OPD,1,,Other,999312
-"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size",Photo Medicine,1,PDT-301-1,1,"Description:
+"Photodynamic Therapy for Early-Stage Oral Cancer IPD - Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size",Photo Medicine,1,PDT-301-1,1,"Description:
 
-Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
@@ -431,9 +431,9 @@ Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
-"Recurrent Cancers IPD - Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size",Photo Medicine,1,PDT-302-1,1,"Description:
+"Recurrent Cancers IPD - Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size",Photo Medicine,1,PDT-302-1,1,"Description:
 
-Indications: Small lesions, early diagnosis, minimal photosensitizer use. <4mm Depth 1 cm size
+Indications: Small lesions, early diagnosis, minimal photosensitizer use. less than 4mm Depth 1 cm size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
@@ -443,9 +443,9 @@ Indications: Larger lesions, deeper invasion, higher photosensitizer dose.
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
-"PDT for Oral Leukoplakia - Small, localized leukoplakia patch. <1 cm",Photo Medicine,1,PDT-303-1,1,"Description:
+"PDT for Oral Leukoplakia - Small, localized leukoplakia patch. less than 1 cm",Photo Medicine,1,PDT-303-1,1,"Description:
 
-Indications: Small, localized leukoplakia patch. <1 cm
+Indications: Small, localized leukoplakia patch. less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
@@ -461,9 +461,9 @@ Indications: Extensive leukoplakia covering multiple sites
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,,PDT,999312
-"PDT for Oral Erythroplakia - Small, localized Erythroleukoplakia patch. <1 cm",Photo Medicine,1,PDT-304-1S,1,"Description:
+"PDT for Oral Erythroplakia - Small, localized Erythroleukoplakia patch. less than 1 cm",Photo Medicine,1,PDT-304-1S,1,"Description:
 
-Indications: Small, localized Erythroleukoplakia patch. <1 cm
+Indications: Small, localized Erythroleukoplakia patch. less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
@@ -479,21 +479,21 @@ Indications: Extensive Erythro-leukoplakia covering multiple sites
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,,PDT,999312
-"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 1 site",Photo Medicine,1,PDT-305-1S-1,1,"Description:
+"PDT for Dysplasia, Early-stage lesion - Mild less than  1 cm, 1 site",Photo Medicine,1,PDT-305-1S-1,1,"Description:
 
-Indications: Mild < 1 cm, 1 site
+Indications: Mild less than  1 cm, 1 site
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
-"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, 2-3 site",Photo Medicine,1,PDT-305-2S-1,1,"Description:
+"PDT for Dysplasia, Early-stage lesion - Mild less than  1 cm, 2-3 site",Photo Medicine,1,PDT-305-2S-1,1,"Description:
 
-Indications: Mild < 1 cm, 2-3 site
+Indications: Mild less than  1 cm, 2-3 site
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
-"PDT for Dysplasia, Early-stage lesion - Mild < 1 cm, multiple sites",Photo Medicine,1,PDT-305-MS-1,1,"Description:
+"PDT for Dysplasia, Early-stage lesion - Mild less than  1 cm, multiple sites",Photo Medicine,1,PDT-305-MS-1,1,"Description:
 
-Indications: Mild < 1 cm, multiple sites
+Indications: Mild less than  1 cm, multiple sites
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PDT,999312
@@ -581,9 +581,9 @@ Indications: Severe case, multi-site, multiple sessions
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,,PDT,999312
-"PDT for Field Cancerization - Large lesions > 4cm, multiple sites, multiple sessions",Photo Medicine,1,PDT-309-MS-4,1,"Description:
+"PDT for Field Cancerization - Large lesions greater than  4cm, multiple sites, multiple sessions",Photo Medicine,1,PDT-309-MS-4,1,"Description:
 
-Indications: Large lesions > 4cm, multiple sites, multiple sessions
+Indications: Large lesions greater than  4cm, multiple sites, multiple sessions
 Frequency:   Once a week
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,,PDT,999312
@@ -728,9 +728,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,,PDTI,999312
-Laser Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,Photo Medicine,1,PS-601-1,1,"Description:
+Laser Vapourisation of PML/ Benign lesions - Grade 1 Lesion less than 1 cm,Photo Medicine,1,PS-601-1,1,"Description:
 
-Indications: Grade 1 Lesion <1 cm
+Indications: Grade 1 Lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
@@ -746,9 +746,9 @@ Indications: Grade 3 lesion 2-4 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
-Laser Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,Photo Medicine,1,PS-601-4,1,"Description:
+Laser Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion less than 2 cm,Photo Medicine,1,PS-601-4,1,"Description:
 
-Indications: Grade 4 Mulitple lesion <2 cm
+Indications: Grade 4 Mulitple lesion less than 2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
@@ -758,9 +758,9 @@ Indications: Grade 5 Muliple lesion of various size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
-Electro Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,Photo Medicine,1,PS-602-1,1,"Description:
+Electro Vapourisation of PML/ Benign lesions - Grade 1 Lesion less than 1 cm,Photo Medicine,1,PS-602-1,1,"Description:
 
-Indications: Grade 1 Lesion <1 cm
+Indications: Grade 1 Lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
@@ -776,9 +776,9 @@ Indications: Grade 3 lesion 2-4 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
-Electro Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,Photo Medicine,1,PS-602-4,1,"Description:
+Electro Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion less than 2 cm,Photo Medicine,1,PS-602-4,1,"Description:
 
-Indications: Grade 4 Mulitple lesion <2 cm
+Indications: Grade 4 Mulitple lesion less than 2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
@@ -788,9 +788,9 @@ Indications: Grade 5 Muliple lesion of various size
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
-PLASMA Vapourisation of PML/ Benign lesions - Grade 1 Lesion <1 cm,Photo Medicine,1,PS-603-1,1,"Description:
+PLASMA Vapourisation of PML/ Benign lesions - Grade 1 Lesion less than 1 cm,Photo Medicine,1,PS-603-1,1,"Description:
 
-Indications: Grade 1 Lesion <1 cm
+Indications: Grade 1 Lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
@@ -806,9 +806,9 @@ Indications: Grade 3 lesion 2-4 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
-PLASMA Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion <2 cm,Photo Medicine,1,PS-603-4,1,"Description:
+PLASMA Vapourisation of PML/ Benign lesions - Grade 4 Mulitple lesion less than 2 cm,Photo Medicine,1,PS-603-4,1,"Description:
 
-Indications: Grade 4 Mulitple lesion <2 cm
+Indications: Grade 4 Mulitple lesion less than 2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,PS,999312
@@ -850,9 +850,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,,PS,999312
-Laser Excision of Benign/PML lesion - Grade 1 <1 cm,Photo Medicine,1,PS-605-1,1,"Description:
+Laser Excision of Benign/PML lesion - Grade 1 less than 1 cm,Photo Medicine,1,PS-605-1,1,"Description:
 
-Indications: Grade 1 <1 cm
+Indications: Grade 1 less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
@@ -862,9 +862,9 @@ Indications: Grade 2 lesion 1-2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
-Laser Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,Photo Medicine,1,PS-605-3,1,"Description:
+Laser Excision of Benign/PML lesion - Grade 3 Multiple lesion less than 1 cm,Photo Medicine,1,PS-605-3,1,"Description:
 
-Indications: Grade 3 Multiple lesion <1 cm
+Indications: Grade 3 Multiple lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
@@ -882,9 +882,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,TISSUE,PS,999312
-Electro Excision of Benign/PML lesion - Grade 1 <1 cm,Photo Medicine,1,PS-606-1,1,"Description:
+Electro Excision of Benign/PML lesion - Grade 1 less than 1 cm,Photo Medicine,1,PS-606-1,1,"Description:
 
-Indications: Grade 1 <1 cm
+Indications: Grade 1 less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
@@ -894,9 +894,9 @@ Indications: Grade 2 lesion 1-2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
-Electro Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,Photo Medicine,1,PS-606-3,1,"Description:
+Electro Excision of Benign/PML lesion - Grade 3 Multiple lesion less than 1 cm,Photo Medicine,1,PS-606-3,1,"Description:
 
-Indications: Grade 3 Multiple lesion <1 cm
+Indications: Grade 3 Multiple lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
@@ -914,9 +914,9 @@ Frequency:   Once a week
 repeat if needed
 Repeat For:  2-4 weeks
 # Sessions:  2 to 4",OPD,1,Tissue,PS,999312
-Plasma Excision of Benign/PML lesion - Grade 1 <1 cm,Photo Medicine,1,PS-607-1,1,"Description:
+Plasma Excision of Benign/PML lesion - Grade 1 less than 1 cm,Photo Medicine,1,PS-607-1,1,"Description:
 
-Indications: Grade 1 <1 cm
+Indications: Grade 1 less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
@@ -926,9 +926,9 @@ Indications: Grade 2 lesion 1-2 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
-Plasma Excision of Benign/PML lesion - Grade 3 Multiple lesion <1 cm,Photo Medicine,1,PS-607-3,1,"Description:
+Plasma Excision of Benign/PML lesion - Grade 3 Multiple lesion less than 1 cm,Photo Medicine,1,PS-607-3,1,"Description:
 
-Indications: Grade 3 Multiple lesion <1 cm
+Indications: Grade 3 Multiple lesion less than 1 cm
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,TISSUE,PS,999312
@@ -1144,9 +1144,9 @@ Indications: Obturator post operative procedure
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,Dental,999312
-ORAL REHABILITATION - Implants – Permanent tooth,Oral Rehabilitation,1,DEN-706,1,"Description:
+ORAL REHABILITATION - Implants - Permanent tooth,Oral Rehabilitation,1,DEN-706,1,"Description:
 
-Indications: Implants – Permanent tooth
+Indications: Implants - Permanent tooth
 Frequency:   Once
 Repeat For:  None
 # Sessions:  1",OPD,1,,Dental,999312
