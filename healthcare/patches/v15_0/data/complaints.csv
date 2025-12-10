@@ -1,0 +1,133 @@
+complaint_code,complaint,department
+C-001,Fever,General Medicine
+C-002,Headache,General Medicine
+C-003,Fatigue / weakness,General Medicine
+C-004,Cough,General Medicine
+C-005,Cold / Running nose,General Medicine
+C-006,Breathlessness,General Medicine
+C-007,Chest pain,General Medicine
+C-008,Palpitations,General Medicine
+C-009,Vomiting,General Medicine
+C-010,Nausea,General Medicine
+C-011,Loose motions,General Medicine
+C-012,Abdominal pain,General Medicine
+C-013,Loss of appetite,General Medicine
+C-014,Weight loss,General Medicine
+C-015,Swelling of legs,General Medicine
+C-016,Dizziness,General Medicine
+C-017,Fainting,General Medicine
+C-018,Back pain,General Medicine
+C-019,Neck pain,General Medicine
+C-020,Shoulder pain,General Medicine
+C-021,Joint pain,General Medicine
+C-022,Muscle pain,General Medicine
+C-023,Stiffness,General Medicine
+C-024,Decreased / Restricted / Limited mouth opening,General Medicine
+C-025,Mouth ulcer,General Medicine
+C-026,White patch in mouth,General Medicine
+C-027,Pain in teeth,General Medicine
+C-028,Bleeding gums,General Medicine
+C-029,Tooth sensitivity,General Medicine
+C-030,Bad breath (halitosis),General Medicine
+C-031,Loose tooth,General Medicine
+C-032,Swollen gums,General Medicine
+C-033,Oral bleeding,General Medicine
+C-034,Non-healing mouth wound,General Medicine
+C-035,Difficulty swallowing,General Medicine
+C-036,Hoarseness,General Medicine
+C-037,Ear pain,General Medicine
+C-038,Ear discharge,General Medicine
+C-039,Hearing loss,General Medicine
+C-040,Nasal blockage,General Medicine
+C-041,Nosebleed,General Medicine
+C-042,Sinus pain,General Medicine
+C-043,Visual loss,General Medicine
+C-044,Blurred vision,General Medicine
+C-045,Eye pain,General Medicine
+C-046,Red eye,General Medicine
+C-047,Itchy eyes,General Medicine
+C-048,Leg pain on walking,General Medicine
+C-049,Difficulty walking,General Medicine
+C-050,Lump in neck,General Medicine
+C-051,Weight gain,General Medicine
+C-052,Excessive thirst,General Medicine
+C-053,Polyuria,General Medicine
+C-054,Memory loss,General Medicine
+C-055,Confusion,General Medicine
+C-056,Insomnia,General Medicine
+C-057,Excessive sleepiness,General Medicine
+C-058,Skin rash,General Medicine
+C-059,Itching,General Medicine
+C-060,Skin lesion,General Medicine
+C-061,Non-healing skin ulcer,General Medicine
+C-062,Urinary frequency,General Medicine
+C-063,Burning micturition,General Medicine
+C-064,Blood in urine,General Medicine
+C-065,Menstrual irregularity,General Medicine
+C-066,Vaginal discharge,General Medicine
+C-067,Breast lump,General Medicine
+C-068,Breast pain,General Medicine
+C-069,Infertility,General Medicine
+C-070,Testicular pain,General Medicine
+C-071,Scrotal swelling,General Medicine
+C-072,Penile discharge,General Medicine
+C-073,Difficulty passing stool,General Medicine
+C-074,Constipation,General Medicine
+C-075,Rectal bleeding,General Medicine
+C-076,Black tarry stools,General Medicine
+C-077,Recent trauma,General Medicine
+C-078,Bleeding after trauma,General Medicine
+C-079,Swelling after injury,General Medicine
+C-080,Heat intolerance,General Medicine
+C-081,Cold intolerance,General Medicine
+C-082,Tremors,General Medicine
+C-083,Seizure episode,General Medicine
+C-084,Weakness of limb,General Medicine
+C-085,Loss of consciousness,General Medicine
+C-086,Eye redness,General Medicine
+C-087,Neck stiffness,General Medicine
+C-088,Photophobia,General Medicine
+C-089,Mouth ulcer (Dental),Dental Medicine
+C-090,White patch in mouth (Dental),Dental Medicine
+C-091,Non-healing oral wound,Dental Medicine
+C-092,Difficulty chewing,Dental Medicine
+C-093,Loose tooth (Dental),Dental Medicine
+C-094,Jaw swelling,Dental Medicine
+C-095,Unexplained weight loss,Oral Oncology
+C-096,Lump or mass,Oral Oncology
+C-097,Bleeding from orifice,Oral Oncology
+C-098,Persistent pain,Oral Oncology
+C-099,Night sweats,Oral Oncology
+C-100,Other complaint,General Medicine
+C-101,Lump Swelling on face,Oral Oncology
+C-102,Lump/Swelling in Neck (outside),Oral Oncology
+C-103,Swelling/lump in Throat (inside),Oral Oncology
+C-104,Stickiness in throat,General Medicine
+C-105,Change in Voice,General Medicine
+C-106,Sore throat/Hoarseness,General Medicine
+C-107,Swallowing Difficulty/pain,General Medicine
+C-108,Restricted Mouth opening,Oral Oncology
+C-109,Restricted Tongue Movement,Oral Oncology
+C-110,Trauma mouth,Dental Medicine
+C-111,Pain mouth,Dental Medicine
+C-112,Painful Ulcer in mouth,Dental Medicine
+C-113,Painless Ulcer in mouth,Oral Oncology
+C-114,Recurrent Ulcer in mouth,Dental Medicine
+C-115,Red patch in mouth,Oral Oncology
+C-116,Nodule/Lump in mouth,Oral Oncology
+C-117,Swelling in mouth,Oral Oncology
+C-118,Sensitivity in mouth/teeth,Dental Medicine
+C-119,Burning Sensation in mouth oral cavity,Dental Medicine
+C-120,Bleeding in mouth or oral cavity,Dental Medicine
+C-121,Decreased Salivation,General Medicine
+C-122,Increased Salivation,General Medicine
+C-123,Foul Smell (Halitosis),Dental Medicine
+C-124,Swallowing Difficulty/pain during swallowing,General Medicine
+C-125,Painful teeth,Dental Medicine
+C-126,Loosening of teeth,Dental Medicine
+C-127,Lost teeth,Dental Medicine
+C-128,Teeth or gum problem,Dental Medicine
+C-129,Denture problem,Dental Medicine
+C-130,Earache,General Medicine
+C-131,Other,General Medicine
+
