@@ -58,8 +58,8 @@
   {
    "fieldname": "when",
    "fieldtype": "Data",
-   "label": "When",
-   "description": "Enter approximate date or number of years"
+   "label": "Since When",
+   "description": "Enter year, month and day, eg: 2023, Jan 3, 2023"
   },
   {
    "default": "0",

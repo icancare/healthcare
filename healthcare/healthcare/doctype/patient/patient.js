@@ -241,8 +241,8 @@ function render_diagnosis_quick_select_panel(frm) {
 					<thead>
 						<tr>
 							<th style="width: 35%;">DIAGNOSIS</th>
-							<th class="self-column-header" style="width: 12%; text-align: center; background: rgba(59, 130, 246, 0.15);">WHEN</th>
-							<th class="self-column-header" style="width: 13%; text-align: center; background: rgba(59, 130, 246, 0.15);">TREATMENT<br><small>ONGOING</small></th>
+							<th class="self-column-header" style="width: 12%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF WHEN<br><small>SINCE WHEN</small></th>
+							<th class="self-column-header" style="width: 13%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF TREATMENT<br><small>ONGOING</small></th>
 							<th class="self-column-header" style="width: 20%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF<br><small>NO / YES</small></th>
 							<th class="family-column-header" style="width: 20%; text-align: center; background: rgba(34, 197, 94, 0.15);">FAMILY<br><small>NO / YES</small></th>
 						</tr>
@@ -259,7 +259,7 @@ function render_diagnosis_quick_select_panel(frm) {
 			<tr class="diagnosis-row" data-diagnosis="${diag.name}" data-category="${diag.category}">
 				<td class="diagnosis-name">${display_name}</td>
 				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
-					<input type="text" class="form-control form-control-sm when-input" placeholder="e.g. 2020" style="width: 70px; margin: 0 auto;">
+					<input type="text" class="form-control form-control-sm when-input" placeholder="e.g. 2023" title="Enter year, month and day, eg: 2023, Jan 3, 2023" style="width: 80px; margin: 0 auto;">
 				</td>
 				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
 					<div class="btn-group btn-group-sm" role="group">

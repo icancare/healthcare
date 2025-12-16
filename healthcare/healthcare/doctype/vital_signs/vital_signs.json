@@ -105,15 +105,17 @@
   "ecg_done",
   "ecg_attachment",
   "ecg_preview_html",
+  "ecg_note",
   "cb_diag1",
   "echo_done",
   "echo_attachment",
   "echo_preview_html",
+  "echo_note",
   "cb_diag2",
   "dexascan_done",
   "dexascan_attachment",
   "dexascan_preview_html",
-  "diagnostic_note",
+  "dexascan_note",
   "sb_oral_exam",
   "mouth_opening_fingers",
   "mouth_opening_mm",
@@ -755,6 +757,12 @@
    "label": "ECG Preview"
   },
   {
+   "depends_on": "eval:doc.ecg_done=='Yes'",
+   "fieldname": "ecg_note",
+   "fieldtype": "Small Text",
+   "label": "ECG Notes"
+  },
+  {
    "fieldname": "cb_diag1",
    "fieldtype": "Column Break"
   },
@@ -776,6 +784,12 @@
    "fieldname": "echo_preview_html",
    "fieldtype": "HTML",
    "label": "ECHO Preview"
+  },
+  {
+   "depends_on": "eval:doc.echo_done=='Yes'",
+   "fieldname": "echo_note",
+   "fieldtype": "Small Text",
+   "label": "ECHO Notes"
   },
   {
    "fieldname": "cb_diag2",
@@ -801,9 +815,9 @@
    "label": "DExascan Preview"
   },
   {
-   "fieldname": "diagnostic_note",
+   "fieldname": "dexascan_note",
    "fieldtype": "Small Text",
-   "label": "Diagnostic Notes"
+   "label": "DExascan Notes"
   },
   {
    "collapsible": 1,
