@@ -250,20 +250,8 @@ function render_table(frm) {
 	let sex = get_sex(frm);
 	let age = frm.doc.patient_age;
 	
-	// Waist status
-	let waist_cm = to_cm(frm.doc.waist_circumference, frm.doc.waist_unit);
-	let waist_status = '-';
-	if (waist_cm > 0 && sex) {
-		if (sex === 'M') {
-			waist_status = waist_cm < 94 ? 'Normal' : waist_cm <= 102 ? 'Abnormal' : 'High';
-		} else {
-			waist_status = waist_cm < 80 ? 'Normal' : waist_cm <= 88 ? 'Abnormal' : 'High';
-		}
-	}
-	
 	let data = [
 		{ p: 'BMI', u: 'kg/m²', e: frm.doc.bmi, m: 'bmi_manual', n: '18.5-24.9', f: 'Weight/(Height²)', show: true },
-		{ p: 'Waist Circumference', u: 'cm', e: waist_cm || '-', m: 'waist_circumference', n: sex === 'M' ? '<94' : '<80', f: 'Measured', show: true, st: waist_status },
 		{ p: 'Waist to Hip Ratio', u: 'ratio', e: frm.doc.whr, m: 'whr_manual', n: sex === 'M' ? '<0.95' : '<0.80', f: 'Waist/Hip', show: true },
 		{ p: 'Body Fat %', u: '%', e: frm.doc.body_fat_percentage, m: 'bfp_manual', n: sex === 'M' ? '10-20' : '18-28', f: '1.20×BMI+0.23×Age-10.8×Sex-5.4', show: true },
 		{ p: 'Lean Body Mass', u: 'kg', e: frm.doc.lean_body_mass, m: 'lbm_manual', n: 'Varies', f: 'Boer Formula', show: true },
@@ -418,9 +406,6 @@ function get_status(param, val, normal, sex, frm) {
 	} else if (param === 'BMR') {
 		// BMR varies by individual
 		label = 'Calculated'; cls = 'av-g';
-	} else if (param === 'Waist Circumference') {
-		// Already handled via st parameter
-		return `<span class="av-st av-y">-</span>`;
 	} else {
 		return `<span class="av-st av-y">-</span>`;
 	}

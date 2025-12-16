@@ -276,7 +276,7 @@
   {
    "fieldname": "waist_circumference",
    "fieldtype": "Float",
-   "label": "Waist",
+   "label": "Waist Circumference",
    "precision": "2"
   },
   {
@@ -294,7 +294,7 @@
   {
    "fieldname": "hip_circumference",
    "fieldtype": "Float",
-   "label": "Hip",
+   "label": "Hip Circumference",
    "precision": "2"
   },
   {

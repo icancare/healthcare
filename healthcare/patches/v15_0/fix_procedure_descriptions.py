@@ -9,15 +9,19 @@ def execute():
     Fix Procedure Items and Clinical Procedure Templates descriptions
     - Re-import descriptions with proper multiline formatting
     - Decode HTML entities
+    - Change Clinical Procedure Template description to Text Editor
     """
     print("=" * 60)
     print("Fixing Procedure Descriptions")
     print("=" * 60)
     
+    # Change Clinical Procedure Template description field to Text Editor
+    change_template_description_field_type()
+    
     # Fix Items
     fix_item_descriptions()
     
-    # Fix Clinical Procedure Templates
+    # Fix Clinical Procedure Templates (now with HTML since field is Text Editor)
     fix_template_descriptions()
     
     frappe.db.commit()
@@ -26,6 +30,35 @@ def execute():
     print("=" * 60)
     print("✓ Procedure Descriptions Fixed!")
     print("=" * 60)
+
+
+def change_template_description_field_type():
+    """Change Clinical Procedure Template description field from Small Text to Text Editor"""
+    print("\n--- Changing Clinical Procedure Template Description Field Type ---")
+    
+    # Use Property Setter to change field type
+    property_name = "Clinical Procedure Template-description-fieldtype"
+    
+    if frappe.db.exists("Property Setter", property_name):
+        print("  - Property Setter already exists, updating...")
+        frappe.db.set_value("Property Setter", property_name, "value", "Text Editor")
+    else:
+        print("  - Creating Property Setter...")
+        ps = frappe.get_doc({
+            "doctype": "Property Setter",
+            "name": property_name,
+            "doctype_or_field": "DocField",
+            "doc_type": "Clinical Procedure Template",
+            "field_name": "description",
+            "property": "fieldtype",
+            "value": "Text Editor",
+            "property_type": "Select"
+        })
+        ps.insert(ignore_permissions=True)
+    
+    # Clear cache
+    frappe.clear_cache(doctype="Clinical Procedure Template")
+    print("  ✓ Changed description field to Text Editor")
 
 
 def fix_item_descriptions():
@@ -107,7 +140,7 @@ def fix_template_descriptions():
         # Decode HTML entities and clean special chars
         description = html.unescape(description)
         
-        # Convert newlines to HTML <br> for proper rendering
+        # Convert to HTML since field is now Text Editor
         description = convert_to_html(description)
         
         template_name_clean = clean_template_name(template_name)
@@ -158,7 +191,7 @@ def clean_template_name(name):
 
 
 def convert_to_html(text):
-    """Convert plain text with newlines to HTML with <br> tags"""
+    """Convert plain text with newlines to HTML with <br> tags for Text Editor fields"""
     if not text:
         return text
     
@@ -188,4 +221,23 @@ def convert_to_html(text):
     
     # Join with <br> tags
     return "<br>".join(html_parts)
+
+
+def clean_plain_text(text):
+    """Clean plain text - preserve newlines for Small Text fields"""
+    if not text:
+        return text
+    
+    # Split by newlines
+    lines = text.split('\n')
+    
+    # Clean each line but preserve structure
+    cleaned_lines = []
+    for line in lines:
+        # Don't strip completely - preserve some formatting
+        cleaned = line.rstrip()
+        cleaned_lines.append(cleaned)
+    
+    # Join with newlines
+    return '\n'.join(cleaned_lines)
 
