@@ -33,10 +33,12 @@
   "sb_symptoms",
   "symptoms",
   "symptoms_in_print",
+  "symptoms_notes",
   "get_applicable_treatment_plans",
   "physical_examination",
   "diagnosis",
   "diagnosis_in_print",
+  "diagnosis_notes",
   "codification",
   "codification_table",
   "sb_drug_prescription",
@@ -178,6 +180,11 @@
    "report_hide": 1
   },
   {
+   "fieldname": "symptoms_notes",
+   "fieldtype": "Small Text",
+   "label": "Symptom Notes"
+  },
+  {
    "fieldname": "physical_examination",
    "fieldtype": "Column Break"
   },
@@ -198,6 +205,11 @@
    "no_copy": 1,
    "print_hide": 1,
    "report_hide": 1
+  },
+  {
+   "fieldname": "diagnosis_notes",
+   "fieldtype": "Small Text",
+   "label": "Diagnosis Notes"
   },
   {
    "collapsible": 1,
