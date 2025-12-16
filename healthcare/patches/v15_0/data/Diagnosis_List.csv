@@ -1,0 +1,334 @@
+diagnosis_code,ChronicOrAcute,is_chronic,clinical_category,diagnosis_name,common_name,synonyms,icd11_code,icd11_uri,department,department-ignore,severity,default_follow_up_days,billing_code,status,default_treatment_template,is_reportable,notifiable,is_photo_medicine_eligible
+DIAG-0001,Acute,No,Gastrointestinal,Cholera,Cholera,Cholera,1A00,https://id.who.int/icd/entity/1A00,General Medicine,Gastroenterology,Mild,7,BL-00001,Approved,TT-0001,Yes,Yes,No
+DIAG-0002,Acute,No,Gastrointestinal,Typhoid fever,Typhoid fever,"Typhoid fever, Typhoid",1A04,https://id.who.int/icd/entity/1A04,General Medicine,General Medicine,Mild,7,BL-00002,Approved,TT-0002,Yes,Yes,No
+DIAG-0003,Acute,No,Medical Disease,Dengue,Dengue,Dengue,1B10,https://id.who.int/icd/entity/1B10,General Medicine,General Medicine,Mild,7,BL-00003,Approved,TT-0003,Yes,Yes,No
+DIAG-0004,Acute,No,Medical Disease,COVID-19,COVID-19,COVID-19,1C62,https://id.who.int/icd/entity/1C62,General Medicine,General Medicine,Mild,7,BL-00004,Approved,TT-0004,Yes,Yes,No
+DIAG-0005,Acute,No,Medical Disease,Influenza,Influenza,Influenza,1C10,https://id.who.int/icd/entity/1C10,General Medicine,General Medicine,Mild,7,BL-00005,Approved,TT-0005,No,No,No
+DIAG-0006,Chronic,Yes,Respiratory,Pulmonary tuberculosis,Pulmonary tuberculosis,"Pulmonary tuberculosis, Pulmonary",1F40,https://id.who.int/icd/entity/1F40,General Medicine,General Medicine,Mild,7,BL-00006,Approved,TT-0006,Yes,Yes,No
+DIAG-0007,Acute,No,Medical Disease,Malaria,Malaria,Malaria,1D47,https://id.who.int/icd/entity/1D47,General Medicine,General Medicine,Mild,7,BL-00007,Approved,TT-0007,No,No,No
+DIAG-0008,Chronic,Yes,Endocrine/Metabolic,Type 2 diabetes mellitus,Type 2 diabetes mellitus,"Type 2 diabetes mellitus, Type",5A11,https://id.who.int/icd/entity/5A11,General Medicine,Endocrinology,Moderate,30,BL-00008,Approved,TT-0008,No,No,No
+DIAG-0009,Chronic,Yes,Endocrine/Metabolic,Type 1 diabetes mellitus,Type 1 diabetes mellitus,"Type 1 diabetes mellitus, Type",5A10,https://id.who.int/icd/entity/5A10,General Medicine,Endocrinology,Moderate,30,BL-00009,Approved,TT-0009,No,No,No
+DIAG-0010,Chronic,Yes,Endocrine/Metabolic,Hypothyroidism,Hypothyroidism,Hypothyroidism,5A40,https://id.who.int/icd/entity/5A40,General Medicine,Endocrinology,Mild,7,BL-00010,Approved,TT-0010,No,No,No
+DIAG-0011,Chronic,Yes,Endocrine/Metabolic,Hyperthyroidism,Hyperthyroidism,Hyperthyroidism,5A41,https://id.who.int/icd/entity/5A41,General Medicine,Endocrinology,Mild,7,BL-00011,Approved,TT-0011,No,No,No
+DIAG-0012,Chronic,Yes,Endocrine/Metabolic,Obesity,Obesity,Obesity,5B81,https://id.who.int/icd/entity/5B81,General Medicine,Endocrinology,Mild,30,BL-00012,Approved,TT-0012,No,No,No
+DIAG-0013,Chronic,Yes,Cardiovascular,Essential hypertension,Essential hypertension,"Essential hypertension, Essential",BA80,https://id.who.int/icd/entity/BA80,General Medicine,Cardiology,Moderate,30,BL-00013,Approved,TT-0013,No,No,No
+DIAG-0014,Chronic,Yes,Cardiovascular,Ischaemic heart disease,Ischaemic heart disease,"Ischaemic heart disease, Ischaemic",BA41,https://id.who.int/icd/entity/BA41,General Medicine,ENT,Moderate,7,BL-00014,Approved,TT-0014,No,No,No
+DIAG-0015,Acute,No,Cardiovascular,Acute myocardial infarction,Acute myocardial infarction,"Acute myocardial infarction, Acute",BA40.0,https://id.who.int/icd/entity/BA40.0,General Medicine,Cardiology,Severe,7,BL-00015,Approved,TT-0015,No,No,No
+DIAG-0016,Chronic,Yes,Neurology,Ischemic stroke,Ischemic stroke,"Ischemic stroke, Ischemic",BD10,https://id.who.int/icd/entity/BD10,General Medicine,Neurology,Severe,7,BL-00016,Approved,TT-0016,No,No,No
+DIAG-0017,Chronic,Yes,Neurology,Hemorrhagic stroke,Hemorrhagic stroke,"Hemorrhagic stroke, Hemorrhagic",BD11,https://id.who.int/icd/entity/BD11,General Medicine,Neurology,Severe,7,BL-00017,Approved,TT-0017,No,No,No
+DIAG-0018,Acute,No,Cardiovascular,Heart failure,Heart failure,"Heart failure, Heart",BD56,https://id.who.int/icd/entity/BD56,General Medicine,ENT,Moderate,7,BL-00018,Approved,TT-0018,No,No,No
+DIAG-0019,Acute,No,Respiratory,Acute upper respiratory infection,Acute upper respiratory infection,"Acute upper respiratory infection, Acute",CA40,https://id.who.int/icd/entity/CA40,General Medicine,Respiratory,Severe,7,BL-00019,Approved,TT-0019,No,No,No
+DIAG-0020,Acute,No,Respiratory,Community-acquired pneumonia,Community-acquired pneumonia,"Community-acquired pneumonia, Community-acquired",CA23,https://id.who.int/icd/entity/CA23,General Medicine,Respiratory,Mild,7,BL-00020,Approved,TT-0020,No,No,No
+DIAG-0021,Chronic,Yes,Respiratory,Bronchitis,Bronchitis,Bronchitis,CA22,https://id.who.int/icd/entity/CA22,General Medicine,Respiratory,Mild,7,BL-00021,Approved,TT-0021,No,No,No
+DIAG-0022,Chronic,Yes,Respiratory,Asthma,Asthma,Asthma,CA30,https://id.who.int/icd/entity/CA30,General Medicine,Respiratory,Mild,30,BL-00022,Approved,TT-0022,No,No,No
+DIAG-0023,Chronic,Yes,Respiratory,COPD,COPD,COPD,CB24,https://id.who.int/icd/entity/CB24,General Medicine,Respiratory,Moderate,30,BL-00023,Approved,TT-0023,No,No,No
+DIAG-0024,Acute,No,Gastrointestinal,Gastritis,Gastritis,Gastritis,DA42,,General Medicine,General Medicine,Severe,7,BL-00024,Approved,TT-0024,No,No,No
+DIAG-0025,Chronic,Yes,Gastrointestinal,Peptic ulcer disease,Peptic ulcer disease,"Peptic ulcer disease, Peptic",,,General Medicine,General Medicine,Moderate,7,BL-00025,Approved,TT-0025,No,No,No
+DIAG-0026,Acute,No,General Medicine,Gastroenteritis,Gastroenteritis,Gastroenteritis,,,General Medicine,General Medicine,Mild,7,BL-00026,Approved,TT-0026,No,No,No
+DIAG-0027,Chronic,Yes,Gastrointestinal,Liver cirrhosis,Liver cirrhosis,"Liver cirrhosis, Liver",,,General Medicine,Gastroenterology,Mild,7,BL-00027,Approved,TT-0027,No,No,No
+DIAG-0028,Chronic,Yes,Gastrointestinal,Viral hepatitis,Viral hepatitis,"Viral hepatitis, Viral",,,General Medicine,Gastroenterology,Mild,7,BL-00028,Approved,TT-0028,Yes,Yes,No
+DIAG-0029,Chronic,Yes,Orthopedics,Low back pain,Low back pain,"Low back pain, Low",,,General Medicine,General Medicine,Mild,7,BL-00029,Approved,TT-0029,No,No,No
+DIAG-0030,Chronic,Yes,Orthopedics,Osteoarthritis,Osteoarthritis,Osteoarthritis,,,General Medicine,General Medicine,Moderate,30,BL-00030,Approved,TT-0030,No,No,No
+DIAG-0031,Chronic,Yes,Orthopedics,Rheumatoid arthritis,Rheumatoid arthritis,"Rheumatoid arthritis, Rheumatoid",,,General Medicine,General Medicine,Moderate,30,BL-00031,Approved,TT-0031,No,No,No
+DIAG-0032,Chronic,Yes,Neurology,Migraine,Migraine,Migraine,,,General Medicine,Neurology,Mild,7,BL-00034,Approved,TT-0034,No,No,No
+DIAG-0033,Chronic,Yes,Neurology,Epilepsy,Epilepsy,Epilepsy,,,General Medicine,Neurology,Mild,7,BL-00035,Approved,TT-0035,No,No,No
+DIAG-0034,Chronic,Yes,Neurology,Alzheimer disease,Alzheimer disease,"Alzheimer disease, Alzheimer",,,General Medicine,General Medicine,Moderate,7,BL-00036,Approved,TT-0036,No,No,No
+DIAG-0035,Chronic,Yes,Neurology,Peripheral neuropathy,Peripheral neuropathy,"Peripheral neuropathy, Peripheral",,,General Medicine,Neurology,Mild,7,BL-00037,Approved,TT-0037,No,No,No
+DIAG-0036,Chronic,Yes,Neurology,Parkinson disease,Parkinson disease,"Parkinson disease, Parkinson",,,General Medicine,Neurology,Moderate,7,BL-00038,Approved,TT-0038,No,No,No
+DIAG-0037,Chronic,Yes,Psychiatry,Depression,Depression,Depression,,,General Medicine,Psychiatry,Mild,7,BL-00039,Approved,TT-0039,No,No,No
+DIAG-0038,Chronic,Yes,Psychiatry,Anxiety disorder,Anxiety disorder,"Anxiety disorder, Anxiety",,,General Medicine,Psychiatry,Mild,7,BL-00040,Approved,TT-0040,No,No,No
+DIAG-0039,Chronic,Yes,Psychiatry,Schizophrenia,Schizophrenia,Schizophrenia,,,General Medicine,Psychiatry,Mild,7,BL-00041,Approved,TT-0041,No,No,No
+DIAG-0040,Chronic,Yes,Addiction,Alcohol dependence,Alcohol dependence,"Alcohol dependence, Alcohol",,,General Medicine,General Medicine,Mild,7,BL-00042,Approved,TT-0042,No,No,No
+DIAG-0041,Chronic,Yes,Addiction,Nicotine dependence,Nicotine dependence,"Nicotine dependence, Nicotine",,,General Medicine,General Medicine,Mild,7,BL-00043,Approved,TT-0043,No,No,No
+DIAG-0042,Chronic,Yes,Skin,Dermatitis,Dermatitis,Dermatitis,,,General Medicine,Dermatology,Mild,7,BL-00044,Approved,TT-0044,No,No,No
+DIAG-0043,Chronic,Yes,Skin,Psoriasis,Psoriasis,Psoriasis,,,General Medicine,Dermatology,Mild,7,BL-00045,Approved,TT-0045,No,No,No
+DIAG-0044,Chronic,Yes,Skin,Urticaria,Urticaria,Urticaria,,,General Medicine,Dermatology,Mild,7,BL-00046,Approved,TT-0046,No,No,No
+DIAG-0045,Chronic,Yes,Skin,Fungal skin infection,Fungal skin infection,"Fungal skin infection, Fungal",,,General Medicine,Dermatology,Mild,7,BL-00047,Approved,TT-0047,No,No,No
+DIAG-0046,Chronic,Yes,Cancer,Oral cancer,Oral cancer,"Oral cancer, Oral",2C10,https://id.who.int/icd/entity/2C10,General Medicine,Dental,Severe,7,BL-00048,Approved,TT-0048,No,No,Yes
+DIAG-0047,Chronic,Yes,Cancer,Breast cancer,Breast cancer,"Breast cancer, Breast",2C20,https://id.who.int/icd/entity/2C20,Oral Oncology,Oncology,Severe,7,BL-00049,Approved,TT-0049,No,No,Yes
+DIAG-0048,Chronic,Yes,Cancer,Lung cancer,Lung cancer,"Lung cancer, Lung",2C30,https://id.who.int/icd/entity/2C30,Oral Oncology,Oncology,Severe,7,BL-00050,Approved,TT-0050,No,No,Yes
+DIAG-0049,Chronic,Yes,Cancer,Colorectal cancer,Colorectal cancer,"Colorectal cancer, Colorectal",2C40,https://id.who.int/icd/entity/2C40,Oral Oncology,Oncology,Severe,7,BL-00051,Approved,TT-0051,No,No,Yes
+DIAG-0050,Chronic,Yes,Cancer,Leukemia,Leukemia,Leukemia,2C14,https://id.who.int/icd/entity/2C14,Oral Oncology,Oncology,Mild,30,BL-00052,Approved,TT-0052,No,No,No
+DIAG-0051,Acute,No,Obstetrics/Gynaecology,Normal pregnancy,Normal pregnancy,"Normal pregnancy, Normal",JA20,https://id.who.int/icd/entity/JA20,General Medicine,Gynaecology,Mild,7,BL-00053,Approved,TT-0053,No,No,No
+DIAG-0052,Acute,No,Obstetrics/Gynaecology,Preeclampsia,Preeclampsia,Preeclampsia,JA84,https://id.who.int/icd/entity/JA84,General Medicine,Gynaecology,Mild,7,BL-00054,Approved,TT-0054,No,No,No
+DIAG-0053,Chronic,Yes,Obstetrics/Gynaecology,Gestational diabetes,Gestational diabetes,"Gestational diabetes, Gestational",JA63,https://id.who.int/icd/entity/JA63,General Medicine,Gynaecology,Moderate,30,BL-00055,Approved,TT-0055,No,No,No
+DIAG-0054,Chronic,Yes,Obstetrics/Gynaecology,PCOS,PCOS,PCOS,,,General Medicine,General Medicine,Mild,7,BL-00056,Approved,TT-0056,No,No,No
+DIAG-0055,Chronic,Yes,Obstetrics/Gynaecology,Menstrual disorders,Menstrual disorders,"Menstrual disorders, Menstrual",,,General Medicine,Gynaecology,Mild,7,BL-00057,Approved,TT-0057,No,No,No
+DIAG-0056,Acute,No,ENT,Acute otitis media,Acute otitis media,"Acute otitis media, Acute",KA81,https://id.who.int/icd/entity/KA81,General Medicine,ENT,Severe,7,BL-00058,Approved,TT-0058,No,No,No
+DIAG-0057,Chronic,Yes,Medical Disease,Nutritional anemia,Nutritional anemia,"Nutritional anemia, Nutritional",XA20,https://id.who.int/icd/entity/XA20,General Medicine,General Medicine,Mild,7,BL-00059,Approved,TT-0059,No,No,No
+DIAG-0058,Acute,No,ENT,Acute pharyngitis,Acute pharyngitis,"Acute pharyngitis, Acute",,,General Medicine,ENT,Severe,7,BL-00060,Approved,TT-0060,No,No,No
+DIAG-0059,Acute,No,ENT,Tonsillitis,Tonsillitis,Tonsillitis,,,General Medicine,ENT,Mild,7,BL-00061,Approved,TT-0061,No,No,No
+DIAG-0060,Acute,No,ENT,Sinusitis,Sinusitis,Sinusitis,,,General Medicine,ENT,Mild,7,BL-00062,Approved,TT-0062,No,No,No
+DIAG-0061,Acute,No,ENT,Otitis externa,Otitis externa,"Otitis externa, Otitis",,,General Medicine,ENT,Mild,7,BL-00063,Approved,TT-0063,No,No,No
+DIAG-0062,Chronic,Yes,Genitourinary,Chronic kidney disease,Chronic kidney disease,"Chronic kidney disease, Chronic",,,General Medicine,Nephrology/Urology,Moderate,30,BL-00064,Approved,TT-0064,No,No,No
+DIAG-0063,Acute,No,Genitourinary,Acute kidney injury,Acute kidney injury,"Acute kidney injury, Acute",,,General Medicine,Nephrology/Urology,Severe,7,BL-00065,Approved,TT-0065,No,No,No
+DIAG-0064,Acute,No,Genitourinary,Urinary tract infection,Urinary tract infection,"Urinary tract infection, Urinary",,,General Medicine,Nephrology/Urology,Mild,7,BL-00066,Approved,TT-0066,No,No,No
+DIAG-0065,Acute,No,Genitourinary,Pyelonephritis,Pyelonephritis,Pyelonephritis,,,General Medicine,Nephrology/Urology,Mild,7,BL-00067,Approved,TT-0067,No,No,No
+DIAG-0066,Chronic,Yes,Genitourinary,Benign prostatic hyperplasia,Benign prostatic hyperplasia,"Benign prostatic hyperplasia, Benign",,,General Medicine,General Medicine,Mild,7,BL-00068,Approved,TT-0068,No,No,No
+DIAG-0067,Chronic,Yes,Genitourinary,Prostatitis,Prostatitis,Prostatitis,,,General Medicine,General Medicine,Mild,7,BL-00069,Approved,TT-0069,No,No,No
+DIAG-0068,Chronic,Yes,Gastrointestinal,Gallstones,Gallstones,Gallstones,,,Gastroenterology,Gastroenterology,Mild,7,BL-00070,Approved,TT-0070,No,No,No
+DIAG-0069,Acute,No,Gastrointestinal,Pancreatitis,Pancreatitis,Pancreatitis,,,Gastroenterology,Gastroenterology,Mild,7,BL-00071,Approved,TT-0071,No,No,No
+DIAG-0070,Chronic,Yes,Gastrointestinal,Irritable bowel syndrome,Irritable bowel syndrome,"Irritable bowel syndrome, Irritable",,,General Medicine,General Medicine,Mild,7,BL-00072,Approved,TT-0072,No,No,No
+DIAG-0071,Chronic,Yes,Gastrointestinal,Constipation,Constipation,Constipation,,,General Medicine,General Medicine,Mild,7,BL-00073,Approved,TT-0073,No,No,No
+DIAG-0072,Acute,No,Gastrointestinal,Diarrhea,Diarrhea,Diarrhea,,,General Medicine,General Medicine,Mild,7,BL-00074,Approved,TT-0074,No,No,No
+DIAG-0073,Chronic,Yes,Medical Disease,Iron deficiency anemia,Iron deficiency anemia,"Iron deficiency anemia, Iron",,,General Medicine,General Medicine,Mild,7,BL-00075,Approved,TT-0075,No,No,No
+DIAG-0074,Chronic,Yes,Hematology,Thalassemia minor,Thalassemia minor,"Thalassemia minor, Thalassemia",,,General Medicine,General Medicine,Mild,7,BL-00076,Approved,TT-0076,No,No,No
+DIAG-0075,Acute,No,Cardiovascular,Hypertensive crisis,Hypertensive crisis,"Hypertensive crisis, Hypertensive",,,General Medicine,Cardiology,Mild,7,BL-00077,Approved,TT-0077,No,No,No
+DIAG-0076,Acute,No,General Medicine,Hypotension,Hypotension,Hypotension,,,General Medicine,General Medicine,Mild,7,BL-00078,Approved,TT-0078,No,No,No
+DIAG-0077,Chronic,Yes,Cardiovascular,Varicose veins,Varicose veins,"Varicose veins, Varicose",,,General Medicine,General Medicine,Mild,7,BL-00079,Approved,TT-0079,No,No,No
+DIAG-0078,Chronic,Yes,Cardiovascular,Peripheral vascular disease,Peripheral vascular disease,"Peripheral vascular disease, Peripheral",,,General Medicine,General Medicine,Moderate,7,BL-00080,Approved,TT-0080,No,No,No
+DIAG-0079,Chronic,Yes,Cardiovascular,Deep vein thrombosis,Deep vein thrombosis,"Deep vein thrombosis, Deep",,,General Medicine,General Medicine,Mild,7,BL-00081,Approved,TT-0081,No,No,No
+DIAG-0080,Acute,No,Cardiovascular,Pulmonary embolism,Pulmonary embolism,"Pulmonary embolism, Pulmonary",,,General Medicine,General Medicine,Mild,7,BL-00082,Approved,TT-0082,No,No,No
+DIAG-0081,Chronic,Yes,Allergy,Allergic rhinitis,Allergic rhinitis,"Allergic rhinitis, Allergic",,,General Medicine,General Medicine,Mild,7,BL-00083,Approved,TT-0083,No,No,No
+DIAG-0082,Acute,No,Medical Disease,Sinus headache,Sinus headache,"Sinus headache, Sinus",,,General Medicine,ENT,Mild,7,BL-00084,Approved,TT-0084,No,No,No
+DIAG-0083,Chronic,Yes,Medical Disease,Tension headache,Tension headache,"Tension headache, Tension",,,General Medicine,General Medicine,Mild,7,BL-00085,Approved,TT-0085,No,No,No
+DIAG-0084,Chronic,Yes,Medical Disease,Cluster headache,Cluster headache,"Cluster headache, Cluster",,,General Medicine,General Medicine,Mild,7,BL-00086,Approved,TT-0086,No,No,No
+DIAG-0085,Chronic,Yes,Neurology,Sciatica,Sciatica,Sciatica,,,General Medicine,General Medicine,Mild,7,BL-00087,Approved,TT-0087,No,No,No
+DIAG-0086,Chronic,Yes,Neurology,Cervical spondylosis,Cervical spondylosis,"Cervical spondylosis, Cervical",,,General Medicine,General Medicine,Mild,7,BL-00088,Approved,TT-0088,No,No,No
+DIAG-0087,Chronic,Yes,Neurology,Lumbar spondylosis,Lumbar spondylosis,"Lumbar spondylosis, Lumbar",,,General Medicine,General Medicine,Mild,7,BL-00089,Approved,TT-0089,No,No,No
+DIAG-0088,Chronic,Yes,Neurology,Carpal tunnel syndrome,Carpal tunnel syndrome,"Carpal tunnel syndrome, Carpal",,,General Medicine,General Medicine,Mild,7,BL-00090,Approved,TT-0090,No,No,No
+DIAG-0089,Chronic,Yes,Orthopedics,Tendinitis,Tendinitis,Tendinitis,,,General Medicine,General Medicine,Mild,7,BL-00091,Approved,TT-0091,No,No,No
+DIAG-0090,Chronic,Yes,Orthopedics,Plantar fasciitis,Plantar fasciitis,"Plantar fasciitis, Plantar",,,General Medicine,General Medicine,Mild,7,BL-00092,Approved,TT-0092,No,No,No
+DIAG-0091,Chronic,Yes,Orthopedics,Achilles tendinitis,Achilles tendinitis,"Achilles tendinitis, Achilles",,,General Medicine,General Medicine,Mild,7,BL-00093,Approved,TT-0093,No,No,No
+DIAG-0092,Chronic,Yes,Orthopedics,Shoulder impingement,Shoulder impingement,"Shoulder impingement, Shoulder",,,General Medicine,General Medicine,Mild,7,BL-00094,Approved,TT-0094,No,No,No
+DIAG-0093,Chronic,Yes,Orthopedics,Rotator cuff tear,Rotator cuff tear,"Rotator cuff tear, Rotator",,,General Medicine,ENT,Mild,7,BL-00095,Approved,TT-0095,No,No,No
+DIAG-0094,Chronic,Yes,Orthopedics,Frozen shoulder,Frozen shoulder,"Frozen shoulder, Frozen",,,General Medicine,General Medicine,Mild,7,BL-00096,Approved,TT-0096,No,No,No
+DIAG-0095,Chronic,Yes,Medical Disease,Gout,Gout,Gout,,,General Medicine,General Medicine,Mild,7,BL-00097,Approved,TT-0097,No,No,No
+DIAG-0096,Chronic,Yes,Endocrine/Metabolic,Hyperlipidemia,Hyperlipidemia,Hyperlipidemia,,,General Medicine,Endocrinology,Mild,7,BL-00098,Approved,TT-0098,No,No,No
+DIAG-0097,Chronic,Yes,Endocrine/Metabolic,Metabolic syndrome,Metabolic syndrome,"Metabolic syndrome, Metabolic",,,General Medicine,Endocrinology,Mild,7,BL-00099,Approved,TT-0099,No,No,No
+DIAG-0098,Chronic,Yes,Endocrine/Metabolic,Vitamin D deficiency,Vitamin D deficiency,"Vitamin D deficiency, Vitamin",,,General Medicine,Endocrinology,Mild,7,BL-00100,Approved,TT-0100,No,No,No
+DIAG-0099,Chronic,Yes,Endocrine/Metabolic,Vitamin B12 deficiency,Vitamin B12 deficiency,"Vitamin B12 deficiency, Vitamin",,,General Medicine,Endocrinology,Mild,7,BL-00101,Approved,TT-0101,No,No,No
+DIAG-0100,Chronic,Yes,Respiratory,Obstructive sleep apnea,Obstructive sleep apnea,"Obstructive sleep apnea, Obstructive",,,General Medicine,General Medicine,Mild,7,BL-00102,Approved,TT-0102,No,No,No
+DIAG-0101,Chronic,Yes,Medical Disease,Insomnia,Insomnia,Insomnia,,,General Medicine,General Medicine,Mild,7,BL-00103,Approved,TT-0103,No,No,No
+DIAG-0102,Chronic,Yes,Medical Disease,Restless leg syndrome,Restless leg syndrome,"Restless leg syndrome, Restless",,,General Medicine,General Medicine,Mild,7,BL-00104,Approved,TT-0104,No,No,No
+DIAG-0103,Acute,No,Eye,Conjunctivitis,Conjunctivitis,Conjunctivitis,,,General Medicine,General Medicine,Mild,7,BL-00105,Approved,TT-0105,No,No,No
+DIAG-0104,Chronic,Yes,Eye,Glaucoma,Glaucoma,Glaucoma,,,General Medicine,General Medicine,Mild,7,BL-00106,Approved,TT-0106,No,No,No
+DIAG-0105,Chronic,Yes,Eye,Cataract,Cataract,Cataract,,,General Medicine,General Medicine,Mild,7,BL-00107,Approved,TT-0107,No,No,No
+DIAG-0106,Chronic,Yes,Eye,Macular degeneration,Macular degeneration,"Macular degeneration, Macular",,,General Medicine,General Medicine,Mild,7,BL-00108,Approved,TT-0108,No,No,No
+DIAG-0107,Chronic,Yes,Eye,Diabetic retinopathy,Diabetic retinopathy,"Diabetic retinopathy, Diabetic",,,General Medicine,General Medicine,Mild,7,BL-00109,Approved,TT-0109,No,No,No
+DIAG-0108,Chronic,Yes,ENT,Epistaxis,Epistaxis,Epistaxis,,,General Medicine,ENT,Mild,7,BL-00110,Approved,TT-0110,No,No,No
+DIAG-0109,Acute,No,Cardiovascular,Phlebitis,Phlebitis,Phlebitis,,,General Medicine,General Medicine,Mild,7,BL-00111,Approved,TT-0111,No,No,No
+DIAG-0110,Chronic,Yes,Gastrointestinal,Hemorrhoids,Hemorrhoids,Hemorrhoids,,,General Medicine,General Medicine,Mild,7,BL-00112,Approved,TT-0112,No,No,No
+DIAG-0111,Chronic,Yes,Gastrointestinal,Anal fissure,Anal fissure,"Anal fissure, Anal",,,General Medicine,General Medicine,Mild,7,BL-00113,Approved,TT-0113,No,No,No
+DIAG-0112,Chronic,Yes,Gastrointestinal,Inguinal hernia,Inguinal hernia,"Inguinal hernia, Inguinal",,,General Medicine,General Medicine,Mild,7,BL-00114,Approved,TT-0114,No,No,No
+DIAG-0113,Chronic,Yes,Gastrointestinal,Umbilical hernia,Umbilical hernia,"Umbilical hernia, Umbilical",,,General Medicine,General Medicine,Mild,7,BL-00115,Approved,TT-0115,No,No,No
+DIAG-0114,Acute,No,Gastrointestinal,Appendicitis,Appendicitis,Appendicitis,,,General Medicine,General Medicine,Mild,7,BL-00116,Approved,TT-0116,No,No,No
+DIAG-0115,Acute,No,Gastrointestinal,Cholecystitis,Cholecystitis,Cholecystitis,,,General Medicine,Gastroenterology,Mild,7,BL-00117,Approved,TT-0117,No,No,No
+DIAG-0116,Chronic,Yes,Obstetrics/Gynaecology,Endometriosis,Endometriosis,Endometriosis,,,General Medicine,Gynaecology,Mild,7,BL-00118,Approved,TT-0118,No,No,No
+DIAG-0117,Chronic,Yes,Obstetrics/Gynaecology,Uterine fibroids,Uterine fibroids,"Uterine fibroids, Uterine",,,General Medicine,Gynaecology,Mild,7,BL-00119,Approved,TT-0119,No,No,No
+DIAG-0118,Chronic,Yes,Obstetrics/Gynaecology,Pelvic inflammatory disease,Pelvic inflammatory disease,"Pelvic inflammatory disease, Pelvic",,,General Medicine,General Medicine,Moderate,7,BL-00120,Approved,TT-0120,No,No,No
+DIAG-0119,Chronic,Yes,Obstetrics/Gynaecology,Ovarian cyst,Ovarian cyst,"Ovarian cyst, Ovarian",,,General Medicine,Gynaecology,Mild,7,BL-00121,Approved,TT-0121,No,No,No
+DIAG-0120,Chronic,Yes,Obstetrics/Gynaecology,Menopause symptoms,Menopause symptoms,"Menopause symptoms, Menopause",,,General Medicine,Gynaecology,Mild,7,BL-00122,Approved,TT-0122,No,No,No
+DIAG-0121,Chronic,Yes,Obstetrics/Gynaecology,Female infertility,Female infertility,"Female infertility, Female",,,General Medicine,General Medicine,Mild,7,BL-00123,Approved,TT-0123,No,No,No
+DIAG-0122,Chronic,Yes,Medical Disease,Male infertility,Male infertility,"Male infertility, Male",,,General Medicine,General Medicine,Mild,7,BL-00124,Approved,TT-0124,No,No,No
+DIAG-0123,Acute,No,Respiratory,Asthma acute exacerbation,Asthma acute exacerbation,"Asthma acute exacerbation, Asthma",,,General Medicine,Respiratory,Severe,30,BL-00125,Approved,TT-0125,No,No,No
+DIAG-0124,Chronic,Yes,Respiratory,Bronchiolitis,Bronchiolitis,Bronchiolitis,,,General Medicine,Respiratory,Mild,7,BL-00126,Approved,TT-0126,No,No,No
+DIAG-0125,Chronic,Yes,Respiratory,Emphysema,Emphysema,Emphysema,,,General Medicine,General Medicine,Mild,7,BL-00127,Approved,TT-0127,No,No,No
+DIAG-0126,Chronic,Yes,Respiratory,Pleurisy,Pleurisy,Pleurisy,,,General Medicine,General Medicine,Mild,7,BL-00128,Approved,TT-0128,No,No,No
+DIAG-0127,Acute,No,Respiratory,Pneumothorax,Pneumothorax,Pneumothorax,,,General Medicine,General Medicine,Mild,7,BL-00129,Approved,TT-0129,No,No,No
+DIAG-0128,Acute,No,Respiratory,Acute respiratory distress syndrome,Acute respiratory distress syndrome,"Acute respiratory distress syndrome, Acute",,,General Medicine,Respiratory,Severe,7,BL-00130,Approved,TT-0130,No,No,No
+DIAG-0129,Acute,No,General Medicine,Sepsis,Sepsis,Sepsis,,,General Medicine,General Medicine,Severe,7,BL-00131,Approved,TT-0131,No,No,No
+DIAG-0130,Acute,No,General Medicine,Cellulitis,Cellulitis,Cellulitis,,,General Medicine,General Medicine,Mild,7,BL-00132,Approved,TT-0132,No,No,No
+DIAG-0131,Acute,No,Dermatology,Skin abscess,Skin abscess,"Skin abscess, Skin",,,General Medicine,Dermatology,Mild,7,BL-00133,Approved,TT-0133,No,No,No
+DIAG-0132,Acute,No,General Medicine,Lymphadenitis,Lymphadenitis,Lymphadenitis,,,General Medicine,General Medicine,Mild,7,BL-00134,Approved,TT-0134,No,No,No
+DIAG-0133,Chronic,Yes,Skin,Herpes zoster,Herpes zoster,"Herpes zoster, Herpes",,,General Medicine,General Medicine,Mild,7,BL-00135,Approved,TT-0135,No,No,No
+DIAG-0134,Acute,No,Skin,Herpes simplex,Herpes simplex,"Herpes simplex, Herpes",,,General Medicine,General Medicine,Mild,7,BL-00136,Approved,TT-0136,No,No,No
+DIAG-0135,Chronic,Yes,Skin,Warts,Warts,Warts,,,General Medicine,General Medicine,Mild,7,BL-00137,Approved,TT-0137,No,No,No
+DIAG-0136,Chronic,Yes,Skin,Acne vulgaris,Acne vulgaris,"Acne vulgaris, Acne",,,General Medicine,Dermatology,Mild,7,BL-00138,Approved,TT-0138,No,No,No
+DIAG-0137,Chronic,Yes,Skin,Melanoma,Melanoma,Melanoma,,,Oral Oncology,Oncology,Mild,7,BL-00139,Approved,TT-0139,No,No,Yes
+DIAG-0138,Chronic,Yes,Skin,Basal cell carcinoma,Basal cell carcinoma,"Basal cell carcinoma, Basal",,,Oral Oncology,Oncology,Mild,7,BL-00140,Approved,TT-0140,No,No,Yes
+DIAG-0139,Chronic,Yes,Skin,Squamous cell carcinoma,Squamous cell carcinoma,"Squamous cell carcinoma, Squamous",,,Oral Oncology,Oncology,Mild,7,BL-00141,Approved,TT-0141,No,No,Yes
+DIAG-0140,Chronic,Yes,Skin,Hypertrophic scar,Hypertrophic scar,"Hypertrophic scar, Hypertrophic",,,General Medicine,General Medicine,Mild,7,BL-00142,Approved,TT-0142,No,No,No
+DIAG-0141,Chronic,Yes,Skin,Keloid,Keloid,Keloid,,,General Medicine,General Medicine,Mild,7,BL-00143,Approved,TT-0143,No,No,No
+DIAG-0142,Chronic,Yes,Allergy,Anaphylaxis,Anaphylaxis,Anaphylaxis,,,General Medicine,General Medicine,Mild,7,BL-00144,Approved,TT-0144,No,No,No
+DIAG-0143,Chronic,Yes,Allergy,Food allergy,Food allergy,"Food allergy, Food",,,General Medicine,General Medicine,Mild,7,BL-00145,Approved,TT-0145,No,No,No
+DIAG-0144,Chronic,Yes,Allergy,Drug allergy,Drug allergy,"Drug allergy, Drug",,,General Medicine,General Medicine,Mild,7,BL-00146,Approved,TT-0146,No,No,No
+DIAG-0145,Chronic,Yes,Allergy,Atopic dermatitis,Atopic dermatitis,"Atopic dermatitis, Atopic",,,General Medicine,Dermatology,Mild,7,BL-00147,Approved,TT-0147,No,No,No
+DIAG-0146,Chronic,Yes,Skin,Contact dermatitis,Contact dermatitis,"Contact dermatitis, Contact",,,General Medicine,Dermatology,Mild,7,BL-00148,Approved,TT-0148,No,No,No
+DIAG-0147,Chronic,Yes,Medical Disease,Chronic fatigue syndrome,Chronic fatigue syndrome,"Chronic fatigue syndrome, Chronic",,,General Medicine,General Medicine,Moderate,30,BL-00149,Approved,TT-0149,No,No,No
+DIAG-0148,Chronic,Yes,Medical Disease,Fibromyalgia,Fibromyalgia,Fibromyalgia,,,General Medicine,General Medicine,Mild,7,BL-00150,Approved,TT-0150,No,No,No
+DIAG-0149,Acute,No,Psychiatry,Somatization disorder,Somatization disorder,"Somatization disorder, Somatization",,,General Medicine,General Medicine,Mild,7,BL-00151,Approved,TT-0151,No,No,No
+DIAG-0150,Chronic,Yes,Psychiatry,Bipolar disorder,Bipolar disorder,"Bipolar disorder, Bipolar",,,General Medicine,Psychiatry,Mild,7,BL-00152,Approved,TT-0152,No,No,No
+DIAG-0151,Chronic,Yes,Psychiatry,Post traumatic stress disorder,Post traumatic stress disorder,"Post traumatic stress disorder, Post",,,General Medicine,General Medicine,Mild,7,BL-00153,Approved,TT-0153,No,No,No
+DIAG-0152,Chronic,Yes,Psychiatry,Obsessive compulsive disorder,Obsessive compulsive disorder,"Obsessive compulsive disorder, Obsessive",,,General Medicine,General Medicine,Mild,7,BL-00154,Approved,TT-0154,No,No,No
+DIAG-0153,Chronic,Yes,Psychiatry,ADHD,ADHD,ADHD,,,General Medicine,Psychiatry,Mild,7,BL-00155,Approved,TT-0155,No,No,No
+DIAG-0154,Chronic,Yes,Psychiatry,Autism spectrum disorder,Autism spectrum disorder,"Autism spectrum disorder, Autism",,,General Medicine,Psychiatry,Mild,7,BL-00156,Approved,TT-0156,No,No,No
+DIAG-0155,Chronic,Yes,Psychiatry,Conduct disorder,Conduct disorder,"Conduct disorder, Conduct",,,General Medicine,General Medicine,Mild,7,BL-00157,Approved,TT-0157,No,No,No
+DIAG-0156,Chronic,Yes,Psychiatry,Oppositional defiant disorder,Oppositional defiant disorder,"Oppositional defiant disorder, Oppositional",,,General Medicine,General Medicine,Mild,7,BL-00158,Approved,TT-0158,No,No,No
+DIAG-0157,Chronic,Yes,Psychiatry,Delirium,Delirium,Delirium,,,General Medicine,General Medicine,Mild,7,BL-00159,Approved,TT-0159,No,No,No
+DIAG-0158,Chronic,Yes,Psychiatry,Dementia unspecified,Dementia unspecified,"Dementia unspecified, Dementia",,,General Medicine,Neurology,Mild,30,BL-00160,Approved,TT-0160,No,No,No
+DIAG-0159,Chronic,Yes,Neurology,Encephalitis,Encephalitis,Encephalitis,,,General Medicine,Neurology,Mild,7,BL-00161,Approved,TT-0161,No,No,No
+DIAG-0160,Chronic,Yes,Neurology,Meningitis,Meningitis,Meningitis,,,General Medicine,Neurology,Mild,7,BL-00162,Approved,TT-0162,No,No,No
+DIAG-0161,Chronic,Yes,Neurology,Brain tumor,Brain tumor,"Brain tumor, Brain",,,General Medicine,Neurology,Mild,7,BL-00163,Approved,TT-0163,No,No,No
+DIAG-0162,Chronic,Yes,Neurology,Spinal tumor,Spinal tumor,"Spinal tumor, Spinal",,,General Medicine,General Medicine,Mild,7,BL-00164,Approved,TT-0164,No,No,No
+DIAG-0163,Chronic,Yes,Neurology,Secondary parkinsonism,Secondary parkinsonism,"Secondary parkinsonism, Secondary",,,General Medicine,Neurology,Mild,7,BL-00165,Approved,TT-0165,No,No,No
+DIAG-0164,Chronic,Yes,Neurology,Multiple sclerosis,Multiple sclerosis,"Multiple sclerosis, Multiple",,,General Medicine,General Medicine,Mild,7,BL-00166,Approved,TT-0166,No,No,No
+DIAG-0165,Chronic,Yes,Neurology,Guillain-Barre syndrome,Guillain-Barre syndrome,"Guillain-Barre syndrome, Guillain-Barre",,,General Medicine,General Medicine,Mild,7,BL-00167,Approved,TT-0167,No,No,No
+DIAG-0166,Chronic,Yes,Neurology,Myasthenia gravis,Myasthenia gravis,"Myasthenia gravis, Myasthenia",,,General Medicine,General Medicine,Mild,7,BL-00168,Approved,TT-0168,No,No,No
+DIAG-0167,Chronic,Yes,Neurology,Febrile seizure,Febrile seizure,"Febrile seizure, Febrile",,,General Medicine,Neurology,Mild,7,BL-00169,Approved,TT-0169,No,No,No
+DIAG-0168,Chronic,Yes,Neurology,Hydrocephalus,Hydrocephalus,Hydrocephalus,,,General Medicine,General Medicine,Mild,7,BL-00170,Approved,TT-0170,No,No,No
+DIAG-0169,Chronic,Yes,Neurology,Cerebral palsy,Cerebral palsy,"Cerebral palsy, Cerebral",,,General Medicine,General Medicine,Mild,7,BL-00171,Approved,TT-0171,No,No,No
+DIAG-0170,Chronic,Yes,Neurology,Developmental delay,Developmental delay,"Developmental delay, Developmental",,,General Medicine,General Medicine,Mild,7,BL-00172,Approved,TT-0172,No,No,No
+DIAG-0171,Chronic,Yes,Neurology,Down syndrome,Down syndrome,"Down syndrome, Down",,,General Medicine,General Medicine,Mild,7,BL-00173,Approved,TT-0173,No,No,No
+DIAG-0172,Chronic,Yes,ENT,Recurrent otitis media,Recurrent otitis media,"Recurrent otitis media, Recurrent",,,General Medicine,ENT,Mild,7,BL-00174,Approved,TT-0174,No,No,No
+DIAG-0173,Chronic,Yes,ENT,Hearing loss,Hearing loss,"Hearing loss, Hearing",,,General Medicine,ENT,Mild,7,BL-00175,Approved,TT-0175,No,No,No
+DIAG-0174,Chronic,Yes,ENT,Speech delay,Speech delay,"Speech delay, Speech",,,General Medicine,General Medicine,Mild,7,BL-00176,Approved,TT-0176,No,No,No
+DIAG-0175,Chronic,Yes,Nutrition,Moderate malnutrition,Moderate malnutrition,"Moderate malnutrition, Moderate",,,General Medicine,General Medicine,Mild,7,BL-00178,Approved,TT-0178,No,No,No
+DIAG-0176,Chronic,Yes,Nutrition,Severe malnutrition,Severe malnutrition,"Severe malnutrition, Severe",,,General Medicine,General Medicine,Severe,7,BL-00179,Approved,TT-0179,No,No,No
+DIAG-0177,Chronic,Yes,Endocrine/Metabolic,Childhood obesity,Childhood obesity,"Childhood obesity, Childhood",,,General Medicine,Endocrinology,Mild,30,BL-00180,Approved,TT-0180,No,No,No
+DIAG-0178,Chronic,Yes,Medical Disease,Hand foot mouth disease,Hand foot mouth disease,"Hand foot mouth disease, Hand",,,General Medicine,Dental,Moderate,7,BL-00181,Approved,TT-0181,No,No,No
+DIAG-0179,Chronic,Yes,Medical Disease,Measles,Measles,Measles,,,General Medicine,General Medicine,Mild,7,BL-00182,Approved,TT-0182,Yes,Yes,No
+DIAG-0180,Chronic,Yes,Medical Disease,Mumps,Mumps,Mumps,,,General Medicine,General Medicine,Mild,7,BL-00183,Approved,TT-0183,No,No,No
+DIAG-0181,Chronic,Yes,Medical Disease,Rubella,Rubella,Rubella,,,General Medicine,General Medicine,Mild,7,BL-00184,Approved,TT-0184,No,No,No
+DIAG-0182,Chronic,Yes,Medical Disease,Chickenpox,Chickenpox,Chickenpox,,,General Medicine,General Medicine,Mild,7,BL-00185,Approved,TT-0185,No,No,No
+DIAG-0183,Chronic,Yes,Medical Disease,Pertussis,Pertussis,Pertussis,,,General Medicine,General Medicine,Mild,7,BL-00186,Approved,TT-0186,No,No,No
+DIAG-0184,Chronic,Yes,Medical Disease,Tetanus,Tetanus,Tetanus,,,General Medicine,General Medicine,Mild,7,BL-00187,Approved,TT-0187,No,No,No
+DIAG-0185,Chronic,Yes,Medical Disease,Diphtheria,Diphtheria,Diphtheria,,,General Medicine,General Medicine,Mild,7,BL-00188,Approved,TT-0188,No,No,No
+DIAG-0186,Chronic,Yes,Gastrointestinal,Hepatitis A,Hepatitis A,"Hepatitis A, Hepatitis",,,General Medicine,Gastroenterology,Mild,7,BL-00189,Approved,TT-0189,Yes,Yes,No
+DIAG-0187,Chronic,Yes,Gastrointestinal,Hepatitis E,Hepatitis E,"Hepatitis E, Hepatitis",,,General Medicine,Gastroenterology,Mild,7,BL-00190,Approved,TT-0190,Yes,Yes,No
+DIAG-0188,Chronic,Yes,Immunosuppression,HIV infection,HIV infection,"HIV infection, HIV",,,General Medicine,General Medicine,Mild,30,BL-00191,Approved,TT-0191,Yes,Yes,No
+DIAG-0189,Chronic,Yes,Immunosuppression,AIDS,AIDS,AIDS,,,General Medicine,General Medicine,Severe,30,BL-00192,Approved,TT-0192,Yes,Yes,No
+DIAG-0190,Chronic,Yes,Genitourinary,Syphilis,Syphilis,Syphilis,,,General Medicine,General Medicine,Mild,7,BL-00193,Approved,TT-0193,No,No,No
+DIAG-0191,Chronic,Yes,Genitourinary,Gonorrhea,Gonorrhea,Gonorrhea,,,General Medicine,General Medicine,Mild,7,BL-00194,Approved,TT-0194,No,No,No
+DIAG-0192,Chronic,Yes,Genitourinary,Chlamydia infection,Chlamydia infection,"Chlamydia infection, Chlamydia",,,General Medicine,General Medicine,Mild,7,BL-00195,Approved,TT-0195,No,No,No
+DIAG-0193,Chronic,Yes,Genitourinary,Trichomoniasis,Trichomoniasis,Trichomoniasis,,,General Medicine,General Medicine,Mild,7,BL-00196,Approved,TT-0196,No,No,No
+DIAG-0194,Chronic,Yes,Skin,Scabies,Scabies,Scabies,,,General Medicine,General Medicine,Mild,7,BL-00197,Approved,TT-0197,No,No,No
+DIAG-0195,Chronic,Yes,Skin,Pediculosis,Pediculosis,Pediculosis,,,General Medicine,General Medicine,Mild,7,BL-00198,Approved,TT-0198,No,No,No
+DIAG-0196,Chronic,Yes,Medical Disease,Extrapulmonary tuberculosis,Extrapulmonary tuberculosis,"Extrapulmonary tuberculosis, Extrapulmonary",,,General Medicine,General Medicine,Mild,7,BL-00199,Approved,TT-0199,Yes,Yes,No
+DIAG-0197,Chronic,Yes,Respiratory,Bronchiectasis,Bronchiectasis,Bronchiectasis,,,General Medicine,Respiratory,Mild,7,BL-00200,Approved,TT-0200,No,No,No
+DIAG-0198,Chronic,Yes,Immunosuppression,Sarcoidosis,Sarcoidosis,Sarcoidosis,,,General Medicine,General Medicine,Mild,7,BL-00201,Approved,TT-0201,No,No,No
+DIAG-0199,Chronic,Yes,Immunosuppression,Autoimmune hepatitis,Autoimmune hepatitis,"Autoimmune hepatitis, Autoimmune",,,General Medicine,Gastroenterology,Mild,7,BL-00202,Approved,TT-0202,Yes,Yes,No
+DIAG-0200,Chronic,Yes,Immunosuppression,Systemic lupus erythematosus,Systemic lupus erythematosus,"Systemic lupus erythematosus, Systemic",,,General Medicine,General Medicine,Mild,7,BL-00203,Approved,TT-0203,No,No,No
+DIAG-0201,Chronic,Yes,Skin,Scleroderma,Scleroderma,Scleroderma,,,General Medicine,General Medicine,Mild,7,BL-00204,Approved,TT-0204,No,No,No
+DIAG-0202,Chronic,Yes,Skin,Sjogren syndrome,Sjogren syndrome,"Sjogren syndrome, Sjogren",,,General Medicine,General Medicine,Mild,7,BL-00205,Approved,TT-0205,No,No,No
+DIAG-0203,Chronic,Yes,Skin,Vasculitis,Vasculitis,Vasculitis,,,General Medicine,General Medicine,Mild,7,BL-00206,Approved,TT-0206,No,No,No
+DIAG-0204,Chronic,Yes,Orthopedics,Ankylosing spondylitis,Ankylosing spondylitis,"Ankylosing spondylitis, Ankylosing",,,General Medicine,General Medicine,Mild,7,BL-00207,Approved,TT-0207,No,No,No
+DIAG-0205,Chronic,Yes,Orthopedics,Psoriatic arthritis,Psoriatic arthritis,"Psoriatic arthritis, Psoriatic",,,General Medicine,General Medicine,Moderate,30,BL-00208,Approved,TT-0208,No,No,No
+DIAG-0206,Chronic,Yes,Orthopedics,Reactive arthritis,Reactive arthritis,"Reactive arthritis, Reactive",,,General Medicine,General Medicine,Moderate,30,BL-00209,Approved,TT-0209,No,No,No
+DIAG-0207,Chronic,Yes,Endocrine/Metabolic,Osteoporosis,Osteoporosis,Osteoporosis,,,General Medicine,General Medicine,Moderate,7,BL-00210,Approved,TT-0210,No,No,No
+DIAG-0208,Acute,No,Trauma/Orthopaedics,Fracture wrist,Fracture wrist,"Fracture wrist, Fracture",,,General Medicine,Orthopaedics,Mild,7,BL-00211,Approved,TT-0211,No,No,No
+DIAG-0209,Acute,No,Trauma/Orthopaedics,Fracture ankle,Fracture ankle,"Fracture ankle, Fracture",,,General Medicine,Orthopaedics,Mild,7,BL-00212,Approved,TT-0212,No,No,No
+DIAG-0210,Acute,No,Trauma/Orthopaedics,Fracture clavicle,Fracture clavicle,"Fracture clavicle, Fracture",,,General Medicine,Orthopaedics,Mild,7,BL-00213,Approved,TT-0213,No,No,No
+DIAG-0211,Acute,No,Trauma/Orthopaedics,Fracture rib,Fracture rib,"Fracture rib, Fracture",,,General Medicine,Orthopaedics,Mild,7,BL-00214,Approved,TT-0214,No,No,No
+DIAG-0212,Acute,No,Trauma/Orthopaedics,Fracture pelvis,Fracture pelvis,"Fracture pelvis, Fracture",,,General Medicine,Orthopaedics,Mild,7,BL-00215,Approved,TT-0215,No,No,No
+DIAG-0213,Acute,No,General Medicine,Superficial burn,Superficial burn,"Superficial burn, Superficial",,,General Medicine,General Medicine,Mild,7,BL-00216,Approved,TT-0216,No,No,No
+DIAG-0214,Acute,No,Skin,Partial thickness burn,Partial thickness burn,"Partial thickness burn, Partial",,,General Medicine,General Medicine,Mild,7,BL-00217,Approved,TT-0217,No,No,No
+DIAG-0215,Acute,No,Skin,Full thickness burn,Full thickness burn,"Full thickness burn, Full",,,General Medicine,General Medicine,Mild,7,BL-00218,Approved,TT-0218,No,No,No
+DIAG-0216,Acute,No,Neurology,Heat stroke,Heat stroke,"Heat stroke, Heat",,,General Medicine,Neurology,Severe,7,BL-00219,Approved,TT-0219,No,No,No
+DIAG-0217,Acute,No,Medical Disease,Hypothermia,Hypothermia,Hypothermia,,,General Medicine,General Medicine,Mild,7,BL-00220,Approved,TT-0220,No,No,No
+DIAG-0218,Acute,No,Medical Disease,Dehydration,Dehydration,Dehydration,,,General Medicine,General Medicine,Mild,7,BL-00221,Approved,TT-0221,No,No,No
+DIAG-0219,Acute,No,Medical Disease,Snake bite,Snake bite,"Snake bite, Snake",,,General Medicine,General Medicine,Mild,7,BL-00222,Approved,TT-0222,No,No,No
+DIAG-0220,Chronic,Yes,Medical Disease,Dog bite,Dog bite,"Dog bite, Dog",,,General Medicine,General Medicine,Mild,7,BL-00223,Approved,TT-0223,No,No,No
+DIAG-0221,Chronic,Yes,Medical Disease,Rabies exposure,Rabies exposure,"Rabies exposure, Rabies",,,General Medicine,General Medicine,Mild,7,BL-00224,Approved,TT-0224,No,No,No
+DIAG-0222,Chronic,Yes,Occupational,Pesticide poisoning,Pesticide poisoning,"Pesticide poisoning, Pesticide",,,General Medicine,General Medicine,Mild,7,BL-00225,Approved,TT-0225,No,No,No
+DIAG-0223,Chronic,Yes,General Medicine,Drug overdose,Drug overdose,"Drug overdose, Drug",,,General Medicine,General Medicine,Mild,7,BL-00227,Approved,TT-0227,No,No,No
+DIAG-0224,Chronic,Yes,General Medicine,Lead poisoning,Lead poisoning,"Lead poisoning, Lead",,,General Medicine,General Medicine,Mild,7,BL-00228,Approved,TT-0228,No,No,No
+DIAG-0225,Acute,No,Cardiovascular,Acute coronary syndrome,Acute coronary syndrome,"Acute coronary syndrome, Acute",,,General Medicine,General Medicine,Severe,7,BL-00229,Approved,TT-0229,No,No,No
+DIAG-0226,Chronic,Yes,Cardiovascular,Stable angina,Stable angina,"Stable angina, Stable",,,General Medicine,Cardiology,Mild,7,BL-00230,Approved,TT-0230,No,No,No
+DIAG-0227,Chronic,Yes,Cardiovascular,Atrial fibrillation,Atrial fibrillation,"Atrial fibrillation, Atrial",,,General Medicine,Cardiology,Mild,7,BL-00231,Approved,TT-0231,No,No,No
+DIAG-0228,Chronic,Yes,Cardiovascular,Supraventricular tachycardia,Supraventricular tachycardia,"Supraventricular tachycardia, Supraventricular",,,General Medicine,Cardiology,Mild,7,BL-00232,Approved,TT-0232,No,No,No
+DIAG-0229,Chronic,Yes,Cardiovascular,Ventricular tachycardia,Ventricular tachycardia,"Ventricular tachycardia, Ventricular",,,General Medicine,Cardiology,Mild,7,BL-00233,Approved,TT-0233,No,No,No
+DIAG-0230,Chronic,Yes,Genitourinary,End-stage renal disease,End-stage renal disease,"End-stage renal disease, End-stage",,,General Medicine,Nephrology/Urology,Moderate,7,BL-00234,Approved,TT-0234,No,No,No
+DIAG-0231,Acute,No,Gastrointestinal,Peritonitis,Peritonitis,Peritonitis,,,General Medicine,General Medicine,Mild,7,BL-00235,Approved,TT-0235,No,No,No
+DIAG-0232,Acute,No,Gastrointestinal,Acute pancreatitis,Acute pancreatitis,"Acute pancreatitis, Acute",,,General Medicine,Gastroenterology,Severe,7,BL-00236,Approved,TT-0236,No,No,No
+DIAG-0233,Chronic,Yes,Gastrointestinal,Chronic pancreatitis,Chronic pancreatitis,"Chronic pancreatitis, Chronic",,,General Medicine,Gastroenterology,Moderate,30,BL-00237,Approved,TT-0237,No,No,No
+DIAG-0234,Acute,No,Gastrointestinal,Peptic ulcer perforation,Peptic ulcer perforation,"Peptic ulcer perforation, Peptic",,,General Medicine,General Medicine,Severe,7,BL-00238,Approved,TT-0238,No,No,No
+DIAG-0235,Acute,No,Gastrointestinal,Small bowel obstruction,Small bowel obstruction,"Small bowel obstruction, Small",,,General Medicine,General Medicine,Mild,7,BL-00239,Approved,TT-0239,No,No,No
+DIAG-0236,Acute,No,Gastrointestinal,Large bowel obstruction,Large bowel obstruction,"Large bowel obstruction, Large",,,General Medicine,General Medicine,Mild,7,BL-00240,Approved,TT-0240,No,No,No
+DIAG-0237,Acute,No,Gastrointestinal,Diverticulitis,Diverticulitis,Diverticulitis,,,General Medicine,General Medicine,Mild,7,BL-00241,Approved,TT-0241,No,No,No
+DIAG-0238,Chronic,Yes,Haematology,Hemolytic anemia,Hemolytic anemia,"Hemolytic anemia, Hemolytic",,,General Medicine,General Medicine,Mild,7,BL-00242,Approved,TT-0242,No,No,No
+DIAG-0239,Chronic,Yes,Haematology,Aplastic anemia,Aplastic anemia,"Aplastic anemia, Aplastic",,,General Medicine,General Medicine,Mild,7,BL-00243,Approved,TT-0243,No,No,No
+DIAG-0240,Chronic,Yes,Haematology,Polycythemia vera,Polycythemia vera,"Polycythemia vera, Polycythemia",,,General Medicine,General Medicine,Mild,7,BL-00244,Approved,TT-0244,No,No,No
+DIAG-0241,Chronic,Yes,Haematology,Essential thrombocythemia,Essential thrombocythemia,"Essential thrombocythemia, Essential",,,General Medicine,General Medicine,Mild,7,BL-00245,Approved,TT-0245,No,No,No
+DIAG-0242,Acute,No,Orthopedics,Septic arthritis,Septic arthritis,"Septic arthritis, Septic",,,General Medicine,General Medicine,Moderate,30,BL-00246,Approved,TT-0246,No,No,No
+DIAG-0243,Acute,No,Orthopedics,Osteomyelitis,Osteomyelitis,Osteomyelitis,,,General Medicine,General Medicine,Mild,7,BL-00247,Approved,TT-0247,No,No,No
+DIAG-0244,Chronic,Yes,Orthopedics,Meniscal tear,Meniscal tear,"Meniscal tear, Meniscal",,,General Medicine,ENT,Mild,7,BL-00248,Approved,TT-0248,No,No,No
+DIAG-0245,Chronic,Yes,Orthopedics,ACL tear,ACL tear,"ACL tear, ACL",,,General Medicine,ENT,Mild,7,BL-00249,Approved,TT-0249,No,No,No
+DIAG-0246,Chronic,Yes,Orthopedics,Rotator cuff tendinopathy,Rotator cuff tendinopathy,"Rotator cuff tendinopathy, Rotator",,,General Medicine,General Medicine,Mild,7,BL-00250,Approved,TT-0250,No,No,No
+DIAG-0247,Acute,No,Orthopedics,Bursitis,Bursitis,Bursitis,,,General Medicine,General Medicine,Mild,7,BL-00251,Approved,TT-0251,No,No,No
+DIAG-0248,Acute,No,Orthopedics,Adhesive capsulitis,Adhesive capsulitis,"Adhesive capsulitis, Adhesive",,,General Medicine,General Medicine,Mild,7,BL-00252,Approved,TT-0252,No,No,No
+DIAG-0249,Chronic,Yes,Orthopedics,Carpal tunnel syndrome severe,Carpal tunnel syndrome severe,"Carpal tunnel syndrome severe, Carpal",,,General Medicine,General Medicine,Severe,7,BL-00253,Approved,TT-0253,No,No,No
+DIAG-0250,Chronic,Yes,Neurology,Complex regional pain syndrome,Complex regional pain syndrome,"Complex regional pain syndrome, Complex",,,General Medicine,General Medicine,Mild,7,BL-00254,Approved,TT-0254,No,No,No
+DIAG-0251,Acute,No,Medical Disease,Rheumatic fever,Rheumatic fever,"Rheumatic fever, Rheumatic",,,General Medicine,General Medicine,Mild,7,BL-00255,Approved,TT-0255,No,No,No
+DIAG-0252,Chronic,Yes,Medical Disease,Kawasaki disease,Kawasaki disease,"Kawasaki disease, Kawasaki",,,General Medicine,General Medicine,Moderate,7,BL-00256,Approved,TT-0256,No,No,No
+DIAG-0253,Acute,No,Neurology,Migraine with aura,Migraine with aura,"Migraine with aura, Migraine",,,General Medicine,Neurology,Mild,7,BL-00257,Approved,TT-0257,No,No,No
+DIAG-0254,Acute,No,Neurology,Cluster headache chronic,Cluster headache chronic,"Cluster headache chronic, Cluster",,,General Medicine,General Medicine,Moderate,30,BL-00258,Approved,TT-0258,No,No,No
+DIAG-0255,Acute,No,Neurology,Idiopathic intracranial hypertension,Idiopathic intracranial hypertension,"Idiopathic intracranial hypertension, Idiopathic",,,General Medicine,Cardiology,Moderate,30,BL-00259,Approved,TT-0259,No,No,No
+DIAG-0256,Acute,No,Cardiovascular,Transient ischemic attack,Transient ischemic attack,"Transient ischemic attack, Transient",,,General Medicine,General Medicine,Mild,7,BL-00260,Approved,TT-0260,No,No,No
+DIAG-0257,Acute,No,Neurology,Subarachnoid hemorrhage,Subarachnoid hemorrhage,"Subarachnoid hemorrhage, Subarachnoid",,,General Medicine,General Medicine,Severe,7,BL-00261,Approved,TT-0261,No,No,No
+DIAG-0258,Acute,No,Neurology,Intracerebral hemorrhage,Intracerebral hemorrhage,"Intracerebral hemorrhage, Intracerebral",,,General Medicine,General Medicine,Severe,7,BL-00262,Approved,TT-0262,No,No,No
+DIAG-0259,Chronic,Yes,Neurology,Brain abscess,Brain abscess,"Brain abscess, Brain",,,General Medicine,Neurology,Mild,7,BL-00263,Approved,TT-0263,No,No,No
+DIAG-0260,Chronic,Yes,Neurology,Spinal cord injury,Spinal cord injury,"Spinal cord injury, Spinal",,,General Medicine,General Medicine,Mild,7,BL-00264,Approved,TT-0264,No,No,No
+DIAG-0261,Chronic,Yes,Neurology,Cauda equina syndrome,Cauda equina syndrome,"Cauda equina syndrome, Cauda",,,General Medicine,General Medicine,Mild,7,BL-00265,Approved,TT-0265,No,No,No
+DIAG-0262,Chronic,Yes,Neurology,Peripheral artery disease critical limb ischemia,Peripheral artery disease critical limb ischemia,"Peripheral artery disease critical limb ischemia, Peripheral",,,General Medicine,General Medicine,Moderate,7,BL-00266,Approved,TT-0266,No,No,No
+DIAG-0263,Chronic,Yes,Genitourinary,Varicocele,Varicocele,Varicocele,,,General Medicine,General Medicine,Mild,7,BL-00267,Approved,TT-0267,No,No,No
+DIAG-0264,Chronic,Yes,Genitourinary,Hydrocele,Hydrocele,Hydrocele,,,General Medicine,General Medicine,Mild,7,BL-00268,Approved,TT-0268,No,No,No
+DIAG-0265,Acute,No,Genitourinary,Testicular torsion,Testicular torsion,"Testicular torsion, Testicular",,,General Medicine,General Medicine,Mild,7,BL-00269,Approved,TT-0269,No,No,No
+DIAG-0266,Chronic,Yes,Cancer,Prostate cancer,Prostate cancer,"Prostate cancer, Prostate",,,Oral Oncology,Oncology,Severe,7,BL-00270,Approved,TT-0270,No,No,Yes
+DIAG-0267,Chronic,Yes,Cancer,Bladder cancer,Bladder cancer,"Bladder cancer, Bladder",,,Oral Oncology,Oncology,Severe,7,BL-00271,Approved,TT-0271,No,No,Yes
+DIAG-0268,Chronic,Yes,Cancer,Renal cell carcinoma,Renal cell carcinoma,"Renal cell carcinoma, Renal",,,Oral Oncology,Oncology,Mild,7,BL-00272,Approved,TT-0272,No,No,Yes
+DIAG-0269,Chronic,Yes,Cancer,Cervical cancer,Cervical cancer,"Cervical cancer, Cervical",,,Oral Oncology,Oncology,Severe,7,BL-00273,Approved,TT-0273,No,No,Yes
+DIAG-0270,Chronic,Yes,Cancer,Endometrial cancer,Endometrial cancer,"Endometrial cancer, Endometrial",,,Oral Oncology,Oncology,Severe,7,BL-00274,Approved,TT-0274,No,No,Yes
+DIAG-0271,Chronic,Yes,Cancer,Ovarian cancer,Ovarian cancer,"Ovarian cancer, Ovarian",,,Oral Oncology,Oncology,Severe,7,BL-00275,Approved,TT-0275,No,No,Yes
+DIAG-0272,Chronic,Yes,Obstetrics/Gynaecology,Uterine prolapse,Uterine prolapse,"Uterine prolapse, Uterine",,,General Medicine,Gynaecology,Mild,7,BL-00276,Approved,TT-0276,No,No,No
+DIAG-0273,Chronic,Yes,Obstetrics/Gynaecology,Ectopic pregnancy,Ectopic pregnancy,"Ectopic pregnancy, Ectopic",,,General Medicine,Gynaecology,Mild,7,BL-00277,Approved,TT-0277,No,No,No
+DIAG-0274,Acute,No,Obstetrics/Gynaecology,Placental abruption,Placental abruption,"Placental abruption, Placental",,,General Medicine,General Medicine,Mild,7,BL-00278,Approved,TT-0278,No,No,No
+DIAG-0275,Acute,No,Obstetrics/Gynaecology,Postpartum hemorrhage,Postpartum hemorrhage,"Postpartum hemorrhage, Postpartum",,,General Medicine,General Medicine,Severe,7,BL-00279,Approved,TT-0279,No,No,No
+DIAG-0276,Acute,No,Obstetrics/Gynaecology,Postpartum infection,Postpartum infection,"Postpartum infection, Postpartum",,,General Medicine,General Medicine,Mild,7,BL-00280,Approved,TT-0280,No,No,No
+DIAG-0277,Chronic,Yes,Breast,Breast mastitis,Breast mastitis,"Breast mastitis, Breast",,,General Medicine,Gynaecology,Mild,7,BL-00281,Approved,TT-0281,No,No,No
+DIAG-0278,Chronic,Yes,Breast,Breast abscess,Breast abscess,"Breast abscess, Breast",,,General Medicine,Gynaecology,Mild,7,BL-00282,Approved,TT-0282,No,No,No
+DIAG-0279,Chronic,Yes,Cancer,Gynecologic malignancy metastatic,Gynecologic malignancy metastatic,"Gynecologic malignancy metastatic, Gynecologic",,,General Medicine,General Medicine,Mild,7,BL-00283,Approved,TT-0283,No,No,No
+DIAG-0280,Chronic,Yes,Endocrine/Metabolic,Thyroid nodule,Thyroid nodule,"Thyroid nodule, Thyroid",,,General Medicine,Endocrinology,Mild,7,BL-00284,Approved,TT-0284,No,No,No
+DIAG-0281,Chronic,Yes,General Medicine,Goiter multinodular,Goiter multinodular,"Goiter multinodular, Goiter",,,General Medicine,General Medicine,Mild,7,BL-00285,Approved,TT-0285,No,No,No
+DIAG-0282,Chronic,Yes,General Medicine,Graves disease,Graves disease,"Graves disease, Graves",,,General Medicine,General Medicine,Moderate,7,BL-00286,Approved,TT-0286,No,No,No
+DIAG-0283,Chronic,Yes,Endocrine/Metabolic,Hashimoto thyroiditis,Hashimoto thyroiditis,"Hashimoto thyroiditis, Hashimoto",,,General Medicine,Endocrinology,Mild,7,BL-00287,Approved,TT-0287,No,No,No
+DIAG-0284,Chronic,Yes,General Medicine,Addison disease,Addison disease,"Addison disease, Addison",,,General Medicine,General Medicine,Moderate,7,BL-00288,Approved,TT-0288,No,No,No
+DIAG-0285,Chronic,Yes,Endocrine/Metabolic,Cushing syndrome,Cushing syndrome,"Cushing syndrome, Cushing",,,General Medicine,General Medicine,Mild,7,BL-00289,Approved,TT-0289,No,No,No
+DIAG-0286,Chronic,Yes,Endocrine/Metabolic,Hyperparathyroidism,Hyperparathyroidism,Hyperparathyroidism,,,General Medicine,Endocrinology,Mild,7,BL-00290,Approved,TT-0290,No,No,No
+DIAG-0287,Chronic,Yes,Endocrine/Metabolic,Primary hyperaldosteronism,Primary hyperaldosteronism,"Primary hyperaldosteronism, Primary",,,General Medicine,General Medicine,Mild,7,BL-00291,Approved,TT-0291,No,No,No
+DIAG-0288,Chronic,Yes,Endocrine/Metabolic,Pheochromocytoma,Pheochromocytoma,Pheochromocytoma,,,General Medicine,General Medicine,Mild,7,BL-00292,Approved,TT-0292,No,No,No
+DIAG-0289,Chronic,Yes,Endocrine/Metabolic,Hyperprolactinemia,Hyperprolactinemia,Hyperprolactinemia,,,General Medicine,General Medicine,Mild,7,BL-00293,Approved,TT-0293,No,No,No
+DIAG-0290,Chronic,Yes,Endocrine/Metabolic,Acromegaly,Acromegaly,Acromegaly,,,General Medicine,General Medicine,Mild,7,BL-00294,Approved,TT-0294,No,No,No
+DIAG-0291,Chronic,Yes,Endocrine/Metabolic,Gigantism,Gigantism,Gigantism,,,General Medicine,General Medicine,Mild,7,BL-00295,Approved,TT-0295,No,No,No
+DIAG-0292,Chronic,Yes,Endocrine/Metabolic,Short stature endocrine,Short stature endocrine,"Short stature endocrine, Short",,,General Medicine,Endocrinology,Mild,7,BL-00296,Approved,TT-0296,No,No,No
+DIAG-0293,Chronic,Yes,Endocrine/Metabolic,Adrenal insufficiency,Adrenal insufficiency,"Adrenal insufficiency, Adrenal",,,General Medicine,Nephrology/Urology,Mild,7,BL-00297,Approved,TT-0297,No,No,No
+DIAG-0294,Chronic,Yes,Endocrine/Metabolic,Hypogonadism male,Hypogonadism male,"Hypogonadism male, Hypogonadism",,,General Medicine,General Medicine,Mild,7,BL-00298,Approved,TT-0298,No,No,No
+DIAG-0295,Chronic,Yes,Genitourinary,Polycystic kidney disease,Polycystic kidney disease,"Polycystic kidney disease, Polycystic",,,General Medicine,Nephrology/Urology,Moderate,7,BL-00299,Approved,TT-0299,No,No,No
+DIAG-0296,Chronic,Yes,Genitourinary,Nephrolithiasis,Nephrolithiasis,Nephrolithiasis,,,General Medicine,Nephrology/Urology,Mild,7,BL-00300,Approved,TT-0300,No,No,No
+DIAG-0297,Chronic,Yes,Genitourinary,Hydronephrosis,Hydronephrosis,Hydronephrosis,,,General Medicine,Nephrology/Urology,Mild,7,BL-00301,Draft,TT-0301,No,No,No
+DIAG-0298,Chronic,Yes,Genitourinary,Renal artery stenosis,Renal artery stenosis,"Renal artery stenosis, Renal",,,General Medicine,Nephrology/Urology,Mild,7,BL-00302,Draft,TT-0302,No,No,No
+DIAG-0299,Chronic,Yes,Genitourinary,Glomerulonephritis,Glomerulonephritis,Glomerulonephritis,,,General Medicine,General Medicine,Mild,7,BL-00303,Draft,TT-0303,No,No,No
+DIAG-0300,Chronic,Yes,Genitourinary,Nephrotic syndrome,Nephrotic syndrome,"Nephrotic syndrome, Nephrotic",,,General Medicine,Nephrology/Urology,Mild,7,BL-00304,Draft,TT-0304,No,No,No
+DIAG-0301,Chronic,Yes,Genitourinary,Interstitial nephritis,Interstitial nephritis,"Interstitial nephritis, Interstitial",,,General Medicine,General Medicine,Mild,7,BL-00305,Draft,TT-0305,No,No,No
+DIAG-0302,Chronic,Yes,Genitourinary,Acute tubular necrosis,Acute tubular necrosis,"Acute tubular necrosis, Acute",,,General Medicine,General Medicine,Severe,7,BL-00306,Draft,TT-0306,No,No,No
+DIAG-0303,Chronic,Yes,Gastrointestinal,Chronic liver disease alcoholic,Chronic liver disease alcoholic,"Chronic liver disease alcoholic, Chronic",,,General Medicine,Gastroenterology,Moderate,30,BL-00307,Draft,TT-0307,No,No,No
+DIAG-0304,Chronic,Yes,Gastrointestinal,Non-alcoholic fatty liver disease,Non-alcoholic fatty liver disease,"Non-alcoholic fatty liver disease, Non-alcoholic",,,General Medicine,Gastroenterology,Moderate,7,BL-00308,Draft,TT-0308,No,No,No
+DIAG-0305,Chronic,Yes,Cancer,Hepatocellular carcinoma,Hepatocellular carcinoma,"Hepatocellular carcinoma, Hepatocellular",,,Oral Oncology,Oncology,Mild,7,BL-00309,Draft,TT-0309,No,No,Yes
+DIAG-0306,Chronic,Yes,Cardiovascular,Portal hypertension,Portal hypertension,"Portal hypertension, Portal",,,General Medicine,Cardiology,Moderate,30,BL-00310,Draft,TT-0310,No,No,No
+DIAG-0307,Chronic,Yes,Gastrointestinal,Esophageal varices bleeding,Esophageal varices bleeding,"Esophageal varices bleeding, Esophageal",,,General Medicine,General Medicine,Mild,7,BL-00311,Draft,TT-0311,No,No,No
+DIAG-0308,Chronic,Yes,Gastrointestinal,Mallory-Weiss tear,Mallory-Weiss tear,"Mallory-Weiss tear, Mallory-Weiss",,,General Medicine,ENT,Mild,7,BL-00312,Draft,TT-0312,No,No,No
+DIAG-0309,Chronic,Yes,Gastrointestinal,Gastroesophageal reflux disease,Gastroesophageal reflux disease,"Gastroesophageal reflux disease, Gastroesophageal",,,General Medicine,General Medicine,Moderate,7,BL-00313,Draft,TT-0313,No,No,No
+DIAG-0310,Chronic,Yes,Gastrointestinal,Barrett esophagus,Barrett esophagus,"Barrett esophagus, Barrett",,,General Medicine,General Medicine,Mild,7,BL-00314,Draft,TT-0314,No,No,No
+DIAG-0311,Chronic,Yes,Gastrointestinal,Achalasia,Achalasia,Achalasia,,,General Medicine,General Medicine,Mild,7,BL-00315,Draft,TT-0315,No,No,No
+DIAG-0312,Chronic,Yes,Gastrointestinal,Gastroparesis,Gastroparesis,Gastroparesis,,,General Medicine,General Medicine,Mild,7,BL-00316,Draft,TT-0316,No,No,No
+DIAG-0313,Chronic,Yes,Gastrointestinal,Celiac disease,Celiac disease,"Celiac disease, Celiac",,,General Medicine,General Medicine,Moderate,7,BL-00317,Draft,TT-0317,No,No,No
+DIAG-0314,Chronic,Yes,Allergy,Lactose intolerance,Lactose intolerance,"Lactose intolerance, Lactose",,,General Medicine,General Medicine,Mild,7,BL-00318,Draft,TT-0318,No,No,No
+DIAG-0315,Chronic,Yes,Allergy,Fructose malabsorption,Fructose malabsorption,"Fructose malabsorption, Fructose",,,General Medicine,General Medicine,Mild,7,BL-00319,Draft,TT-0319,No,No,No
+DIAG-0316,Chronic,Yes,Gastrointestinal,Primary biliary cholangitis,Primary biliary cholangitis,"Primary biliary cholangitis, Primary",,,General Medicine,General Medicine,Mild,7,BL-00320,Draft,TT-0320,No,No,No
+DIAG-0317,Chronic,Yes,Gastrointestinal,Primary sclerosing cholangitis,Primary sclerosing cholangitis,"Primary sclerosing cholangitis, Primary",,,General Medicine,General Medicine,Mild,7,BL-00321,Draft,TT-0321,No,No,No
+DIAG-0318,Chronic,Yes,Gastrointestinal,Wilson disease,Wilson disease,"Wilson disease, Wilson",,,General Medicine,General Medicine,Moderate,7,BL-00322,Draft,TT-0322,No,No,No
+DIAG-0319,Chronic,Yes,Gastrointestinal,Hemochromatosis,Hemochromatosis,Hemochromatosis,,,General Medicine,General Medicine,Mild,7,BL-00323,Draft,TT-0323,No,No,No
+DIAG-0320,Chronic,Yes,Other,Alpha-1 antitrypsin deficiency,Alpha-1 antitrypsin deficiency,"Alpha-1 antitrypsin deficiency, Alpha-1",,,General Medicine,General Medicine,Mild,7,BL-00324,Draft,TT-0324,No,No,No
+DIAG-0321,Chronic,Yes,Respiratory,Idiopathic pulmonary fibrosis,Idiopathic pulmonary fibrosis,"Idiopathic pulmonary fibrosis, Idiopathic",,,General Medicine,General Medicine,Mild,7,BL-00325,Draft,TT-0325,No,No,No
+DIAG-0322,Chronic,Yes,Cardiovascular,Pulmonary hypertension,Pulmonary hypertension,"Pulmonary hypertension, Pulmonary",,,General Medicine,Cardiology,Moderate,30,BL-00326,Draft,TT-0326,No,No,No
+DIAG-0323,Chronic,Yes,Respiratory,Interstitial lung disease,Interstitial lung disease,"Interstitial lung disease, Interstitial",,,General Medicine,General Medicine,Moderate,7,BL-00327,Draft,TT-0327,No,No,No
+DIAG-0324,Chronic,Yes,Occupational,Occupational lung disease pneumoconiosis,Occupational lung disease pneumoconiosis,"Occupational lung disease pneumoconiosis, Occupational",,,General Medicine,General Medicine,Moderate,7,BL-00328,Draft,TT-0328,No,No,No
+DIAG-0325,Chronic,Yes,Occupational,Silicosis,Silicosis,Silicosis,,,General Medicine,General Medicine,Mild,7,BL-00329,Draft,TT-0329,No,No,No
+DIAG-0326,Chronic,Yes,Occupational,Asbestosis,Asbestosis,Asbestosis,,,General Medicine,General Medicine,Mild,7,BL-00330,Draft,TT-0330,No,No,No
+DIAG-0327,Chronic,Yes,Occupational,Coal worker pneumoconiosis,Coal worker pneumoconiosis,"Coal worker pneumoconiosis, Coal",,,General Medicine,General Medicine,Mild,7,BL-00331,Draft,TT-0331,No,No,No
+DIAG-0328,Chronic,Yes,Occupational,Occupational asthma,Occupational asthma,"Occupational asthma, Occupational",,,General Medicine,Respiratory,Mild,30,BL-00332,Draft,TT-0332,No,No,No
+DIAG-0329,Chronic,Yes,Genitourinary,Stress urinary incontinence,Stress urinary incontinence,"Stress urinary incontinence, Stress",,,General Medicine,Nephrology/Urology,Mild,7,BL-00333,Draft,TT-0333,No,No,No
+DIAG-0330,Chronic,Yes,Genitourinary,Urge incontinence,Urge incontinence,"Urge incontinence, Urge",,,General Medicine,General Medicine,Mild,7,BL-00334,Draft,TT-0334,No,No,No
+DIAG-0331,Chronic,Yes,Genitourinary,Overflow incontinence,Overflow incontinence,"Overflow incontinence, Overflow",,,General Medicine,General Medicine,Mild,7,BL-00335,Draft,TT-0335,No,No,No
+DIAG-0332,Chronic,Yes,Genitourinary,Neurogenic bladder,Neurogenic bladder,"Neurogenic bladder, Neurogenic",,,General Medicine,General Medicine,Mild,7,BL-00336,Draft,TT-0336,No,No,No
+DIAG-0333,Chronic,Yes,General Medicine,Unspecified condition,Unspecified condition,Unspecified condition,,,General Medicine,General Medicine,Mild,7,BL-00337,Draft,TT-0337,No,No,No

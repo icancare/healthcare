@@ -191,26 +191,27 @@ function setup_diagnosis_filters(frm) {
 // ============================================
 
 // Common diagnoses to show in quick selection - as per client's ICanCaRe TOBACCO USERS ORAL Screening Form
+// Updated to match actual Diagnosis data imported from client CSV (Diagnosis_List.csv)
 const QUICK_DIAGNOSES = [
-	// Medical History - as per client document
+	// Medical History - as per client document, linked to actual Diagnosis DocType records
 	{ category: "Cardiovascular", name: "Essential hypertension", short: "Blood Pressure (Hypertension)" },
 	{ category: "Endocrine/Metabolic", name: "Type 2 diabetes mellitus", short: "Diabetes" },
 	{ category: "Cardiovascular", name: "Ischaemic heart disease", short: "Heart Disease - Cardiovascular Disease" },
 	{ category: "Neurology", name: "Epilepsy", short: "Neurological disease (Epilepsy)" },
 	{ category: "Respiratory", name: "Asthma", short: "Respiratory Disease (e.g., COPD, Asthma)" },
-	{ category: "Respiratory", name: "Chronic obstructive pulmonary disease", short: "COPD" },
-	{ category: "Gastrointestinal", name: "Chronic liver disease", short: "Liver Disease" },
+	{ category: "Respiratory", name: "COPD", short: "COPD" },
+	{ category: "Gastrointestinal", name: "Liver cirrhosis", short: "Liver Disease" },
 	{ category: "Genitourinary", name: "Chronic kidney disease", short: "Renal Disease" },
-	{ category: "Ophthalmology", name: "Cataract", short: "Eye Problem" },
-	{ category: "Infectious Disease", name: "HIV/AIDS", short: "Immunosuppressive Condition" },
-	{ category: "Autoimmune", name: "Systemic lupus erythematosus", short: "Other Relevant Conditions" },
+	{ category: "Eye", name: "Cataract", short: "Eye Problem" },
+	{ category: "Immunosuppression", name: "HIV infection", short: "Immunosuppressive Condition" },
+	{ category: "Immunosuppression", name: "Systemic lupus erythematosus", short: "Other Relevant Conditions" },
 	{ category: "Allergy", name: "Drug allergy", short: "Allergies (Drug/Food/Chemical)" },
-	{ category: "Medical Disease", name: "Tension headache", short: "Medical Disease" },
-	{ category: "Trauma", name: "Fracture", short: "Any Surgery Done" },
-	{ category: "Gynecology", name: "Female infertility", short: "Infertility" },
-	{ category: "Oral/Dental", name: "Leukoplakia", short: "ORAL PML - on treatment" },
-	{ category: "Oral/Dental", name: "Oral submucous fibrosis", short: "Restricted Mouth Opening" },
-	{ category: "Oncology", name: "Oral cancer", short: "CANCER PAST - on treatment" }
+	{ category: "Medical Disease", name: "Fibromyalgia", short: "Medical Disease" },
+	{ category: "Trauma/Orthopaedics", name: "Fracture wrist", short: "Any Surgery Done" },
+	{ category: "Obstetrics/Gynaecology", name: "Female infertility", short: "Infertility" },
+	{ category: "Cancer", name: "Oral cancer", short: "ORAL PML - on treatment" },
+	{ category: "Gastrointestinal", name: "Achalasia", short: "Restricted Mouth Opening" },
+	{ category: "Cancer", name: "Breast cancer", short: "CANCER PAST - on treatment" }
 ];
 
 function render_diagnosis_quick_select_panel(frm) {
