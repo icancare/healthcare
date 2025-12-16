@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "creation": "2024-12-16 14:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "test_name",
+  "result",
+  "column_break_1",
+  "parameters",
+  "note"
+ ],
+ "fields": [
+  {
+   "fieldname": "test_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Test Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "result",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Result",
+   "options": "\nNormal\nLow Suspicious\nHigh Suspicious\nPositive\nNegative"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "parameters",
+   "fieldtype": "Small Text",
+   "label": "Parameters/Findings"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-16 14:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Clinical Exam Special Test",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
+

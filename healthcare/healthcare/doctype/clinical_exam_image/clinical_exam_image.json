@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "creation": "2024-12-16 14:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "image_category",
+  "image",
+  "column_break_1",
+  "taken_by",
+  "uploaded_by",
+  "upload_time",
+  "note"
+ ],
+ "fields": [
+  {
+   "fieldname": "image_category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Image Category",
+   "options": "\nFace and Neck\nOpen Mouth with Scale\nCentral Arch with Lips\nRight Cheek with Alveolus\nLeft Cheek with Alveolus\nTongue Protruded\nTongue with Floor of Mouth\nHard and Soft Palate\nAbnormal Area Focused\nSpecial Tests\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "in_list_view": 1,
+   "label": "Image",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "taken_by",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Taken By",
+   "options": "\nPatient\nDoctor Assistant\nDoctor"
+  },
+  {
+   "fieldname": "uploaded_by",
+   "fieldtype": "Link",
+   "label": "Uploaded By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "upload_time",
+   "fieldtype": "Datetime",
+   "label": "Upload Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-16 14:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Clinical Exam Image",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
+

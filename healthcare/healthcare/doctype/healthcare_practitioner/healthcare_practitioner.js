@@ -90,6 +90,9 @@ frappe.ui.form.on('Healthcare Practitioner', {
 
 		set_query_service_item(frm, 'inpatient_visit_charge_item');
 		set_query_service_item(frm, 'op_consulting_charge_item');
+		
+		// Render Clinical Examination Template selector
+		render_clinical_exam_template_selector(frm);
 	},
 
 	practitioner_primary_address: function(frm) {
@@ -197,6 +200,104 @@ let set_query_service_item = function(frm, service_item_field) {
 		};
 	});
 };
+
+// Render Clinical Examination Template Selector with Add New option
+function render_clinical_exam_template_selector(frm) {
+	if (!frm.fields_dict.clinical_exam_section) return;
+	
+	let wrapper = frm.fields_dict.clinical_exam_section.$wrapper;
+	
+	// Remove existing custom UI
+	wrapper.find('.clinical-exam-selector').remove();
+	
+	// Get all templates
+	frappe.call({
+		method: "frappe.client.get_list",
+		args: {
+			doctype: "Clinical Examination Template",
+			filters: { disabled: 0 },
+			fields: ["name", "template_name", "examination_type"],
+			order_by: "template_name asc"
+		},
+		callback: function(r) {
+			let templates = r.message || [];
+			let current_template = frm.doc.default_examination_template;
+			
+			let options_html = templates.map(t => {
+				let selected = t.name === current_template ? 'selected' : '';
+				return `<option value="${t.name}" ${selected}>${t.template_name} (${t.examination_type})</option>`;
+			}).join('');
+			
+			let html = `
+				<div class="clinical-exam-selector" style="
+					padding: 20px;
+					background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+					border-radius: 12px;
+					margin: 15px 0;
+				">
+					<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+						<div style="flex: 1; min-width: 250px;">
+							<label style="color: #fff; font-weight: 600; margin-bottom: 8px; display: block;">
+								<i class="fa fa-stethoscope"></i> Clinical Examination Form
+							</label>
+							<select class="form-control exam-template-select" style="
+								background: rgba(255,255,255,0.95);
+								border: none;
+								border-radius: 8px;
+								padding: 10px 15px;
+								font-size: 14px;
+							">
+								<option value="">-- Select Examination Template --</option>
+								${options_html}
+							</select>
+						</div>
+						<div>
+							<button class="btn btn-light add-new-template-btn" style="
+								border-radius: 8px;
+								padding: 10px 20px;
+								font-weight: 600;
+							">
+								<i class="fa fa-plus"></i> Add New Template
+							</button>
+						</div>
+					</div>
+					${current_template ? `
+						<div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.2); border-radius: 8px;">
+							<span style="color: #fff;">
+								<i class="fa fa-check-circle"></i> 
+								This practitioner will see <strong>${templates.find(t => t.name === current_template)?.template_name || current_template}</strong> form in Patient Encounters
+							</span>
+						</div>
+					` : `
+						<div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+							<span style="color: rgba(255,255,255,0.8);">
+								<i class="fa fa-info-circle"></i> 
+								Select a template to enable Clinical Examination in Patient Encounters
+							</span>
+						</div>
+					`}
+				</div>
+			`;
+			
+			wrapper.append(html);
+			
+			// Handle template selection
+			wrapper.find('.exam-template-select').on('change', function() {
+				let selected = $(this).val();
+				frm.set_value('default_examination_template', selected);
+				frm.dirty();
+				
+				// Re-render to update the message
+				setTimeout(() => render_clinical_exam_template_selector(frm), 100);
+			});
+			
+			// Handle Add New button
+			wrapper.find('.add-new-template-btn').on('click', function() {
+				frappe.new_doc('Clinical Examination Template');
+			});
+		}
+	});
+}
 
 frappe.tour['Healthcare Practitioner'] = [
 	{

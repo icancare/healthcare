@@ -1,0 +1,276 @@
+{
+ "actions": [],
+ "autoname": "field:template_name",
+ "creation": "2024-12-16 14:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "template_details_section",
+  "template_name",
+  "examination_type",
+  "description",
+  "column_break_1",
+  "disabled",
+  "medical_department",
+  "practitioners_section",
+  "practitioners",
+  "form_configuration_tab",
+  "complaints_section",
+  "enable_complaints",
+  "complaint_body_parts",
+  "physical_examination_section",
+  "enable_physical_exam",
+  "exam_body_parts",
+  "diagram_section",
+  "enable_diagram_marking",
+  "diagram_type",
+  "diagram_svg",
+  "images_section",
+  "enable_image_upload",
+  "image_categories",
+  "special_tests_section",
+  "enable_special_tests",
+  "special_tests",
+  "diagnosis_section",
+  "enable_provisional_diagnosis",
+  "diagnosis_options",
+  "prescription_section",
+  "enable_prescription",
+  "default_prescriptions"
+ ],
+ "fields": [
+  {
+   "fieldname": "template_details_section",
+   "fieldtype": "Section Break",
+   "label": "Template Details"
+  },
+  {
+   "fieldname": "template_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Template Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "examination_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Examination Type",
+   "options": "\nOral Screening\nDermatology\nGeneral Physical\nENT\nOphthalmology\nCardiology\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "medical_department",
+   "fieldtype": "Link",
+   "label": "Medical Department",
+   "options": "Medical Department"
+  },
+  {
+   "fieldname": "practitioners_section",
+   "fieldtype": "Section Break",
+   "label": "Assigned Practitioners"
+  },
+  {
+   "fieldname": "practitioners",
+   "fieldtype": "Table",
+   "label": "Practitioners",
+   "options": "Clinical Exam Template Practitioner",
+   "description": "Select practitioners who can use this form. Check 'Show as Default' to auto-show in their encounters."
+  },
+  {
+   "fieldname": "form_configuration_tab",
+   "fieldtype": "Tab Break",
+   "label": "Form Configuration"
+  },
+  {
+   "fieldname": "complaints_section",
+   "fieldtype": "Section Break",
+   "label": "Patient Complaints"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_complaints",
+   "fieldtype": "Check",
+   "label": "Enable Patient Complaints Section"
+  },
+  {
+   "depends_on": "eval:doc.enable_complaints",
+   "fieldname": "complaint_body_parts",
+   "fieldtype": "Small Text",
+   "label": "Complaint Body Parts",
+   "description": "Enter body part groups for complaints (e.g., Face, Neck, Oral Cavity)"
+  },
+  {
+   "fieldname": "physical_examination_section",
+   "fieldtype": "Section Break",
+   "label": "Physical Examination"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_physical_exam",
+   "fieldtype": "Check",
+   "label": "Enable Physical Examination Section"
+  },
+  {
+   "depends_on": "eval:doc.enable_physical_exam",
+   "fieldname": "exam_body_parts",
+   "fieldtype": "Small Text",
+   "label": "Examination Body Parts",
+   "description": "Enter body part groups for examination (e.g., Face, Neck, Oral Cavity)"
+  },
+  {
+   "fieldname": "diagram_section",
+   "fieldtype": "Section Break",
+   "label": "Diagram Marking"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_diagram_marking",
+   "fieldtype": "Check",
+   "label": "Enable Interactive Diagram Marking"
+  },
+  {
+   "depends_on": "eval:doc.enable_diagram_marking",
+   "fieldname": "diagram_type",
+   "fieldtype": "Select",
+   "label": "Diagram Type",
+   "options": "\nOral Cavity\nFace Front\nFace Side\nNeck\nTeeth Chart\nFull Body Front\nFull Body Back\nCustom"
+  },
+  {
+   "depends_on": "eval:doc.diagram_type=='Custom'",
+   "fieldname": "diagram_svg",
+   "fieldtype": "Code",
+   "label": "Custom SVG Diagram",
+   "options": "SVG"
+  },
+  {
+   "fieldname": "images_section",
+   "fieldtype": "Section Break",
+   "label": "Image Upload"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_image_upload",
+   "fieldtype": "Check",
+   "label": "Enable Image Upload"
+  },
+  {
+   "depends_on": "eval:doc.enable_image_upload",
+   "fieldname": "image_categories",
+   "fieldtype": "Small Text",
+   "label": "Image Categories",
+   "description": "Enter categories separated by new line. E.g.:\nFace and Neck\nOpen Mouth\nTongue\nAbnormal Area"
+  },
+  {
+   "fieldname": "special_tests_section",
+   "fieldtype": "Section Break",
+   "label": "Special Tests"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_special_tests",
+   "fieldtype": "Check",
+   "label": "Enable Special Tests Section"
+  },
+  {
+   "depends_on": "eval:doc.enable_special_tests",
+   "fieldname": "special_tests",
+   "fieldtype": "Small Text",
+   "label": "Special Tests",
+   "description": "Enter test names separated by new line. E.g.:\nToluidine Blue Test\nAutofluorescence Test"
+  },
+  {
+   "fieldname": "diagnosis_section",
+   "fieldtype": "Section Break",
+   "label": "Provisional Diagnosis"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_provisional_diagnosis",
+   "fieldtype": "Check",
+   "label": "Enable Provisional Diagnosis Section"
+  },
+  {
+   "depends_on": "eval:doc.enable_provisional_diagnosis",
+   "fieldname": "diagnosis_options",
+   "fieldtype": "Small Text",
+   "label": "Diagnosis Options",
+   "description": "Enter diagnosis options separated by new line"
+  },
+  {
+   "fieldname": "prescription_section",
+   "fieldtype": "Section Break",
+   "label": "Prescription/Advice"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_prescription",
+   "fieldtype": "Check",
+   "label": "Enable Prescription Section"
+  },
+  {
+   "depends_on": "eval:doc.enable_prescription",
+   "fieldname": "default_prescriptions",
+   "fieldtype": "Small Text",
+   "label": "Default Prescription Options",
+   "description": "Enter prescription options separated by new line"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-16 14:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Clinical Examination Template",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "role": "Healthcare Administrator",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Physician"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "template_name",
+ "track_changes": 1
+}
+

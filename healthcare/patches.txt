@@ -90,3 +90,14 @@ healthcare.patches.v15_0.add_diagnostic_notes_fields #16-12-2024
 healthcare.patches.v15_0.update_medical_history_when_label #16-12-2024
 healthcare.patches.v15_0.add_encounter_symptom_diagnosis_notes #16-12-2024
 healthcare.patches.v15_0.create_sample_treatment_plan_templates #16-12-2024
+healthcare.patches.v15_0.setup_clinical_examination_system #16-12-2024
+healthcare.patches.v15_0.add_clinical_examination_to_encounter #16-12-2024
+healthcare.patches.v15_0.fix_exam_field_dependencies #16-12-2024
+healthcare.patches.v15_0.add_step2_physical_examination #16-12-2024
+healthcare.patches.v15_0.fix_step2_examination_flow #16-12-2024
+healthcare.patches.v15_0.add_step3_diagram_marking #16-12-2024
+healthcare.patches.v15_0.add_step4_step5_fields #16-12-2024
+healthcare.patches.v15_0.add_step6_interpretation #16-12-2024
+healthcare.patches.v15_0.add_step7_lab_followup #16-12-2024
+healthcare.patches.v15_0.complete_lab_step7_followup_fields #17-12-2024
+healthcare.patches.v15_0.remove_unused_exam_tables #16-12-2024

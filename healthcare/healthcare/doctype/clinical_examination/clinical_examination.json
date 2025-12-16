@@ -1,0 +1,468 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2024-12-16 14:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "examination_template",
+  "examination_type",
+  "patient",
+  "patient_name",
+  "column_break_1",
+  "practitioner",
+  "practitioner_name",
+  "examination_date",
+  "examination_time",
+  "patient_encounter",
+  "case_type_section",
+  "case_type",
+  "follow_up_details",
+  "step1_complaints_tab",
+  "complaints_status",
+  "complaints",
+  "step2_physical_exam_tab",
+  "general_examination_section",
+  "mouth_opening_fingers",
+  "mouth_opening_mm",
+  "tongue_movement",
+  "tongue_protrusion_mm",
+  "column_break_ge1",
+  "oral_hygiene",
+  "prosthesis",
+  "teeth_issues",
+  "physical_findings_section",
+  "physical_findings",
+  "step3_diagram_tab",
+  "diagram_html",
+  "lesion_markings_json",
+  "lesions",
+  "step4_images_tab",
+  "images",
+  "step5_special_tests_tab",
+  "special_tests",
+  "step6_diagnosis_tab",
+  "assessment_status",
+  "risk_level",
+  "column_break_diag1",
+  "provisional_diagnosis",
+  "diagnosis_notes",
+  "step7_prescription_tab",
+  "advice_section",
+  "tobacco_cessation",
+  "alcohol_education",
+  "dental_care",
+  "column_break_adv1",
+  "specialist_referral",
+  "higher_center_referral",
+  "prescription_section",
+  "prescription_notes",
+  "follow_up_section",
+  "follow_up_required",
+  "follow_up_date",
+  "follow_up_notes",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "HLC-CE-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "examination_template",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Examination Template",
+   "options": "Clinical Examination Template",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "examination_template.examination_type",
+   "fieldname": "examination_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Examination Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Patient",
+   "options": "Patient",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "patient.patient_name",
+   "fieldname": "patient_name",
+   "fieldtype": "Data",
+   "label": "Patient Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "practitioner",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Healthcare Practitioner",
+   "options": "Healthcare Practitioner",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "practitioner.practitioner_name",
+   "fieldname": "practitioner_name",
+   "fieldtype": "Data",
+   "label": "Practitioner Name",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "examination_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Examination Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "examination_time",
+   "fieldtype": "Time",
+   "label": "Examination Time"
+  },
+  {
+   "fieldname": "patient_encounter",
+   "fieldtype": "Link",
+   "label": "Patient Encounter",
+   "options": "Patient Encounter",
+   "description": "Link to associated Patient Encounter"
+  },
+  {
+   "fieldname": "case_type_section",
+   "fieldtype": "Section Break",
+   "label": "Case Type"
+  },
+  {
+   "fieldname": "case_type",
+   "fieldtype": "Select",
+   "label": "Case Type",
+   "options": "\nNew Case\nFollow Up Case"
+  },
+  {
+   "depends_on": "eval:doc.case_type=='Follow Up Case'",
+   "fieldname": "follow_up_details",
+   "fieldtype": "Select",
+   "label": "Follow Up Status",
+   "options": "\nNo New Complaints\nNo New Lesion\nNew Complaints\nNew Lesion"
+  },
+  {
+   "fieldname": "step1_complaints_tab",
+   "fieldtype": "Tab Break",
+   "label": "Step 1: Patient Complaints"
+  },
+  {
+   "fieldname": "complaints_status",
+   "fieldtype": "Select",
+   "label": "Complaints Status",
+   "options": "\nNo Complaints - Normal\nComplaints - Abnormal"
+  },
+  {
+   "depends_on": "eval:doc.complaints_status=='Complaints - Abnormal'",
+   "fieldname": "complaints",
+   "fieldtype": "Table",
+   "label": "Complaints",
+   "options": "Clinical Exam Complaint"
+  },
+  {
+   "fieldname": "step2_physical_exam_tab",
+   "fieldtype": "Tab Break",
+   "label": "Step 2: Physical Examination"
+  },
+  {
+   "fieldname": "general_examination_section",
+   "fieldtype": "Section Break",
+   "label": "General Examination"
+  },
+  {
+   "fieldname": "mouth_opening_fingers",
+   "fieldtype": "Select",
+   "label": "Mouth Opening (Fingers)",
+   "options": "\nOne\nTwo\nThree\nFour"
+  },
+  {
+   "fieldname": "mouth_opening_mm",
+   "fieldtype": "Float",
+   "label": "Mouth Opening (mm)"
+  },
+  {
+   "fieldname": "tongue_movement",
+   "fieldtype": "Select",
+   "label": "Tongue Movement",
+   "options": "\nNormal\nPainful\nDeviation to Left\nDeviation to Right\nRestricted Protrusion"
+  },
+  {
+   "fieldname": "tongue_protrusion_mm",
+   "fieldtype": "Float",
+   "label": "Tongue Protrusion (mm)"
+  },
+  {
+   "fieldname": "column_break_ge1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "oral_hygiene",
+   "fieldtype": "Select",
+   "label": "Oral Hygiene",
+   "options": "\nGood\nModerate\nPoor"
+  },
+  {
+   "fieldname": "prosthesis",
+   "fieldtype": "Select",
+   "label": "Prosthesis",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "teeth_issues",
+   "fieldtype": "Small Text",
+   "label": "Teeth Issues",
+   "description": "Enter teeth numbers and issues"
+  },
+  {
+   "fieldname": "physical_findings_section",
+   "fieldtype": "Section Break",
+   "label": "Physical Findings"
+  },
+  {
+   "fieldname": "physical_findings",
+   "fieldtype": "Table",
+   "label": "Physical Findings",
+   "options": "Clinical Exam Finding"
+  },
+  {
+   "fieldname": "step3_diagram_tab",
+   "fieldtype": "Tab Break",
+   "label": "Step 3: Diagram Marking"
+  },
+  {
+   "fieldname": "diagram_html",
+   "fieldtype": "HTML",
+   "label": "Interactive Diagram"
+  },
+  {
+   "fieldname": "lesion_markings_json",
+   "fieldtype": "Code",
+   "hidden": 1,
+   "label": "Lesion Markings Data",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "lesions",
+   "fieldtype": "Table",
+   "label": "Marked Lesions",
+   "options": "Clinical Exam Lesion"
+  },
+  {
+   "fieldname": "step4_images_tab",
+   "fieldtype": "Tab Break",
+   "label": "Step 4: Images"
+  },
+  {
+   "fieldname": "images",
+   "fieldtype": "Table",
+   "label": "Clinical Images",
+   "options": "Clinical Exam Image"
+  },
+  {
+   "fieldname": "step5_special_tests_tab",
+   "fieldtype": "Tab Break",
+   "label": "Step 5: Special Tests"
+  },
+  {
+   "fieldname": "special_tests",
+   "fieldtype": "Table",
+   "label": "Special Tests",
+   "options": "Clinical Exam Special Test"
+  },
+  {
+   "fieldname": "step6_diagnosis_tab",
+   "fieldtype": "Tab Break",
+   "label": "Step 6: Diagnosis"
+  },
+  {
+   "fieldname": "assessment_status",
+   "fieldtype": "Select",
+   "label": "Assessment Status",
+   "options": "\nNormal\nRisk for PML/Cancer"
+  },
+  {
+   "depends_on": "eval:doc.assessment_status=='Risk for PML/Cancer'",
+   "fieldname": "risk_level",
+   "fieldtype": "Select",
+   "label": "Risk Level",
+   "options": "\nLow Risk\nHigh Risk"
+  },
+  {
+   "fieldname": "column_break_diag1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "provisional_diagnosis",
+   "fieldtype": "Select",
+   "label": "Provisional Diagnosis",
+   "options": "\nNormal, routine screening after 1 year\nNormal with risk factors, close screening every six months\nPotentially Malignant lesions, need further management\nHigh risk, need to see nearest center for evaluation\nSuspicious for cancer, need immediate evaluation\nFrank malignancy, requires immediate treatment\nInsufficient data, repeat examination\nInflammation/infection to be ruled out"
+  },
+  {
+   "fieldname": "diagnosis_notes",
+   "fieldtype": "Small Text",
+   "label": "Diagnosis Notes"
+  },
+  {
+   "fieldname": "step7_prescription_tab",
+   "fieldtype": "Tab Break",
+   "label": "Step 7: Prescription/Advice"
+  },
+  {
+   "fieldname": "advice_section",
+   "fieldtype": "Section Break",
+   "label": "Advice"
+  },
+  {
+   "default": "0",
+   "fieldname": "tobacco_cessation",
+   "fieldtype": "Check",
+   "label": "Recommend Tobacco Cessation"
+  },
+  {
+   "default": "0",
+   "fieldname": "alcohol_education",
+   "fieldtype": "Check",
+   "label": "Educate About Alcohol Use"
+  },
+  {
+   "default": "0",
+   "fieldname": "dental_care",
+   "fieldtype": "Check",
+   "label": "Recommend Dental Care"
+  },
+  {
+   "fieldname": "column_break_adv1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "specialist_referral",
+   "fieldtype": "Check",
+   "label": "Referred for Specialist Review"
+  },
+  {
+   "default": "0",
+   "fieldname": "higher_center_referral",
+   "fieldtype": "Check",
+   "label": "Referred to Higher Center"
+  },
+  {
+   "fieldname": "prescription_section",
+   "fieldtype": "Section Break",
+   "label": "Prescription"
+  },
+  {
+   "fieldname": "prescription_notes",
+   "fieldtype": "Text Editor",
+   "label": "Prescription Notes"
+  },
+  {
+   "fieldname": "follow_up_section",
+   "fieldtype": "Section Break",
+   "label": "Follow Up"
+  },
+  {
+   "default": "0",
+   "fieldname": "follow_up_required",
+   "fieldtype": "Check",
+   "label": "Follow Up Required"
+  },
+  {
+   "depends_on": "eval:doc.follow_up_required",
+   "fieldname": "follow_up_date",
+   "fieldtype": "Date",
+   "label": "Follow Up Date"
+  },
+  {
+   "fieldname": "follow_up_notes",
+   "fieldtype": "Small Text",
+   "label": "Follow Up Notes"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Clinical Examination",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Patient Encounter",
+   "link_fieldname": "patient"
+  }
+ ],
+ "modified": "2024-12-16 14:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Clinical Examination",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Physician",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Nursing User",
+   "write": 1
+  }
+ ],
+ "search_fields": "patient, practitioner, examination_type",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "patient_name",
+ "track_changes": 1
+}
+

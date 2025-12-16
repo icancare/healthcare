@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "creation": "2024-12-16 14:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "location",
+  "side",
+  "status",
+  "column_break_1",
+  "abnormality",
+  "section_break_1",
+  "size_length",
+  "size_width",
+  "size_height",
+  "column_break_2",
+  "color",
+  "shape",
+  "texture",
+  "section_break_2",
+  "description",
+  "palpation",
+  "note"
+ ],
+ "fields": [
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "side",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Side",
+   "options": "\nLeft\nRight\nCentral\nBilateral\nMidline"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nNormal\nAbnormal"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "abnormality",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Abnormality/Finding"
+  },
+  {
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Lesion Details",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "size_length",
+   "fieldtype": "Float",
+   "label": "Length (mm)"
+  },
+  {
+   "fieldname": "size_width",
+   "fieldtype": "Float",
+   "label": "Width (mm)"
+  },
+  {
+   "fieldname": "size_height",
+   "fieldtype": "Float",
+   "label": "Height (mm)"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "color",
+   "fieldtype": "Select",
+   "label": "Color",
+   "options": "\nUniform\nVariegated\nWhite\nRed\nBlack\nBrown\nMixed"
+  },
+  {
+   "fieldname": "shape",
+   "fieldtype": "Select",
+   "label": "Shape",
+   "options": "\nRound\nOval\nIrregular\nRectangular"
+  },
+  {
+   "fieldname": "texture",
+   "fieldtype": "Select",
+   "label": "Texture",
+   "options": "\nSmooth\nRough\nPapillary\nCorrugated\nFissured\nCrusted"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Visual Description"
+  },
+  {
+   "fieldname": "palpation",
+   "fieldtype": "Small Text",
+   "label": "Palpation Findings"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-16 14:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Healthcare",
+ "name": "Clinical Exam Finding",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
+
