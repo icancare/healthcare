@@ -250,31 +250,32 @@ function render_table(frm) {
 	let sex = get_sex(frm);
 	let age = frm.doc.patient_age;
 	
+	// field: database field name for fetching history
 	let data = [
-		{ p: 'BMI', u: 'kg/m²', e: frm.doc.bmi, m: 'bmi_manual', n: '18.5-24.9', f: 'Weight/(Height²)', show: true },
-		{ p: 'Waist to Hip Ratio', u: 'ratio', e: frm.doc.whr, m: 'whr_manual', n: sex === 'M' ? '<0.95' : '<0.80', f: 'Waist/Hip', show: true },
-		{ p: 'Body Fat %', u: '%', e: frm.doc.body_fat_percentage, m: 'bfp_manual', n: sex === 'M' ? '10-20' : '18-28', f: '1.20×BMI+0.23×Age-10.8×Sex-5.4', show: true },
-		{ p: 'Lean Body Mass', u: 'kg', e: frm.doc.lean_body_mass, m: 'lbm_manual', n: 'Varies', f: 'Boer Formula', show: true },
-		{ p: 'Skeletal Muscle Mass', u: 'kg', e: frm.doc.muscle_mass, m: 'muscle_mass_manual', n: sex === 'M' ? '33-40%' : '24-30%', f: 'Lee Formula', show: true },
-		{ p: 'Bone Mass', u: 'kg', e: frm.doc.bone_mass, m: 'bone_mass_manual', n: sex === 'M' ? '2.5-3.5' : '1.8-2.5', f: 'Hume Formula', show: true },
-		{ p: 'Bone Mineral Content', u: 'kg', e: frm.doc.bone_mineral_content, m: 'bmc_manual', n: 'Varies', f: 'Hologic Formula', show: true },
-		{ p: 'Total Body Water', u: '%', e: frm.doc.total_body_water, m: 'tbw_manual', n: sex === 'M' ? '50-65' : '45-60', f: 'Watson Formula', show: true },
-		{ p: 'Protein %', u: '%', e: frm.doc.protein_percentage, m: 'protein_manual', n: '16-20', f: 'LBM×0.20/Weight×100', show: true },
-		{ p: 'BMR', u: 'kcal/day', e: frm.doc.bmr, m: 'bmr_manual', n: 'Varies', f: 'Mifflin-St Jeor', show: true },
-		{ p: 'Metabolic Age', u: 'years', e: frm.doc.metabolic_age, m: 'metabolic_age_manual', n: '=Actual Age', f: '70-(BMR/(24×LBM))×100', show: true },
-		{ p: 'Subcutaneous Fat', u: '%', e: frm.doc.subcutaneous_fat, m: 'subcutaneous_fat_manual', n: sex === 'M' ? '8-15' : '18-25', f: 'Jackson-Pollock 3-site', show: true }
+		{ p: 'BMI', u: 'kg/m²', e: frm.doc.bmi, m: 'bmi_manual', n: '18.5-24.9', f: 'Weight/(Height²)', show: true, field: 'bmi' },
+		{ p: 'Waist to Hip Ratio', u: 'ratio', e: frm.doc.whr, m: 'whr_manual', n: sex === 'M' ? '<0.95' : '<0.80', f: 'Waist/Hip', show: true, field: 'whr' },
+		{ p: 'Body Fat %', u: '%', e: frm.doc.body_fat_percentage, m: 'bfp_manual', n: sex === 'M' ? '10-20' : '18-28', f: '1.20×BMI+0.23×Age-10.8×Sex-5.4', show: true, field: 'body_fat_percentage' },
+		{ p: 'Lean Body Mass', u: 'kg', e: frm.doc.lean_body_mass, m: 'lbm_manual', n: 'Varies', f: 'Boer Formula', show: true, field: 'lean_body_mass' },
+		{ p: 'Skeletal Muscle Mass', u: 'kg', e: frm.doc.muscle_mass, m: 'muscle_mass_manual', n: sex === 'M' ? '33-40%' : '24-30%', f: 'Lee Formula', show: true, field: 'muscle_mass' },
+		{ p: 'Bone Mass', u: 'kg', e: frm.doc.bone_mass, m: 'bone_mass_manual', n: sex === 'M' ? '2.5-3.5' : '1.8-2.5', f: 'Hume Formula', show: true, field: 'bone_mass' },
+		{ p: 'Bone Mineral Content', u: 'kg', e: frm.doc.bone_mineral_content, m: 'bmc_manual', n: 'Varies', f: 'Hologic Formula', show: true, field: 'bone_mineral_content' },
+		{ p: 'Total Body Water', u: '%', e: frm.doc.total_body_water, m: 'tbw_manual', n: sex === 'M' ? '50-65' : '45-60', f: 'Watson Formula', show: true, field: 'total_body_water' },
+		{ p: 'Protein %', u: '%', e: frm.doc.protein_percentage, m: 'protein_manual', n: '16-20', f: 'LBM×0.20/Weight×100', show: true, field: 'protein_percentage' },
+		{ p: 'BMR', u: 'kcal/day', e: frm.doc.bmr, m: 'bmr_manual', n: 'Varies', f: 'Mifflin-St Jeor', show: true, field: 'bmr' },
+		{ p: 'Metabolic Age', u: 'years', e: frm.doc.metabolic_age, m: 'metabolic_age_manual', n: '=Actual Age', f: '70-(BMR/(24×LBM))×100', show: true, field: 'metabolic_age' },
+		{ p: 'Subcutaneous Fat', u: '%', e: frm.doc.subcutaneous_fat, m: 'subcutaneous_fat_manual', n: sex === 'M' ? '8-15' : '18-25', f: 'Jackson-Pollock 3-site', show: true, field: 'subcutaneous_fat' }
 	];
 
 	// MUAC status
 	if (frm.doc.muac) {
 		let mc = frm.doc.muac / 10;
 		let st = mc >= 13.5 ? 'Adequate' : mc >= 12.5 ? 'Mild' : mc >= 11.5 ? 'Moderate' : 'Severe';
-		data.push({ p: 'MUAC Status', u: 'cm', e: mc.toFixed(1), m: null, n: '>13.5', f: 'Mid-Upper Arm', show: true, st: st });
+		data.push({ p: 'MUAC Status', u: 'cm', e: mc.toFixed(1), m: null, n: '>13.5', f: 'Mid-Upper Arm', show: true, st: st, field: null });
 	}
 	
 	// Bilateral Pitting Edema
 	if (frm.doc.bilateral_pitting_edema === 'Yes') {
-		data.push({ p: 'Bilateral Pitting Edema', u: '', e: 'Present', m: null, n: 'No', f: '-', show: true, st: 'Severe' });
+		data.push({ p: 'Bilateral Pitting Edema', u: '', e: 'Present', m: null, n: 'No', f: '-', show: true, st: 'Severe', field: null });
 	}
 
 	let html = `<style>
@@ -291,6 +292,11 @@ function render_table(frm) {
 		.av-o { background:#fd7e14; color:#fff; }
 		.av-help { cursor:pointer; color:var(--primary); font-size:10px; }
 		.av-note { width:100%; margin-top:8px; padding:4px 8px; border:1px solid var(--border-color); border-radius:3px; font-size:11px; background:var(--control-bg); color:var(--text-color); }
+		.av-param-link { cursor:pointer; display:inline-block; }
+		.av-param-link:hover { color:#5e64ff; }
+		.av-param-name { font-weight:600; color:var(--text-color); }
+		.av-param-link:hover .av-param-name { color:#5e64ff; }
+		.av-chart-icon { font-size:11px; margin-left:4px; }
 	</style>
 	<table class="av-tbl">
 		<thead><tr>
@@ -308,8 +314,14 @@ function render_table(frm) {
 		let est = r.e || '-';
 		let status = r.st ? get_status_badge(r.st) : get_status(r.p, r.e, r.n, sex, frm);
 		let manual_inp = r.m ? `<input type="number" class="av-inp" data-field="${r.m}" value="${frm.doc[r.m] || ''}" step="0.01">` : '-';
+		
+		// Make parameter name clickable if it has a field for history
+		let param_html = r.field 
+			? `<span class="av-param-link" data-parameter="${r.field}" data-title="${r.p}" data-unit="${r.u}"><span class="av-param-name">${r.p}</span><span class="av-chart-icon">📈</span></span>`
+			: `<span class="av-param-name">${r.p}</span>`;
+		
 		html += `<tr>
-			<td><strong>${r.p}</strong></td>
+			<td>${param_html}</td>
 			<td>${r.u}</td>
 			<td>${est}</td>
 			<td>${manual_inp}</td>
@@ -328,6 +340,14 @@ function render_table(frm) {
 			let field = $(this).data('field');
 			let val = $(this).val();
 			frm.set_value(field, val || null);
+		});
+		
+		// Add click handler for chart links
+		frm.fields_dict.computed_values_html.$wrapper.find('.av-param-link').on('click', function() {
+			let parameter = $(this).data('parameter');
+			let title = $(this).data('title');
+			let unit = $(this).data('unit');
+			show_parameter_history_chart(frm, parameter, title, unit);
 		});
 	}
 }
@@ -831,4 +851,91 @@ function render_diagnostic_previews(frm) {
 			frm.fields_dict.dexascan_preview_html.$wrapper.html('');
 		}
 	}
+}
+
+// Show parameter history chart in a dialog
+function show_parameter_history_chart(frm, parameter, title, unit) {
+	if (!frm.doc.patient) {
+		frappe.msgprint(__('Please select a patient first'));
+		return;
+	}
+	
+	frappe.call({
+		method: 'healthcare.healthcare.doctype.vital_signs.vital_signs.get_vital_parameter_history',
+		args: {
+			patient: frm.doc.patient,
+			parameter: parameter
+		},
+		freeze: true,
+		freeze_message: __('Loading history...'),
+		callback: function(r) {
+			if (r.message) {
+				let data = r.message;
+				
+				if (!data.labels || data.labels.length === 0) {
+					frappe.msgprint({
+						title: __('No History'),
+						indicator: 'orange',
+						message: __('No previous records found for {0}', [title])
+					});
+					return;
+				}
+				
+				// Create dialog with chart
+				let dialog = new frappe.ui.Dialog({
+					title: __('📈 {0} History', [title]),
+					size: 'large',
+					fields: [
+						{
+							fieldtype: 'HTML',
+							fieldname: 'chart_container'
+						}
+					]
+				});
+				
+				dialog.show();
+				
+				// Render chart after dialog is shown
+				setTimeout(() => {
+					let chart_container = dialog.fields_dict.chart_container.$wrapper;
+					chart_container.html(`
+						<div class="vital-history-chart" style="height:350px;"></div>
+						<div class="text-muted text-center" style="margin-top:10px;font-size:12px;">
+							<strong>${data.labels.length}</strong> ${__('records found')} | 
+							${__('Latest')}: <strong>${data.values[data.values.length - 1]} ${unit}</strong>
+						</div>
+					`);
+					
+					new frappe.Chart(chart_container.find('.vital-history-chart')[0], {
+						title: title + (unit ? ' (' + unit + ')' : ''),
+						data: {
+							labels: data.labels,
+							datasets: [
+								{
+									name: title,
+									values: data.values,
+									chartType: 'line'
+								}
+							]
+						},
+						type: 'axis-mixed',
+						height: 300,
+						colors: ['#5e64ff'],
+						lineOptions: {
+							regionFill: 1,
+							dotSize: 4
+						},
+						axisOptions: {
+							xIsSeries: true,
+							xAxisMode: 'tick'
+						},
+						tooltipOptions: {
+							formatTooltipX: d => d,
+							formatTooltipY: d => d + ' ' + unit
+						}
+					});
+				}, 100);
+			}
+		}
+	});
 }

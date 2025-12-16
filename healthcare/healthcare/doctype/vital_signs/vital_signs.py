@@ -3,6 +3,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
 from frappe.model.document import Document
 
 
@@ -132,3 +133,78 @@ class VitalSigns(Document):
 		elif 'male' in s:
 			return 'M'
 		return None
+
+
+@frappe.whitelist()
+def get_vital_parameter_history(patient, parameter):
+	"""
+	Get history of a specific vital parameter for a patient
+	Used for displaying charts in Vital Signs form
+	
+	Args:
+		patient: Patient ID
+		parameter: Field name of the parameter (e.g., 'bmi', 'whr', 'body_fat_percentage')
+	
+	Returns:
+		dict with labels (dates) and values for charting
+	"""
+	if not patient or not parameter:
+		return {"labels": [], "values": []}
+	
+	# Map parameter names to their database field names
+	parameter_field_map = {
+		"bmi": "bmi",
+		"whr": "whr",
+		"body_fat_percentage": "body_fat_percentage",
+		"lean_body_mass": "lean_body_mass",
+		"muscle_mass": "muscle_mass",
+		"bone_mass": "bone_mass",
+		"bone_mineral_content": "bone_mineral_content",
+		"total_body_water": "total_body_water",
+		"protein_percentage": "protein_percentage",
+		"bmr": "bmr",
+		"metabolic_age": "metabolic_age",
+		"subcutaneous_fat": "subcutaneous_fat",
+		# Vital Signs
+		"temperature": "temperature",
+		"pulse": "pulse",
+		"spo2": "spo2",
+		"respiratory_rate": "respiratory_rate",
+		"bp_systolic": "bp_systolic",
+		"bp_diastolic": "bp_diastolic",
+		"blood_sugar": "blood_sugar",
+		# Anthropometric
+		"height": "height",
+		"weight": "weight",
+		"waist_circumference": "waist_circumference",
+		"hip_circumference": "hip_circumference",
+	}
+	
+	field_name = parameter_field_map.get(parameter, parameter)
+	
+	# Fetch all vital signs for this patient with the specific field
+	vitals = frappe.db.get_all(
+		"Vital Signs",
+		filters={"patient": patient, "docstatus": ["!=", 2]},
+		fields=["signs_date", "signs_time", field_name],
+		order_by="signs_date asc, signs_time asc"
+	)
+	
+	labels = []
+	values = []
+	
+	for vital in vitals:
+		value = vital.get(field_name)
+		if value is not None and value != 0:
+			# Format date for display
+			date_str = frappe.utils.formatdate(vital.signs_date, "dd-MM-yyyy")
+			time_str = str(vital.signs_time)[:5] if vital.signs_time else ""
+			label = f"{date_str} {time_str}".strip()
+			
+			labels.append(label)
+			values.append(float(value) if value else 0)
+	
+	return {
+		"labels": labels,
+		"values": values
+	}
