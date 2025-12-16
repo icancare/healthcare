@@ -151,25 +151,77 @@ frappe.ui.form.on("Patient Encounter", {
 	},
 
 	get_applicable_treatment_plans: function(frm) {
-		if (frm.doc.patient) {
-			frappe.call({
-				method: "healthcare.healthcare.doctype.patient_encounter.patient_encounter.get_applicable_treatment_plans",
-				args: { patient: frm.doc.patient },
-				callback: function(r) {
-					if (r.message) {
-						frappe.msgprint({
-							title: __("Treatment Plans"),
-							indicator: "green",
-							message: r.message
-						});
-					} else {
-						frappe.msgprint(__("No applicable treatment plans for this patient"));
-					}
-				}
-			});
+		if (!frm.doc.patient) {
+			frappe.msgprint(__("Please select a patient first"));
+			return;
 		}
+		
+		// Build encounter object for the API call
+		let encounter = {
+			patient: frm.doc.patient,
+			symptoms: frm.doc.symptoms || [],
+			diagnosis: frm.doc.diagnosis || []
+		};
+		
+		frappe.call({
+			method: "healthcare.healthcare.doctype.patient_encounter.patient_encounter.get_applicable_treatment_plans",
+			args: { encounter: encounter },
+			callback: function(r) {
+				if (r.message && r.message.length > 0) {
+					show_treatment_plan_dialog(frm, r.message);
+				} else {
+					frappe.msgprint({
+						title: __("No Treatment Plans"),
+						indicator: "orange",
+						message: __("No applicable treatment plans found for the selected symptoms/diagnosis. Please create Treatment Plan Templates first.")
+					});
+				}
+			}
+		});
 	}
 });
+
+// Show treatment plan selection dialog
+function show_treatment_plan_dialog(frm, plans) {
+	let plan_options = plans.map(p => ({
+		label: `<strong>${p.template_name}</strong>${p.description ? ' - ' + p.description : ''}`,
+		value: p.template_name
+	}));
+	
+	let d = new frappe.ui.Dialog({
+		title: __('Select Treatment Plans to Apply'),
+		fields: [
+			{
+				fieldtype: 'HTML',
+				fieldname: 'plan_info',
+				options: `<p class="text-muted">${__('Found {0} applicable treatment plan(s). Select the ones you want to apply:', [plans.length])}</p>`
+			},
+			{
+				fieldtype: 'MultiCheck',
+				fieldname: 'selected_plans',
+				label: __('Treatment Plans'),
+				options: plan_options,
+				columns: 1
+			}
+		],
+		primary_action_label: __('Apply Selected Plans'),
+		primary_action: function() {
+			let selected = d.get_value('selected_plans');
+			if (selected && selected.length > 0) {
+				frm.call('set_treatment_plans', { treatment_plans: selected })
+					.then(() => {
+						frm.reload_doc();
+						frappe.show_alert({
+							message: __('Treatment plans applied successfully'),
+							indicator: 'green'
+						});
+					});
+			}
+			d.hide();
+		}
+	});
+	d.show();
+}
 
 // Auto-fill allergies and immunizations from Patient medical history
 function load_patient_medical_history(frm) {
