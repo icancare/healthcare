@@ -82,3 +82,5 @@ healthcare.patches.v15_0.import_missing_procedure_templates #10-12-2024
 healthcare.patches.v15_0.add_complaint_custom_fields #10-12-2024
 healthcare.patches.v15_0.import_complaints_data #10-12-2024
 healthcare.patches.v15_0.reimport_diagnosis_data #16-12-2024
+healthcare.patches.v15_0.fix_procedure_descriptions #16-12-2024
+healthcare.patches.v15_0.fix_item_gst_hsn_depends_on #16-12-2024
