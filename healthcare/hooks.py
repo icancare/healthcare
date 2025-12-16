@@ -25,6 +25,7 @@ fixtures = [
 	{"dt": "Diet Type", "filters": []},
 	{"dt": "Occupational Exposure Type", "filters": []},
 	{"dt": "Environmental Factors Type", "filters": []},
+	{"dt": "Treatment Plan Template", "filters": []},
 ]
 
 # Includes in <head>

@@ -1,0 +1,132 @@
+[
+  {
+    "doctype": "Treatment Plan Template",
+    "template_name": "Diabetes Type 2 Management Plan",
+    "description": "Comprehensive treatment plan for Type 2 Diabetes Mellitus patients including lifestyle modifications, medications, and regular monitoring.",
+    "goal": "Maintain HbA1c below 7%, prevent complications, improve quality of life",
+    "disabled": 0,
+    "patient_age_from": 18,
+    "patient_age_to": 100,
+    "gender": null,
+    "diagnosis": [
+      {
+        "doctype": "Patient Encounter Diagnosis",
+        "diagnosis": "Type 2 diabetes mellitus"
+      }
+    ],
+    "drugs": [
+      {
+        "doctype": "Drug Prescription",
+        "drug_name": "Metformin 500mg",
+        "dosage": "1-0-1",
+        "period": "1 Month",
+        "comment": "Take after meals. Start with low dose and increase gradually.",
+        "patient_instruction": "Take with food to reduce stomach upset. Drink 1 litre water daily. Avoid alcohol."
+      }
+    ],
+    "items": [
+      {
+        "doctype": "Treatment Plan Template Item",
+        "type": "Lab Test Template",
+        "template": "HbA1c",
+        "qty": 1,
+        "instructions": "Fasting not required. Repeat every 3 months."
+      },
+      {
+        "doctype": "Treatment Plan Template Item",
+        "type": "Lab Test Template",
+        "template": "Fasting Blood Sugar",
+        "qty": 1,
+        "instructions": "12 hours fasting required. Check weekly initially."
+      }
+    ]
+  },
+  {
+    "doctype": "Treatment Plan Template",
+    "template_name": "Hypertension Management Plan",
+    "description": "Standard treatment protocol for Essential Hypertension including lifestyle changes, medication, and regular BP monitoring.",
+    "goal": "Maintain BP below 130/80 mmHg, prevent cardiovascular complications",
+    "disabled": 0,
+    "patient_age_from": 30,
+    "patient_age_to": 100,
+    "gender": null,
+    "diagnosis": [
+      {
+        "doctype": "Patient Encounter Diagnosis",
+        "diagnosis": "Essential hypertension"
+      }
+    ],
+    "complaints": [
+      {
+        "doctype": "Patient Encounter Symptom",
+        "complaint": "Headache"
+      },
+      {
+        "doctype": "Patient Encounter Symptom",
+        "complaint": "Chest pain"
+      }
+    ],
+    "drugs": [
+      {
+        "doctype": "Drug Prescription",
+        "drug_name": "Amlodipine 5mg",
+        "dosage": "0-0-1",
+        "period": "1 Month",
+        "comment": "Calcium channel blocker. Take at night.",
+        "patient_instruction": "Take at the same time daily. Reduce salt intake. Exercise 30 mins daily. Avoid stress."
+      }
+    ],
+    "items": [
+      {
+        "doctype": "Treatment Plan Template Item",
+        "type": "Lab Test Template",
+        "template": "Lipid Profile",
+        "qty": 1,
+        "instructions": "12 hours fasting required. Check every 6 months."
+      },
+      {
+        "doctype": "Treatment Plan Template Item",
+        "type": "Lab Test Template",
+        "template": "Kidney Function Test",
+        "qty": 1,
+        "instructions": "To monitor kidney function. Check annually."
+      }
+    ]
+  },
+  {
+    "doctype": "Treatment Plan Template",
+    "template_name": "General Fever Management Plan",
+    "description": "Standard protocol for managing fever with symptomatic treatment and investigations to identify cause.",
+    "goal": "Reduce fever, identify underlying cause, prevent complications",
+    "disabled": 0,
+    "patient_age_from": 5,
+    "patient_age_to": 100,
+    "gender": null,
+    "complaints": [
+      {
+        "doctype": "Patient Encounter Symptom",
+        "complaint": "Other"
+      }
+    ],
+    "drugs": [
+      {
+        "doctype": "Drug Prescription",
+        "drug_name": "Paracetamol 500mg",
+        "dosage": "1-1-1",
+        "period": "3 Days",
+        "comment": "Antipyretic. Take when temperature above 100°F.",
+        "patient_instruction": "Take every 6-8 hours if fever persists. Drink plenty of fluids (2-3 litres water daily). Rest adequately. Sponge with lukewarm water if high fever."
+      }
+    ],
+    "items": [
+      {
+        "doctype": "Treatment Plan Template Item",
+        "type": "Lab Test Template",
+        "template": "Complete Blood Count",
+        "qty": 1,
+        "instructions": "To check for infection. No fasting required."
+      }
+    ]
+  }
+]
+

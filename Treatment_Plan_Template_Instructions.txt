@@ -1,0 +1,123 @@
+================================================================================
+                    TREATMENT PLAN TEMPLATE - DATA GUIDE
+                           IcanCare Healthcare ERP
+================================================================================
+
+1. OVERVIEW
+-----------
+Treatment Plan Templates are pre-defined treatment protocols that can be 
+automatically suggested based on patient's symptoms and diagnosis during 
+Patient Encounter. This saves time and ensures standardized care.
+
+
+2. HOW IT WORKS
+---------------
+Step 1: Doctor adds Symptoms and/or Diagnosis in Patient Encounter
+Step 2: Click "Get Applicable Treatment Plans" button
+Step 3: System shows matching Treatment Plan Templates
+Step 4: Doctor selects one or more plans
+Step 5: Medications and other items are automatically added to the encounter
+
+
+3. FIELD DESCRIPTIONS
+---------------------
+
+| Field Name          | Description                                           | Example                    |
+|---------------------|-------------------------------------------------------|----------------------------|
+| Template Name       | Unique name for the treatment plan                    | Diabetes Type 2 Management |
+| Description         | Detailed description of the treatment plan            | Comprehensive treatment... |
+| Goal                | Treatment objectives                                  | Maintain HbA1c below 7%    |
+| Patient Age From    | Minimum patient age for this plan                     | 18                         |
+| Patient Age To      | Maximum patient age for this plan                     | 100                        |
+| Gender              | Leave blank for all, or specify Male/Female           | Female                     |
+| Diagnosis           | Conditions that trigger this plan (from Diagnosis master) | Type 2 diabetes mellitus |
+| Complaints/Symptoms | Symptoms that trigger this plan (from Complaint master)  | Headache, Chest pain    |
+| Drug Name           | Name of medication                                    | Metformin 500mg            |
+| Drug Dosage         | Dosing schedule (Morning-Afternoon-Night)             | 1-0-1                      |
+| Drug Period         | Duration of medication                                | 1 Month                    |
+| Drug Comment        | Notes for doctor                                      | Take after meals           |
+| Patient Instruction | Instructions to give to patient                       | Drink plenty of water      |
+
+
+4. DOSAGE FORMAT GUIDE
+----------------------
+The dosage format is: Morning - Afternoon - Night
+
+Examples:
+- 1-0-1   = 1 tablet morning, 0 afternoon, 1 tablet night
+- 0-0-1   = Only 1 tablet at night
+- 1-1-1   = 1 tablet three times daily
+- SOS     = As needed (when required)
+- 1/2-0-1 = Half tablet morning, 1 tablet night
+
+
+5. LIFESTYLE ADVICE / PATIENT INSTRUCTIONS
+-------------------------------------------
+The "Patient Instruction" field is where you add lifestyle advice like:
+- "Drink 1 litre water daily"
+- "Exercise 30 minutes daily"
+- "Avoid spicy and oily food"
+- "Reduce salt intake"
+- "Take rest for 3 days"
+
+These instructions will be printed on the prescription.
+
+
+6. SAMPLE TREATMENT PLANS CREATED
+---------------------------------
+
+1. Diabetes Type 2 Management Plan
+   - Trigger: Diagnosis = "Type 2 diabetes mellitus"
+   - Age: 18-100 years
+   - Medication: Metformin 500mg
+   - Lifestyle: Drink water, avoid alcohol
+
+2. Hypertension Management Plan
+   - Trigger: Diagnosis = "Essential hypertension" OR Symptoms = Headache/Chest pain
+   - Age: 30-100 years
+   - Medication: Amlodipine 5mg
+   - Lifestyle: Reduce salt, exercise daily
+
+3. General Fever Management Plan
+   - Trigger: Any symptom (Other)
+   - Age: 5-100 years
+   - Medication: Paracetamol 500mg
+   - Lifestyle: Drink fluids, rest
+
+
+7. HOW TO ADD MORE TEMPLATES
+----------------------------
+Option 1: Through UI
+   - Go to Healthcare > Treatment Plan Template > New
+   - Fill in the details
+   - Save
+
+Option 2: Through Data Import
+   - Use the CSV file provided
+   - Go to Settings > Data Import
+   - Select "Treatment Plan Template"
+   - Upload CSV file
+
+
+8. MATCHING LOGIC
+-----------------
+A Treatment Plan Template will be suggested when:
+- Patient's age is within the specified range (Age From <= Patient Age <= Age To)
+- Patient's gender matches (if specified)
+- At least one Diagnosis matches OR
+- At least one Symptom/Complaint matches
+
+
+9. IMPORTANT NOTES
+------------------
+- Template Name must be unique
+- Diagnosis and Complaints must exist in the system masters
+- Multiple drugs can be added to a single template
+- Lab Tests and Procedures can also be added (via Items table)
+- Templates can be disabled without deleting them
+
+
+================================================================================
+                         For Support Contact: IcanCare
+================================================================================
+
