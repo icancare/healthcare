@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Patient Encounter", {
-	setup: function(frm) {
+	setup: function (frm) {
 		frm.get_field("drug_prescription").grid.editable_fields = [
 			{ fieldname: "drug_code", columns: 2 },
 			{ fieldname: "drug_name", columns: 2 },
@@ -12,44 +12,44 @@ frappe.ui.form.on("Patient Encounter", {
 		];
 	},
 
-	onload: function(frm) {
+	onload: function (frm) {
 		if (frm.is_new()) {
 			frm.set_value("encounter_date", frappe.datetime.get_today());
 		}
 	},
 
-	refresh: function(frm) {
-		frm.set_query("patient", function() {
+	refresh: function (frm) {
+		frm.set_query("patient", function () {
 			return {
 				filters: { status: "Active" }
 			};
 		});
 
-		frm.set_query("drug_code", "drug_prescription", function() {
+		frm.set_query("drug_code", "drug_prescription", function () {
 			return {
 				filters: { disabled: 0 }
 			};
 		});
 
-		frm.set_query("lab_test_code", "lab_test_prescription", function() {
+		frm.set_query("lab_test_code", "lab_test_prescription", function () {
 			return {
 				filters: { disabled: 0, is_billable: 1 }
 			};
 		});
 
-		frm.set_query("procedure", "procedure_prescription", function() {
+		frm.set_query("procedure", "procedure_prescription", function () {
 			return {
 				filters: { disabled: 0, is_billable: 1 }
 			};
 		});
 
-		frm.set_query("therapy_type", "therapies", function() {
+		frm.set_query("therapy_type", "therapies", function () {
 			return {
 				filters: { disabled: 0 }
 			};
 		});
 
-		frm.set_query("practitioner", function() {
+		frm.set_query("practitioner", function () {
 			return {
 				filters: { status: "Active" }
 			};
@@ -61,11 +61,11 @@ frappe.ui.form.on("Patient Encounter", {
 		}
 
 		if (frm.doc.docstatus == 1) {
-			frm.add_custom_button(__("Order"), function() {
+			frm.add_custom_button(__("Order"), function () {
 				frappe.new_doc("Service Request");
 			});
 
-			frm.add_custom_button(__("Clinical Note"), function() {
+			frm.add_custom_button(__("Clinical Note"), function () {
 				frappe.new_doc("Clinical Note", {
 					patient: frm.doc.patient,
 					encounter: frm.doc.name
@@ -78,10 +78,11 @@ frappe.ui.form.on("Patient Encounter", {
 			load_patient_allergies(frm);
 			load_patient_immunizations(frm);
 		}
-		
+
 		// Check and render Clinical Examination if practitioner has template
 		if (frm.doc.practitioner && frm.doc.show_clinical_examination) {
 			setTimeout(() => {
+				render_step1_table_form(frm);
 				render_clinical_exam_diagram(frm);
 				render_clinical_images_section(frm);
 				render_step4_pictures(frm);
@@ -91,11 +92,12 @@ frappe.ui.form.on("Patient Encounter", {
 			check_practitioner_examination_template(frm);
 		}
 	},
-	
+
 	// Trigger render when show_clinical_examination changes
-	show_clinical_examination: function(frm) {
+	show_clinical_examination: function (frm) {
 		if (frm.doc.show_clinical_examination && frm.doc.practitioner) {
 			setTimeout(() => {
+				render_step1_table_form(frm);
 				render_clinical_exam_diagram(frm);
 				render_clinical_images_section(frm);
 				render_step4_pictures(frm);
@@ -103,14 +105,15 @@ frappe.ui.form.on("Patient Encounter", {
 		}
 	},
 
-	patient: function(frm) {
+
+	patient: function (frm) {
 		if (frm.doc.patient) {
 			frappe.call({
 				method: "healthcare.healthcare.doctype.patient.patient.get_patient_detail",
 				args: {
 					patient: frm.doc.patient
 				},
-				callback: function(r) {
+				callback: function (r) {
 					let data = r.message;
 					frm.set_value("patient_age", data.patient_age);
 					frm.set_value("patient_name", data.patient_name);
@@ -122,13 +125,13 @@ frappe.ui.form.on("Patient Encounter", {
 
 			// Auto-fill allergies and immunizations from Patient
 			load_patient_medical_history(frm);
-			
+
 			// Setup who field queries
 			setup_who_field_queries(frm);
 		}
 	},
 
-	practitioner: function(frm) {
+	practitioner: function (frm) {
 		if (frm.doc.practitioner) {
 			frappe.call({
 				method: "frappe.client.get_value",
@@ -137,14 +140,14 @@ frappe.ui.form.on("Patient Encounter", {
 					filters: { name: frm.doc.practitioner },
 					fieldname: ["practitioner_name", "department"]
 				},
-				callback: function(r) {
+				callback: function (r) {
 					if (r.message) {
 						frm.set_value("practitioner_name", r.message.practitioner_name);
 						frm.set_value("medical_department", r.message.department);
 					}
 				}
 			});
-			
+
 			// Check if practitioner has Clinical Examination Template assigned
 			check_practitioner_examination_template(frm);
 		} else {
@@ -153,7 +156,7 @@ frappe.ui.form.on("Patient Encounter", {
 		}
 	},
 
-	appointment: function(frm) {
+	appointment: function (frm) {
 		if (frm.doc.appointment) {
 			frappe.call({
 				method: "frappe.client.get",
@@ -161,7 +164,7 @@ frappe.ui.form.on("Patient Encounter", {
 					doctype: "Patient Appointment",
 					name: frm.doc.appointment
 				},
-				callback: function(r) {
+				callback: function (r) {
 					let values = {
 						patient: r.message.patient,
 						patient_name: r.message.patient_name,
@@ -179,23 +182,23 @@ frappe.ui.form.on("Patient Encounter", {
 		}
 	},
 
-	get_applicable_treatment_plans: function(frm) {
+	get_applicable_treatment_plans: function (frm) {
 		if (!frm.doc.patient) {
 			frappe.msgprint(__("Please select a patient first"));
 			return;
 		}
-		
+
 		// Build encounter object for the API call
 		let encounter = {
 			patient: frm.doc.patient,
 			symptoms: frm.doc.symptoms || [],
 			diagnosis: frm.doc.diagnosis || []
 		};
-		
+
 		frappe.call({
 			method: "healthcare.healthcare.doctype.patient_encounter.patient_encounter.get_applicable_treatment_plans",
 			args: { encounter: encounter },
-			callback: function(r) {
+			callback: function (r) {
 				if (r.message && r.message.length > 0) {
 					show_treatment_plan_dialog(frm, r.message);
 				} else {
@@ -216,7 +219,7 @@ function show_treatment_plan_dialog(frm, plans) {
 		label: `<strong>${p.template_name}</strong>${p.description ? ' - ' + p.description : ''}`,
 		value: p.template_name
 	}));
-	
+
 	let d = new frappe.ui.Dialog({
 		title: __('Select Treatment Plans to Apply'),
 		fields: [
@@ -234,7 +237,7 @@ function show_treatment_plan_dialog(frm, plans) {
 			}
 		],
 		primary_action_label: __('Apply Selected Plans'),
-		primary_action: function() {
+		primary_action: function () {
 			let selected = d.get_value('selected_plans');
 			if (selected && selected.length > 0) {
 				frm.call('set_treatment_plans', { treatment_plans: selected })
@@ -262,15 +265,15 @@ function load_patient_medical_history(frm) {
 			doctype: "Patient",
 			name: frm.doc.patient
 		},
-		callback: function(r) {
+		callback: function (r) {
 			if (r.message) {
 				console.log("Patient data received:", r.message);
-				
+
 				// Auto-fill allergies if custom_allergy field exists
 				if (frm.fields_dict.custom_allergy && r.message.patient_allergy && r.message.patient_allergy.length > 0) {
 					console.log("Loading allergies:", r.message.patient_allergy.length);
 					frm.clear_table("custom_allergy");
-					r.message.patient_allergy.forEach(function(allergy) {
+					r.message.patient_allergy.forEach(function (allergy) {
 						let row = frm.add_child("custom_allergy");
 						// Map Patient Allergy fields to Patient Encounter Allergy fields
 						row.allergen = allergy.allergen;
@@ -286,13 +289,13 @@ function load_patient_medical_history(frm) {
 				// Debug immunization
 				console.log("custom_immunization field exists?", !!frm.fields_dict.custom_immunization);
 				console.log("patient_immunization data:", r.message.patient_immunization);
-				
+
 				// Auto-fill immunizations if custom_immunization field exists
 				if (frm.fields_dict.custom_immunization) {
 					if (r.message.patient_immunization && r.message.patient_immunization.length > 0) {
 						console.log("Loading immunizations:", r.message.patient_immunization.length);
 						frm.clear_table("custom_immunization");
-						r.message.patient_immunization.forEach(function(imm) {
+						r.message.patient_immunization.forEach(function (imm) {
 							let row = frm.add_child("custom_immunization");
 							// Map all Patient Immunization fields to Patient Encounter Immunization
 							row.vaccine_name = imm.vaccine_name;
@@ -320,7 +323,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_medical_history && r.message.patient_medical_history && r.message.patient_medical_history.length > 0) {
 					console.log("Loading medical history:", r.message.patient_medical_history.length);
 					frm.clear_table("custom_medical_history");
-					r.message.patient_medical_history.forEach(function(history) {
+					r.message.patient_medical_history.forEach(function (history) {
 						let row = frm.add_child("custom_medical_history");
 						row.diagnosis_category = history.diagnosis_category;
 						row.diagnosis = history.diagnosis;
@@ -345,7 +348,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_surgical_history && r.message.patient_surgical_history && r.message.patient_surgical_history.length > 0) {
 					console.log("Loading surgical history:", r.message.patient_surgical_history.length);
 					frm.clear_table("custom_surgical_history");
-					r.message.patient_surgical_history.forEach(function(history) {
+					r.message.patient_surgical_history.forEach(function (history) {
 						let row = frm.add_child("custom_surgical_history");
 						row.procedure = history.procedure;
 						row.procedure_name = history.procedure_name;
@@ -360,7 +363,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history.length > 0) {
 					console.log("Loading smokeless tobacco history:", r.message.patient_smokeless_tobacco_history.length);
 					frm.clear_table("custom_smokeless_tobacco_history");
-					r.message.patient_smokeless_tobacco_history.forEach(function(history) {
+					r.message.patient_smokeless_tobacco_history.forEach(function (history) {
 						let row = frm.add_child("custom_smokeless_tobacco_history");
 						row.type = history.type;
 						row.frequency = history.frequency;
@@ -377,7 +380,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_smoking_tobacco_history && r.message.patient_smoking_tobacco_history && r.message.patient_smoking_tobacco_history.length > 0) {
 					console.log("Loading smoking tobacco history:", r.message.patient_smoking_tobacco_history.length);
 					frm.clear_table("custom_smoking_tobacco_history");
-					r.message.patient_smoking_tobacco_history.forEach(function(history) {
+					r.message.patient_smoking_tobacco_history.forEach(function (history) {
 						let row = frm.add_child("custom_smoking_tobacco_history");
 						row.type = history.type;
 						row.frequency = history.frequency;
@@ -394,7 +397,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_substance_abuse_history && r.message.patient_substance_abuse_history && r.message.patient_substance_abuse_history.length > 0) {
 					console.log("Loading substance abuse history:", r.message.patient_substance_abuse_history.length);
 					frm.clear_table("custom_substance_abuse_history");
-					r.message.patient_substance_abuse_history.forEach(function(history) {
+					r.message.patient_substance_abuse_history.forEach(function (history) {
 						let row = frm.add_child("custom_substance_abuse_history");
 						row.type = history.type;
 						row.frequency = history.frequency;
@@ -411,7 +414,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_oral_habits_history && r.message.patient_oral_habits_history && r.message.patient_oral_habits_history.length > 0) {
 					console.log("Loading oral habits history:", r.message.patient_oral_habits_history.length);
 					frm.clear_table("custom_oral_habits_history");
-					r.message.patient_oral_habits_history.forEach(function(history) {
+					r.message.patient_oral_habits_history.forEach(function (history) {
 						let row = frm.add_child("custom_oral_habits_history");
 						row.type = history.type;
 						row.oral_hygiene_practice = history.oral_hygiene_practice;
@@ -427,7 +430,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_diet_history && r.message.patient_diet_history && r.message.patient_diet_history.length > 0) {
 					console.log("Loading diet history:", r.message.patient_diet_history.length);
 					frm.clear_table("custom_diet_history");
-					r.message.patient_diet_history.forEach(function(history) {
+					r.message.patient_diet_history.forEach(function (history) {
 						let row = frm.add_child("custom_diet_history");
 						row.diet_type = history.diet_type;
 						row.started_when = history.started_when;
@@ -440,7 +443,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_occupational_exposure_history && r.message.patient_occupational_exposure_history && r.message.patient_occupational_exposure_history.length > 0) {
 					console.log("Loading occupational exposure history:", r.message.patient_occupational_exposure_history.length);
 					frm.clear_table("custom_occupational_exposure_history");
-					r.message.patient_occupational_exposure_history.forEach(function(history) {
+					r.message.patient_occupational_exposure_history.forEach(function (history) {
 						let row = frm.add_child("custom_occupational_exposure_history");
 						row.type = history.type;
 						row.duration = history.duration;
@@ -453,7 +456,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_environmental_factors_history && r.message.patient_environmental_factors_history && r.message.patient_environmental_factors_history.length > 0) {
 					console.log("Loading environmental factors history:", r.message.patient_environmental_factors_history.length);
 					frm.clear_table("custom_environmental_factors_history");
-					r.message.patient_environmental_factors_history.forEach(function(history) {
+					r.message.patient_environmental_factors_history.forEach(function (history) {
 						let row = frm.add_child("custom_environmental_factors_history");
 						row.type = history.type;
 						row.exposure_level = history.exposure_level;
@@ -466,7 +469,7 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.encounter_family_medical_history && r.message.patient_family_medical_history && r.message.patient_family_medical_history.length > 0) {
 					console.log("Loading family medical history:", r.message.patient_family_medical_history.length);
 					frm.clear_table("encounter_family_medical_history");
-					r.message.patient_family_medical_history.forEach(function(history) {
+					r.message.patient_family_medical_history.forEach(function (history) {
 						let row = frm.add_child("encounter_family_medical_history");
 						row.diagnosis_category = history.diagnosis_category;
 						row.relation = history.relation;
@@ -523,7 +526,7 @@ function load_patient_medical_history(frm) {
 					if (frm.fields_dict.encounter_children_details && r.message.patient_children_details && r.message.patient_children_details.length > 0) {
 						console.log("Loading children details:", r.message.patient_children_details.length);
 						frm.clear_table("encounter_children_details");
-						r.message.patient_children_details.forEach(function(child) {
+						r.message.patient_children_details.forEach(function (child) {
 							let row = frm.add_child("encounter_children_details");
 							row.child_number = child.child_number;
 							row.age_at_delivery = child.age_at_delivery;
@@ -539,7 +542,7 @@ function load_patient_medical_history(frm) {
 }
 
 frappe.ui.form.on("Drug Prescription", {
-	drug_code: function(frm, cdt, cdn) {
+	drug_code: function (frm, cdt, cdn) {
 		let row = locals[cdt][cdn];
 		if (row.drug_code) {
 			frappe.call({
@@ -549,7 +552,7 @@ frappe.ui.form.on("Drug Prescription", {
 					filters: { name: row.drug_code },
 					fieldname: ["medication_name", "default_prescription_dosage", "default_prescription_duration"]
 				},
-				callback: function(r) {
+				callback: function (r) {
 					if (r.message) {
 						frappe.model.set_value(cdt, cdn, "drug_name", r.message.medication_name);
 						if (r.message.default_prescription_dosage)
@@ -562,7 +565,7 @@ frappe.ui.form.on("Drug Prescription", {
 		}
 	},
 
-	drug_name: function(frm, cdt, cdn) {
+	drug_name: function (frm, cdt, cdn) {
 		let row = locals[cdt][cdn];
 		if (row.drug_name) {
 			frappe.call({
@@ -572,7 +575,7 @@ frappe.ui.form.on("Drug Prescription", {
 					filters: { medication_name: row.drug_name },
 					fieldname: ["name", "default_prescription_dosage", "default_prescription_duration"]
 				},
-				callback: function(r) {
+				callback: function (r) {
 					if (r.message) {
 						frappe.model.set_value(cdt, cdn, "drug_code", r.message.name);
 						if (r.message.default_prescription_dosage)
@@ -587,7 +590,7 @@ frappe.ui.form.on("Drug Prescription", {
 });
 
 frappe.ui.form.on("Lab Prescription", {
-	lab_test_code: function(frm, cdt, cdn) {
+	lab_test_code: function (frm, cdt, cdn) {
 		let row = locals[cdt][cdn];
 		if (row.lab_test_code) {
 			frappe.call({
@@ -597,7 +600,7 @@ frappe.ui.form.on("Lab Prescription", {
 					filters: { name: row.lab_test_code },
 					fieldname: ["lab_test_name", "lab_test_rate", "lab_test_description"]
 				},
-				callback: function(r) {
+				callback: function (r) {
 					if (r.message) {
 						frappe.model.set_value(cdt, cdn, "lab_test_name", r.message.lab_test_name);
 					}
@@ -608,7 +611,7 @@ frappe.ui.form.on("Lab Prescription", {
 });
 
 frappe.ui.form.on("Procedure Prescription", {
-	procedure: function(frm, cdt, cdn) {
+	procedure: function (frm, cdt, cdn) {
 		let row = locals[cdt][cdn];
 		if (row.procedure) {
 			frappe.call({
@@ -618,7 +621,7 @@ frappe.ui.form.on("Procedure Prescription", {
 					filters: { name: row.procedure },
 					fieldname: ["medical_department"]
 				},
-				callback: function(r) {
+				callback: function (r) {
 					if (r.message && r.message.medical_department) {
 						frappe.model.set_value(cdt, cdn, "department", r.message.medical_department);
 					}
@@ -638,13 +641,13 @@ function setup_who_field_queries(frm) {
 			doctype: "Patient",
 			name: frm.doc.patient
 		},
-		callback: function(r) {
+		callback: function (r) {
 			if (r.message) {
 				let patient_list = [r.message.name]; // Include self
-				
+
 				// Add related patients from patient_relation
 				if (r.message.patient_relation) {
-					r.message.patient_relation.forEach(function(rel) {
+					r.message.patient_relation.forEach(function (rel) {
 						if (rel.patient) {
 							patient_list.push(rel.patient);
 						}
@@ -653,7 +656,7 @@ function setup_who_field_queries(frm) {
 
 				// Set query for Medical History "who" field
 				if (frm.fields_dict.custom_medical_history) {
-					frm.fields_dict.custom_medical_history.grid.get_field('who').get_query = function() {
+					frm.fields_dict.custom_medical_history.grid.get_field('who').get_query = function () {
 						return {
 							filters: [['Patient', 'name', 'in', patient_list]]
 						};
@@ -662,7 +665,7 @@ function setup_who_field_queries(frm) {
 
 				// Set query for Surgical History "who" field
 				if (frm.fields_dict.custom_surgical_history) {
-					frm.fields_dict.custom_surgical_history.grid.get_field('who').get_query = function() {
+					frm.fields_dict.custom_surgical_history.grid.get_field('who').get_query = function () {
 						return {
 							filters: [['Patient', 'name', 'in', patient_list]]
 						};
@@ -681,29 +684,29 @@ function setup_clinical_examination_button(frm) {
 	frappe.call({
 		method: "healthcare.healthcare.doctype.clinical_examination_template.clinical_examination_template.get_templates_for_practitioner",
 		args: { practitioner: frm.doc.practitioner },
-		callback: function(r) {
+		callback: function (r) {
 			if (r.message && r.message.length > 0) {
 				let templates = r.message;
-				
+
 				// Add Clinical Examination button with dropdown
 				if (templates.length === 1) {
 					// Single template - direct button
-					frm.add_custom_button(__("Clinical Examination"), function() {
+					frm.add_custom_button(__("Clinical Examination"), function () {
 						create_clinical_examination(frm, templates[0].template_name);
 					}, __("Create"));
 				} else {
 					// Multiple templates - dropdown
-					templates.forEach(function(template) {
+					templates.forEach(function (template) {
 						let label = template.examination_type;
 						if (template.is_default) {
 							label += " ★";
 						}
-						frm.add_custom_button(__(label), function() {
+						frm.add_custom_button(__(label), function () {
 							create_clinical_examination(frm, template.template_name);
 						}, __("Clinical Examination"));
 					});
 				}
-				
+
 				// Show default form section in encounter if practitioner has default template
 				let default_template = templates.find(t => t.is_default);
 				if (default_template) {
@@ -721,7 +724,7 @@ function create_clinical_examination(frm, template_name) {
 			encounter: frm.doc.name,
 			template: template_name
 		},
-		callback: function(r) {
+		callback: function (r) {
 			if (r.message) {
 				frappe.set_route("Form", "Clinical Examination", r.message.name);
 			}
@@ -731,16 +734,16 @@ function create_clinical_examination(frm, template_name) {
 
 function render_default_clinical_exam_section(frm, template) {
 	// Add a section in the form showing quick access to clinical examination
-	let wrapper = frm.fields_dict.physical_examination ? 
+	let wrapper = frm.fields_dict.physical_examination ?
 		frm.fields_dict.physical_examination.$wrapper.parent() : null;
-	
+
 	if (!wrapper) return;
-	
+
 	// Check if section already exists
 	if (wrapper.find('.clinical-exam-quick-access').length > 0) {
 		return;
 	}
-	
+
 	let html = `
 		<div class="clinical-exam-quick-access" style="
 			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -768,10 +771,10 @@ function render_default_clinical_exam_section(frm, template) {
 			</div>
 		</div>
 	`;
-	
+
 	wrapper.prepend(html);
-	
-	wrapper.find('.open-clinical-exam').on('click', function() {
+
+	wrapper.find('.open-clinical-exam').on('click', function () {
 		let template_name = $(this).data('template');
 		create_clinical_examination(frm, template_name);
 	});
@@ -786,11 +789,11 @@ function check_practitioner_examination_template(frm) {
 			filters: { name: frm.doc.practitioner },
 			fieldname: ["default_examination_template"]
 		},
-		callback: function(r) {
+		callback: function (r) {
 			if (r.message && r.message.default_examination_template) {
 				// Practitioner has clinical examination template assigned
 				frm.set_value("show_clinical_examination", 1);
-				
+
 				// Get template details
 				frappe.call({
 					method: "frappe.client.get_value",
@@ -799,20 +802,20 @@ function check_practitioner_examination_template(frm) {
 						filters: { name: r.message.default_examination_template },
 						fieldname: ["template_name", "examination_type"]
 					},
-					callback: function(template_r) {
+					callback: function (template_r) {
 						if (template_r.message) {
 							// Set examination type
 							if (!frm.doc.exam_examination_type) {
 								frm.set_value("exam_examination_type", template_r.message.examination_type);
 							}
-							
+
 							// Render diagram and images
 							setTimeout(() => {
 								render_clinical_exam_diagram(frm);
 								render_clinical_images_section(frm);
 								render_step4_pictures(frm);
 							}, 500);
-							
+
 							frappe.show_alert({
 								message: __('Clinical Examination: {0}', [template_r.message.template_name]),
 								indicator: 'blue'
@@ -837,10 +840,10 @@ function render_clinical_exam_diagram(frm) {
 // STEP 3 - Professional Interactive Diagrams
 function render_step3_interactive_diagrams(frm) {
 	if (!frm.fields_dict.exam_diagram_interactive) return;
-	
+
 	let wrapper = frm.fields_dict.exam_diagram_interactive.$wrapper;
 	wrapper.empty();
-	
+
 	// Professional Medical Diagrams with 3D-like styling
 	let svg_html = `
 		<style>
@@ -1140,7 +1143,7 @@ function render_step3_interactive_diagrams(frm) {
 						
 						<!-- Upper Teeth -->
 						<g transform="translate(30,30)">
-							${[18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28].map((num, i) => `
+							${[18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28].map((num, i) => `
 								<g class="clickable-region" data-region="tooth-${num}" data-side="${num < 20 ? 'Right' : 'Left'}" data-diagram="Teeth" transform="translate(${i * 15}, 0)">
 									<rect x="0" y="0" width="13" height="25" fill="url(#toothGradient)" stroke="#ccc" rx="3"/>
 									<text x="6.5" y="35" text-anchor="middle" font-size="7" fill="#666">${num}</text>
@@ -1159,7 +1162,7 @@ function render_step3_interactive_diagrams(frm) {
 						
 						<!-- Lower Teeth -->
 						<g transform="translate(30,130)">
-							${[48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38].map((num, i) => `
+							${[48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38].map((num, i) => `
 								<g class="clickable-region" data-region="tooth-${num}" data-side="${num > 40 ? 'Right' : 'Left'}" data-diagram="Teeth" transform="translate(${i * 15}, 0)">
 									<rect x="0" y="0" width="13" height="25" fill="url(#toothGradient)" stroke="#ccc" rx="3"/>
 									<text x="6.5" y="35" text-anchor="middle" font-size="7" fill="#666">${num}</text>
@@ -1252,15 +1255,15 @@ function render_step3_interactive_diagrams(frm) {
 			</div>
 		</div>
 	`;
-	
+
 	wrapper.html(svg_html);
-	
+
 	// Add click handlers for all diagram regions
-	wrapper.find('.clickable-region').on('click', function(e) {
+	wrapper.find('.clickable-region').on('click', function (e) {
 		let region = $(this).data('region');
 		let side = $(this).data('side') || 'Midline';
 		let diagram = $(this).data('diagram') || 'Face';
-		
+
 		add_lesion_marking(frm, region, side, diagram, e);
 	});
 }
@@ -1269,7 +1272,7 @@ function render_step3_interactive_diagrams(frm) {
 function add_lesion_marking(frm, region, side, diagram, event) {
 	// Format region name for display
 	let region_display = region.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-	
+
 	let d = new frappe.ui.Dialog({
 		title: __('Mark Lesion - {0} ({1})', [region_display, side]),
 		size: 'large',
@@ -1338,12 +1341,12 @@ function add_lesion_marking(frm, region, side, diagram, event) {
 			}
 		],
 		primary_action_label: __('Add Lesion'),
-		primary_action: function() {
+		primary_action: function () {
 			let values = d.get_values();
-			
+
 			// Get current lesion count
 			let lesion_count = (frm.doc.exam_diagram_lesions || []).length + 1;
-			
+
 			// Add to lesions table
 			let row = frm.add_child('exam_diagram_lesions');
 			row.lesion_number = lesion_count;
@@ -1356,10 +1359,10 @@ function add_lesion_marking(frm, region, side, diagram, event) {
 			row.description = values.description;
 			row.note = values.note;
 			row.diagram_region = region;
-			
+
 			frm.refresh_field('exam_diagram_lesions');
 			d.hide();
-			
+
 			frappe.show_alert({
 				message: __('Lesion #{0} added: {1} - {2}', [lesion_count, region_display, side]),
 				indicator: 'green'
@@ -1372,10 +1375,10 @@ function add_lesion_marking(frm, region, side, diagram, event) {
 // Legacy diagram function - now calls new STEP 3 function
 function render_old_clinical_exam_diagram(frm) {
 	if (!frm.fields_dict.exam_diagram_html) return;
-	
+
 	let wrapper = frm.fields_dict.exam_diagram_html.$wrapper;
 	wrapper.empty();
-	
+
 	// Interactive Oral Cavity SVG Diagram
 	let svg_html = `
 		<div class="oral-exam-diagram-container" style="padding: 20px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 12px; margin: 10px 0;">
@@ -1496,29 +1499,29 @@ function render_old_clinical_exam_diagram(frm) {
 			</div>
 		</div>
 	`;
-	
+
 	wrapper.html(svg_html);
-	
+
 	// Add click handlers for diagram regions
-	wrapper.find('.clickable-region').on('click', function() {
+	wrapper.find('.clickable-region').on('click', function () {
 		let region = $(this).data('region');
 		add_lesion_from_diagram(frm, region);
 	});
-	
+
 	// Style clickable regions
 	wrapper.find('.clickable-region').css({
 		'cursor': 'pointer',
 		'transition': 'all 0.2s ease'
 	}).hover(
-		function() { $(this).css({'opacity': '0.7', 'stroke-width': '3'}); },
-		function() { $(this).css({'opacity': '1', 'stroke-width': ''}); }
+		function () { $(this).css({ 'opacity': '0.7', 'stroke-width': '3' }); },
+		function () { $(this).css({ 'opacity': '1', 'stroke-width': '' }); }
 	);
 }
 
 function add_lesion_from_diagram(frm, region) {
 	// Format region name
 	let region_name = region.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-	
+
 	let d = new frappe.ui.Dialog({
 		title: __('Add Lesion - {0}', [region_name]),
 		fields: [
@@ -1536,19 +1539,19 @@ function add_lesion_from_diagram(frm, region) {
 			}
 		],
 		primary_action_label: __('Add Lesion'),
-		primary_action: function() {
+		primary_action: function () {
 			let values = d.get_values();
-			
+
 			// Add to lesions table
 			let row = frm.add_child('exam_lesions');
 			row.lesion_number = (frm.doc.exam_lesions || []).length;
 			row.diagram_region = region_name;
 			row.lesion_type = values.lesion_type;
 			row.description = values.description;
-			
+
 			frm.refresh_field('exam_lesions');
 			d.hide();
-			
+
 			frappe.show_alert({
 				message: __('Lesion added for {0}', [region_name]),
 				indicator: 'green'
@@ -1561,13 +1564,13 @@ function add_lesion_from_diagram(frm, region) {
 // Clinical Images Section with Direct Upload
 function render_clinical_images_section(frm) {
 	if (!frm.fields_dict.exam_images_section) return;
-	
+
 	// Add custom image upload UI before the table
 	let wrapper = frm.fields_dict.exam_images_section.$wrapper;
-	
+
 	// Remove existing custom UI
 	wrapper.find('.clinical-images-upload-ui').remove();
-	
+
 	let image_categories = [
 		'Face and Neck',
 		'Open Mouth with Scale',
@@ -1580,7 +1583,7 @@ function render_clinical_images_section(frm) {
 		'Abnormal Area Focused',
 		'Special Tests'
 	];
-	
+
 	let upload_html = `
 		<div class="clinical-images-upload-ui" style="padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; margin: 10px 0;">
 			<h6 style="color: #fff; margin-bottom: 15px;">
@@ -1611,33 +1614,33 @@ function render_clinical_images_section(frm) {
 			</div>
 		</div>
 	`;
-	
+
 	wrapper.prepend(upload_html);
-	
+
 	// Add click handlers for image upload
-	wrapper.find('.image-upload-card').on('click', function() {
+	wrapper.find('.image-upload-card').on('click', function () {
 		let category = $(this).data('category');
 		let card = $(this);
-		
+
 		new frappe.ui.FileUploader({
 			doctype: frm.doctype,
 			docname: frm.docname,
 			folder: 'Home/Attachments',
-			on_success: function(file_doc) {
+			on_success: function (file_doc) {
 				// Add to images table
 				let row = frm.add_child('exam_images');
 				row.image_category = category;
 				row.image = file_doc.file_url;
 				row.uploaded_by = frappe.session.user;
 				row.upload_time = frappe.datetime.now_datetime();
-				
+
 				frm.refresh_field('exam_images');
-				
+
 				// Update card UI
 				card.find('.upload-icon').html('<i class="fa fa-check-circle" style="color: #28a745;"></i>');
 				card.find('.image-preview').show().find('img').attr('src', file_doc.file_url);
 				card.css('border-color', '#28a745');
-				
+
 				frappe.show_alert({
 					message: __('Image uploaded: {0}', [category]),
 					indicator: 'green'
@@ -1645,13 +1648,13 @@ function render_clinical_images_section(frm) {
 			}
 		});
 	});
-	
+
 	// Hover effects
 	wrapper.find('.image-upload-card').hover(
-		function() { $(this).css({'transform': 'scale(1.02)', 'box-shadow': '0 4px 15px rgba(0,0,0,0.1)'}); },
-		function() { $(this).css({'transform': 'scale(1)', 'box-shadow': 'none'}); }
+		function () { $(this).css({ 'transform': 'scale(1.02)', 'box-shadow': '0 4px 15px rgba(0,0,0,0.1)' }); },
+		function () { $(this).css({ 'transform': 'scale(1)', 'box-shadow': 'none' }); }
 	);
-	
+
 	// Show existing images
 	if (frm.doc.exam_images && frm.doc.exam_images.length > 0) {
 		frm.doc.exam_images.forEach(img => {
@@ -1672,10 +1675,10 @@ function render_step4_pictures(frm) {
 	if (!field || !field.$wrapper) {
 		return;
 	}
-	
+
 	let wrapper = field.$wrapper;
 	wrapper.empty();
-	
+
 	// Picture categories matching the sheet
 	const picture_categories = [
 		{ num: 1, name: 'Face and Neck', field: 'exam_pic_1_face_neck', icon: 'fa-user' },
@@ -1689,7 +1692,7 @@ function render_step4_pictures(frm) {
 		{ num: 9, name: 'Abnormal Area Focused', field: 'exam_pic_9_abnormal', icon: 'fa-search-plus' },
 		{ num: 10, name: 'Special Tests', field: 'exam_pic_10_special', icon: 'fa-microscope' }
 	];
-	
+
 	let html = `
 		<style>
 			.step4-container {
@@ -1828,8 +1831,8 @@ function render_step4_pictures(frm) {
 			
 			<div class="pictures-grid">
 				${picture_categories.map(cat => {
-					let existing_image = frm.doc[cat.field];
-					return `
+		let existing_image = frm.doc[cat.field];
+		return `
 						<div class="picture-card" data-field="${cat.field}" data-name="${cat.name}">
 							<div class="picture-card-header">
 								<i class="fa ${cat.icon}"></i> ${cat.num}. ${cat.name}
@@ -1855,27 +1858,27 @@ function render_step4_pictures(frm) {
 							</div>
 						</div>
 					`;
-				}).join('')}
+	}).join('')}
 			</div>
 		</div>
 	`;
-	
+
 	wrapper.html(html);
-	
+
 	// Add click handlers for upload
-	wrapper.find('.picture-placeholder').on('click', function() {
+	wrapper.find('.picture-placeholder').on('click', function () {
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
 		let name = card.data('name');
 		upload_picture(frm, card, field, name);
 	});
-	
+
 	// View full image
-	wrapper.find('.btn-view').on('click', function(e) {
+	wrapper.find('.btn-view').on('click', function (e) {
 		e.stopPropagation();
 		let img_src = $(this).closest('.picture-preview').find('img').attr('src');
 		let name = $(this).closest('.picture-card').data('name');
-		
+
 		let d = new frappe.ui.Dialog({
 			title: name,
 			size: 'extra-large'
@@ -1883,28 +1886,28 @@ function render_step4_pictures(frm) {
 		d.$body.html(`<img src="${img_src}" style="width: 100%; max-height: 80vh; object-fit: contain;"/>`);
 		d.show();
 	});
-	
+
 	// Replace image
-	wrapper.find('.btn-replace').on('click', function(e) {
+	wrapper.find('.btn-replace').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
 		let name = card.data('name');
 		upload_picture(frm, card, field, name);
 	});
-	
+
 	// Delete image
-	wrapper.find('.btn-delete').on('click', function(e) {
+	wrapper.find('.btn-delete').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
 		let name = card.data('name');
-		
+
 		frappe.confirm(
 			__('Are you sure you want to delete the image for "{0}"?', [name]),
 			() => {
 				frm.set_value(field, '');
-				
+
 				// Update UI
 				card.find('.picture-card-body').html(`
 					<div class="picture-placeholder">
@@ -1913,12 +1916,12 @@ function render_step4_pictures(frm) {
 					</div>
 					<div class="upload-status"><i class="fa fa-check"></i> Uploaded</div>
 				`);
-				
+
 				// Re-bind click handler
-				card.find('.picture-placeholder').on('click', function() {
+				card.find('.picture-placeholder').on('click', function () {
 					upload_picture(frm, card, field, name);
 				});
-				
+
 				frappe.show_alert({
 					message: __('Image deleted: {0}', [name]),
 					indicator: 'orange'
@@ -1937,10 +1940,10 @@ function upload_picture(frm, card, field, name) {
 		restrictions: {
 			allowed_file_types: ['image/*']
 		},
-		on_success: function(file_doc) {
+		on_success: function (file_doc) {
 			// Set field value
 			frm.set_value(field, file_doc.file_url);
-			
+
 			// Update card UI
 			card.find('.picture-card-body').html(`
 				<div class="picture-preview">
@@ -1953,9 +1956,9 @@ function upload_picture(frm, card, field, name) {
 				</div>
 				<div class="upload-status show"><i class="fa fa-check"></i> Uploaded</div>
 			`);
-			
+
 			// Re-bind action handlers
-			card.find('.btn-view').on('click', function(e) {
+			card.find('.btn-view').on('click', function (e) {
 				e.stopPropagation();
 				let d = new frappe.ui.Dialog({
 					title: name,
@@ -1964,13 +1967,13 @@ function upload_picture(frm, card, field, name) {
 				d.$body.html(`<img src="${file_doc.file_url}" style="width: 100%; max-height: 80vh; object-fit: contain;"/>`);
 				d.show();
 			});
-			
-			card.find('.btn-replace').on('click', function(e) {
+
+			card.find('.btn-replace').on('click', function (e) {
 				e.stopPropagation();
 				upload_picture(frm, card, field, name);
 			});
-			
-			card.find('.btn-delete').on('click', function(e) {
+
+			card.find('.btn-delete').on('click', function (e) {
 				e.stopPropagation();
 				frappe.confirm(
 					__('Are you sure you want to delete the image for "{0}"?', [name]),
@@ -1984,11 +1987,371 @@ function upload_picture(frm, card, field, name) {
 					}
 				);
 			});
-			
+
 			frappe.show_alert({
 				message: __('Image uploaded: {0}', [name]),
 				indicator: 'green'
 			});
 		}
 	});
+}
+
+
+// ================== STEP 1 - PATIENT COMPLAINTS (REDESIGNED) ==================
+// Uses radio buttons for selection and shows complaints table at bottom
+
+const BODY_PARTS_CONFIG = {
+    'Face': {
+        symptoms: ['Lump/Swelling on face', 'Pigmentation', 'Ulcer']
+    },
+    'Neck': {
+        symptoms: ['Lump/Swelling in Neck (outside)', 'Swelling/lump in Throat (inside)', 'Stickiness in throat', 'Change in Voice', 'Sore throat/Hoarseness', 'Others']
+    },
+    'Oral Cavity (Mouth and Tongue)': {
+        symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Trauma', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Others']
+    },
+    'Teeth (Dental)': {
+        symptoms: ['Painful teeth', 'Loosening of teeth', 'Lost teeth', 'Teeth or gum problem', 'Denture problem']
+    },
+    'Others': {
+        symptoms: ['Earache', 'Others']
+    }
+};
+
+function render_step1_table_form(frm) {
+    let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
+    if (!wrapper) return;
+
+    wrapper.empty();
+
+    let currentStatus = frm.doc.exam_complaints_status || '';
+    let isNormal = currentStatus === 'No Complaints - Normal';
+    let isAbnormal = currentStatus === 'Complaints - Abnormal';
+
+    let html = `
+		<style>
+			.step1-radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+			.step1-radio-label { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; font-size: 12px; }
+			.step1-radio-label:hover { background: var(--subtle-bg); }
+			.step1-radio-label input[type="radio"] { margin: 0; }
+			.step1-section-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
+			.step1-complaints-table { width: 100%; border-collapse: collapse; margin-top: 15px; border: 1px solid var(--border-color); border-radius: 4px; }
+			.step1-complaints-table th { background: var(--subtle-bg); padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); border: 1px solid var(--border-color); }
+			.step1-complaints-table td { padding: 10px 12px; border: 1px solid var(--border-color); font-size: 12px; }
+			.step1-complaints-table tbody tr:hover { background: var(--subtle-bg); }
+			.step1-complaints-table .btn-xs { padding: 3px 8px; font-size: 11px; }
+		</style>
+		
+		<div class="step1-form">
+			<!-- Row 1: Filled By and Status -->
+			<div class="row" style="margin-bottom: 15px;">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label" style="font-size: 12px; color: var(--text-muted);">Can be filled by</label>
+						<select class="form-control input-sm" id="step1_filled_by">
+							<option value="">Select...</option>
+							<option value="Patient Himself" ${frm.doc.exam_filled_by === 'Patient Himself' ? 'selected' : ''}>Patient Himself</option>
+							<option value="Doctor Assistant" ${frm.doc.exam_filled_by === 'Doctor Assistant' ? 'selected' : ''}>Doctor Assistant</option>
+							<option value="Counsellor" ${frm.doc.exam_filled_by === 'Counsellor' ? 'selected' : ''}>Counsellor</option>
+							<option value="Doctor" ${frm.doc.exam_filled_by === 'Doctor' ? 'selected' : ''}>Doctor</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label" style="font-size: 12px; color: var(--text-muted);">Complaints Status</label>
+						<select class="form-control input-sm" id="step1_status">
+							<option value="">Select...</option>
+							<option value="No Complaints - Normal" ${isNormal ? 'selected' : ''}>No Complaints - Normal</option>
+							<option value="Complaints - Abnormal" ${isAbnormal ? 'selected' : ''}>Complaints - Abnormal</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Normal Message -->
+			<div id="step1_normal_msg" style="display: ${isNormal ? 'block' : 'none'}; padding: 20px; text-align: center; background: var(--subtle-bg); border-radius: 6px; margin-bottom: 15px;">
+				<span style="color: var(--green-500);">✓ No complaints reported. Patient is normal.</span>
+			</div>
+			
+			<!-- Abnormal Section -->
+			<div id="step1_abnormal_section" style="display: ${isAbnormal ? 'block' : 'none'};">
+				
+				<!-- Duration - Radio Buttons -->
+				<div style="margin-bottom: 15px;">
+					<div class="step1-section-title">Since When (Duration)</div>
+					<div class="step1-radio-group">
+						${['1-5 days', '5-14 days', '>14 days - 1 month', '>1 month - 1 year', 'Long time', 'Occurs off and on'].map((d, i) => `
+							<label class="step1-radio-label">
+								<input type="radio" name="step1_duration" value="${d}"> ${d}
+							</label>
+						`).join('')}
+					</div>
+				</div>
+				
+				<!-- Body Part - Radio Buttons -->
+				<div style="margin-bottom: 15px;">
+					<div class="step1-section-title">Select Body Part</div>
+					<div class="step1-radio-group">
+						${Object.keys(BODY_PARTS_CONFIG).map(bp => `
+							<label class="step1-radio-label">
+								<input type="radio" name="step1_bodypart" value="${bp}"> ${bp}
+							</label>
+						`).join('')}
+					</div>
+				</div>
+				
+				<!-- Complaints - Radio Buttons (dynamic) -->
+				<div id="complaints_section" style="display: none; margin-bottom: 15px;">
+					<div class="step1-section-title" id="complaints_label">Select Complaint</div>
+					<div class="step1-radio-group" id="complaints_list"></div>
+				</div>
+				
+				<!-- Details Form -->
+				<div id="details_section" style="display: none; margin-bottom: 15px; padding: 15px; background: var(--subtle-bg); border-radius: 6px; border: 1px solid var(--border-color);">
+					<div class="step1-section-title" style="margin-bottom: 12px;">Complaint Details</div>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Duration (Days)</label>
+								<input type="number" class="form-control input-sm" id="detail_days" placeholder="Days" min="0">
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Pattern</label>
+								<select class="form-control input-sm" id="detail_pattern">
+									<option value="">Select...</option>
+									<option value="Increasing">Increasing</option>
+									<option value="Decreasing">Decreasing</option>
+									<option value="Persistent">Persistent</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Onset Date</label>
+								<input type="date" class="form-control input-sm" id="detail_onset">
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Notes</label>
+								<input type="text" class="form-control input-sm" id="detail_notes" placeholder="Notes...">
+							</div>
+						</div>
+					</div>
+					<div style="margin-top: 10px;">
+						<label class="checkbox-inline" style="margin-right: 15px; font-size: 12px;">
+							<input type="checkbox" id="detail_trauma"> Trauma?
+						</label>
+						<label class="checkbox-inline" style="margin-right: 15px; font-size: 12px;">
+							<input type="checkbox" id="detail_treatment"> Medical treatment?
+						</label>
+						<label class="checkbox-inline" style="margin-right: 15px; font-size: 12px;">
+							<input type="checkbox" id="detail_intermittent"> Intermittent
+						</label>
+						<label class="checkbox-inline" style="font-size: 12px;">
+							<input type="checkbox" id="detail_recurrent"> Recurrent
+						</label>
+					</div>
+					<div style="margin-top: 15px;">
+						<button type="button" class="btn btn-primary btn-sm" id="add_complaint_btn">+ Add Complaint</button>
+						<button type="button" class="btn btn-default btn-sm" id="cancel_btn">Cancel</button>
+					</div>
+				</div>
+				
+				<!-- Added Complaints Table -->
+				<div id="added_complaints_section" style="margin-top: 20px;">
+					<div class="step1-section-title">Added Complaints</div>
+					<div id="complaints_table_container"></div>
+				</div>
+				
+			</div>
+		</div>
+	`;
+
+    wrapper.html(html);
+
+    // Setup handlers
+    setup_step1_handlers(frm, wrapper);
+
+    // Render existing complaints table
+    render_complaints_table(frm, wrapper);
+}
+
+function render_complaints_table(frm, wrapper) {
+    let container = wrapper.find('#complaints_table_container');
+
+    if (!frm.doc.exam_complaints || frm.doc.exam_complaints.length === 0) {
+        container.html('<p style="color: var(--text-muted); font-size: 12px; padding: 10px 0;">No complaints added yet.</p>');
+        return;
+    }
+
+    let tableHtml = `
+		<table class="step1-complaints-table">
+			<thead>
+				<tr>
+					<th style="width: 30px;">#</th>
+					<th>Body Part</th>
+					<th>Complaint</th>
+					<th>Duration</th>
+					<th>Pattern</th>
+					<th style="width: 70px;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				${frm.doc.exam_complaints.map((c, idx) => `
+					<tr>
+						<td>${idx + 1}</td>
+						<td>${c.body_part || '-'}</td>
+						<td>${c.complaint_type || '-'}</td>
+						<td>${c.duration_days ? c.duration_days + ' days' : '-'}</td>
+						<td>${c.pattern || '-'}</td>
+						<td>
+							<button type="button" class="btn btn-xs btn-default edit-complaint-btn" data-idx="${idx}"><i class="fa fa-pencil"></i></button>
+							<button type="button" class="btn btn-xs btn-danger delete-complaint-btn" data-idx="${idx}"><i class="fa fa-trash"></i></button>
+						</td>
+					</tr>
+				`).join('')}
+			</tbody>
+		</table>
+		<button type="button" class="btn btn-default btn-xs" id="add_more_btn" style="margin-top: 10px;">+ Add More Complaint</button>
+	`;
+
+    container.html(tableHtml);
+
+    // Delete handler
+    container.find('.delete-complaint-btn').on('click', function () {
+        let idx = $(this).data('idx');
+        frm.doc.exam_complaints.splice(idx, 1);
+        // Re-index
+        frm.doc.exam_complaints.forEach((row, i) => row.idx = i + 1);
+        frm.refresh_field('exam_complaints');
+        render_complaints_table(frm, wrapper);
+        frappe.show_alert({ message: 'Complaint removed', indicator: 'orange' });
+    });
+
+    // Edit handler
+    container.find('.edit-complaint-btn').on('click', function () {
+        let idx = $(this).data('idx');
+        if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.grid) {
+            let row = frm.fields_dict.exam_complaints.grid.grid_rows[idx];
+            if (row) {
+                row.toggle_view(true);
+            }
+        }
+    });
+
+    // Add more handler
+    container.find('#add_more_btn').on('click', function () {
+        // Reset selections
+        wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
+        wrapper.find('#complaints_section').hide();
+        wrapper.find('#details_section').hide();
+        // Scroll to body part section
+        wrapper.find('input[name="step1_bodypart"]').first().closest('.step1-radio-group').parent()[0].scrollIntoView({ behavior: 'smooth' });
+    });
+}
+
+function setup_step1_handlers(frm, wrapper) {
+
+    // Filled by change
+    wrapper.find('#step1_filled_by').on('change', function () {
+        frm.set_value('exam_filled_by', $(this).val());
+    });
+
+    // Status change
+    wrapper.find('#step1_status').on('change', function () {
+        let val = $(this).val();
+        frm.set_value('exam_complaints_status', val);
+
+        if (val === 'No Complaints - Normal') {
+            wrapper.find('#step1_normal_msg').show();
+            wrapper.find('#step1_abnormal_section').hide();
+        } else if (val === 'Complaints - Abnormal') {
+            wrapper.find('#step1_normal_msg').hide();
+            wrapper.find('#step1_abnormal_section').show();
+        } else {
+            wrapper.find('#step1_normal_msg').hide();
+            wrapper.find('#step1_abnormal_section').hide();
+        }
+    });
+
+
+    // Body part change - show complaints
+    wrapper.find('input[name="step1_bodypart"]').on('change', function () {
+        let bodyPart = $(this).val();
+
+        // Show complaints for this body part as radio buttons
+        let symptoms = BODY_PARTS_CONFIG[bodyPart].symptoms;
+        let html = symptoms.map(s => `
+			<label class="step1-radio-label">
+				<input type="radio" name="step1_complaint" value="${s}"> ${s}
+			</label>
+		`).join('');
+
+        wrapper.find('#complaints_list').html(html);
+        wrapper.find('#complaints_label').text(`Select Complaint for ${bodyPart}`);
+        wrapper.find('#complaints_section').show();
+        wrapper.find('#details_section').hide();
+
+        // Complaint change - show details
+        wrapper.find('input[name="step1_complaint"]').on('change', function () {
+            // Clear details form
+            wrapper.find('#detail_days').val('');
+            wrapper.find('#detail_pattern').val('');
+            wrapper.find('#detail_onset').val('');
+            wrapper.find('#detail_notes').val('');
+            wrapper.find('#detail_trauma').prop('checked', false);
+            wrapper.find('#detail_treatment').prop('checked', false);
+            wrapper.find('#detail_intermittent').prop('checked', false);
+            wrapper.find('#detail_recurrent').prop('checked', false);
+            wrapper.find('#details_section').show();
+        });
+    });
+
+    // Add complaint
+    wrapper.find('#add_complaint_btn').on('click', function () {
+        let selectedBodyPart = wrapper.find('input[name="step1_bodypart"]:checked').val();
+        let selectedComplaint = wrapper.find('input[name="step1_complaint"]:checked').val();
+        let selectedDuration = wrapper.find('input[name="step1_duration"]:checked').val();
+
+        if (!selectedBodyPart || !selectedComplaint) {
+            frappe.msgprint('Please select body part and complaint first');
+            return;
+        }
+
+        // Add to child table
+        let row = frm.add_child('exam_complaints');
+        row.body_part = selectedBodyPart;
+        row.complaint_type = selectedComplaint;
+        row.duration_days = parseInt(wrapper.find('#detail_days').val()) || 0;
+        row.duration_category = selectedDuration || '';
+        row.pattern = wrapper.find('#detail_pattern').val() || '';
+        row.onset_date = wrapper.find('#detail_onset').val() || '';
+        row.trauma_related = wrapper.find('#detail_trauma').is(':checked') ? 1 : 0;
+        row.medical_treatment_taken = wrapper.find('#detail_treatment').is(':checked') ? 1 : 0;
+        row.is_intermittent = wrapper.find('#detail_intermittent').is(':checked') ? 1 : 0;
+        row.is_recurrent = wrapper.find('#detail_recurrent').is(':checked') ? 1 : 0;
+        row.note = wrapper.find('#detail_notes').val() || '';
+
+        frm.refresh_field('exam_complaints');
+
+        // Reset selections
+        wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
+        wrapper.find('#complaints_section').hide();
+        wrapper.find('#details_section').hide();
+
+        // Re-render table
+        render_complaints_table(frm, wrapper);
+
+        frappe.show_alert({ message: 'Complaint added!', indicator: 'green' });
+    });
+
+    // Cancel
+    wrapper.find('#cancel_btn').on('click', function () {
+        wrapper.find('#details_section').hide();
+        wrapper.find('input[name="step1_complaint"]').prop('checked', false);
+    });
 }

@@ -7,15 +7,26 @@ frappe.ui.form.on("Clinical Examination", {
 		if (frm.doc.examination_template) {
 			render_interactive_diagram(frm);
 		}
-		
+
+		// Render Step 1 Complaints Form
+		render_step1_complaints_form(frm);
+
 		// Add print button
 		if (!frm.is_new() && frm.doc.docstatus === 1) {
-			frm.add_custom_button(__("Print Report"), function() {
+			frm.add_custom_button(__("Print Report"), function () {
 				frappe.set_route("print", "Clinical Examination", frm.doc.name);
 			});
 		}
 	},
-	
+
+	complaints_status(frm) {
+		render_step1_complaints_form(frm);
+	},
+
+	abnormal_complaints_body_parts(frm) {
+		render_step1_complaints_form(frm);
+	},
+
 	examination_template(frm) {
 		if (frm.doc.examination_template) {
 			// Load template configuration
@@ -25,13 +36,13 @@ frappe.ui.form.on("Clinical Examination", {
 					doctype: "Clinical Examination Template",
 					name: frm.doc.examination_template
 				},
-				callback: function(r) {
+				callback: function (r) {
 					if (r.message) {
 						let template = r.message;
-						
+
 						// Set examination type
 						frm.set_value("examination_type", template.examination_type);
-						
+
 						// Setup special tests if enabled
 						if (template.enable_special_tests && template.special_tests) {
 							let tests = template.special_tests.split("\n").filter(t => t.trim());
@@ -42,7 +53,7 @@ frappe.ui.form.on("Clinical Examination", {
 							});
 							frm.refresh_field("special_tests");
 						}
-						
+
 						// Render diagram
 						render_interactive_diagram(frm);
 					}
@@ -50,14 +61,14 @@ frappe.ui.form.on("Clinical Examination", {
 			});
 		}
 	},
-	
+
 	patient(frm) {
 		if (frm.doc.patient) {
 			// Show patient history
 			frappe.call({
 				method: "healthcare.healthcare.doctype.clinical_examination.clinical_examination.get_clinical_examinations_for_patient",
 				args: { patient: frm.doc.patient },
-				callback: function(r) {
+				callback: function (r) {
 					if (r.message && r.message.length > 0) {
 						let html = '<div class="alert alert-info">';
 						html += '<strong>' + __("Previous Examinations:") + '</strong><br>';
@@ -77,12 +88,12 @@ function render_interactive_diagram(frm) {
 	// Get the diagram HTML field wrapper
 	let wrapper = frm.fields_dict.diagram_html.$wrapper;
 	wrapper.empty();
-	
+
 	if (!frm.doc.examination_template) {
 		wrapper.html('<p class="text-muted">' + __("Select an examination template to load the diagram") + '</p>');
 		return;
 	}
-	
+
 	// Fetch template to get diagram type
 	frappe.call({
 		method: "frappe.client.get_value",
@@ -91,7 +102,7 @@ function render_interactive_diagram(frm) {
 			filters: { name: frm.doc.examination_template },
 			fieldname: ["diagram_type", "enable_diagram_marking"]
 		},
-		callback: function(r) {
+		callback: function (r) {
 			if (r.message && r.message.enable_diagram_marking) {
 				let diagram_type = r.message.diagram_type;
 				render_svg_diagram(frm, wrapper, diagram_type);
@@ -104,7 +115,7 @@ function render_interactive_diagram(frm) {
 
 function render_svg_diagram(frm, wrapper, diagram_type) {
 	let svg_content = get_svg_for_type(diagram_type);
-	
+
 	let html = `
 		<div class="clinical-diagram-container" style="background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 10px 0;">
 			<div class="row">
@@ -141,40 +152,40 @@ function render_svg_diagram(frm, wrapper, diagram_type) {
 			</div>
 		</div>
 	`;
-	
+
 	wrapper.html(html);
-	
+
 	// Initialize lesion markers from existing data
 	let existing_lesions = [];
 	try {
 		if (frm.doc.lesion_markings_json) {
 			existing_lesions = JSON.parse(frm.doc.lesion_markings_json);
 		}
-	} catch(e) {}
-	
+	} catch (e) { }
+
 	// Setup click handler for SVG
 	let svg_container = wrapper.find('#diagram-svg-container');
 	let lesion_counter = existing_lesions.length;
-	
+
 	// Render existing lesions
 	existing_lesions.forEach((lesion, idx) => {
 		add_lesion_marker(svg_container, lesion.x, lesion.y, idx + 1, lesion.type);
 	});
 	update_lesion_list(wrapper, existing_lesions);
-	
-	svg_container.on('click', function(e) {
+
+	svg_container.on('click', function (e) {
 		if (frm.doc.docstatus === 1) return; // Don't allow editing submitted docs
-		
+
 		let offset = $(this).offset();
 		let x = e.pageX - offset.left;
 		let y = e.pageY - offset.top;
-		
+
 		lesion_counter++;
 		let lesion_type = wrapper.find('#current-lesion-type').val();
-		
+
 		// Add marker to SVG
 		add_lesion_marker(svg_container, x, y, lesion_counter, lesion_type);
-		
+
 		// Add to lesions array
 		existing_lesions.push({
 			number: lesion_counter,
@@ -183,10 +194,10 @@ function render_svg_diagram(frm, wrapper, diagram_type) {
 			type: lesion_type,
 			region: get_region_at_point(x, y)
 		});
-		
+
 		// Update JSON field
 		frm.set_value('lesion_markings_json', JSON.stringify(existing_lesions));
-		
+
 		// Add to child table
 		let row = frm.add_child('lesions');
 		row.lesion_number = lesion_counter;
@@ -195,16 +206,16 @@ function render_svg_diagram(frm, wrapper, diagram_type) {
 		row.lesion_type = lesion_type;
 		row.diagram_region = get_region_at_point(x, y);
 		frm.refresh_field('lesions');
-		
+
 		// Update legend
 		update_lesion_list(wrapper, existing_lesions);
 	});
-	
+
 	// Clear all button
-	wrapper.find('#clear-all-lesions').on('click', function() {
+	wrapper.find('#clear-all-lesions').on('click', function () {
 		if (frm.doc.docstatus === 1) return;
-		
-		frappe.confirm(__("Are you sure you want to clear all marked lesions?"), function() {
+
+		frappe.confirm(__("Are you sure you want to clear all marked lesions?"), function () {
 			svg_container.find('.lesion-marker').remove();
 			existing_lesions = [];
 			lesion_counter = 0;
@@ -289,7 +300,7 @@ function get_svg_for_type(diagram_type) {
 	} else if (diagram_type === 'Teeth Chart') {
 		return get_teeth_chart_svg();
 	}
-	
+
 	// Default placeholder
 	return `
 		<svg width="500" height="400" style="background: #fafafa; border: 1px solid #ddd;">
@@ -440,7 +451,7 @@ function get_teeth_chart_svg() {
 			<!-- Upper Right -->
 			<text x="150" y="60" text-anchor="middle" fill="#666" font-size="11">Upper Right</text>
 			<g transform="translate(50, 70)">
-				${[18,17,16,15,14,13,12,11].map((n, i) => `
+				${[18, 17, 16, 15, 14, 13, 12, 11].map((n, i) => `
 					<g transform="translate(${i * 25}, 0)">
 						<rect width="22" height="35" fill="#fff" stroke="#999" rx="3"/>
 						<text x="11" y="50" text-anchor="middle" fill="#666" font-size="8">${n}</text>
@@ -451,7 +462,7 @@ function get_teeth_chart_svg() {
 			<!-- Upper Left -->
 			<text x="450" y="60" text-anchor="middle" fill="#666" font-size="11">Upper Left</text>
 			<g transform="translate(300, 70)">
-				${[21,22,23,24,25,26,27,28].map((n, i) => `
+				${[21, 22, 23, 24, 25, 26, 27, 28].map((n, i) => `
 					<g transform="translate(${i * 25}, 0)">
 						<rect width="22" height="35" fill="#fff" stroke="#999" rx="3"/>
 						<text x="11" y="50" text-anchor="middle" fill="#666" font-size="8">${n}</text>
@@ -462,7 +473,7 @@ function get_teeth_chart_svg() {
 			<!-- Lower Right -->
 			<text x="150" y="180" text-anchor="middle" fill="#666" font-size="11">Lower Right</text>
 			<g transform="translate(50, 190)">
-				${[48,47,46,45,44,43,42,41].map((n, i) => `
+				${[48, 47, 46, 45, 44, 43, 42, 41].map((n, i) => `
 					<g transform="translate(${i * 25}, 0)">
 						<rect width="22" height="35" fill="#fff" stroke="#999" rx="3"/>
 						<text x="11" y="50" text-anchor="middle" fill="#666" font-size="8">${n}</text>
@@ -473,7 +484,7 @@ function get_teeth_chart_svg() {
 			<!-- Lower Left -->
 			<text x="450" y="180" text-anchor="middle" fill="#666" font-size="11">Lower Left</text>
 			<g transform="translate(300, 190)">
-				${[31,32,33,34,35,36,37,38].map((n, i) => `
+				${[31, 32, 33, 34, 35, 36, 37, 38].map((n, i) => `
 					<g transform="translate(${i * 25}, 0)">
 						<rect width="22" height="35" fill="#fff" stroke="#999" rx="3"/>
 						<text x="11" y="50" text-anchor="middle" fill="#666" font-size="8">${n}</text>
@@ -487,5 +498,405 @@ function get_teeth_chart_svg() {
 			<text x="300" y="285" text-anchor="middle" fill="#666" font-size="11">Click on teeth to mark issues</text>
 		</svg>
 	`;
+}
+
+// ================== STEP 1: PATIENT COMPLAINTS FORM ==================
+
+// Symptom configurations per body part (from client's Google Doc)
+const BODY_PART_SYMPTOMS = {
+	'Face': [
+		'Lump/Swelling',
+		'Pigmentation',
+		'Ulcer'
+	],
+	'Neck': [
+		'Lump/Swelling in Neck (outside)',
+		'Swelling/lump in Throat (inside)',
+		'Stickiness in throat',
+		'Change in Voice',
+		'Sore throat/Hoarseness',
+		'Swallowing Difficulty/pain',
+		'Other'
+	],
+	'Oral cavity (mouth and tongue)': [
+		'Restricted Mouth opening',
+		'Restricted Tongue Movement',
+		'Trauma',
+		'Pain',
+		'Painful Ulcer',
+		'Painless Ulcer',
+		'Recurrent Ulcer',
+		'Red patch in mouth',
+		'White patch in mouth',
+		'Nodule/Lump',
+		'Swelling',
+		'Sensitivity in mouth/teeth',
+		'Burning Sensation',
+		'Bleeding',
+		'Decreased Salivation',
+		'Increased Salivation',
+		'Foul Smell (Halitosis)',
+		'Swallowing Difficulty/pain during',
+		'Others'
+	],
+	'Teeth (dental)': [
+		'Painful teeth',
+		'Loosening of teeth',
+		'Lost teeth',
+		'Teeth or gum problem',
+		'Denture problem'
+	],
+	'Others': [
+		'Earache',
+		'Others, please specify'
+	]
+};
+
+function render_step1_complaints_form(frm) {
+	let wrapper = frm.fields_dict.step1_complaints_html?.$wrapper;
+	if (!wrapper) return;
+
+	wrapper.empty();
+
+	// Only show if complaints status is Abnormal
+	if (frm.doc.complaints_status !== 'Complaints - Abnormal') {
+		wrapper.html(`
+			<div class="text-muted" style="padding: 20px; text-align: center; background: #f8f9fa; border-radius: 8px;">
+				<i class="fa fa-info-circle"></i> 
+				${__("Select 'Complaints - Abnormal' to enter detailed complaints")}
+			</div>
+		`);
+		return;
+	}
+
+	// Get selected body parts
+	let selected_body_parts = [];
+	if (frm.doc.abnormal_complaints_body_parts) {
+		selected_body_parts = frm.doc.abnormal_complaints_body_parts.split(',').map(s => s.trim()).filter(s => s);
+	}
+
+	// Load existing complaints into a lookup
+	let existing_complaints = {};
+	if (frm.doc.complaints && frm.doc.complaints.length > 0) {
+		frm.doc.complaints.forEach(c => {
+			let key = `${c.body_part}|${c.complaint_type}`;
+			existing_complaints[key] = c;
+		});
+	}
+
+	// Build the form HTML
+	let html = `
+		<style>
+			.step1-complaints-container {
+				background: #fff;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+				padding: 20px;
+				margin: 10px 0;
+			}
+			.step1-header {
+				background: linear-gradient(135deg, #2c3e50, #3498db);
+				color: #fff;
+				padding: 15px 20px;
+				border-radius: 8px 8px 0 0;
+				margin: -20px -20px 20px -20px;
+			}
+			.body-part-section {
+				border: 1px solid #e0e0e0;
+				border-radius: 8px;
+				margin-bottom: 15px;
+				overflow: hidden;
+			}
+			.body-part-header {
+				background: #f5f5f5;
+				padding: 12px 15px;
+				font-weight: 600;
+				border-bottom: 1px solid #e0e0e0;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+			.body-part-header input[type="checkbox"] {
+				width: 18px;
+				height: 18px;
+			}
+			.symptoms-grid {
+				padding: 15px;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 8px;
+			}
+			.symptom-row {
+				display: flex;
+				align-items: center;
+				padding: 8px 12px;
+				background: #fafafa;
+				border-radius: 6px;
+				border: 1px solid #eee;
+			}
+			.symptom-row:hover {
+				background: #f0f7ff;
+				border-color: #3498db;
+			}
+			.symptom-row input[type="checkbox"] {
+				margin-right: 10px;
+				width: 16px;
+				height: 16px;
+			}
+			.symptom-row label {
+				flex: 1;
+				margin: 0;
+				cursor: pointer;
+				font-size: 13px;
+			}
+			.symptom-options {
+				display: none;
+				padding: 15px;
+				background: #f8f9fa;
+				border-top: 1px solid #e0e0e0;
+			}
+			.symptom-options.active {
+				display: block;
+			}
+			.options-grid {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 10px;
+				margin-bottom: 15px;
+			}
+			.option-item {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				font-size: 12px;
+			}
+			.option-item input[type="checkbox"],
+			.option-item input[type="radio"] {
+				width: 14px;
+				height: 14px;
+			}
+			.additional-fields {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 15px;
+				padding-top: 15px;
+				border-top: 1px solid #ddd;
+			}
+			.additional-field label {
+				display: block;
+				font-size: 11px;
+				color: #666;
+				margin-bottom: 4px;
+			}
+			.additional-field input,
+			.additional-field select {
+				width: 100%;
+				padding: 6px 10px;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+				font-size: 12px;
+			}
+		</style>
+		
+		<div class="step1-complaints-container">
+			<div class="step1-header">
+				<h5 style="margin: 0;"><i class="fa fa-stethoscope"></i> ${__("STEP 1: Patient Complaints")}</h5>
+				<p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.9;">
+					${__("Body Part, Complaint, Since When in Days, Option, Trauma?, Treated Before, Note")}
+				</p>
+			</div>
+			
+			<div class="info-box" style="background: #fff3cd; border: 1px solid #ffc107; padding: 10px 15px; border-radius: 6px; margin-bottom: 20px;">
+				<i class="fa fa-lightbulb-o"></i>
+				<strong>${__("Help:")}</strong> ${__("Select the body parts affected, then check the symptoms. For each symptom, you can specify additional details.")}
+			</div>
+	`;
+
+	// Render each body part section
+	Object.keys(BODY_PART_SYMPTOMS).forEach(bodyPart => {
+		let symptoms = BODY_PART_SYMPTOMS[bodyPart];
+		let isBodyPartSelected = selected_body_parts.includes(bodyPart);
+
+		html += `
+			<div class="body-part-section" data-body-part="${bodyPart}">
+				<div class="body-part-header">
+					<input type="checkbox" class="body-part-checkbox" 
+						data-body-part="${bodyPart}"
+						${isBodyPartSelected ? 'checked' : ''}>
+					<span>${bodyPart}</span>
+				</div>
+				
+				<div class="symptoms-grid" style="${!isBodyPartSelected ? 'display: none;' : ''}">
+		`;
+
+		symptoms.forEach(symptom => {
+			let key = `${bodyPart}|${symptom}`;
+			let existing = existing_complaints[key];
+			let isChecked = !!existing;
+			let symptomId = `symptom_${bodyPart.replace(/[^a-zA-Z0-9]/g, '_')}_${symptom.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
+			html += `
+				<div class="symptom-row">
+					<input type="checkbox" class="symptom-checkbox" 
+						id="${symptomId}"
+						data-body-part="${bodyPart}"
+						data-symptom="${symptom}"
+						${isChecked ? 'checked' : ''}>
+					<label for="${symptomId}">${symptom}</label>
+				</div>
+			`;
+		});
+
+		html += `
+				</div>
+				
+				<div class="symptom-options ${isBodyPartSelected ? 'active' : ''}" data-body-part="${bodyPart}">
+					<h6 style="margin-bottom: 12px; color: #666;">
+						<i class="fa fa-cog"></i> ${__("Options for")} ${bodyPart} ${__("complaints")}</h6>
+					
+					<div class="options-grid">
+						<div class="option-item">
+							<input type="radio" name="pattern_${bodyPart.replace(/[^a-zA-Z0-9]/g, '_')}" value="Increasing">
+							<label>${__("Increasing")}</label>
+						</div>
+						<div class="option-item">
+							<input type="radio" name="pattern_${bodyPart.replace(/[^a-zA-Z0-9]/g, '_')}" value="Decreasing">
+							<label>${__("Decreasing")}</label>
+						</div>
+						<div class="option-item">
+							<input type="checkbox" class="pattern-persistent" data-body-part="${bodyPart}">
+							<label>${__("Persistent")}</label>
+						</div>
+						<div class="option-item">
+							<input type="checkbox" class="pattern-intermittent" data-body-part="${bodyPart}">
+							<label>${__("Intermittent")}</label>
+						</div>
+					</div>
+					
+					<div class="additional-fields">
+						<div class="additional-field">
+							<label>${__("Onset - When did the lesion appear?")}</label>
+							<input type="date" class="onset-date" data-body-part="${bodyPart}">
+						</div>
+						<div class="additional-field">
+							<label>${__("Duration (days)")}</label>
+							<input type="number" class="duration-days" data-body-part="${bodyPart}" min="0">
+						</div>
+						<div class="additional-field">
+							<label>${__("Duration Category")}</label>
+							<select class="duration-category" data-body-part="${bodyPart}">
+								<option value="">${__("Select...")}</option>
+								<option value="1-5 days">${__("1-5 days")}</option>
+								<option value="5-14 days">${__("5-14 days")}</option>
+								<option value=">14 days - 1 month">${__(">14 days - 1 month")}</option>
+								<option value=">1 month - 1 year">${__(">1 month - 1 year")}</option>
+								<option value="Long time">${__("Long time")}</option>
+								<option value="Occurs off and on">${__("Occurs off and on")}</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="additional-fields" style="margin-top: 15px;">
+						<div class="option-item">
+							<input type="checkbox" class="trauma-checkbox" data-body-part="${bodyPart}">
+							<label>${__("Trauma - Did you experience any trauma in the area?")}</label>
+						</div>
+						<div class="option-item">
+							<input type="checkbox" class="medical-treatment-checkbox" data-body-part="${bodyPart}">
+							<label>${__("Did you undergo medical treatment?")}</label>
+						</div>
+						<div class="additional-field">
+							<label>${__("Notes")}</label>
+							<input type="text" class="complaint-notes" data-body-part="${bodyPart}" placeholder="${__("Additional notes...")}">
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+	});
+
+	html += `
+			<div style="text-align: center; margin-top: 20px;">
+				<button class="btn btn-primary btn-sm save-complaints-btn">
+					<i class="fa fa-save"></i> ${__("Save Complaints")}
+				</button>
+			</div>
+		</div>
+	`;
+
+	wrapper.html(html);
+
+	// Event handlers
+	setup_step1_event_handlers(frm, wrapper);
+}
+
+function setup_step1_event_handlers(frm, wrapper) {
+	// Body part checkbox handler
+	wrapper.find('.body-part-checkbox').on('change', function () {
+		let bodyPart = $(this).data('body-part');
+		let isChecked = $(this).is(':checked');
+		let section = $(this).closest('.body-part-section');
+
+		section.find('.symptoms-grid').toggle(isChecked);
+		section.find('.symptom-options').toggleClass('active', isChecked);
+
+		// Update the abnormal_complaints_body_parts field
+		let current = frm.doc.abnormal_complaints_body_parts ? frm.doc.abnormal_complaints_body_parts.split(',').map(s => s.trim()).filter(s => s) : [];
+
+		if (isChecked && !current.includes(bodyPart)) {
+			current.push(bodyPart);
+		} else if (!isChecked) {
+			current = current.filter(bp => bp !== bodyPart);
+		}
+
+		frm.set_value('abnormal_complaints_body_parts', current.join(', '));
+	});
+
+	// Save complaints button
+	wrapper.find('.save-complaints-btn').on('click', function () {
+		save_step1_complaints(frm, wrapper);
+	});
+}
+
+function save_step1_complaints(frm, wrapper) {
+	// Clear existing complaints
+	frm.clear_table('complaints');
+
+	// Iterate through all checked symptoms
+	wrapper.find('.symptom-checkbox:checked').each(function () {
+		let bodyPart = $(this).data('body-part');
+		let symptom = $(this).data('symptom');
+		let section = wrapper.find(`.symptom-options[data-body-part="${bodyPart}"]`);
+
+		// Get pattern
+		let pattern = section.find(`input[name="pattern_${bodyPart.replace(/[^a-zA-Z0-9]/g, '_')}"]:checked`).val() || '';
+		let isPersistent = section.find('.pattern-persistent').is(':checked');
+		let isIntermittent = section.find('.pattern-intermittent').is(':checked');
+
+		// Get other values
+		let onsetDate = section.find('.onset-date').val() || '';
+		let durationDays = parseInt(section.find('.duration-days').val()) || 0;
+		let durationCategory = section.find('.duration-category').val() || '';
+		let trauma = section.find('.trauma-checkbox').is(':checked') ? 1 : 0;
+		let medicalTreatment = section.find('.medical-treatment-checkbox').is(':checked') ? 1 : 0;
+		let notes = section.find('.complaint-notes').val() || '';
+
+		// Add row to complaints table
+		let row = frm.add_child('complaints');
+		row.body_part = bodyPart;
+		row.complaint_type = symptom;
+		row.onset_date = onsetDate;
+		row.duration_days = durationDays;
+		row.duration_category = durationCategory;
+		row.pattern = pattern;
+		row.is_intermittent = isIntermittent ? 1 : 0;
+		row.is_recurrent = isPersistent ? 1 : 0;  // Using recurrent for persistent
+		row.trauma_related = trauma;
+		row.medical_treatment_taken = medicalTreatment;
+		row.note = notes;
+	});
+
+	frm.refresh_field('complaints');
+	frappe.show_alert({ message: __('Complaints saved successfully!'), indicator: 'green' });
 }
 
