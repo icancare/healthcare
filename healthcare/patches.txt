@@ -104,3 +104,4 @@ healthcare.patches.v15_0.remove_unused_exam_tables #16-12-2024
 healthcare.patches.v15_0.delete_old_oral_screening_template #22-12-2024
 healthcare.patches.v15_0.setup_oral_screening_template_v2 #22-12-2024
 healthcare.patches.v15_0.add_step1_table_format #22-12-2024
+healthcare.patches.v15_0.fix_step1_clinical_visibility #22-12-2024
