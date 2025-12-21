@@ -998,11 +998,57 @@ function show_parameter_history_chart(frm, parameter, title, unit) {
 				// Render chart after dialog is shown
 				setTimeout(() => {
 					let chart_container = dialog.fields_dict.chart_container.$wrapper;
+					let latestValue = data.values[data.values.length - 1];
+					let tableRows = data.labels.map((label, idx) => {
+						let val = data.values[idx];
+						return `<tr>
+							<td>${idx + 1}</td>
+							<td>${label}</td>
+							<td>${val !== undefined && val !== null ? `<strong>${val}</strong> ${unit || ''}` : '-'}</td>
+						</tr>`;
+					}).join('');
+					
 					chart_container.html(`
-						<div class="vital-history-chart" style="height:350px;"></div>
-						<div class="text-muted text-center" style="margin-top:10px;font-size:12px;">
-							<strong>${data.labels.length}</strong> ${__('records found')} | 
-							${__('Latest')}: <strong>${data.values[data.values.length - 1]} ${unit}</strong>
+						<style>
+							.vh-tabs { display:flex; gap:6px; margin-bottom:12px; }
+							.vh-tab { flex:1; text-align:center; padding:8px 0; border:1px solid var(--border-color); border-radius:6px; background:var(--card-bg); color:var(--text-muted); font-size:12px; font-weight:600; cursor:pointer; text-transform:uppercase; letter-spacing:0.5px; }
+							.vh-tab.active { background:var(--primary); color:#fff; border-color:var(--primary); box-shadow:0 6px 18px rgba(94,100,255,0.25); }
+							.vh-pane { display:none; }
+							.vh-pane.active { display:block; }
+							.vital-history-chart { height:320px; }
+							.vh-summary { margin-top:10px; font-size:12px; color:var(--text-muted); text-align:center; }
+							.vh-table-wrap { max-height:260px; overflow:auto; border:1px solid var(--border-color); border-radius:6px; }
+							.vh-table { width:100%; border-collapse:collapse; font-size:12px; }
+							.vh-table th, .vh-table td { padding:8px 10px; border-bottom:1px solid var(--border-color); text-align:left; }
+							.vh-table th { background:var(--subtle-fg); color:var(--text-muted); text-transform:uppercase; font-size:11px; }
+							.vh-table tr:nth-child(every-odd) td { background:var(--card-bg); }
+							.vh-table tr:hover td { background:var(--bg-color); }
+						</style>
+						<div class="vh-tabs">
+							<div class="vh-tab active" data-tab="graph">${__('Graph')}</div>
+							<div class="vh-tab" data-tab="data">${__('Data')}</div>
+						</div>
+						<div class="vh-pane vh-pane-graph active">
+							<div class="vital-history-chart"></div>
+							<div class="vh-summary">
+								<strong>${data.labels.length}</strong> ${__('records found')} &bull; ${__('Latest')}: <strong>${latestValue} ${unit || ''}</strong>
+							</div>
+						</div>
+						<div class="vh-pane vh-pane-data">
+							<div class="vh-table-wrap">
+								<table class="vh-table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>${__('Recorded On')}</th>
+											<th>${__('Value')}</th>
+										</tr>
+									</thead>
+									<tbody>
+										${tableRows}
+									</tbody>
+								</table>
+							</div>
 						</div>
 					`);
 					
@@ -1034,6 +1080,14 @@ function show_parameter_history_chart(frm, parameter, title, unit) {
 							formatTooltipX: d => d,
 							formatTooltipY: d => d + ' ' + unit
 						}
+					});
+					
+					chart_container.find('.vh-tab').on('click', function() {
+						let tab = $(this).data('tab');
+						chart_container.find('.vh-tab').removeClass('active');
+						$(this).addClass('active');
+						chart_container.find('.vh-pane').removeClass('active');
+						chart_container.find(`.vh-pane-${tab}`).addClass('active');
 					});
 				}, 100);
 			}
