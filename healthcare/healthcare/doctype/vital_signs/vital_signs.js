@@ -109,7 +109,10 @@ frappe.ui.form.on('Vital Signs', {
 	right_eye_opacity: function(frm) { render_tobacco_health_table(frm); },
 	right_eye_sightedness: function(frm) { render_tobacco_health_table(frm); },
 	// ECOG
-	ecog_score: function(frm) { render_ecog_status(frm); }
+	ecog_score: function(frm) {
+		validate_ecog_input(frm);
+		render_ecog_status(frm);
+	}
 });
 
 function to_cm(v, u) { return !v ? 0 : u === 'inch' ? v * 2.54 : u === 'feet' ? v * 30.48 : v; }
@@ -147,6 +150,30 @@ function toggle_skinfold_fields(frm) {
 		frm.toggle_display('skinfold_suprailiac', true);
 		frm.toggle_display('skinfold_thigh', true);
 	}
+}
+
+function validate_ecog_input(frm) {
+	const { ecog_score } = frm.doc;
+
+	if (ecog_score === undefined || ecog_score === null || ecog_score === '') {
+		return true;
+	}
+
+	const score = Number(ecog_score);
+
+	if (!Number.isInteger(score) || score < 0 || score > 5) {
+		const message = __('ECOG Score must be an integer between 0 and 5.');
+		frappe.show_alert({ message, indicator: 'red' });
+		frappe.msgprint({
+			title: __('Invalid ECOG Score'),
+			indicator: 'red',
+			message
+		});
+		frm.set_value('ecog_score', null);
+		return false;
+	}
+
+	return true;
 }
 
 function calc_all(frm) {

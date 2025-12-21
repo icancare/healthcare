@@ -12,6 +12,7 @@ class VitalSigns(Document):
 		self.set_title()
 		self.fetch_patient_data()
 		self.calculate_anthropometrics()
+		self.validate_ecog_score()
 
 	def set_title(self):
 		self.title = f"{self.patient_name or self.patient} - {self.signs_date}"
@@ -133,6 +134,18 @@ class VitalSigns(Document):
 		elif 'male' in s:
 			return 'M'
 		return None
+
+	def validate_ecog_score(self):
+		if self.ecog_score is None:
+			return
+
+		try:
+			score = int(self.ecog_score)
+		except (TypeError, ValueError):
+			frappe.throw(_("ECOG Score must be an integer between 0 and 5."))
+
+		if score < 0 or score > 5:
+			frappe.throw(_("ECOG Score must be an integer between 0 and 5."))
 
 
 @frappe.whitelist()
