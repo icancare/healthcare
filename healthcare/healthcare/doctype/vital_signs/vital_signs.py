@@ -191,6 +191,27 @@ def get_vital_parameter_history(patient, parameter):
 		"weight": "weight",
 		"waist_circumference": "waist_circumference",
 		"hip_circumference": "hip_circumference",
+		# Tobacco & respiratory
+		"spirometer_fev1_fvc": "spirometer_fev1_fvc",
+		"spirometer_fvc": "spirometer_fvc",
+		"spirometer_fev1": "spirometer_fev1",
+		"spirometer_pef": "spirometer_pef",
+		"mouth_opening_mm": "mouth_opening_mm",
+		"peak_flow_current": "peak_flow_current",
+		"peak_flow_personal_best": "peak_flow_personal_best",
+		"breath_holding_time": "breath_holding_time",
+		"co_reading": "co_reading",
+		"cohb_percentage": "cohb_percentage",
+		"urinal_nicotine": "urinal_nicotine",
+		"ecg_done": "ecg_done",
+		"echo_done": "echo_done",
+		"dexascan_done": "dexascan_done",
+		"left_ear_abnormality": "left_ear_abnormality",
+		"right_ear_abnormality": "right_ear_abnormality",
+		"left_eye_pupil_dilation": "left_eye_pupil_dilation",
+		"left_eye_opacity": "left_eye_opacity",
+		"right_eye_pupil_dilation": "right_eye_pupil_dilation",
+		"right_eye_opacity": "right_eye_opacity"
 	}
 	
 	field_name = parameter_field_map.get(parameter, parameter)
@@ -208,16 +229,56 @@ def get_vital_parameter_history(patient, parameter):
 	
 	for vital in vitals:
 		value = vital.get(field_name)
-		if value is not None and value != 0:
+		normalized = normalize_chart_value(value)
+		if normalized is not None:
 			# Format date for display
 			date_str = frappe.utils.formatdate(vital.signs_date, "dd-MM-yyyy")
 			time_str = str(vital.signs_time)[:5] if vital.signs_time else ""
 			label = f"{date_str} {time_str}".strip()
 			
 			labels.append(label)
-			values.append(float(value) if value else 0)
+			values.append(normalized)
 	
 	return {
 		"labels": labels,
 		"values": values
 	}
+
+
+def normalize_chart_value(value):
+	"""Convert various field values to floats for charting."""
+	if value is None:
+		return None
+
+	if isinstance(value, (int, float)):
+		return float(value)
+
+	if isinstance(value, str):
+		val = value.strip()
+		if not val:
+			return None
+		lower_val = val.lower()
+		boolean_map = {
+			"yes": 1,
+			"true": 1,
+			"done": 1,
+			"present": 1,
+			"abnormal": 1,
+			"positive": 1,
+			"no": 0,
+			"false": 0,
+			"pending": 0,
+			"pending upload": 0,
+			"stored": 1,
+			"recorded": 1,
+			"normal": 1,
+			"none": 0,
+		}
+		if lower_val in boolean_map:
+			return float(boolean_map[lower_val])
+		try:
+			return float(val)
+		except ValueError:
+			return None
+
+	return None

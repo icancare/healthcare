@@ -362,20 +362,14 @@ function render_table(frm) {
 	<textarea class="av-note" data-field="anthropometric_note" placeholder="Notes...">${frm.doc.anthropometric_note || ''}</textarea>`;
 
 	if (frm.fields_dict.computed_values_html) {
-		frm.fields_dict.computed_values_html.$wrapper.html(html);
-		frm.fields_dict.computed_values_html.$wrapper.find('.av-inp, .av-note').on('change', function() {
+		let wrapper = frm.fields_dict.computed_values_html.$wrapper;
+		wrapper.html(html);
+		wrapper.find('.av-inp, .av-note').on('change', function() {
 			let field = $(this).data('field');
 			let val = $(this).val();
 			frm.set_value(field, val || null);
 		});
-		
-		// Add click handler for chart links
-		frm.fields_dict.computed_values_html.$wrapper.find('.av-param-link').on('click', function() {
-			let parameter = $(this).data('parameter');
-			let title = $(this).data('title');
-			let unit = $(this).data('unit');
-			show_parameter_history_chart(frm, parameter, title, unit);
-		});
+		bind_param_history(wrapper, frm, '.av-param-link');
 	}
 }
 
@@ -385,6 +379,46 @@ function get_status_badge(label) {
 	else if (label === 'High' || label === 'Severe' || label === 'Obese' || label === 'Highly Abnormal') cls = 'av-r';
 	else if (label === 'Abnormal' || label === 'Overweight' || label === 'Mild' || label === 'Moderate') cls = 'av-o';
 	return `<span class="av-st ${cls}">${label}</span>`;
+}
+
+function get_param_label_html(title, unit, field) {
+	if (!field) {
+		return `<span class="av-param-name">${title}</span>`;
+	}
+
+	const createLink = (label, fieldname, linkUnit) => {
+		if (!fieldname) {
+			return `<span class="av-param-name">${label}</span>`;
+		}
+		return `<span class="av-param-link" data-parameter="${fieldname}" data-title="${label}" data-unit="${linkUnit || unit || ''}">
+			<span class="av-param-name">${label}</span>
+			<span class="av-chart-icon">📈</span>
+		</span>`;
+	};
+
+	if (Array.isArray(field)) {
+		const links = field
+			.filter(f => f && f.field)
+			.map(f => createLink(f.label || title, f.field, f.unit || unit))
+			.join('<br>');
+		return `<div class="av-param-multi">
+			<span class="av-param-name">${title}</span>
+			<div class="av-param-links">${links}</div>
+		</div>`;
+	}
+
+	return createLink(title, field, unit);
+}
+
+function bind_param_history(wrapper, frm, selector = '.av-param-link') {
+	if (!wrapper) return;
+	wrapper.find(selector).off('click').on('click', function() {
+		const parameter = $(this).data('parameter');
+		const title = $(this).data('title');
+		const unit = $(this).data('unit');
+		if (!parameter) return;
+		show_parameter_history_chart(frm, parameter, title, unit);
+	});
 }
 
 function get_status(param, val, normal, sex, frm) {
@@ -468,7 +502,7 @@ function render_vital_signs_table(frm) {
 		let v = parseFloat(frm.doc.pulse);
 		let st = v >= 60 && v <= 100 ? 'Normal' : v < 60 ? 'Low' : 'High';
 		let cls = st === 'Normal' ? 'av-g' : 'av-r';
-		data.push({ p: 'Pulse (Heart Rate)', u: 'bpm', v: v, n: '60-100', st: st, cls: cls });
+		data.push({ p: 'Pulse (Heart Rate)', u: 'bpm', v: v, n: '60-100', st: st, cls: cls, field: 'pulse' });
 	}
 	
 	// SpO2
@@ -476,7 +510,7 @@ function render_vital_signs_table(frm) {
 		let v = parseFloat(frm.doc.spo2);
 		let st = v >= 95 ? 'Normal' : v >= 90 ? 'Low' : 'Critical';
 		let cls = st === 'Normal' ? 'av-g' : st === 'Low' ? 'av-o' : 'av-r';
-		data.push({ p: 'SpO2', u: '%', v: v, n: '95-100%', st: st, cls: cls });
+		data.push({ p: 'SpO2', u: '%', v: v, n: '95-100%', st: st, cls: cls, field: 'spo2' });
 	}
 	
 	// Temperature
@@ -484,7 +518,7 @@ function render_vital_signs_table(frm) {
 		let v = parseFloat(frm.doc.temperature);
 		let st = v >= 36.1 && v <= 37.2 ? 'Normal' : v > 38.5 ? 'Fever' : v > 37.2 ? 'Elevated' : 'Low';
 		let cls = st === 'Normal' ? 'av-g' : st === 'Fever' ? 'av-r' : 'av-o';
-		data.push({ p: 'Temperature', u: '°C', v: v, n: '36.1-37.2', st: st, cls: cls });
+		data.push({ p: 'Temperature', u: '°C', v: v, n: '36.1-37.2', st: st, cls: cls, field: 'temperature' });
 	}
 	
 	// Respiratory Rate
@@ -492,7 +526,7 @@ function render_vital_signs_table(frm) {
 		let v = parseFloat(frm.doc.respiratory_rate);
 		let st = v >= 12 && v <= 20 ? 'Normal' : v < 12 ? 'Low' : 'High';
 		let cls = st === 'Normal' ? 'av-g' : 'av-o';
-		data.push({ p: 'Respiratory Rate', u: '/min', v: v, n: '12-20', st: st, cls: cls });
+		data.push({ p: 'Respiratory Rate', u: '/min', v: v, n: '12-20', st: st, cls: cls, field: 'respiratory_rate' });
 	}
 	
 	// Blood Pressure
@@ -505,7 +539,18 @@ function render_vital_signs_table(frm) {
 		else if (sys >= 140 || dia >= 90) { st = 'Stage 2'; cls = 'av-r'; }
 		else if (sys >= 130 || dia >= 80) { st = 'Stage 1'; cls = 'av-o'; }
 		else if (sys >= 120 && sys < 130 && dia < 80) { st = 'Elevated'; cls = 'av-o'; }
-		data.push({ p: 'Blood Pressure', u: 'mmHg', v: sys + '/' + dia, n: '<120/<80', st: st, cls: cls });
+		data.push({
+			p: 'Blood Pressure',
+			u: 'mmHg',
+			v: sys + '/' + dia,
+			n: '<120/<80',
+			st: st,
+			cls: cls,
+			field: [
+				{ field: 'bp_systolic', label: 'Systolic' },
+				{ field: 'bp_diastolic', label: 'Diastolic' }
+			]
+		});
 	}
 	
 	// Blood Sugar
@@ -513,7 +558,7 @@ function render_vital_signs_table(frm) {
 		let v = parseFloat(frm.doc.blood_sugar);
 		let st = v >= 80 && v <= 110 ? 'Normal' : v > 200 ? 'Diabetic' : v > 110 ? 'Prediabetic' : 'Low';
 		let cls = st === 'Normal' ? 'av-g' : st === 'Diabetic' ? 'av-r' : 'av-o';
-		data.push({ p: 'Blood Sugar', u: 'mg/dl', v: v, n: '80-110', st: st, cls: cls });
+		data.push({ p: 'Blood Sugar', u: 'mg/dl', v: v, n: '80-110', st: st, cls: cls, field: 'blood_sugar' });
 	}
 	
 	if (data.length === 0) {
@@ -529,6 +574,8 @@ function render_vital_signs_table(frm) {
 		.vs-tbl th { background:var(--subtle-fg); color:var(--text-muted); font-weight:600; font-size:11px; text-transform:uppercase; }
 		.vs-tbl td { background:var(--card-bg); color:var(--text-color); }
 		.vs-tbl tr:hover td { background:var(--bg-color); }
+		.av-param-link { cursor:pointer; display:inline-flex; align-items:center; gap:4px; }
+		.av-param-link .av-chart-icon { font-size:11px; }
 	</style>
 	<table class="vs-tbl">
 		<thead><tr>
@@ -541,7 +588,7 @@ function render_vital_signs_table(frm) {
 	
 	data.forEach(r => {
 		html += `<tr>
-			<td><strong>${r.p}</strong></td>
+			<td>${get_param_label_html(r.p, r.u, r.field)}</td>
 			<td>${r.v}</td>
 			<td>${r.u}</td>
 			<td><small>${r.n}</small></td>
@@ -552,7 +599,9 @@ function render_vital_signs_table(frm) {
 	html += `</tbody></table>`;
 	
 	if (frm.fields_dict.vital_signs_html) {
-		frm.fields_dict.vital_signs_html.$wrapper.html(html);
+		let wrapper = frm.fields_dict.vital_signs_html.$wrapper;
+		wrapper.html(html);
+		bind_param_history(wrapper, frm);
 	}
 }
 
@@ -586,43 +635,43 @@ function render_tobacco_health_table(frm) {
 		let v = parseFloat(frm.doc.spirometer_fev1_fvc);
 		let st = v >= 70 ? 'Normal' : v >= 60 ? 'Mild Obstruction' : v >= 50 ? 'Moderate' : 'Severe';
 		let cls = st === 'Normal' ? 'av-g' : st === 'Mild Obstruction' ? 'av-o' : 'av-r';
-		data.push({ p: 'FEV1/FVC Ratio', u: '%', v: v.toFixed(1), n: '>70%', st: st, cls: cls, cat: 'Spirometer' });
+		data.push({ p: 'FEV1/FVC Ratio', u: '%', v: v.toFixed(1), n: '>70%', st: st, cls: cls, cat: 'Spirometer', field: 'spirometer_fev1_fvc' });
 	}
 	
 	// Spirometer - FVC
 	if (frm.doc.spirometer_fvc) {
-		data.push({ p: 'FVC', u: 'L', v: frm.doc.spirometer_fvc, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer' });
+		data.push({ p: 'FVC', u: 'L', v: frm.doc.spirometer_fvc, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer', field: 'spirometer_fvc' });
 	}
 	
 	// Spirometer - FEV1
 	if (frm.doc.spirometer_fev1) {
-		data.push({ p: 'FEV1', u: 'L', v: frm.doc.spirometer_fev1, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer' });
+		data.push({ p: 'FEV1', u: 'L', v: frm.doc.spirometer_fev1, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer', field: 'spirometer_fev1' });
 	}
 	
 	// Spirometer - PEF
 	if (frm.doc.spirometer_pef) {
-		data.push({ p: 'PEF (Spirometer)', u: 'L/min', v: frm.doc.spirometer_pef, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer' });
+		data.push({ p: 'PEF (Spirometer)', u: 'L/min', v: frm.doc.spirometer_pef, n: 'Varies', st: 'Recorded', cls: 'av-g', cat: 'Spirometer', field: 'spirometer_pef' });
 	}
 	
 	// ECG
 	if (frm.doc.ecg_done === 'Yes') {
-		let st = frm.doc.ecg_attachment ? 'Done ✓' : 'Pending Upload';
+		let st = frm.doc.ecg_attachment ? 'Done ' : 'Pending Upload';
 		let cls = frm.doc.ecg_attachment ? 'av-g' : 'av-o';
-		data.push({ p: 'ECG', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic' });
+		data.push({ p: 'ECG', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic', field: 'ecg_done' });
 	}
-	
+
 	// ECHO
 	if (frm.doc.echo_done === 'Yes') {
-		let st = frm.doc.echo_attachment ? 'Done ✓' : 'Pending Upload';
+		let st = frm.doc.echo_attachment ? 'Done ' : 'Pending Upload';
 		let cls = frm.doc.echo_attachment ? 'av-g' : 'av-o';
-		data.push({ p: 'ECHO', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic' });
+		data.push({ p: 'ECHO', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic', field: 'echo_done' });
 	}
-	
+
 	// DExascan
 	if (frm.doc.dexascan_done === 'Yes') {
-		let st = frm.doc.dexascan_attachment ? 'Done ✓' : 'Pending Upload';
+		let st = frm.doc.dexascan_attachment ? 'Done ' : 'Pending Upload';
 		let cls = frm.doc.dexascan_attachment ? 'av-g' : 'av-o';
-		data.push({ p: 'DExascan', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic' });
+		data.push({ p: 'DExascan', u: '-', v: 'Yes', n: '-', st: st, cls: cls, cat: 'Diagnostic', field: 'dexascan_done' });
 	}
 	
 	// Mouth Opening
@@ -639,7 +688,7 @@ function render_tobacco_health_table(frm) {
 			else if (mm < 30) { st = 'Moderate Restriction'; cls = 'av-o'; }
 			else if (mm < 35) { st = 'Mild Restriction'; cls = 'av-o'; }
 		}
-		data.push({ p: 'Mouth Opening', u: 'mm/fingers', v: v, n: '>35mm / 3+ fingers', st: st, cls: cls, cat: 'Oral' });
+		data.push({ p: 'Mouth Opening', u: 'mm/fingers', v: v, n: '>35mm / 3+ fingers', st: st, cls: cls, cat: 'Oral', field: 'mouth_opening_mm' });
 	}
 	
 	// Peak Flow
@@ -654,12 +703,12 @@ function render_tobacco_health_table(frm) {
 			else { st = 'Red Zone'; cls = 'av-r'; }
 			v = v + ' (' + pct.toFixed(0) + '%)';
 		}
-		data.push({ p: 'Peak Flow', u: 'L/min', v: v, n: '>80% of best', st: st, cls: cls, cat: 'Peak Flow' });
+		data.push({ p: 'Peak Flow', u: 'L/min', v: v, n: '>80% of best', st: st, cls: cls, cat: 'Peak Flow', field: 'peak_flow_current' });
 	}
 	
 	// Personal Best
 	if (frm.doc.peak_flow_personal_best) {
-		data.push({ p: 'Personal Best', u: 'L/min', v: frm.doc.peak_flow_personal_best, n: 'Reference', st: 'Stored', cls: 'av-g', cat: 'Peak Flow' });
+		data.push({ p: 'Personal Best', u: 'L/min', v: frm.doc.peak_flow_personal_best, n: 'Reference', st: 'Stored', cls: 'av-g', cat: 'Peak Flow', field: 'peak_flow_personal_best' });
 	}
 	
 	// Breath Holding Time
@@ -667,7 +716,7 @@ function render_tobacco_health_table(frm) {
 		let v = parseFloat(frm.doc.breath_holding_time);
 		let st = v > 40 ? 'Normal' : v >= 30 ? 'Mild Respiratory Disorder' : 'Severe Respiratory Disorder';
 		let cls = st === 'Normal' ? 'av-g' : st.includes('Mild') ? 'av-o' : 'av-r';
-		data.push({ p: 'Breath Holding Time', u: 'sec', v: v, n: '>40s', st: st, cls: cls, cat: 'Breath & CO Tests' });
+		data.push({ p: 'Breath Holding Time', u: 'sec', v: v, n: '>40s', st: st, cls: cls, cat: 'Breath & CO Tests', field: 'breath_holding_time' });
 	}
 	
 	// CO Reading
@@ -680,7 +729,7 @@ function render_tobacco_health_table(frm) {
 		else if (v >= 10) { st = 'Regular Smoker'; cls = 'av-o'; }
 		else if (v >= 7) { st = 'Light Smoker'; cls = 'av-o'; }
 		else if (v > 6) { st = 'Light Smoker'; cls = 'av-o'; }
-		data.push({ p: 'CO Reading', u: 'ppm', v: v, n: '0-6 ppm', st: st, cls: cls, cat: 'Breath & CO Tests' });
+		data.push({ p: 'CO Reading', u: 'ppm', v: v, n: '0-6 ppm', st: st, cls: cls, cat: 'Breath & CO Tests', field: 'co_reading' });
 	}
 	
 	// COHb Percentage
@@ -692,7 +741,7 @@ function render_tobacco_health_table(frm) {
 		else if (v >= 2) { st = 'Heavy Smoker'; cls = 'av-r'; }
 		else if (v >= 1) { st = 'Regular Smoker'; cls = 'av-o'; }
 		else if (v >= 0.01) { st = 'Light Smoker'; cls = 'av-o'; }
-		data.push({ p: '% Carboxyhaemoglobin', u: '%COHb', v: v, n: '<1%', st: st, cls: cls, cat: 'Breath & CO Tests' });
+		data.push({ p: '% Carboxyhaemoglobin', u: '%COHb', v: v, n: '<1%', st: st, cls: cls, cat: 'Breath & CO Tests', field: 'cohb_percentage' });
 	}
 	
 	// Urinal Nicotine
@@ -702,35 +751,55 @@ function render_tobacco_health_table(frm) {
 		let cls = 'av-g';
 		if (v > 500) { st = 'Heavy Smoker'; cls = 'av-r'; }
 		else if (v >= 100) { st = 'Light/Passive Smoker'; cls = 'av-o'; }
-		data.push({ p: 'Urinal Nicotine', u: 'ng/ml', v: v, n: '<100', st: st, cls: cls, cat: 'Breath & CO Tests' });
+		data.push({ p: 'Urinal Nicotine', u: 'ng/ml', v: v, n: '<100', st: st, cls: cls, cat: 'Breath & CO Tests', field: 'urinal_nicotine' });
 	}
 	
 	// Audiometry - Left Ear
 	if (frm.doc.left_ear_abnormality === 'Yes') {
-		data.push({ p: 'Left Ear Abnormality', u: '-', v: 'Yes', n: 'No', st: 'Abnormal', cls: 'av-r', cat: 'Audiometry & Optical' });
+		data.push({ p: 'Left Ear Abnormality', u: '-', v: 'Yes', n: 'No', st: 'Abnormal', cls: 'av-r', cat: 'Audiometry & Optical', field: 'left_ear_abnormality' });
 	}
-	
+
 	// Audiometry - Right Ear
 	if (frm.doc.right_ear_abnormality === 'Yes') {
-		data.push({ p: 'Right Ear Abnormality', u: '-', v: 'Yes', n: 'No', st: 'Abnormal', cls: 'av-r', cat: 'Audiometry & Optical' });
+		data.push({ p: 'Right Ear Abnormality', u: '-', v: 'Yes', n: 'No', st: 'Abnormal', cls: 'av-r', cat: 'Audiometry & Optical', field: 'right_ear_abnormality' });
 	}
 	
 	// Left Eye
 	let leftEyeIssues = [];
-	if (frm.doc.left_eye_pupil_dilation === 'Yes') leftEyeIssues.push('Pupil Dilation');
-	if (frm.doc.left_eye_opacity === 'Yes') leftEyeIssues.push('Opacity');
-	if (frm.doc.left_eye_sightedness && frm.doc.left_eye_sightedness !== 'Normal') leftEyeIssues.push(frm.doc.left_eye_sightedness + ' Sighted');
+	let leftEyeFields = [];
+	if (frm.doc.left_eye_pupil_dilation === 'Yes') {
+		leftEyeIssues.push(__('Pupil Dilation - Yes'));
+		leftEyeFields.push({ field: 'left_eye_pupil_dilation', label: __('Pupil Dilation') });
+	}
+	if (frm.doc.left_eye_opacity === 'Yes') {
+		leftEyeIssues.push(__('Opacity - Yes'));
+		leftEyeFields.push({ field: 'left_eye_opacity', label: __('Opacity') });
+	}
+	if (frm.doc.left_eye_sightedness && frm.doc.left_eye_sightedness !== 'Normal') {
+		leftEyeIssues.push(__(`Sightedness - ${frm.doc.left_eye_sightedness}`));
+	}
 	if (leftEyeIssues.length > 0) {
-		data.push({ p: 'Left Eye', u: '-', v: leftEyeIssues.join(', '), n: 'Normal', st: 'Abnormal', cls: 'av-o', cat: 'Audiometry & Optical' });
+		let field = leftEyeFields.length ? leftEyeFields : null;
+		data.push({ p: 'Left Eye', u: '-', v: leftEyeIssues.join(', '), n: 'Normal', st: 'Abnormal', cls: 'av-o', cat: 'Audiometry & Optical', field: field });
 	}
 	
 	// Right Eye
 	let rightEyeIssues = [];
-	if (frm.doc.right_eye_pupil_dilation === 'Yes') rightEyeIssues.push('Pupil Dilation');
-	if (frm.doc.right_eye_opacity === 'Yes') rightEyeIssues.push('Opacity');
-	if (frm.doc.right_eye_sightedness && frm.doc.right_eye_sightedness !== 'Normal') rightEyeIssues.push(frm.doc.right_eye_sightedness + ' Sighted');
+	let rightEyeFields = [];
+	if (frm.doc.right_eye_pupil_dilation === 'Yes') {
+		rightEyeIssues.push(__('Pupil Dilation - Yes'));
+		rightEyeFields.push({ field: 'right_eye_pupil_dilation', label: __('Pupil Dilation') });
+	}
+	if (frm.doc.right_eye_opacity === 'Yes') {
+		rightEyeIssues.push(__('Opacity - Yes'));
+		rightEyeFields.push({ field: 'right_eye_opacity', label: __('Opacity') });
+	}
+	if (frm.doc.right_eye_sightedness && frm.doc.right_eye_sightedness !== 'Normal') {
+		rightEyeIssues.push(__(`Sightedness - ${frm.doc.right_eye_sightedness}`));
+	}
 	if (rightEyeIssues.length > 0) {
-		data.push({ p: 'Right Eye', u: '-', v: rightEyeIssues.join(', '), n: 'Normal', st: 'Abnormal', cls: 'av-o', cat: 'Audiometry & Optical' });
+		let field = rightEyeFields.length ? rightEyeFields : null;
+		data.push({ p: 'Right Eye', u: '-', v: rightEyeIssues.join(', '), n: 'Normal', st: 'Abnormal', cls: 'av-o', cat: 'Audiometry & Optical', field: field });
 	}
 	
 	if (data.length === 0) {
@@ -747,6 +816,8 @@ function render_tobacco_health_table(frm) {
 		.th-tbl td { background:var(--card-bg); color:var(--text-color); }
 		.th-tbl tr:hover td { background:var(--bg-color); }
 		.th-cat { font-size:10px; color:var(--text-muted); text-transform:uppercase; }
+		.av-param-link { cursor:pointer; display:inline-flex; align-items:center; gap:4px; }
+		.av-param-link .av-chart-icon { font-size:11px; }
 	</style>
 	<table class="th-tbl">
 		<thead><tr>
@@ -764,7 +835,7 @@ function render_tobacco_health_table(frm) {
 			lastCat = r.cat;
 		}
 		html += `<tr>
-			<td><strong>${r.p}</strong></td>
+			<td>${get_param_label_html(r.p, r.u, r.field)}</td>
 			<td>${r.v}</td>
 			<td>${r.u}</td>
 			<td><small>${r.n}</small></td>
@@ -775,7 +846,9 @@ function render_tobacco_health_table(frm) {
 	html += `</tbody></table>`;
 	
 	if (frm.fields_dict.tobacco_health_html) {
-		frm.fields_dict.tobacco_health_html.$wrapper.html(html);
+		let wrapper = frm.fields_dict.tobacco_health_html.$wrapper;
+		wrapper.html(html);
+		bind_param_history(wrapper, frm);
 	}
 }
 
@@ -947,10 +1020,11 @@ function show_parameter_history_chart(frm, parameter, title, unit) {
 						},
 						type: 'axis-mixed',
 						height: 300,
-						colors: ['#5e64ff'],
+						colors: ['#2ecc71'],
 						lineOptions: {
 							regionFill: 1,
-							dotSize: 4
+							dotSize: 6,
+							hideDots: false
 						},
 						axisOptions: {
 							xIsSeries: true,
