@@ -827,10 +827,10 @@ function render_all_clinical_steps(frm, attempt = 0) {
 	const maxAttempts = 10;
 	const delay = 300;
 
-	// Check if key HTML fields have their wrappers ready
+	// Check if key fields have their wrappers ready
 	let step1_ready = frm.fields_dict.exam_step1_table_html && frm.fields_dict.exam_step1_table_html.$wrapper && frm.fields_dict.exam_step1_table_html.$wrapper.length > 0;
 	let step2_ready = frm.fields_dict.exam_step2_table_html && frm.fields_dict.exam_step2_table_html.$wrapper && frm.fields_dict.exam_step2_table_html.$wrapper.length > 0;
-	let step4_ready = frm.fields_dict.exam_pictures_html && frm.fields_dict.exam_pictures_html.$wrapper && frm.fields_dict.exam_pictures_html.$wrapper.length > 0;
+	let step4_ready = frm.fields_dict.exam_pictures_taken_by && frm.fields_dict.exam_pictures_taken_by.$wrapper && frm.fields_dict.exam_pictures_taken_by.$wrapper.length > 0;
 
 	if (step1_ready || step2_ready || step4_ready || attempt >= maxAttempts) {
 		// At least some fields are ready, render them
@@ -1779,23 +1779,17 @@ function render_clinical_images_section(frm) {
 
 // STEP 4 - Pictures Upload with Direct Display
 function render_step4_pictures(frm) {
-	// Get the HTML field wrapper
-	let field = frm.fields_dict.exam_pictures_html;
-	if (!field || !field.$wrapper) {
-		console.log('Step 4: exam_pictures_html field not found');
+	// Find the Pictures Taken By field and render AFTER it
+	let takenByField = frm.fields_dict.exam_pictures_taken_by;
+	if (!takenByField || !takenByField.$wrapper) {
+		console.log('Step 4: exam_pictures_taken_by field not found');
 		return;
 	}
 
-	// Find the actual container to render in
-	let wrapper = field.$wrapper;
-	let container = wrapper.find('.frappe-control');
-	if (container.length === 0) {
-		container = wrapper;
-	}
+	// Remove any existing step4-pictures-container
+	takenByField.$wrapper.parent().find('.step4-pictures-container').remove();
 
-	console.log('Step 4: Rendering picture grid, container found:', container.length);
-	container.empty();
-
+	console.log('Step 4: Rendering picture grid after Pictures Taken By field');
 
 	// Picture categories matching the sheet
 	const picture_categories = [
@@ -2009,13 +2003,11 @@ function render_step4_pictures(frm) {
 		</div>
 	`;
 
-	// Set the HTML content
-	try {
-		container.html(html);
-		console.log('Step 4: HTML added to container');
-	} catch (e) {
-		console.log('Step 4: Error setting HTML:', e);
-	}
+	// Create container and append after Pictures Taken By field
+	let container = $('<div class="step4-pictures-container">').html(html);
+	takenByField.$wrapper.after(container);
+	console.log('Step 4: HTML appended after Pictures Taken By field');
+
 
 	// Add click handlers for upload
 	container.find('.picture-placeholder').on('click', function () {
@@ -2027,7 +2019,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// View full image
-	container.find('.btn-view').on('click', function (e) {
+	wrapper.find('.btn-view').on('click', function (e) {
 		e.stopPropagation();
 		let img_src = $(this).closest('.picture-preview').find('img').attr('src');
 		let name = $(this).closest('.picture-card').data('name');
@@ -2041,7 +2033,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// Replace image
-	container.find('.btn-replace').on('click', function (e) {
+	wrapper.find('.btn-replace').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
@@ -2050,7 +2042,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// Delete image
-	container.find('.btn-delete').on('click', function (e) {
+	wrapper.find('.btn-delete').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
