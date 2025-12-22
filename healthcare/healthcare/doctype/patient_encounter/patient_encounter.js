@@ -1788,9 +1788,16 @@ function render_step4_pictures(frm) {
 	}
 
 	// Remove any existing step4-pictures-container
-	takenByField.$wrapper.parent().find('.step4-pictures-container').remove();
+	$('.step4-pictures-container').remove();
 
-	console.log('Step 4: Rendering picture grid after Pictures Taken By field');
+	// Find the section body to append full-width container
+	let sectionBody = takenByField.$wrapper.closest('.section-body');
+	if (!sectionBody.length) {
+		sectionBody = takenByField.$wrapper.closest('.frappe-control').parent();
+	}
+
+	console.log('Step 4: Rendering picture grid in section body');
+
 
 	// Picture categories matching the sheet
 	const picture_categories = [
@@ -1818,9 +1825,8 @@ function render_step4_pictures(frm) {
 				max-width: 100%;
 				box-sizing: border-box;
 			}
-			/* Make parent wrapper full width */
+			/* Make container full width */
 			[data-fieldname="exam_pictures_html"],
-			[data-fieldname="exam_pictures_taken_by"],
 			.step4-pictures-container {
 				width: 100% !important;
 				max-width: 100% !important;
@@ -1828,12 +1834,6 @@ function render_step4_pictures(frm) {
 			[data-fieldname="exam_pictures_html"] .frappe-control,
 			.step4-pictures-container .step4-container {
 				width: 100% !important;
-			}
-			/* Force parent column to full width */
-			[data-fieldname="exam_pictures_taken_by"] .form-column,
-			[data-fieldname="exam_step4_section"] + .section-body {
-				flex: 0 0 100% !important;
-				max-width: 100% !important;
 			}
 			.step4-header {
 				color: var(--heading-color);
@@ -2013,10 +2013,10 @@ function render_step4_pictures(frm) {
 		</div>
 	`;
 
-	// Create container and append after Pictures Taken By field
-	let container = $('<div class="step4-pictures-container">').html(html);
-	takenByField.$wrapper.after(container);
-	console.log('Step 4: HTML appended after Pictures Taken By field');
+	// Create container and append to section body (full width)
+	let container = $('<div class="step4-pictures-container" style="width:100%; margin-top:15px;">').html(html);
+	sectionBody.append(container);
+	console.log('Step 4: HTML appended to section body');
 
 
 	// Add click handlers for upload
