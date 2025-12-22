@@ -2172,8 +2172,13 @@ const BODY_PARTS_CONFIG = {
 };
 
 function render_step1_table_form(frm) {
+	console.log('Step 1: render_step1_table_form called');
 	let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
-	if (!wrapper) return;
+	if (!wrapper) {
+		console.log('Step 1: wrapper not found, returning');
+		return;
+	}
+	console.log('Step 1: wrapper found, rendering HTML');
 
 	wrapper.empty();
 
@@ -2571,8 +2576,13 @@ let editingFindingIndex = -1;
 let editingLesionIndex = -1;
 
 function render_step2_table_form(frm) {
+	console.log('Step 2: render_step2_table_form called');
 	let wrapper = frm.fields_dict.exam_step2_table_html?.$wrapper;
-	if (!wrapper) return;
+	if (!wrapper) {
+		console.log('Step 2: wrapper not found, returning');
+		return;
+	}
+	console.log('Step 2: wrapper found, rendering HTML');
 
 	wrapper.empty();
 
