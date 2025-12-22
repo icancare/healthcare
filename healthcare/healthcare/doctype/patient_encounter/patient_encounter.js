@@ -1819,12 +1819,21 @@ function render_step4_pictures(frm) {
 				box-sizing: border-box;
 			}
 			/* Make parent wrapper full width */
-			[data-fieldname="exam_pictures_html"] {
+			[data-fieldname="exam_pictures_html"],
+			[data-fieldname="exam_pictures_taken_by"],
+			.step4-pictures-container {
 				width: 100% !important;
 				max-width: 100% !important;
 			}
-			[data-fieldname="exam_pictures_html"] .frappe-control {
+			[data-fieldname="exam_pictures_html"] .frappe-control,
+			.step4-pictures-container .step4-container {
 				width: 100% !important;
+			}
+			/* Force parent column to full width */
+			[data-fieldname="exam_pictures_taken_by"] .form-column,
+			[data-fieldname="exam_step4_section"] + .section-body {
+				flex: 0 0 100% !important;
+				max-width: 100% !important;
 			}
 			.step4-header {
 				color: var(--heading-color);
