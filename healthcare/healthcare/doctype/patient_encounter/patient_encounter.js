@@ -2019,7 +2019,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// View full image
-	wrapper.find('.btn-view').on('click', function (e) {
+	container.find('.btn-view').on('click', function (e) {
 		e.stopPropagation();
 		let img_src = $(this).closest('.picture-preview').find('img').attr('src');
 		let name = $(this).closest('.picture-card').data('name');
@@ -2033,7 +2033,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// Replace image
-	wrapper.find('.btn-replace').on('click', function (e) {
+	container.find('.btn-replace').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
@@ -2042,7 +2042,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// Delete image
-	wrapper.find('.btn-delete').on('click', function (e) {
+	container.find('.btn-delete').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
