@@ -829,7 +829,8 @@ function render_all_clinical_steps(frm, attempt = 0) {
 
 	// Check if key fields have their wrappers ready
 	let step1_ready = frm.fields_dict.exam_step1_table_html && frm.fields_dict.exam_step1_table_html.$wrapper && frm.fields_dict.exam_step1_table_html.$wrapper.length > 0;
-	let step2_ready = frm.fields_dict.exam_step2_table_html && frm.fields_dict.exam_step2_table_html.$wrapper && frm.fields_dict.exam_step2_table_html.$wrapper.length > 0;
+	let step2_ready = (frm.fields_dict.exam_step2_table_html && frm.fields_dict.exam_step2_table_html.$wrapper && frm.fields_dict.exam_step2_table_html.$wrapper.length > 0) || step1_ready;
+
 	let step4_ready = frm.fields_dict.exam_pictures_taken_by && frm.fields_dict.exam_pictures_taken_by.$wrapper && frm.fields_dict.exam_pictures_taken_by.$wrapper.length > 0;
 
 	if (step1_ready || step2_ready || step4_ready || attempt >= maxAttempts) {
@@ -2569,14 +2570,30 @@ let editingLesionIndex = -1;
 
 function render_step2_table_form(frm) {
 	console.log('Step 2: render_step2_table_form called');
-	let wrapper = frm.fields_dict.exam_step2_table_html?.$wrapper;
-	if (!wrapper) {
-		console.log('Step 2: wrapper not found, returning');
+
+	// Try HTML field first (works on localhost)
+	let htmlField = frm.fields_dict.exam_step2_table_html;
+	let wrapper = htmlField?.$wrapper;
+
+	// If HTML field not found, use Step 1 HTML field as anchor
+	let step1Field = frm.fields_dict.exam_step1_table_html;
+
+	// Remove any existing container
+	$('.step2-table-container').remove();
+
+	if (wrapper) {
+		// Use wrapper directly
+		wrapper.empty();
+		console.log('Step 2: Using HTML field wrapper');
+	} else if (step1Field?.$wrapper) {
+		// Create new container and append after step1
+		wrapper = $('<div class="step2-table-container">');
+		step1Field.$wrapper.parent().append(wrapper);
+		console.log('Step 2: Using Step 1 as anchor');
+	} else {
+		console.log('Step 2: No suitable wrapper found');
 		return;
 	}
-	console.log('Step 2: wrapper found, rendering HTML');
-
-	wrapper.empty();
 
 	// Initialize from saved data
 	step2Findings = [];
@@ -2761,9 +2778,12 @@ function render_step2_table_form(frm) {
                 </div>
             </div>
         </div>
-    `;
+	`;
 
+	// Set HTML to wrapper
 	wrapper.html(html);
+	console.log('Step 2: HTML set to wrapper');
+
 	setup_step2_handlers_v3(frm, wrapper);
 	render_all_findings_tables(frm, wrapper);
 }
