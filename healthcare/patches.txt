@@ -108,3 +108,4 @@ healthcare.patches.v15_0.fix_step1_clinical_visibility #22-12-2024
 healthcare.patches.v15_0.fix_step1_complete #22-12-2024
 healthcare.patches.v15_0.add_step2_table_format #22-12-2024
 healthcare.patches.v15_0.add_step3_lesions_table #22-12-2024
+healthcare.patches.v15_0.add_step4_pictures_html #22-12-2024

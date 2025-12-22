@@ -73,40 +73,29 @@ frappe.ui.form.on("Patient Encounter", {
 			});
 		}
 
-		// Load patient allergies and immunizations
-		if (frm.doc.patient) {
-			load_patient_allergies(frm);
-			load_patient_immunizations(frm);
-		}
+		// Load patient allergies and immunizations (functions not yet defined)
+		// if (frm.doc.patient) {
+		// 	load_patient_allergies(frm);
+		// 	load_patient_immunizations(frm);
+		// }
 
 		// Check and render Clinical Examination if practitioner has template
 		if (frm.doc.practitioner && frm.doc.show_clinical_examination) {
-			setTimeout(() => {
-				render_step1_table_form(frm);
-				render_step2_table_form(frm);
-				render_clinical_exam_diagram(frm);
-				render_clinical_images_section(frm);
-				render_step4_pictures(frm);
-			}, 300);
+			// Use polling to wait for fields to be ready
+			render_all_clinical_steps(frm);
 		} else if (frm.doc.practitioner && !frm.doc.show_clinical_examination) {
 			// Check if practitioner has template (for existing encounters)
 			check_practitioner_examination_template(frm);
 		}
 	},
 
+
 	// Trigger render when show_clinical_examination changes
 	show_clinical_examination: function (frm) {
 		if (frm.doc.show_clinical_examination && frm.doc.practitioner) {
-			setTimeout(() => {
-				render_step1_table_form(frm);
-				render_step2_table_form(frm);
-				render_clinical_exam_diagram(frm);
-				render_clinical_images_section(frm);
-				render_step4_pictures(frm);
-			}, 300);
+			render_all_clinical_steps(frm);
 		}
 	},
-
 
 	patient: function (frm) {
 		if (frm.doc.patient) {
@@ -831,6 +820,38 @@ function check_practitioner_examination_template(frm) {
 			}
 		}
 	});
+}
+
+// Render all clinical steps with polling to wait for fields
+function render_all_clinical_steps(frm, attempt = 0) {
+	const maxAttempts = 10;
+	const delay = 300;
+
+	// Check if key HTML fields have their wrappers ready
+	let step1_ready = frm.fields_dict.exam_step1_table_html && frm.fields_dict.exam_step1_table_html.$wrapper && frm.fields_dict.exam_step1_table_html.$wrapper.length > 0;
+	let step2_ready = frm.fields_dict.exam_step2_table_html && frm.fields_dict.exam_step2_table_html.$wrapper && frm.fields_dict.exam_step2_table_html.$wrapper.length > 0;
+	let step4_ready = frm.fields_dict.exam_pictures_html && frm.fields_dict.exam_pictures_html.$wrapper && frm.fields_dict.exam_pictures_html.$wrapper.length > 0;
+
+	if (step1_ready || step2_ready || step4_ready || attempt >= maxAttempts) {
+		// At least some fields are ready, render them
+		console.log(`Clinical steps rendering (attempt ${attempt + 1}): Step1=${step1_ready}, Step2=${step2_ready}, Step4=${step4_ready}`);
+
+		if (step1_ready) render_step1_table_form(frm);
+		if (step2_ready) render_step2_table_form(frm);
+		render_clinical_exam_diagram(frm);
+		render_clinical_images_section(frm);
+		if (step4_ready) render_step4_pictures(frm);
+
+		// If not all ready and we haven't maxed out, retry for remaining fields
+		if ((!step1_ready || !step2_ready || !step4_ready) && attempt < maxAttempts) {
+			setTimeout(() => render_all_clinical_steps(frm, attempt + 1), delay);
+		}
+	} else {
+		// Fields not ready yet, try again
+		if (attempt < maxAttempts) {
+			setTimeout(() => render_all_clinical_steps(frm, attempt + 1), delay);
+		}
+	}
 }
 
 // Clinical Examination Diagram Rendering - STEP 3
@@ -1759,13 +1780,22 @@ function render_clinical_images_section(frm) {
 // STEP 4 - Pictures Upload with Direct Display
 function render_step4_pictures(frm) {
 	// Get the HTML field wrapper
-	let field = frm.get_field('exam_pictures_html');
+	let field = frm.fields_dict.exam_pictures_html;
 	if (!field || !field.$wrapper) {
+		console.log('Step 4: exam_pictures_html field not found');
 		return;
 	}
 
+	// Find the actual container to render in
 	let wrapper = field.$wrapper;
-	wrapper.empty();
+	let container = wrapper.find('.frappe-control');
+	if (container.length === 0) {
+		container = wrapper;
+	}
+
+	console.log('Step 4: Rendering picture grid, container found:', container.length);
+	container.empty();
+
 
 	// Picture categories matching the sheet
 	const picture_categories = [
@@ -1784,76 +1814,93 @@ function render_step4_pictures(frm) {
 	let html = `
 		<style>
 			.step4-container {
-				padding: 20px;
-				background: linear-gradient(145deg, #1e3c72 0%, #2a5298 100%);
-				border-radius: 16px;
+				padding: 15px;
+				background: var(--card-bg);
+				border-radius: 8px;
 				margin: 10px 0;
+				border: 1px solid var(--border-color);
 			}
 			.step4-header {
-				color: #fff;
-				text-align: center;
-				margin-bottom: 20px;
-				padding-bottom: 15px;
-				border-bottom: 1px solid rgba(255,255,255,0.2);
+				color: var(--heading-color);
+				margin-bottom: 15px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid var(--border-color);
+			}
+			.step4-header h5 {
+				margin: 0;
+				font-size: 14px;
+			}
+			.step4-header small {
+				color: var(--text-muted);
 			}
 			.pictures-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-				gap: 15px;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 10px;
+			}
+			@media (max-width: 1200px) {
+				.pictures-grid { grid-template-columns: repeat(4, 1fr); }
+			}
+			@media (max-width: 900px) {
+				.pictures-grid { grid-template-columns: repeat(3, 1fr); }
+			}
+			@media (max-width: 600px) {
+				.pictures-grid { grid-template-columns: repeat(2, 1fr); }
 			}
 			.picture-card {
-				background: #fff;
-				border-radius: 12px;
+				background: var(--card-bg);
+				border-radius: 6px;
 				overflow: hidden;
-				box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-				transition: all 0.3s ease;
+				border: 1px solid var(--border-color);
+				transition: all 0.2s ease;
 			}
 			.picture-card:hover {
-				transform: translateY(-5px);
-				box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+				border-color: var(--primary);
+				box-shadow: 0 2px 10px rgba(0,0,0,0.15);
 			}
 			.picture-card-header {
-				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-				color: #fff;
-				padding: 10px;
-				font-size: 11px;
+				background: var(--subtle-bg);
+				color: var(--text-color);
+				padding: 8px;
+				font-size: 10px;
 				font-weight: 600;
 				text-align: center;
+				border-bottom: 1px solid var(--border-color);
 			}
 			.picture-card-body {
-				padding: 10px;
-				min-height: 150px;
+				padding: 8px;
+				min-height: 80px;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				background: #f8f9fa;
+				background: var(--control-bg);
 			}
 			.picture-placeholder {
 				width: 100%;
-				height: 120px;
-				border: 2px dashed #ccc;
-				border-radius: 8px;
+				height: 60px;
+				border: 2px dashed var(--border-color);
+				border-radius: 4px;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
 				cursor: pointer;
 				transition: all 0.2s ease;
-				background: #fff;
+				background: var(--control-bg);
 			}
 			.picture-placeholder:hover {
-				border-color: #667eea;
-				background: rgba(102, 126, 234, 0.05);
+				border-color: var(--primary);
+				background: var(--subtle-bg);
 			}
 			.picture-placeholder i {
-				font-size: 32px;
-				color: #ccc;
-				margin-bottom: 8px;
+				font-size: 20px;
+				color: var(--text-muted);
+				margin-bottom: 4px;
 			}
 			.picture-placeholder span {
-				font-size: 11px;
-				color: #888;
+				font-size: 10px;
+				color: var(--text-muted);
 			}
 			.picture-preview {
 				width: 100%;
@@ -1861,9 +1908,9 @@ function render_step4_pictures(frm) {
 			}
 			.picture-preview img {
 				width: 100%;
-				height: 120px;
+				height: 60px;
 				object-fit: cover;
-				border-radius: 8px;
+				border-radius: 4px;
 				cursor: pointer;
 			}
 			.picture-actions {
@@ -1951,10 +1998,17 @@ function render_step4_pictures(frm) {
 		</div>
 	`;
 
-	wrapper.html(html);
+	// Set the HTML content
+	try {
+		container.html(html);
+		console.log('Step 4: HTML added to container');
+	} catch (e) {
+		console.log('Step 4: Error setting HTML:', e);
+	}
 
 	// Add click handlers for upload
-	wrapper.find('.picture-placeholder').on('click', function () {
+	container.find('.picture-placeholder').on('click', function () {
+
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
 		let name = card.data('name');
@@ -1962,7 +2016,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// View full image
-	wrapper.find('.btn-view').on('click', function (e) {
+	container.find('.btn-view').on('click', function (e) {
 		e.stopPropagation();
 		let img_src = $(this).closest('.picture-preview').find('img').attr('src');
 		let name = $(this).closest('.picture-card').data('name');
@@ -1976,7 +2030,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// Replace image
-	wrapper.find('.btn-replace').on('click', function (e) {
+	container.find('.btn-replace').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
@@ -1985,7 +2039,7 @@ function render_step4_pictures(frm) {
 	});
 
 	// Delete image
-	wrapper.find('.btn-delete').on('click', function (e) {
+	container.find('.btn-delete').on('click', function (e) {
 		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
