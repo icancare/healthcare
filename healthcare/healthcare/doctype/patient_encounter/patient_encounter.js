@@ -1819,6 +1819,17 @@ function render_step4_pictures(frm) {
 				border-radius: 8px;
 				margin: 10px 0;
 				border: 1px solid var(--border-color);
+				width: 100%;
+				max-width: 100%;
+				box-sizing: border-box;
+			}
+			/* Make parent wrapper full width */
+			[data-fieldname="exam_pictures_html"] {
+				width: 100% !important;
+				max-width: 100% !important;
+			}
+			[data-fieldname="exam_pictures_html"] .frappe-control {
+				width: 100% !important;
 			}
 			.step4-header {
 				color: var(--heading-color);
