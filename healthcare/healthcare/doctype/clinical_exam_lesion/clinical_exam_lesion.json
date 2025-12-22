@@ -1,124 +1,123 @@
 {
- "actions": [],
- "creation": "2024-12-16 14:00:00.000000",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "lesion_number",
-  "diagram_type",
-  "location",
-  "side",
-  "column_break_1",
-  "lesion_type",
-  "size_mm",
-  "color",
-  "column_break_2",
-  "x_coordinate",
-  "y_coordinate",
-  "diagram_region",
-  "section_break_1",
-  "description",
-  "note"
- ],
- "fields": [
-  {
-   "fieldname": "lesion_number",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Lesion #",
-   "reqd": 1
-  },
-  {
-   "fieldname": "diagram_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Diagram",
-   "options": "\nFace\nOral Cavity\nTeeth\nNeck\nTongue"
-  },
-  {
-   "fieldname": "location",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Location",
-   "options": "\nForehead\nEye\nNose\nChin\nCheek\nParotid\nEar\nUpper Lip\nLower Lip\nAnterior Arch\nUpper GB Sulcus\nLower GB Sulcus\nAngle of Mouth\nUpper Alveolus\nLower Alveolus\nVentral Tongue\nDorsum Tongue\nLateral Tongue\nBase of Tongue\nBuccal Mucosa\nHard Palate\nSoft Palate\nOropharynx\nTonsil\nRMT\nFloor of Mouth\nGingiva\nRetromolar Trigone\nNeck - Submental\nNeck - Submandibular\nNeck - Parotid\nNeck - Upper Cervical\nNeck - Middle Cervical\nNeck - Lower Cervical\nNeck - Supraclavicular\nNeck - Posterior Triangle\nThyroid\nOther"
-  },
-  {
-   "fieldname": "side",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Side",
-   "options": "\nLeft\nRight\nMidline\nBilateral"
-  },
-  {
-   "fieldname": "column_break_1",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "lesion_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Lesion Type",
-   "options": "\nWhite Patch (Leukoplakia)\nRed Patch (Erythroplakia)\nMixed White-Red\nUlcer - Superficial\nUlcer - Deep\nNodule/Lump\nSwelling\nFibrous Bands\nVesicle\nPapule\nPlaque\nMacule\nPustule\nPigmentation\nErosion\nFissure\nGrowth/Mass\nLymph Node\nOther"
-  },
-  {
-   "fieldname": "size_mm",
-   "fieldtype": "Data",
-   "label": "Size (mm)",
-   "description": "L x W x H in mm"
-  },
-  {
-   "fieldname": "color",
-   "fieldtype": "Select",
-   "label": "Color",
-   "options": "\nWhite\nRed\nBlack\nBrown\nMixed\nNormal"
-  },
-  {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "x_coordinate",
-   "fieldtype": "Float",
-   "label": "X",
-   "hidden": 1
-  },
-  {
-   "fieldname": "y_coordinate",
-   "fieldtype": "Float",
-   "label": "Y",
-   "hidden": 1
-  },
-  {
-   "fieldname": "diagram_region",
-   "fieldtype": "Data",
-   "label": "Region ID",
-   "hidden": 1
-  },
-  {
-   "fieldname": "section_break_1",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Small Text",
-   "label": "Description"
-  },
-  {
-   "fieldname": "note",
-   "fieldtype": "Small Text",
-   "label": "Clinical Note"
-  }
- ],
- "istable": 1,
- "links": [],
- "modified": "2024-12-16 20:00:00.000000",
- "modified_by": "Administrator",
- "module": "Healthcare",
- "name": "Clinical Exam Lesion",
- "owner": "Administrator",
- "permissions": [],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+    "actions": [],
+    "creation": "2024-12-16 14:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "lesion_number",
+        "diagram_type",
+        "location",
+        "side",
+        "column_break_1",
+        "lesion_type",
+        "size_mm",
+        "color",
+        "column_break_2",
+        "x_coordinate",
+        "y_coordinate",
+        "diagram_region",
+        "section_break_1",
+        "description",
+        "note"
+    ],
+    "fields": [
+        {
+            "fieldname": "lesion_number",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Lesion #",
+            "reqd": 1
+        },
+        {
+            "fieldname": "diagram_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Diagram",
+            "options": "\nFace\nOral Cavity\nTeeth\nNeck\nTongue"
+        },
+        {
+            "fieldname": "location",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Location"
+        },
+        {
+            "fieldname": "side",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Side",
+            "options": "\nLeft\nRight\nMidline\nBilateral"
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "lesion_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Lesion Type",
+            "options": "\nWhite Patch (Leukoplakia)\nRed Patch (Erythroplakia)\nMixed White-Red\nUlcer - Superficial\nUlcer - Deep\nNodule/Lump\nSwelling\nFibrous Bands\nVesicle\nPapule\nPlaque\nMacule\nPustule\nPigmentation\nErosion\nFissure\nGrowth/Mass\nLymph Node\nOther"
+        },
+        {
+            "fieldname": "size_mm",
+            "fieldtype": "Data",
+            "label": "Size (mm)",
+            "description": "L x W x H in mm"
+        },
+        {
+            "fieldname": "color",
+            "fieldtype": "Select",
+            "label": "Color",
+            "options": "\nWhite\nRed\nBlack\nBrown\nMixed\nNormal"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "x_coordinate",
+            "fieldtype": "Float",
+            "label": "X",
+            "hidden": 1
+        },
+        {
+            "fieldname": "y_coordinate",
+            "fieldtype": "Float",
+            "label": "Y",
+            "hidden": 1
+        },
+        {
+            "fieldname": "diagram_region",
+            "fieldtype": "Data",
+            "label": "Region ID",
+            "hidden": 1
+        },
+        {
+            "fieldname": "section_break_1",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Small Text",
+            "label": "Description"
+        },
+        {
+            "fieldname": "note",
+            "fieldtype": "Small Text",
+            "label": "Clinical Note"
+        }
+    ],
+    "istable": 1,
+    "links": [],
+    "modified": "2024-12-16 20:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Healthcare",
+    "name": "Clinical Exam Lesion",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
 }

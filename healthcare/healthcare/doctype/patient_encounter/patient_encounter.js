@@ -83,6 +83,7 @@ frappe.ui.form.on("Patient Encounter", {
 		if (frm.doc.practitioner && frm.doc.show_clinical_examination) {
 			setTimeout(() => {
 				render_step1_table_form(frm);
+				render_step2_table_form(frm);
 				render_clinical_exam_diagram(frm);
 				render_clinical_images_section(frm);
 				render_step4_pictures(frm);
@@ -98,6 +99,7 @@ frappe.ui.form.on("Patient Encounter", {
 		if (frm.doc.show_clinical_examination && frm.doc.practitioner) {
 			setTimeout(() => {
 				render_step1_table_form(frm);
+				render_step2_table_form(frm);
 				render_clinical_exam_diagram(frm);
 				render_clinical_images_section(frm);
 				render_step4_pictures(frm);
@@ -835,7 +837,10 @@ function check_practitioner_examination_template(frm) {
 function render_clinical_exam_diagram(frm) {
 	// Render both old diagram and new STEP 3 interactive diagrams
 	render_step3_interactive_diagrams(frm);
+	// Also render existing lesions table
+	setTimeout(() => render_step3_lesions_table(frm), 500);
 }
+
 
 // STEP 3 - Professional Interactive Diagrams
 function render_step3_interactive_diagrams(frm) {
@@ -1363,6 +1368,9 @@ function add_lesion_marking(frm, region, side, diagram, event) {
 			frm.refresh_field('exam_diagram_lesions');
 			d.hide();
 
+			// Render the lesions table
+			render_step3_lesions_table(frm);
+
 			frappe.show_alert({
 				message: __('Lesion #{0} added: {1} - {2}', [lesion_count, region_display, side]),
 				indicator: 'green'
@@ -1371,6 +1379,86 @@ function add_lesion_marking(frm, region, side, diagram, event) {
 	});
 	d.show();
 }
+
+// Render lesions table below the diagram
+function render_step3_lesions_table(frm) {
+	// Find the diagram container
+	let wrapper = frm.fields_dict.exam_diagram_interactive?.$wrapper;
+	if (!wrapper || wrapper.length === 0) {
+		console.log('No diagram wrapper found for lesion table');
+		return;
+	}
+
+	// Find or create table container after the diagram
+	let tableContainer = wrapper.find('#step3_lesions_table_container');
+	if (tableContainer.length === 0) {
+		// Create container at the end of the diagram wrapper
+		wrapper.append('<div id="step3_lesions_table_container" style="margin-top: 20px; background: var(--card-bg); border-radius: 8px; padding: 15px;"></div>');
+		tableContainer = wrapper.find('#step3_lesions_table_container');
+	}
+
+	let lesions = frm.doc.exam_diagram_lesions || [];
+
+	if (lesions.length === 0) {
+		tableContainer.html('<p style="color: var(--text-muted); text-align: center; padding: 10px;">No lesions marked yet. Click on diagram regions to add lesions.</p>');
+		return;
+	}
+
+	let html = `
+		<h5 style="margin-bottom: 15px; font-size: 14px; color: var(--heading-color);">
+			<i class="fa fa-list"></i> Marked Lesions (${lesions.length})
+		</h5>
+		<table class="table table-bordered" style="font-size: 12px; margin: 0; background: var(--card-bg); color: var(--text-color);">
+			<thead>
+				<tr style="background: var(--subtle-bg); color: var(--text-color);">
+					<th style="width: 40px; color: var(--text-color);">#</th>
+					<th style="color: var(--text-color);">Diagram</th>
+					<th style="color: var(--text-color);">Location</th>
+					<th style="color: var(--text-color);">Side</th>
+					<th style="color: var(--text-color);">Lesion Type</th>
+					<th style="color: var(--text-color);">Size (mm)</th>
+					<th style="color: var(--text-color);">Color</th>
+					<th style="width: 60px; color: var(--text-color);">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				${lesions.map((l, idx) => `
+					<tr style="background: var(--card-bg);">
+						<td style="color: var(--text-color);">${l.lesion_number || idx + 1}</td>
+						<td style="color: var(--text-color);">${l.diagram_type || '-'}</td>
+						<td style="color: var(--text-color);">${l.location || '-'}</td>
+						<td style="color: var(--text-color);">${l.side || '-'}</td>
+						<td style="color: var(--text-color);">${l.lesion_type || '-'}</td>
+						<td style="color: var(--text-color);">${l.size_mm || '-'}</td>
+						<td style="color: var(--text-color);">${l.color || '-'}</td>
+						<td>
+							<button type="button" class="btn btn-xs btn-danger step3-delete-lesion" data-idx="${idx}" title="Delete">
+								<i class="fa fa-trash"></i>
+							</button>
+						</td>
+					</tr>
+				`).join('')}
+
+			</tbody>
+		</table>
+	`;
+
+	tableContainer.html(html);
+
+	// Delete handler
+	tableContainer.find('.step3-delete-lesion').on('click', function () {
+		let idx = parseInt($(this).data('idx'));
+		if (confirm('Delete this lesion?')) {
+			frm.doc.exam_diagram_lesions.splice(idx, 1);
+			// Re-number
+			frm.doc.exam_diagram_lesions.forEach((l, i) => l.lesion_number = i + 1);
+			frm.refresh_field('exam_diagram_lesions');
+			render_step3_lesions_table(frm);
+			frappe.show_alert({ message: 'Lesion deleted', indicator: 'orange' });
+		}
+	});
+}
+
 
 // Legacy diagram function - now calls new STEP 3 function
 function render_old_clinical_exam_diagram(frm) {
@@ -2001,34 +2089,34 @@ function upload_picture(frm, card, field, name) {
 // Uses radio buttons for selection and shows complaints table at bottom
 
 const BODY_PARTS_CONFIG = {
-    'Face': {
-        symptoms: ['Lump/Swelling on face', 'Pigmentation', 'Ulcer']
-    },
-    'Neck': {
-        symptoms: ['Lump/Swelling in Neck (outside)', 'Swelling/lump in Throat (inside)', 'Stickiness in throat', 'Change in Voice', 'Sore throat/Hoarseness', 'Others']
-    },
-    'Oral Cavity (Mouth and Tongue)': {
-        symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Trauma', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Others']
-    },
-    'Teeth (Dental)': {
-        symptoms: ['Painful teeth', 'Loosening of teeth', 'Lost teeth', 'Teeth or gum problem', 'Denture problem']
-    },
-    'Others': {
-        symptoms: ['Earache', 'Others']
-    }
+	'Face': {
+		symptoms: ['Lump/Swelling on face', 'Pigmentation', 'Ulcer']
+	},
+	'Neck': {
+		symptoms: ['Lump/Swelling in Neck (outside)', 'Swelling/lump in Throat (inside)', 'Stickiness in throat', 'Change in Voice', 'Sore throat/Hoarseness', 'Others']
+	},
+	'Oral Cavity (Mouth and Tongue)': {
+		symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Trauma', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Others']
+	},
+	'Teeth (Dental)': {
+		symptoms: ['Painful teeth', 'Loosening of teeth', 'Lost teeth', 'Teeth or gum problem', 'Denture problem']
+	},
+	'Others': {
+		symptoms: ['Earache', 'Others']
+	}
 };
 
 function render_step1_table_form(frm) {
-    let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
-    if (!wrapper) return;
+	let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
+	if (!wrapper) return;
 
-    wrapper.empty();
+	wrapper.empty();
 
-    let currentStatus = frm.doc.exam_complaints_status || '';
-    let isNormal = currentStatus === 'No Complaints - Normal';
-    let isAbnormal = currentStatus === 'Complaints - Abnormal';
+	let currentStatus = frm.doc.exam_complaints_status || '';
+	let isNormal = currentStatus === 'No Complaints - Normal';
+	let isAbnormal = currentStatus === 'Complaints - Abnormal';
 
-    let html = `
+	let html = `
 		<style>
 			.step1-radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
 			.step1-radio-label { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; font-size: 12px; }
@@ -2171,24 +2259,24 @@ function render_step1_table_form(frm) {
 		</div>
 	`;
 
-    wrapper.html(html);
+	wrapper.html(html);
 
-    // Setup handlers
-    setup_step1_handlers(frm, wrapper);
+	// Setup handlers
+	setup_step1_handlers(frm, wrapper);
 
-    // Render existing complaints table
-    render_complaints_table(frm, wrapper);
+	// Render existing complaints table
+	render_complaints_table(frm, wrapper);
 }
 
 function render_complaints_table(frm, wrapper) {
-    let container = wrapper.find('#complaints_table_container');
+	let container = wrapper.find('#complaints_table_container');
 
-    if (!frm.doc.exam_complaints || frm.doc.exam_complaints.length === 0) {
-        container.html('<p style="color: var(--text-muted); font-size: 12px; padding: 10px 0;">No complaints added yet.</p>');
-        return;
-    }
+	if (!frm.doc.exam_complaints || frm.doc.exam_complaints.length === 0) {
+		container.html('<p style="color: var(--text-muted); font-size: 12px; padding: 10px 0;">No complaints added yet.</p>');
+		return;
+	}
 
-    let tableHtml = `
+	let tableHtml = `
 		<table class="step1-complaints-table">
 			<thead>
 				<tr>
@@ -2219,139 +2307,963 @@ function render_complaints_table(frm, wrapper) {
 		<button type="button" class="btn btn-default btn-xs" id="add_more_btn" style="margin-top: 10px;">+ Add More Complaint</button>
 	`;
 
-    container.html(tableHtml);
+	container.html(tableHtml);
 
-    // Delete handler
-    container.find('.delete-complaint-btn').on('click', function () {
-        let idx = $(this).data('idx');
-        frm.doc.exam_complaints.splice(idx, 1);
-        // Re-index
-        frm.doc.exam_complaints.forEach((row, i) => row.idx = i + 1);
-        frm.refresh_field('exam_complaints');
-        render_complaints_table(frm, wrapper);
-        frappe.show_alert({ message: 'Complaint removed', indicator: 'orange' });
-    });
+	// Delete handler
+	container.find('.delete-complaint-btn').on('click', function () {
+		let idx = $(this).data('idx');
+		frm.doc.exam_complaints.splice(idx, 1);
+		// Re-index
+		frm.doc.exam_complaints.forEach((row, i) => row.idx = i + 1);
+		frm.refresh_field('exam_complaints');
+		render_complaints_table(frm, wrapper);
+		frappe.show_alert({ message: 'Complaint removed', indicator: 'orange' });
+	});
 
-    // Edit handler
-    container.find('.edit-complaint-btn').on('click', function () {
-        let idx = $(this).data('idx');
-        if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.grid) {
-            let row = frm.fields_dict.exam_complaints.grid.grid_rows[idx];
-            if (row) {
-                row.toggle_view(true);
-            }
-        }
-    });
+	// Edit handler
+	container.find('.edit-complaint-btn').on('click', function () {
+		let idx = $(this).data('idx');
+		if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.grid) {
+			let row = frm.fields_dict.exam_complaints.grid.grid_rows[idx];
+			if (row) {
+				row.toggle_view(true);
+			}
+		}
+	});
 
-    // Add more handler
-    container.find('#add_more_btn').on('click', function () {
-        // Reset selections
-        wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
-        wrapper.find('#complaints_section').hide();
-        wrapper.find('#details_section').hide();
-        // Scroll to body part section
-        wrapper.find('input[name="step1_bodypart"]').first().closest('.step1-radio-group').parent()[0].scrollIntoView({ behavior: 'smooth' });
-    });
+	// Add more handler
+	container.find('#add_more_btn').on('click', function () {
+		// Reset selections
+		wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
+		wrapper.find('#complaints_section').hide();
+		wrapper.find('#details_section').hide();
+		// Scroll to body part section
+		wrapper.find('input[name="step1_bodypart"]').first().closest('.step1-radio-group').parent()[0].scrollIntoView({ behavior: 'smooth' });
+	});
 }
 
 function setup_step1_handlers(frm, wrapper) {
 
-    // Filled by change
-    wrapper.find('#step1_filled_by').on('change', function () {
-        frm.set_value('exam_filled_by', $(this).val());
-    });
+	// Filled by change
+	wrapper.find('#step1_filled_by').on('change', function () {
+		frm.set_value('exam_filled_by', $(this).val());
+	});
 
-    // Status change
-    wrapper.find('#step1_status').on('change', function () {
-        let val = $(this).val();
-        frm.set_value('exam_complaints_status', val);
+	// Status change
+	wrapper.find('#step1_status').on('change', function () {
+		let val = $(this).val();
+		frm.set_value('exam_complaints_status', val);
 
-        if (val === 'No Complaints - Normal') {
-            wrapper.find('#step1_normal_msg').show();
-            wrapper.find('#step1_abnormal_section').hide();
-        } else if (val === 'Complaints - Abnormal') {
-            wrapper.find('#step1_normal_msg').hide();
-            wrapper.find('#step1_abnormal_section').show();
-        } else {
-            wrapper.find('#step1_normal_msg').hide();
-            wrapper.find('#step1_abnormal_section').hide();
-        }
-    });
+		if (val === 'No Complaints - Normal') {
+			wrapper.find('#step1_normal_msg').show();
+			wrapper.find('#step1_abnormal_section').hide();
+		} else if (val === 'Complaints - Abnormal') {
+			wrapper.find('#step1_normal_msg').hide();
+			wrapper.find('#step1_abnormal_section').show();
+		} else {
+			wrapper.find('#step1_normal_msg').hide();
+			wrapper.find('#step1_abnormal_section').hide();
+		}
+	});
 
 
-    // Body part change - show complaints
-    wrapper.find('input[name="step1_bodypart"]').on('change', function () {
-        let bodyPart = $(this).val();
+	// Body part change - show complaints
+	wrapper.find('input[name="step1_bodypart"]').on('change', function () {
+		let bodyPart = $(this).val();
 
-        // Show complaints for this body part as radio buttons
-        let symptoms = BODY_PARTS_CONFIG[bodyPart].symptoms;
-        let html = symptoms.map(s => `
+		// Show complaints for this body part as radio buttons
+		let symptoms = BODY_PARTS_CONFIG[bodyPart].symptoms;
+		let html = symptoms.map(s => `
 			<label class="step1-radio-label">
 				<input type="radio" name="step1_complaint" value="${s}"> ${s}
 			</label>
 		`).join('');
 
-        wrapper.find('#complaints_list').html(html);
-        wrapper.find('#complaints_label').text(`Select Complaint for ${bodyPart}`);
-        wrapper.find('#complaints_section').show();
-        wrapper.find('#details_section').hide();
+		wrapper.find('#complaints_list').html(html);
+		wrapper.find('#complaints_label').text(`Select Complaint for ${bodyPart}`);
+		wrapper.find('#complaints_section').show();
+		wrapper.find('#details_section').hide();
 
-        // Complaint change - show details
-        wrapper.find('input[name="step1_complaint"]').on('change', function () {
-            // Clear details form
-            wrapper.find('#detail_days').val('');
-            wrapper.find('#detail_pattern').val('');
-            wrapper.find('#detail_onset').val('');
-            wrapper.find('#detail_notes').val('');
-            wrapper.find('#detail_trauma').prop('checked', false);
-            wrapper.find('#detail_treatment').prop('checked', false);
-            wrapper.find('#detail_intermittent').prop('checked', false);
-            wrapper.find('#detail_recurrent').prop('checked', false);
-            wrapper.find('#details_section').show();
-        });
-    });
+		// Complaint change - show details
+		wrapper.find('input[name="step1_complaint"]').on('change', function () {
+			// Clear details form
+			wrapper.find('#detail_days').val('');
+			wrapper.find('#detail_pattern').val('');
+			wrapper.find('#detail_onset').val('');
+			wrapper.find('#detail_notes').val('');
+			wrapper.find('#detail_trauma').prop('checked', false);
+			wrapper.find('#detail_treatment').prop('checked', false);
+			wrapper.find('#detail_intermittent').prop('checked', false);
+			wrapper.find('#detail_recurrent').prop('checked', false);
+			wrapper.find('#details_section').show();
+		});
+	});
 
-    // Add complaint
-    wrapper.find('#add_complaint_btn').on('click', function () {
-        let selectedBodyPart = wrapper.find('input[name="step1_bodypart"]:checked').val();
-        let selectedComplaint = wrapper.find('input[name="step1_complaint"]:checked').val();
-        let selectedDuration = wrapper.find('input[name="step1_duration"]:checked').val();
+	// Add complaint
+	wrapper.find('#add_complaint_btn').on('click', function () {
+		let selectedBodyPart = wrapper.find('input[name="step1_bodypart"]:checked').val();
+		let selectedComplaint = wrapper.find('input[name="step1_complaint"]:checked').val();
+		let selectedDuration = wrapper.find('input[name="step1_duration"]:checked').val();
 
-        if (!selectedBodyPart || !selectedComplaint) {
-            frappe.msgprint('Please select body part and complaint first');
-            return;
-        }
+		if (!selectedBodyPart || !selectedComplaint) {
+			frappe.msgprint('Please select body part and complaint first');
+			return;
+		}
 
-        // Add to child table
-        let row = frm.add_child('exam_complaints');
-        row.body_part = selectedBodyPart;
-        row.complaint_type = selectedComplaint;
-        row.duration_days = parseInt(wrapper.find('#detail_days').val()) || 0;
-        row.duration_category = selectedDuration || '';
-        row.pattern = wrapper.find('#detail_pattern').val() || '';
-        row.onset_date = wrapper.find('#detail_onset').val() || '';
-        row.trauma_related = wrapper.find('#detail_trauma').is(':checked') ? 1 : 0;
-        row.medical_treatment_taken = wrapper.find('#detail_treatment').is(':checked') ? 1 : 0;
-        row.is_intermittent = wrapper.find('#detail_intermittent').is(':checked') ? 1 : 0;
-        row.is_recurrent = wrapper.find('#detail_recurrent').is(':checked') ? 1 : 0;
-        row.note = wrapper.find('#detail_notes').val() || '';
+		// Add to child table
+		let row = frm.add_child('exam_complaints');
+		row.body_part = selectedBodyPart;
+		row.complaint_type = selectedComplaint;
+		row.duration_days = parseInt(wrapper.find('#detail_days').val()) || 0;
+		row.duration_category = selectedDuration || '';
+		row.pattern = wrapper.find('#detail_pattern').val() || '';
+		row.onset_date = wrapper.find('#detail_onset').val() || '';
+		row.trauma_related = wrapper.find('#detail_trauma').is(':checked') ? 1 : 0;
+		row.medical_treatment_taken = wrapper.find('#detail_treatment').is(':checked') ? 1 : 0;
+		row.is_intermittent = wrapper.find('#detail_intermittent').is(':checked') ? 1 : 0;
+		row.is_recurrent = wrapper.find('#detail_recurrent').is(':checked') ? 1 : 0;
+		row.note = wrapper.find('#detail_notes').val() || '';
 
-        frm.refresh_field('exam_complaints');
+		frm.refresh_field('exam_complaints');
 
-        // Reset selections
-        wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
-        wrapper.find('#complaints_section').hide();
-        wrapper.find('#details_section').hide();
+		// Reset selections
+		wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
+		wrapper.find('#complaints_section').hide();
+		wrapper.find('#details_section').hide();
 
-        // Re-render table
-        render_complaints_table(frm, wrapper);
+		// Re-render table
+		render_complaints_table(frm, wrapper);
 
-        frappe.show_alert({ message: 'Complaint added!', indicator: 'green' });
-    });
+		frappe.show_alert({ message: 'Complaint added!', indicator: 'green' });
+	});
 
-    // Cancel
-    wrapper.find('#cancel_btn').on('click', function () {
-        wrapper.find('#details_section').hide();
-        wrapper.find('input[name="step1_complaint"]').prop('checked', false);
-    });
+	// Cancel
+	wrapper.find('#cancel_btn').on('click', function () {
+		wrapper.find('#details_section').hide();
+		wrapper.find('input[name="step1_complaint"]').prop('checked', false);
+	});
+}
+
+
+// ================== STEP 2 - PHYSICAL EXAMINATION (REDESIGNED v3) ==================
+// Different fields for different body parts, Edit functionality, Lesion form
+
+const STEP2_CONFIG = {
+	'Face': {
+		locations: [
+			'Forehead - Left', 'Forehead - Right', 'Eye - Left', 'Eye - Right',
+			'Nose - Left', 'Nose - Right', 'Chin', 'Cheek - Left', 'Cheek - Right',
+			'Parotid - Left', 'Parotid - Right', 'Ear - Left', 'Ear - Right'
+		],
+		abnormalities: ['Pain', 'Asymmetry', 'Swelling/Nodule', 'Lymph Nodes', 'Ulcer', 'Decreased Movement'],
+		tableColumns: ['Location', 'Abnormalities', 'Notes']
+	},
+	'Neck': {
+		locations: [
+			'Neck - Left', 'Neck - Right', 'Neck - Central',
+			'SUBMANDIBULAR - Left', 'SUBMANDIBULAR - Right',
+			'THYROID - Left Lobe', 'THYROID - Right Lobe', 'THYROID - Central',
+			'Parathyroid', 'Back of Neck - Left', 'Back of Neck - Right', 'Any Other'
+		],
+		abnormalities: ['Pain', 'Asymmetry', 'Swelling/Nodule', 'Lymph Nodes', 'Ulcer', 'Decreased Movement'],
+		tableColumns: ['Location', 'Abnormalities', 'Notes']
+	},
+	'Mouth': {
+		special: 'mouth',
+		tableColumns: ['Fingers', 'Opening (mm)', 'Tongue', 'Oral Hygiene', 'Prosthesis', 'Notes']
+	},
+	'Dental': {
+		special: 'dental',
+		teethIssues: ['Loose', 'Painful', 'Lost', 'Caries', 'Stained', 'Calculus', 'Missing', 'Broken', 'Abrasion', 'Irregular Alignment', 'Sharp', 'Attrition', 'Root Stump', 'Tender'],
+		tableColumns: ['Teeth #', 'Issues', 'Notes']
+	},
+	'Throat': {
+		locations: ['Throat - Left', 'Throat - Right', 'Throat - Central'],
+		abnormalities: ['Pain', 'Swelling', 'Redness', 'Ulcer'],
+		tableColumns: ['Location', 'Abnormalities', 'Notes']
+	}
+};
+
+const LESION_CONFIG = {
+	locations: [
+		'Lower lip (L)', 'Lower lip (R)', 'Upper lip (L)', 'Upper lip (R)',
+		'Anterior Arch (L)', 'Anterior Arch (R)', 'Buccal mucosa (L)', 'Buccal mucosa (R)',
+		'Ventral Tongue (L)', 'Ventral Tongue (R)', 'Ventral Tongue (Midline)',
+		'Hard palate (L)', 'Hard palate (R)', 'Hard palate (Midline)',
+		'Soft palate', 'Tonsil (L)', 'Tonsil (R)', 'Other'
+	],
+	colors: ['Uniform', 'Variegated', 'White', 'Red', 'Black', 'Brown', 'Mixed'],
+	shapes: ['Round', 'Oval', 'Irregular', 'Rectangular'],
+	margins: ['Well-defined', 'Poorly-defined', 'Regular', 'Irregular borders'],
+	descriptions: ['Macule', 'Papule', 'Nodule', 'Plaque', 'Vesicle', 'Ulcer', 'Leukoplakia', 'Erythroplakia'],
+	palpations: ['Tender', 'Soft', 'Firm', 'Hard', 'Smooth', 'Rough', 'Bleeds on touch', 'Non-scrapable']
+};
+
+// Store findings in memory for this form session
+let step2Findings = [];
+let step2LesionFindings = [];
+let editingFindingIndex = -1;
+let editingLesionIndex = -1;
+
+function render_step2_table_form(frm) {
+	let wrapper = frm.fields_dict.exam_step2_table_html?.$wrapper;
+	if (!wrapper) return;
+
+	wrapper.empty();
+
+	// Initialize from saved data
+	step2Findings = [];
+	step2LesionFindings = [];
+	if (frm.doc.exam_physical_findings && frm.doc.exam_physical_findings.length > 0) {
+		frm.doc.exam_physical_findings.forEach(f => {
+			let bodyPart = f.location ? f.location.split(' - ')[0] : '';
+			let finding = {
+				bodyPart: bodyPart,
+				location: f.location ? f.location.split(' - ').slice(1).join(' - ') : '',
+				abnormality: f.abnormality || '',
+				note: f.note || ''
+			};
+
+			// Parse Mouth data from description field
+			if (bodyPart === 'Mouth' && f.description) {
+				try {
+					let mouthData = JSON.parse(f.description);
+					finding.fingers = mouthData.fingers || '';
+					finding.opening_mm = mouthData.opening_mm || '';
+					finding.measured_with = mouthData.measured_with || '';
+					finding.tongue = mouthData.tongue || '';
+					finding.oral_hygiene = mouthData.oral_hygiene || '';
+					finding.prosthesis = mouthData.prosthesis || '';
+				} catch (e) { }
+			}
+
+			// Parse Dental data from palpation field
+			if (bodyPart === 'Dental' && f.palpation) {
+				try {
+					let dentalData = JSON.parse(f.palpation);
+					finding.teeth_numbers = dentalData.teeth_numbers || '';
+					finding.teeth_issues = dentalData.teeth_issues || '';
+				} catch (e) { }
+			}
+
+			step2Findings.push(finding);
+		});
+	}
+
+
+	let html = `
+        <style>
+            .step2-form { font-size: 13px; }
+            .step2-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+            .step2-header select { padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--control-bg); }
+            .step2-section-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin: 15px 0 8px 0; }
+            .step2-radio-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+            .step2-radio-label { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; font-size: 12px; }
+            .step2-radio-label:hover { background: var(--subtle-bg); border-color: var(--primary); }
+            .step2-radio-label input { margin: 0; }
+            .step2-checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+            .step2-checkbox-label { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; font-size: 12px; cursor: pointer; }
+            .step2-notes { width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 15px; }
+            .step2-btn { padding: 8px 20px; background: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px; }
+            .step2-btn:hover { opacity: 0.9; }
+            .step2-btn-secondary { background: var(--gray-600); }
+            .step2-special-section { padding: 15px; background: var(--subtle-bg); border-radius: 6px; margin: 15px 0; display: none; }
+            .step2-special-section.active { display: block; }
+            .step2-field-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 10px; align-items: flex-end; }
+            .step2-field-group label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+            .step2-field-group input, .step2-field-group select { padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 4px; min-width: 120px; }
+            .step2-table { width: 100%; border-collapse: collapse; margin-top: 15px; border: 1px solid var(--border-color); }
+            .step2-table th { background: var(--subtle-bg); padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; border: 1px solid var(--border-color); }
+            .step2-table td { padding: 10px 12px; border: 1px solid var(--border-color); font-size: 12px; }
+            .step2-table .btn-xs { padding: 3px 8px; font-size: 11px; margin-right: 5px; }
+            .step2-lesion-form { padding: 15px; background: var(--subtle-bg); border: 2px solid var(--primary); border-radius: 8px; margin-top: 15px; display: none; }
+            .step2-lesion-form.active { display: block; }
+        </style>
+        
+        <div class="step2-form">
+            <!-- Header -->
+            <div class="step2-header">
+                <label>Examination Done By:</label>
+                <select id="step2_done_by">
+                    <option value="">Select...</option>
+                    <option value="Doctor" ${frm.doc.exam_step2_done_by === 'Doctor' ? 'selected' : ''}>Doctor</option>
+                    <option value="Doctor Assistant" ${frm.doc.exam_step2_done_by === 'Doctor Assistant' ? 'selected' : ''}>Doctor Assistant</option>
+                </select>
+                
+                <label style="margin-left: 20px;">Status:</label>
+                <select id="step2_status">
+                    <option value="">Select...</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Abnormal">Abnormal</option>
+                </select>
+            </div>
+            
+            <!-- Abnormal Section -->
+            <div id="step2_abnormal_section" style="display: none;">
+                
+                <!-- Body Part Selection -->
+                <div class="step2-section-title">Select Body Part:</div>
+                <div class="step2-radio-group" id="step2_body_parts">
+                    ${Object.keys(STEP2_CONFIG).map(bp => `
+                        <label class="step2-radio-label">
+                            <input type="radio" name="step2_bodypart" value="${bp}"> ${bp}
+                        </label>
+                    `).join('')}
+                </div>
+                
+                <!-- Dynamic Form Area -->
+                <div id="step2_form_area"></div>
+                
+                <!-- Add/Update Button -->
+                <div id="step2_buttons" style="display: none; margin: 15px 0;">
+                    <button type="button" class="step2-btn" id="step2_add_btn">+ Add Finding</button>
+                    <button type="button" class="step2-btn step2-btn-secondary" id="step2_cancel_btn" style="display: none;">Cancel</button>
+                </div>
+                
+                <!-- Findings Tables by Body Part -->
+                <div id="step2_findings_tables"></div>
+                
+                <!-- Lesion Section -->
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 2px solid var(--border-color);">
+                    <div class="step2-section-title" style="font-size: 14px;">Lesion Examination</div>
+                    <div class="step2-radio-group">
+                        <label class="step2-radio-label"><input type="radio" name="lesion_present" value="No" ${frm.doc.exam_lesion_present !== 'Yes' ? 'checked' : ''}> No Lesion</label>
+                        <label class="step2-radio-label"><input type="radio" name="lesion_present" value="Yes" ${frm.doc.exam_lesion_present === 'Yes' ? 'checked' : ''}> Lesion Present</label>
+                    </div>
+                    
+                    <div id="step2_lesion_section" style="display: ${frm.doc.exam_lesion_present === 'Yes' ? 'block' : 'none'};">
+                        <button type="button" class="step2-btn" id="step2_add_lesion_btn">+ Add Lesion</button>
+                        
+                        <!-- Lesion Form -->
+                        <div class="step2-lesion-form" id="step2_lesion_form">
+                            <div class="step2-section-title" style="margin-top: 0;">Lesion Location</div>
+                            <div class="step2-radio-group">
+                                ${LESION_CONFIG.locations.map(loc => `
+                                    <label class="step2-radio-label"><input type="radio" name="lesion_location" value="${loc}"> ${loc}</label>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="step2-field-row">
+                                <div class="step2-field-group">
+                                    <label>Size - Length (mm)</label>
+                                    <input type="number" id="lesion_length" placeholder="mm">
+                                </div>
+                                <div class="step2-field-group">
+                                    <label>Size - Width (mm)</label>
+                                    <input type="number" id="lesion_width" placeholder="mm">
+                                </div>
+                            </div>
+                            
+                            <div class="step2-section-title">Color</div>
+                            <div class="step2-checkbox-group">
+                                ${LESION_CONFIG.colors.map(c => `<label class="step2-checkbox-label"><input type="checkbox" name="lesion_color" value="${c}"> ${c}</label>`).join('')}
+                            </div>
+                            
+                            <div class="step2-section-title">Shape</div>
+                            <div class="step2-checkbox-group">
+                                ${LESION_CONFIG.shapes.map(s => `<label class="step2-checkbox-label"><input type="checkbox" name="lesion_shape" value="${s}"> ${s}</label>`).join('')}
+                            </div>
+                            
+                            <div class="step2-section-title">Margin</div>
+                            <div class="step2-checkbox-group">
+                                ${LESION_CONFIG.margins.map(m => `<label class="step2-checkbox-label"><input type="checkbox" name="lesion_margin" value="${m}"> ${m}</label>`).join('')}
+                            </div>
+                            
+                            <div class="step2-section-title">Description</div>
+                            <div class="step2-checkbox-group">
+                                ${LESION_CONFIG.descriptions.map(d => `<label class="step2-checkbox-label"><input type="checkbox" name="lesion_desc" value="${d}"> ${d}</label>`).join('')}
+                            </div>
+                            
+                            <div class="step2-section-title">Palpation</div>
+                            <div class="step2-checkbox-group">
+                                ${LESION_CONFIG.palpations.map(p => `<label class="step2-checkbox-label"><input type="checkbox" name="lesion_palp" value="${p}"> ${p}</label>`).join('')}
+                            </div>
+                            
+                            <div class="step2-section-title">Notes</div>
+                            <textarea class="step2-notes" id="lesion_notes" rows="2" placeholder="Additional notes..."></textarea>
+                            
+                            <div style="margin-top: 15px;">
+                                <button type="button" class="step2-btn" id="step2_save_lesion_btn">Save Lesion</button>
+                                <button type="button" class="step2-btn step2-btn-secondary" id="step2_cancel_lesion_btn">Cancel</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesion Table -->
+                        <div id="step2_lesion_table"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+	wrapper.html(html);
+	setup_step2_handlers_v3(frm, wrapper);
+	render_all_findings_tables(frm, wrapper);
+}
+
+function setup_step2_handlers_v3(frm, wrapper) {
+	// Done By
+	wrapper.find('#step2_done_by').on('change', function () {
+		frm.set_value('exam_step2_done_by', $(this).val());
+	});
+
+	// Status
+	wrapper.find('#step2_status').on('change', function () {
+		if ($(this).val() === 'Abnormal') {
+			wrapper.find('#step2_abnormal_section').show();
+		} else {
+			wrapper.find('#step2_abnormal_section').hide();
+		}
+	});
+
+	// Body Part Selection
+	wrapper.find('input[name="step2_bodypart"]').on('change', function () {
+		let bodyPart = $(this).val();
+		render_body_part_form(wrapper, bodyPart);
+		wrapper.find('#step2_buttons').show();
+		wrapper.find('#step2_add_btn').text('+ Add Finding');
+		wrapper.find('#step2_cancel_btn').hide();
+		editingFindingIndex = -1;
+	});
+
+	// Add Finding
+	wrapper.find('#step2_add_btn').on('click', function () {
+		save_finding(frm, wrapper);
+	});
+
+	// Cancel Edit
+	wrapper.find('#step2_cancel_btn').on('click', function () {
+		reset_form(wrapper);
+	});
+
+	// Lesion Present
+	wrapper.find('input[name="lesion_present"]').on('change', function () {
+		let val = $(this).val();
+		frm.set_value('exam_lesion_present', val);
+		if (val === 'Yes') {
+			wrapper.find('#step2_lesion_section').show();
+		} else {
+			wrapper.find('#step2_lesion_section').hide();
+		}
+	});
+
+	// Add Lesion
+	wrapper.find('#step2_add_lesion_btn').on('click', function () {
+		wrapper.find('#step2_lesion_form').addClass('active');
+		editingLesionIndex = -1;
+	});
+
+	// Save Lesion
+	wrapper.find('#step2_save_lesion_btn').on('click', function () {
+		save_lesion(frm, wrapper);
+	});
+
+	// Cancel Lesion
+	wrapper.find('#step2_cancel_lesion_btn').on('click', function () {
+		wrapper.find('#step2_lesion_form').removeClass('active');
+		reset_lesion_form(wrapper);
+	});
+
+	// Auto-show if already has data
+	if (step2Findings.length > 0) {
+		wrapper.find('#step2_status').val('Abnormal').trigger('change');
+	}
+}
+
+function render_body_part_form(wrapper, bodyPart) {
+	let config = STEP2_CONFIG[bodyPart];
+	let formArea = wrapper.find('#step2_form_area');
+
+	let html = '';
+
+	if (config.special === 'mouth') {
+		html = `
+            <div class="step2-special-section active">
+                <div class="step2-section-title">Mouth Opening</div>
+                <div class="step2-field-row">
+                    <div class="step2-field-group">
+                        <label>Fingers</label>
+                        <select id="mouth_fingers">
+                            <option value="">Select...</option>
+                            <option value="One">One</option>
+                            <option value="Two">Two</option>
+                            <option value="Three">Three</option>
+                            <option value="Four">Four</option>
+                        </select>
+                    </div>
+                    <div class="step2-field-group">
+                        <label>Opening (mm)</label>
+                        <input type="number" id="mouth_mm" placeholder="mm">
+                    </div>
+                    <div class="step2-field-group">
+                        <label>Measured With</label>
+                        <select id="mouth_measured_with">
+                            <option value="">Select...</option>
+                            <option value="TrisCare">TrisCare</option>
+                            <option value="Caliper">Caliper</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="step2-section-title">Tongue Movement</div>
+                <div class="step2-checkbox-group">
+                    <label class="step2-checkbox-label"><input type="checkbox" id="tongue_normal"> Normal</label>
+                    <label class="step2-checkbox-label"><input type="checkbox" id="tongue_painful"> Painful</label>
+                    <label class="step2-checkbox-label"><input type="checkbox" id="tongue_dev_left"> Deviation Left</label>
+                    <label class="step2-checkbox-label"><input type="checkbox" id="tongue_dev_right"> Deviation Right</label>
+                    <label class="step2-checkbox-label"><input type="checkbox" id="tongue_restricted"> Restricted</label>
+                </div>
+                
+                <div class="step2-section-title">Oral Hygiene</div>
+                <div class="step2-radio-group">
+                    <label class="step2-radio-label" style="color: #28a745;"><input type="radio" name="oral_hygiene" value="Good"> Good</label>
+                    <label class="step2-radio-label" style="color: #ffc107;"><input type="radio" name="oral_hygiene" value="Moderate"> Moderate</label>
+                    <label class="step2-radio-label" style="color: #dc3545;"><input type="radio" name="oral_hygiene" value="Poor"> Poor</label>
+                </div>
+                
+                <div class="step2-section-title">Prosthesis</div>
+                <div class="step2-radio-group">
+                    <label class="step2-radio-label"><input type="radio" name="prosthesis" value="Yes"> Yes</label>
+                    <label class="step2-radio-label"><input type="radio" name="prosthesis" value="No"> No</label>
+                </div>
+                
+                <div class="step2-section-title">Notes</div>
+                <textarea class="step2-notes" id="finding_notes" rows="2" placeholder="Additional notes..."></textarea>
+            </div>
+        `;
+	} else if (config.special === 'dental') {
+		html = `
+            <div class="step2-special-section active">
+                <div class="step2-section-title">Teeth Numbers</div>
+                <input type="text" id="teeth_numbers" style="width: 100%; padding: 8px; margin-bottom: 15px;" placeholder="e.g., 11, 12, 21, 22">
+                
+                <div class="step2-section-title">Teeth Issues</div>
+                <div class="step2-checkbox-group">
+                    ${config.teethIssues.map(issue => `
+                        <label class="step2-checkbox-label"><input type="checkbox" name="teeth_issue" value="${issue}"> ${issue}</label>
+                    `).join('')}
+                </div>
+                
+                <div class="step2-section-title">Notes</div>
+                <textarea class="step2-notes" id="finding_notes" rows="2" placeholder="Additional notes..."></textarea>
+            </div>
+        `;
+	} else {
+		// Standard body parts with locations and abnormalities
+		html = `
+            <div class="step2-special-section active">
+                <div class="step2-section-title">Select Location:</div>
+                <div class="step2-radio-group">
+                    ${config.locations.map(loc => `
+                        <label class="step2-radio-label"><input type="radio" name="finding_location" value="${loc}"> ${loc}</label>
+                    `).join('')}
+                </div>
+                
+                <div class="step2-section-title">Select Abnormalities:</div>
+                <div class="step2-checkbox-group">
+                    ${config.abnormalities.map(abn => `
+                        <label class="step2-checkbox-label"><input type="checkbox" name="finding_abn" value="${abn}"> ${abn}</label>
+                    `).join('')}
+                </div>
+                
+                <div class="step2-section-title">Notes:</div>
+                <textarea class="step2-notes" id="finding_notes" rows="2" placeholder="Additional notes..."></textarea>
+            </div>
+        `;
+	}
+
+	formArea.html(html);
+}
+
+function save_finding(frm, wrapper) {
+	let bodyPart = wrapper.find('input[name="step2_bodypart"]:checked').val();
+	if (!bodyPart) {
+		frappe.msgprint('Please select a body part');
+		return;
+	}
+
+	let config = STEP2_CONFIG[bodyPart];
+	let finding = { bodyPart: bodyPart };
+
+	if (config.special === 'mouth') {
+		finding.fingers = wrapper.find('#mouth_fingers').val() || '';
+		finding.opening_mm = wrapper.find('#mouth_mm').val() || '';
+		finding.measured_with = wrapper.find('#mouth_measured_with').val() || '';
+
+		let tongue = [];
+		if (wrapper.find('#tongue_normal').is(':checked')) tongue.push('Normal');
+		if (wrapper.find('#tongue_painful').is(':checked')) tongue.push('Painful');
+		if (wrapper.find('#tongue_dev_left').is(':checked')) tongue.push('Dev Left');
+		if (wrapper.find('#tongue_dev_right').is(':checked')) tongue.push('Dev Right');
+		if (wrapper.find('#tongue_restricted').is(':checked')) tongue.push('Restricted');
+		finding.tongue = tongue.join(', ');
+
+		finding.oral_hygiene = wrapper.find('input[name="oral_hygiene"]:checked').val() || '';
+		finding.prosthesis = wrapper.find('input[name="prosthesis"]:checked').val() || '';
+		finding.note = wrapper.find('#finding_notes').val() || '';
+		finding.location = 'Mouth';
+
+	} else if (config.special === 'dental') {
+		finding.teeth_numbers = wrapper.find('#teeth_numbers').val() || '';
+		let issues = [];
+		wrapper.find('input[name="teeth_issue"]:checked').each(function () {
+			issues.push($(this).val());
+		});
+		finding.teeth_issues = issues.join(', ');
+		finding.note = wrapper.find('#finding_notes').val() || '';
+		finding.location = 'Teeth #' + (finding.teeth_numbers || 'Not specified');
+
+	} else {
+		finding.location = wrapper.find('input[name="finding_location"]:checked').val();
+		if (!finding.location) {
+			frappe.msgprint('Please select a location');
+			return;
+		}
+		let abns = [];
+		wrapper.find('input[name="finding_abn"]:checked').each(function () {
+			abns.push($(this).val());
+		});
+		finding.abnormality = abns.join(', ');
+		finding.note = wrapper.find('#finding_notes').val() || '';
+	}
+
+	// Add or update
+	if (editingFindingIndex >= 0) {
+		step2Findings[editingFindingIndex] = finding;
+	} else {
+		step2Findings.push(finding);
+	}
+
+	// Sync to child table
+	sync_findings_to_form(frm);
+
+	// Re-render tables
+	render_all_findings_tables(frm, wrapper);
+
+	// Reset form
+	reset_form(wrapper);
+}
+
+function sync_findings_to_form(frm) {
+	// Clear existing
+	frm.doc.exam_physical_findings = [];
+
+	// Add all findings
+	step2Findings.forEach(f => {
+		let row = frm.add_child('exam_physical_findings');
+		row.location = f.bodyPart + ' - ' + (f.location || '');
+		row.status = 'Abnormal';
+
+		// For standard body parts (Face, Neck, Throat)
+		row.abnormality = f.abnormality || '';
+
+		// For Mouth - store all data in description field as JSON-like string
+		if (f.bodyPart === 'Mouth') {
+			let mouthData = [];
+			if (f.fingers) mouthData.push('Fingers: ' + f.fingers);
+			if (f.opening_mm) mouthData.push('Opening: ' + f.opening_mm + 'mm');
+			if (f.tongue) mouthData.push('Tongue: ' + f.tongue);
+			if (f.oral_hygiene) mouthData.push('Hygiene: ' + f.oral_hygiene);
+			if (f.prosthesis) mouthData.push('Prosthesis: ' + f.prosthesis);
+			row.abnormality = mouthData.join(' | ');
+			row.description = JSON.stringify({
+				fingers: f.fingers || '',
+				opening_mm: f.opening_mm || '',
+				measured_with: f.measured_with || '',
+				tongue: f.tongue || '',
+				oral_hygiene: f.oral_hygiene || '',
+				prosthesis: f.prosthesis || ''
+			});
+		}
+
+		// For Dental - store in palpation field
+		if (f.bodyPart === 'Dental') {
+			row.abnormality = f.teeth_issues || '';
+			row.palpation = JSON.stringify({
+				teeth_numbers: f.teeth_numbers || '',
+				teeth_issues: f.teeth_issues || ''
+			});
+		}
+
+		row.note = f.note || '';
+	});
+
+	frm.refresh_field('exam_physical_findings');
+}
+
+
+function render_all_findings_tables(frm, wrapper) {
+	let tablesContainer = wrapper.find('#step2_findings_tables');
+
+	// Group findings by body part
+	let grouped = {};
+	step2Findings.forEach((f, idx) => {
+		if (!grouped[f.bodyPart]) grouped[f.bodyPart] = [];
+		grouped[f.bodyPart].push({ ...f, originalIndex: idx });
+	});
+
+	let html = '';
+
+	Object.keys(grouped).forEach(bodyPart => {
+		let config = STEP2_CONFIG[bodyPart];
+		let findings = grouped[bodyPart];
+
+		html += `<div style="margin-top: 20px;">
+            <h5 style="font-size: 13px; margin-bottom: 10px;">${bodyPart} Findings</h5>
+            <table class="step2-table">
+                <thead><tr>
+                    <th>#</th>`;
+
+		if (config.special === 'mouth') {
+			html += `<th>Fingers</th><th>Opening (mm)</th><th>Tongue</th><th>Oral Hygiene</th><th>Prosthesis</th><th>Notes</th>`;
+		} else if (config.special === 'dental') {
+			html += `<th>Teeth #</th><th>Issues</th><th>Notes</th>`;
+		} else {
+			html += `<th>Location</th><th>Abnormalities</th><th>Notes</th>`;
+		}
+
+		html += `<th>Actions</th></tr></thead><tbody>`;
+
+		findings.forEach((f, idx) => {
+			html += `<tr>
+                <td>${idx + 1}</td>`;
+
+			if (config.special === 'mouth') {
+				html += `<td>${f.fingers || '-'}</td>
+                    <td>${f.opening_mm || '-'}</td>
+                    <td>${f.tongue || '-'}</td>
+                    <td>${f.oral_hygiene || '-'}</td>
+                    <td>${f.prosthesis || '-'}</td>
+                    <td>${f.note || '-'}</td>`;
+			} else if (config.special === 'dental') {
+				html += `<td>${f.teeth_numbers || '-'}</td>
+                    <td>${f.teeth_issues || '-'}</td>
+                    <td>${f.note || '-'}</td>`;
+			} else {
+				html += `<td>${f.location || '-'}</td>
+                    <td>${f.abnormality || '-'}</td>
+                    <td>${f.note || '-'}</td>`;
+			}
+
+			html += `<td>
+                    <button type="button" class="btn btn-xs btn-primary step2-edit-row" data-idx="${f.originalIndex}">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-danger step2-delete-row" data-idx="${f.originalIndex}">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>`;
+		});
+
+		html += `</tbody></table></div>`;
+	});
+
+	if (Object.keys(grouped).length === 0) {
+		html = '<p style="color: var(--text-muted); margin-top: 15px;">No findings added yet.</p>';
+	}
+
+	tablesContainer.html(html);
+
+	// Edit handler
+	tablesContainer.find('.step2-edit-row').on('click', function () {
+		let idx = parseInt($(this).data('idx'));
+		edit_finding(frm, wrapper, idx);
+	});
+
+	// Delete handler
+	tablesContainer.find('.step2-delete-row').on('click', function () {
+		let idx = parseInt($(this).data('idx'));
+		step2Findings.splice(idx, 1);
+		sync_findings_to_form(frm);
+		render_all_findings_tables(frm, wrapper);
+	});
+}
+
+function edit_finding(frm, wrapper, idx) {
+	let finding = step2Findings[idx];
+	if (!finding) return;
+
+	// Select body part
+	wrapper.find(`input[name="step2_bodypart"][value="${finding.bodyPart}"]`).prop('checked', true).trigger('change');
+
+	let config = STEP2_CONFIG[finding.bodyPart];
+
+	// Populate form after a short delay
+	setTimeout(() => {
+		if (config.special === 'mouth') {
+			wrapper.find('#mouth_fingers').val(finding.fingers);
+			wrapper.find('#mouth_mm').val(finding.opening_mm);
+			if (finding.tongue) {
+				if (finding.tongue.includes('Normal')) wrapper.find('#tongue_normal').prop('checked', true);
+				if (finding.tongue.includes('Painful')) wrapper.find('#tongue_painful').prop('checked', true);
+				if (finding.tongue.includes('Dev Left')) wrapper.find('#tongue_dev_left').prop('checked', true);
+				if (finding.tongue.includes('Dev Right')) wrapper.find('#tongue_dev_right').prop('checked', true);
+				if (finding.tongue.includes('Restricted')) wrapper.find('#tongue_restricted').prop('checked', true);
+			}
+			if (finding.oral_hygiene) wrapper.find(`input[name="oral_hygiene"][value="${finding.oral_hygiene}"]`).prop('checked', true);
+			if (finding.prosthesis) wrapper.find(`input[name="prosthesis"][value="${finding.prosthesis}"]`).prop('checked', true);
+
+		} else if (config.special === 'dental') {
+			wrapper.find('#teeth_numbers').val(finding.teeth_numbers);
+			if (finding.teeth_issues) {
+				finding.teeth_issues.split(', ').forEach(issue => {
+					wrapper.find(`input[name="teeth_issue"][value="${issue}"]`).prop('checked', true);
+				});
+			}
+
+		} else {
+			wrapper.find(`input[name="finding_location"][value="${finding.location}"]`).prop('checked', true);
+			if (finding.abnormality) {
+				finding.abnormality.split(', ').forEach(abn => {
+					wrapper.find(`input[name="finding_abn"][value="${abn}"]`).prop('checked', true);
+				});
+			}
+		}
+
+		wrapper.find('#finding_notes').val(finding.note || '');
+
+		editingFindingIndex = idx;
+		wrapper.find('#step2_add_btn').text('Update Finding');
+		wrapper.find('#step2_cancel_btn').show();
+	}, 100);
+}
+
+function reset_form(wrapper) {
+	wrapper.find('#step2_form_area').empty();
+	wrapper.find('input[name="step2_bodypart"]').prop('checked', false);
+	wrapper.find('#step2_buttons').hide();
+	editingFindingIndex = -1;
+}
+
+function save_lesion(frm, wrapper) {
+	let location = wrapper.find('input[name="lesion_location"]:checked').val();
+	if (!location) {
+		frappe.msgprint('Please select a lesion location');
+		return;
+	}
+
+	let lesion = {
+		location: location,
+		size_length: wrapper.find('#lesion_length').val() || '',
+		size_width: wrapper.find('#lesion_width').val() || '',
+		colors: [],
+		shapes: [],
+		margins: [],
+		descriptions: [],
+		palpations: [],
+		notes: wrapper.find('#lesion_notes').val() || ''
+	};
+
+	wrapper.find('input[name="lesion_color"]:checked').each(function () { lesion.colors.push($(this).val()); });
+	wrapper.find('input[name="lesion_shape"]:checked').each(function () { lesion.shapes.push($(this).val()); });
+	wrapper.find('input[name="lesion_margin"]:checked').each(function () { lesion.margins.push($(this).val()); });
+	wrapper.find('input[name="lesion_desc"]:checked').each(function () { lesion.descriptions.push($(this).val()); });
+	wrapper.find('input[name="lesion_palp"]:checked').each(function () { lesion.palpations.push($(this).val()); });
+
+	if (editingLesionIndex >= 0) {
+		step2LesionFindings[editingLesionIndex] = lesion;
+	} else {
+		step2LesionFindings.push(lesion);
+	}
+
+	// Store in form field (using a hidden field or lesion table)
+	sync_lesions_to_form(frm);
+
+	render_lesion_table(wrapper);
+	wrapper.find('#step2_lesion_form').removeClass('active');
+	reset_lesion_form(wrapper);
+}
+
+function sync_lesions_to_form(frm) {
+	// Store lesions - using exam_lesions if exists, or JSON in a field
+	// For now, we'll use the lesion checkboxes that already exist
+	if (step2LesionFindings.length > 0) {
+		let firstLesion = step2LesionFindings[0];
+		// Set basic lesion fields
+		frm.set_value('exam_lesion_single', step2LesionFindings.length === 1 ? 1 : 0);
+		frm.set_value('exam_lesion_multiple', step2LesionFindings.length > 1 ? 1 : 0);
+	}
+}
+
+function render_lesion_table(wrapper) {
+	let container = wrapper.find('#step2_lesion_table');
+
+	if (step2LesionFindings.length === 0) {
+		container.html('<p style="color: var(--text-muted); margin-top: 15px;">No lesions added yet.</p>');
+		return;
+	}
+
+	let html = `
+        <table class="step2-table" style="margin-top: 15px;">
+            <thead><tr>
+                <th>#</th>
+                <th>Location</th>
+                <th>Size (mm)</th>
+                <th>Color</th>
+                <th>Shape</th>
+                <th>Description</th>
+                <th>Palpation</th>
+                <th>Actions</th>
+            </tr></thead>
+            <tbody>
+    `;
+
+	step2LesionFindings.forEach((l, idx) => {
+		html += `<tr>
+            <td>${idx + 1}</td>
+            <td>${l.location}</td>
+            <td>${l.size_length || '-'} × ${l.size_width || '-'}</td>
+            <td>${l.colors.join(', ') || '-'}</td>
+            <td>${l.shapes.join(', ') || '-'}</td>
+            <td>${l.descriptions.join(', ') || '-'}</td>
+            <td>${l.palpations.join(', ') || '-'}</td>
+            <td>
+                <button type="button" class="btn btn-xs btn-primary step2-edit-lesion" data-idx="${idx}"><i class="fa fa-pencil"></i></button>
+                <button type="button" class="btn btn-xs btn-danger step2-delete-lesion" data-idx="${idx}"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>`;
+	});
+
+	html += '</tbody></table>';
+	container.html(html);
+
+	// Edit lesion
+	container.find('.step2-edit-lesion').on('click', function () {
+		let idx = parseInt($(this).data('idx'));
+		edit_lesion(wrapper, idx);
+	});
+
+	// Delete lesion
+	container.find('.step2-delete-lesion').on('click', function () {
+		let idx = parseInt($(this).data('idx'));
+		step2LesionFindings.splice(idx, 1);
+		render_lesion_table(wrapper);
+	});
+}
+
+function edit_lesion(wrapper, idx) {
+	let lesion = step2LesionFindings[idx];
+	if (!lesion) return;
+
+	wrapper.find('#step2_lesion_form').addClass('active');
+	wrapper.find(`input[name="lesion_location"][value="${lesion.location}"]`).prop('checked', true);
+	wrapper.find('#lesion_length').val(lesion.size_length);
+	wrapper.find('#lesion_width').val(lesion.size_width);
+	lesion.colors.forEach(c => wrapper.find(`input[name="lesion_color"][value="${c}"]`).prop('checked', true));
+	lesion.shapes.forEach(s => wrapper.find(`input[name="lesion_shape"][value="${s}"]`).prop('checked', true));
+	lesion.margins.forEach(m => wrapper.find(`input[name="lesion_margin"][value="${m}"]`).prop('checked', true));
+	lesion.descriptions.forEach(d => wrapper.find(`input[name="lesion_desc"][value="${d}"]`).prop('checked', true));
+	lesion.palpations.forEach(p => wrapper.find(`input[name="lesion_palp"][value="${p}"]`).prop('checked', true));
+	wrapper.find('#lesion_notes').val(lesion.notes);
+
+	editingLesionIndex = idx;
+}
+
+function reset_lesion_form(wrapper) {
+	wrapper.find('input[name="lesion_location"]').prop('checked', false);
+	wrapper.find('#lesion_length, #lesion_width, #lesion_notes').val('');
+	wrapper.find('input[name="lesion_color"], input[name="lesion_shape"], input[name="lesion_margin"], input[name="lesion_desc"], input[name="lesion_palp"]').prop('checked', false);
+	editingLesionIndex = -1;
 }
