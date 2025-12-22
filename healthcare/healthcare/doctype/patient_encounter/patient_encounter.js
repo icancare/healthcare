@@ -2571,29 +2571,17 @@ let editingLesionIndex = -1;
 function render_step2_table_form(frm) {
 	console.log('Step 2: render_step2_table_form called');
 
-	// Try HTML field first (works on localhost)
-	let htmlField = frm.fields_dict.exam_step2_table_html;
-	let wrapper = htmlField?.$wrapper;
-
-	// If HTML field not found, use Step 1 HTML field as anchor
-	let step1Field = frm.fields_dict.exam_step1_table_html;
-
-	// Remove any existing container
-	$('.step2-table-container').remove();
-
-	if (wrapper) {
-		// Use wrapper directly
-		wrapper.empty();
-		console.log('Step 2: Using HTML field wrapper');
-	} else if (step1Field?.$wrapper) {
-		// Create new container and append after step1
-		wrapper = $('<div class="step2-table-container">');
-		step1Field.$wrapper.parent().append(wrapper);
-		console.log('Step 2: Using Step 1 as anchor');
-	} else {
-		console.log('Step 2: No suitable wrapper found');
+	// Use HTML field wrapper
+	let wrapper = frm.fields_dict.exam_step2_table_html?.$wrapper;
+	if (!wrapper) {
+		console.log('Step 2: wrapper not found');
 		return;
 	}
+
+	// Remove any existing container
+	wrapper.empty();
+	console.log('Step 2: Using HTML wrapper');
+
 
 	// Initialize from saved data
 	step2Findings = [];
