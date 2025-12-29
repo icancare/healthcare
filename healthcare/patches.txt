@@ -110,3 +110,9 @@ healthcare.patches.v15_0.add_step2_table_format #22-12-2024
 healthcare.patches.v15_0.add_step3_lesions_table #22-12-2024
 healthcare.patches.v15_0.add_step4_pictures_html #22-12-2024
 healthcare.patches.v15_0.fix_clinical_exam_positions #22-12-2024
+healthcare.patches.v15_0.migrate_pattern_to_option #29-12-2024
+healthcare.patches.v15_0.fix_exam_complaints_table_visibility #29-12-2024
+healthcare.patches.v15_0.hide_duplicate_exam_fields #29-12-2024
+healthcare.patches.v15_0.fix_exam_complaints_position #29-12-2024
+healthcare.patches.v15_0.fix_step1_complaints_final #29-12-2024-v2
+healthcare.patches.v15_0.fix_step1_field_order #29-12-2024

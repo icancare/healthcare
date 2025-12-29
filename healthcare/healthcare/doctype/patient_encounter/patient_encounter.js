@@ -2152,8 +2152,8 @@ function upload_picture(frm, card, field, name) {
 }
 
 
-// ================== STEP 1 - PATIENT COMPLAINTS (REDESIGNED) ==================
-// Uses radio buttons for selection and shows complaints table at bottom
+// ================== STEP 1 - PATIENT COMPLAINTS (REDESIGNED v2) ==================
+// Body Part selection opens popup with complaints, uses ERPNext standard table
 
 const BODY_PARTS_CONFIG = {
 	'Face': {
@@ -2173,6 +2173,8 @@ const BODY_PARTS_CONFIG = {
 	}
 };
 
+const OPTION_VALUES = ['Increasing', 'Decreasing', 'Persistent', 'Intermittent', 'Recurrent'];
+
 function render_step1_table_form(frm) {
 	console.log('Step 1: render_step1_table_form called');
 	let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
@@ -2191,32 +2193,15 @@ function render_step1_table_form(frm) {
 	let html = `
 		<style>
 			.step1-radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
-			.step1-radio-label { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; font-size: 12px; }
-			.step1-radio-label:hover { background: var(--subtle-bg); }
+			.step1-radio-label { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+			.step1-radio-label:hover { background: var(--subtle-accent); border-color: var(--primary); }
 			.step1-radio-label input[type="radio"] { margin: 0; }
-			.step1-section-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
-			.step1-complaints-table { width: 100%; border-collapse: collapse; margin-top: 15px; border: 1px solid var(--border-color); border-radius: 4px; }
-			.step1-complaints-table th { background: var(--subtle-bg); padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); border: 1px solid var(--border-color); }
-			.step1-complaints-table td { padding: 10px 12px; border: 1px solid var(--border-color); font-size: 12px; }
-			.step1-complaints-table tbody tr:hover { background: var(--subtle-bg); }
-			.step1-complaints-table .btn-xs { padding: 3px 8px; font-size: 11px; }
+			.step1-section-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; }
 		</style>
 		
 		<div class="step1-form">
-			<!-- Row 1: Filled By and Status -->
+			<!-- Complaints Status -->
 			<div class="row" style="margin-bottom: 15px;">
-				<div class="col-md-4">
-					<div class="form-group">
-						<label class="control-label" style="font-size: 12px; color: var(--text-muted);">Can be filled by</label>
-						<select class="form-control input-sm" id="step1_filled_by">
-							<option value="">Select...</option>
-							<option value="Patient Himself" ${frm.doc.exam_filled_by === 'Patient Himself' ? 'selected' : ''}>Patient Himself</option>
-							<option value="Doctor Assistant" ${frm.doc.exam_filled_by === 'Doctor Assistant' ? 'selected' : ''}>Doctor Assistant</option>
-							<option value="Counsellor" ${frm.doc.exam_filled_by === 'Counsellor' ? 'selected' : ''}>Counsellor</option>
-							<option value="Doctor" ${frm.doc.exam_filled_by === 'Doctor' ? 'selected' : ''}>Doctor</option>
-						</select>
-					</div>
-				</div>
 				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label" style="font-size: 12px; color: var(--text-muted);">Complaints Status</label>
@@ -2229,27 +2214,13 @@ function render_step1_table_form(frm) {
 				</div>
 			</div>
 			
-			<!-- Normal Message -->
+			<!-- Normal Message - Only show when Normal is selected -->
 			<div id="step1_normal_msg" style="display: ${isNormal ? 'block' : 'none'}; padding: 20px; text-align: center; background: var(--subtle-bg); border-radius: 6px; margin-bottom: 15px;">
 				<span style="color: var(--green-500);">✓ No complaints reported. Patient is normal.</span>
 			</div>
 			
-			<!-- Abnormal Section -->
-			<div id="step1_abnormal_section" style="display: ${isAbnormal ? 'block' : 'none'};">
-				
-				<!-- Duration - Radio Buttons -->
-				<div style="margin-bottom: 15px;">
-					<div class="step1-section-title">Since When (Duration)</div>
-					<div class="step1-radio-group">
-						${['1-5 days', '5-14 days', '>14 days - 1 month', '>1 month - 1 year', 'Long time', 'Occurs off and on'].map((d, i) => `
-							<label class="step1-radio-label">
-								<input type="radio" name="step1_duration" value="${d}"> ${d}
-							</label>
-						`).join('')}
-					</div>
-				</div>
-				
-				<!-- Body Part - Radio Buttons -->
+			<!-- Body Part Selection - Only shows for Abnormal status -->
+			<div id="step1_body_part_section" style="display: ${isAbnormal ? 'block' : 'none'};">
 				<div style="margin-bottom: 15px;">
 					<div class="step1-section-title">Select Body Part</div>
 					<div class="step1-radio-group">
@@ -2260,74 +2231,8 @@ function render_step1_table_form(frm) {
 						`).join('')}
 					</div>
 				</div>
-				
-				<!-- Complaints - Radio Buttons (dynamic) -->
-				<div id="complaints_section" style="display: none; margin-bottom: 15px;">
-					<div class="step1-section-title" id="complaints_label">Select Complaint</div>
-					<div class="step1-radio-group" id="complaints_list"></div>
-				</div>
-				
-				<!-- Details Form -->
-				<div id="details_section" style="display: none; margin-bottom: 15px; padding: 15px; background: var(--subtle-bg); border-radius: 6px; border: 1px solid var(--border-color);">
-					<div class="step1-section-title" style="margin-bottom: 12px;">Complaint Details</div>
-					<div class="row">
-						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Duration (Days)</label>
-								<input type="number" class="form-control input-sm" id="detail_days" placeholder="Days" min="0">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Pattern</label>
-								<select class="form-control input-sm" id="detail_pattern">
-									<option value="">Select...</option>
-									<option value="Increasing">Increasing</option>
-									<option value="Decreasing">Decreasing</option>
-									<option value="Persistent">Persistent</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Onset Date</label>
-								<input type="date" class="form-control input-sm" id="detail_onset">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label" style="font-size: 11px; color: var(--text-muted);">Notes</label>
-								<input type="text" class="form-control input-sm" id="detail_notes" placeholder="Notes...">
-							</div>
-						</div>
-					</div>
-					<div style="margin-top: 10px;">
-						<label class="checkbox-inline" style="margin-right: 15px; font-size: 12px;">
-							<input type="checkbox" id="detail_trauma"> Trauma?
-						</label>
-						<label class="checkbox-inline" style="margin-right: 15px; font-size: 12px;">
-							<input type="checkbox" id="detail_treatment"> Medical treatment?
-						</label>
-						<label class="checkbox-inline" style="margin-right: 15px; font-size: 12px;">
-							<input type="checkbox" id="detail_intermittent"> Intermittent
-						</label>
-						<label class="checkbox-inline" style="font-size: 12px;">
-							<input type="checkbox" id="detail_recurrent"> Recurrent
-						</label>
-					</div>
-					<div style="margin-top: 15px;">
-						<button type="button" class="btn btn-primary btn-sm" id="add_complaint_btn">+ Add Complaint</button>
-						<button type="button" class="btn btn-default btn-sm" id="cancel_btn">Cancel</button>
-					</div>
-				</div>
-				
-				<!-- Added Complaints Table -->
-				<div id="added_complaints_section" style="margin-top: 20px;">
-					<div class="step1-section-title">Added Complaints</div>
-					<div id="complaints_table_container"></div>
-				</div>
-				
 			</div>
+			
 		</div>
 	`;
 
@@ -2336,90 +2241,213 @@ function render_step1_table_form(frm) {
 	// Setup handlers
 	setup_step1_handlers(frm, wrapper);
 
-	// Render existing complaints table
-	render_complaints_table(frm, wrapper);
+	// Show/hide the ERPNext standard table based on status
+	toggle_complaints_table_visibility(frm);
 }
 
-function render_complaints_table(frm, wrapper) {
-	let container = wrapper.find('#complaints_table_container');
+function toggle_complaints_table_visibility(frm) {
+	// Show the standard ERPNext table field for complaints
+	let status = frm.doc.exam_complaints_status || '';
+	let isAbnormal = status === 'Complaints - Abnormal';
+	
+	console.log('toggle_complaints_table_visibility called, status:', status, 'isAbnormal:', isAbnormal);
+	console.log('exam_complaints field exists:', !!frm.fields_dict.exam_complaints);
+	
+	if (frm.fields_dict.exam_complaints) {
+		console.log('exam_complaints wrapper exists:', !!frm.fields_dict.exam_complaints.$wrapper);
+		
+		if (isAbnormal) {
+			// Show table
+			frm.set_df_property('exam_complaints', 'hidden', 0);
+			frm.toggle_display('exam_complaints', true);
+			if (frm.fields_dict.exam_complaints.$wrapper) {
+				frm.fields_dict.exam_complaints.$wrapper.show();
+				frm.fields_dict.exam_complaints.$wrapper.css('display', 'block');
+			}
+		} else {
+			// Hide table
+			frm.set_df_property('exam_complaints', 'hidden', 1);
+			frm.toggle_display('exam_complaints', false);
+			if (frm.fields_dict.exam_complaints.$wrapper) {
+				frm.fields_dict.exam_complaints.$wrapper.hide();
+			}
+		}
+		frm.refresh_field('exam_complaints');
+	} else {
+		console.log('exam_complaints field NOT found in frm.fields_dict');
+	}
+}
 
-	if (!frm.doc.exam_complaints || frm.doc.exam_complaints.length === 0) {
-		container.html('<p style="color: var(--text-muted); font-size: 12px; padding: 10px 0;">No complaints added yet.</p>');
+function show_complaints_popup(frm, bodyPart) {
+	let symptoms = BODY_PARTS_CONFIG[bodyPart]?.symptoms || [];
+	
+	if (symptoms.length === 0) {
+		frappe.msgprint(__('No complaints configured for this body part'));
 		return;
 	}
 
-	let tableHtml = `
-		<table class="step1-complaints-table">
+	// Build the popup content with checkboxes for multiple selection
+	let popup_html = `
+		<style>
+			.complaint-popup-table { width: 100%; border-collapse: collapse; }
+			.complaint-popup-table th { 
+				background: var(--subtle-bg); 
+				padding: 10px 8px; 
+				text-align: left; 
+				font-size: 12px; 
+				font-weight: 600; 
+				color: var(--text-muted); 
+				border-bottom: 1px solid var(--border-color);
+			}
+			.complaint-popup-table td { 
+				padding: 8px; 
+				border-bottom: 1px solid var(--border-color); 
+				font-size: 12px; 
+				vertical-align: middle;
+			}
+			.complaint-popup-table tbody tr:hover { background: var(--subtle-bg); }
+			.complaint-popup-table input[type="checkbox"] { 
+				width: 16px; 
+				height: 16px; 
+				cursor: pointer; 
+			}
+			.complaint-popup-table input[type="number"] { 
+				width: 70px; 
+				padding: 4px 6px; 
+				border: 1px solid var(--border-color); 
+				border-radius: 4px; 
+				font-size: 12px;
+			}
+			.complaint-popup-table select { 
+				width: 120px; 
+				padding: 4px 6px; 
+				border: 1px solid var(--border-color); 
+				border-radius: 4px; 
+				font-size: 12px;
+			}
+			.complaint-popup-table input[type="text"] { 
+				width: 100%; 
+				padding: 4px 6px; 
+				border: 1px solid var(--border-color); 
+				border-radius: 4px; 
+				font-size: 12px;
+			}
+		</style>
+		<table class="complaint-popup-table">
 			<thead>
 				<tr>
-					<th style="width: 30px;">#</th>
-					<th>Body Part</th>
+					<th style="width: 30px;"></th>
 					<th>Complaint</th>
-					<th>Duration</th>
-					<th>Pattern</th>
-					<th style="width: 70px;">Actions</th>
+					<th style="width: 80px;">Days</th>
+					<th style="width: 130px;">Option</th>
+					<th style="width: 150px;">Notes</th>
 				</tr>
 			</thead>
 			<tbody>
-				${frm.doc.exam_complaints.map((c, idx) => `
+				${symptoms.map((symptom, idx) => `
 					<tr>
-						<td>${idx + 1}</td>
-						<td>${c.body_part || '-'}</td>
-						<td>${c.complaint_type || '-'}</td>
-						<td>${c.duration_days ? c.duration_days + ' days' : '-'}</td>
-						<td>${c.pattern || '-'}</td>
+						<td><input type="checkbox" class="complaint-check" data-symptom="${symptom}" data-idx="${idx}"></td>
+						<td>${symptom}</td>
+						<td><input type="number" class="complaint-days" data-idx="${idx}" min="0" placeholder="0" disabled></td>
 						<td>
-							<button type="button" class="btn btn-xs btn-default edit-complaint-btn" data-idx="${idx}"><i class="fa fa-pencil"></i></button>
-							<button type="button" class="btn btn-xs btn-danger delete-complaint-btn" data-idx="${idx}"><i class="fa fa-trash"></i></button>
+							<select class="complaint-option" data-idx="${idx}" disabled>
+								<option value="">Select...</option>
+								${OPTION_VALUES.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+							</select>
 						</td>
+						<td><input type="text" class="complaint-notes" data-idx="${idx}" placeholder="Notes..." disabled></td>
 					</tr>
 				`).join('')}
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-default btn-xs" id="add_more_btn" style="margin-top: 10px;">+ Add More Complaint</button>
 	`;
 
-	container.html(tableHtml);
+	let d = new frappe.ui.Dialog({
+		title: __('Select Complaints for {0}', [bodyPart]),
+		fields: [
+			{
+				fieldtype: 'HTML',
+				fieldname: 'complaints_html',
+				options: popup_html
+			}
+		],
+		size: 'large',
+		primary_action_label: __('Add Selected'),
+		primary_action: function() {
+			let selected = [];
+			d.$wrapper.find('.complaint-check:checked').each(function() {
+				let idx = $(this).data('idx');
+				let symptom = $(this).data('symptom');
+				let days = d.$wrapper.find(`.complaint-days[data-idx="${idx}"]`).val() || 0;
+				let option = d.$wrapper.find(`.complaint-option[data-idx="${idx}"]`).val() || '';
+				let notes = d.$wrapper.find(`.complaint-notes[data-idx="${idx}"]`).val() || '';
+				
+				selected.push({
+					body_part: bodyPart,
+					complaint_type: symptom,
+					duration_days: parseInt(days) || 0,
+					option: option,
+					note: notes
+				});
+			});
 
-	// Delete handler
-	container.find('.delete-complaint-btn').on('click', function () {
-		let idx = $(this).data('idx');
-		frm.doc.exam_complaints.splice(idx, 1);
-		// Re-index
-		frm.doc.exam_complaints.forEach((row, i) => row.idx = i + 1);
-		frm.refresh_field('exam_complaints');
-		render_complaints_table(frm, wrapper);
-		frappe.show_alert({ message: 'Complaint removed', indicator: 'orange' });
-	});
+			if (selected.length === 0) {
+				frappe.msgprint(__('Please select at least one complaint'));
+				return;
+			}
 
-	// Edit handler
-	container.find('.edit-complaint-btn').on('click', function () {
-		let idx = $(this).data('idx');
-		if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.grid) {
-			let row = frm.fields_dict.exam_complaints.grid.grid_rows[idx];
-			if (row) {
-				row.toggle_view(true);
+			// Add all selected complaints to the child table
+			selected.forEach(complaint => {
+				let row = frm.add_child('exam_complaints');
+				row.body_part = complaint.body_part;
+				row.complaint_type = complaint.complaint_type;
+				row.duration_days = complaint.duration_days;
+				row.option = complaint.option;
+				row.note = complaint.note;
+			});
+
+			// Make sure table is visible and refresh
+			frm.set_df_property('exam_complaints', 'hidden', 0);
+			if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.$wrapper) {
+				frm.fields_dict.exam_complaints.$wrapper.show();
+			}
+			frm.refresh_field('exam_complaints');
+			
+			d.hide();
+			
+			// Scroll to the table after dialog closes
+			setTimeout(() => {
+				if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.$wrapper) {
+					frm.fields_dict.exam_complaints.$wrapper[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+			}, 300);
+
+			frappe.show_alert({
+				message: __('Added {0} complaint(s)', [selected.length]),
+				indicator: 'green'
+			});
+
+			// Reset body part selection
+			let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
+			if (wrapper) {
+				wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
 			}
 		}
 	});
 
-	// Add more handler
-	container.find('#add_more_btn').on('click', function () {
-		// Reset selections
-		wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
-		wrapper.find('#complaints_section').hide();
-		wrapper.find('#details_section').hide();
-		// Scroll to body part section
-		wrapper.find('input[name="step1_bodypart"]').first().closest('.step1-radio-group').parent()[0].scrollIntoView({ behavior: 'smooth' });
+	d.show();
+
+	// Enable/disable fields based on checkbox
+	d.$wrapper.find('.complaint-check').on('change', function() {
+		let idx = $(this).data('idx');
+		let isChecked = $(this).is(':checked');
+		d.$wrapper.find(`.complaint-days[data-idx="${idx}"]`).prop('disabled', !isChecked);
+		d.$wrapper.find(`.complaint-option[data-idx="${idx}"]`).prop('disabled', !isChecked);
+		d.$wrapper.find(`.complaint-notes[data-idx="${idx}"]`).prop('disabled', !isChecked);
 	});
 }
 
 function setup_step1_handlers(frm, wrapper) {
-
-	// Filled by change
-	wrapper.find('#step1_filled_by').on('change', function () {
-		frm.set_value('exam_filled_by', $(this).val());
-	});
 
 	// Status change
 	wrapper.find('#step1_status').on('change', function () {
@@ -2428,91 +2456,47 @@ function setup_step1_handlers(frm, wrapper) {
 
 		if (val === 'No Complaints - Normal') {
 			wrapper.find('#step1_normal_msg').show();
-			wrapper.find('#step1_abnormal_section').hide();
+			wrapper.find('#step1_body_part_section').hide();
+			// Hide complaints table
+			if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.$wrapper) {
+				frm.fields_dict.exam_complaints.$wrapper.hide();
+			}
 		} else if (val === 'Complaints - Abnormal') {
 			wrapper.find('#step1_normal_msg').hide();
-			wrapper.find('#step1_abnormal_section').show();
+			wrapper.find('#step1_body_part_section').show();
+			// Show complaints table
+			frm.set_df_property('exam_complaints', 'hidden', 0);
+			if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.$wrapper) {
+				frm.fields_dict.exam_complaints.$wrapper.show();
+			}
+			frm.refresh_field('exam_complaints');
 		} else {
 			wrapper.find('#step1_normal_msg').hide();
-			wrapper.find('#step1_abnormal_section').hide();
+			wrapper.find('#step1_body_part_section').hide();
+			// Hide complaints table
+			if (frm.fields_dict.exam_complaints && frm.fields_dict.exam_complaints.$wrapper) {
+				frm.fields_dict.exam_complaints.$wrapper.hide();
+			}
 		}
 	});
 
-
-	// Body part change - show complaints
+	// Body part change - open popup
 	wrapper.find('input[name="step1_bodypart"]').on('change', function () {
 		let bodyPart = $(this).val();
-
-		// Show complaints for this body part as radio buttons
-		let symptoms = BODY_PARTS_CONFIG[bodyPart].symptoms;
-		let html = symptoms.map(s => `
-			<label class="step1-radio-label">
-				<input type="radio" name="step1_complaint" value="${s}"> ${s}
-			</label>
-		`).join('');
-
-		wrapper.find('#complaints_list').html(html);
-		wrapper.find('#complaints_label').text(`Select Complaint for ${bodyPart}`);
-		wrapper.find('#complaints_section').show();
-		wrapper.find('#details_section').hide();
-
-		// Complaint change - show details
-		wrapper.find('input[name="step1_complaint"]').on('change', function () {
-			// Clear details form
-			wrapper.find('#detail_days').val('');
-			wrapper.find('#detail_pattern').val('');
-			wrapper.find('#detail_onset').val('');
-			wrapper.find('#detail_notes').val('');
-			wrapper.find('#detail_trauma').prop('checked', false);
-			wrapper.find('#detail_treatment').prop('checked', false);
-			wrapper.find('#detail_intermittent').prop('checked', false);
-			wrapper.find('#detail_recurrent').prop('checked', false);
-			wrapper.find('#details_section').show();
-		});
-	});
-
-	// Add complaint
-	wrapper.find('#add_complaint_btn').on('click', function () {
-		let selectedBodyPart = wrapper.find('input[name="step1_bodypart"]:checked').val();
-		let selectedComplaint = wrapper.find('input[name="step1_complaint"]:checked').val();
-		let selectedDuration = wrapper.find('input[name="step1_duration"]:checked').val();
-
-		if (!selectedBodyPart || !selectedComplaint) {
-			frappe.msgprint('Please select body part and complaint first');
-			return;
+		let status = frm.doc.exam_complaints_status || '';
+		
+		// Only show popup if status is Abnormal
+		if (status === 'Complaints - Abnormal') {
+			show_complaints_popup(frm, bodyPart);
+		} else if (status === 'No Complaints - Normal') {
+			// For Normal status, just show a message
+			frappe.show_alert({
+				message: __('Patient status is Normal. Change to Abnormal to add complaints.'),
+				indicator: 'blue'
+			});
+			// Uncheck the radio
+			$(this).prop('checked', false);
 		}
-
-		// Add to child table
-		let row = frm.add_child('exam_complaints');
-		row.body_part = selectedBodyPart;
-		row.complaint_type = selectedComplaint;
-		row.duration_days = parseInt(wrapper.find('#detail_days').val()) || 0;
-		row.duration_category = selectedDuration || '';
-		row.pattern = wrapper.find('#detail_pattern').val() || '';
-		row.onset_date = wrapper.find('#detail_onset').val() || '';
-		row.trauma_related = wrapper.find('#detail_trauma').is(':checked') ? 1 : 0;
-		row.medical_treatment_taken = wrapper.find('#detail_treatment').is(':checked') ? 1 : 0;
-		row.is_intermittent = wrapper.find('#detail_intermittent').is(':checked') ? 1 : 0;
-		row.is_recurrent = wrapper.find('#detail_recurrent').is(':checked') ? 1 : 0;
-		row.note = wrapper.find('#detail_notes').val() || '';
-
-		frm.refresh_field('exam_complaints');
-
-		// Reset selections
-		wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
-		wrapper.find('#complaints_section').hide();
-		wrapper.find('#details_section').hide();
-
-		// Re-render table
-		render_complaints_table(frm, wrapper);
-
-		frappe.show_alert({ message: 'Complaint added!', indicator: 'green' });
-	});
-
-	// Cancel
-	wrapper.find('#cancel_btn').on('click', function () {
-		wrapper.find('#details_section').hide();
-		wrapper.find('input[name="step1_complaint"]').prop('checked', false);
 	});
 }
 
