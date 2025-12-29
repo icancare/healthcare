@@ -2160,10 +2160,10 @@ const BODY_PARTS_CONFIG = {
 		symptoms: ['Lump/Swelling on face', 'Pigmentation', 'Ulcer']
 	},
 	'Neck': {
-		symptoms: ['Lump/Swelling in Neck (outside)', 'Swelling/lump in Throat (inside)', 'Stickiness in throat', 'Change in Voice', 'Sore throat/Hoarseness', 'Others']
+		symptoms: ['Lump/Swelling in Neck (outside)', 'Swelling/lump in Throat (inside)', 'Stickiness in throat', 'Change in Voice', 'Sore throat/Hoarseness', 'Swallowing Difficulty/pain', 'Other']
 	},
 	'Oral Cavity (Mouth and Tongue)': {
-		symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Trauma', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Others']
+		symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Others']
 	},
 	'Teeth (Dental)': {
 		symptoms: ['Painful teeth', 'Loosening of teeth', 'Lost teeth', 'Teeth or gum problem', 'Denture problem']
@@ -2340,6 +2340,8 @@ function show_complaints_popup(frm, bodyPart) {
 					<th>Complaint</th>
 					<th style="width: 80px;">Days</th>
 					<th style="width: 130px;">Option</th>
+					<th style="width: 60px;">Trauma</th>
+					<th style="width: 80px;">Treated Before</th>
 					<th style="width: 150px;">Notes</th>
 				</tr>
 			</thead>
@@ -2355,6 +2357,8 @@ function show_complaints_popup(frm, bodyPart) {
 								${OPTION_VALUES.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
 							</select>
 						</td>
+						<td style="text-align: center;"><input type="checkbox" class="complaint-trauma" data-idx="${idx}" disabled></td>
+						<td style="text-align: center;"><input type="checkbox" class="complaint-treated" data-idx="${idx}" disabled></td>
 						<td><input type="text" class="complaint-notes" data-idx="${idx}" placeholder="Notes..." disabled></td>
 					</tr>
 				`).join('')}
@@ -2380,6 +2384,8 @@ function show_complaints_popup(frm, bodyPart) {
 				let symptom = $(this).data('symptom');
 				let days = d.$wrapper.find(`.complaint-days[data-idx="${idx}"]`).val() || 0;
 				let option = d.$wrapper.find(`.complaint-option[data-idx="${idx}"]`).val() || '';
+				let trauma = d.$wrapper.find(`.complaint-trauma[data-idx="${idx}"]`).is(':checked') ? 1 : 0;
+				let treated = d.$wrapper.find(`.complaint-treated[data-idx="${idx}"]`).is(':checked') ? 1 : 0;
 				let notes = d.$wrapper.find(`.complaint-notes[data-idx="${idx}"]`).val() || '';
 				
 				selected.push({
@@ -2387,6 +2393,8 @@ function show_complaints_popup(frm, bodyPart) {
 					complaint_type: symptom,
 					duration_days: parseInt(days) || 0,
 					option: option,
+					trauma_related: trauma,
+					medical_treatment_taken: treated,
 					note: notes
 				});
 			});
@@ -2403,6 +2411,8 @@ function show_complaints_popup(frm, bodyPart) {
 				row.complaint_type = complaint.complaint_type;
 				row.duration_days = complaint.duration_days;
 				row.option = complaint.option;
+				row.trauma_related = complaint.trauma_related;
+				row.medical_treatment_taken = complaint.medical_treatment_taken;
 				row.note = complaint.note;
 			});
 
@@ -2443,6 +2453,8 @@ function show_complaints_popup(frm, bodyPart) {
 		let isChecked = $(this).is(':checked');
 		d.$wrapper.find(`.complaint-days[data-idx="${idx}"]`).prop('disabled', !isChecked);
 		d.$wrapper.find(`.complaint-option[data-idx="${idx}"]`).prop('disabled', !isChecked);
+		d.$wrapper.find(`.complaint-trauma[data-idx="${idx}"]`).prop('disabled', !isChecked);
+		d.$wrapper.find(`.complaint-treated[data-idx="${idx}"]`).prop('disabled', !isChecked);
 		d.$wrapper.find(`.complaint-notes[data-idx="${idx}"]`).prop('disabled', !isChecked);
 	});
 }
