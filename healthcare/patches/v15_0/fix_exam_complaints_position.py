@@ -30,3 +30,4 @@ def execute():
     
     print("Fixed exam_complaints table position")
 
+

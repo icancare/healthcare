@@ -116,3 +116,7 @@ healthcare.patches.v15_0.hide_duplicate_exam_fields #29-12-2024
 healthcare.patches.v15_0.fix_exam_complaints_position #29-12-2024
 healthcare.patches.v15_0.fix_step1_complaints_final #29-12-2024-v2
 healthcare.patches.v15_0.fix_step1_field_order #29-12-2024
+healthcare.patches.v15_0.add_step2_and_lesion_exam_fields #29-12-2024-step2
+healthcare.patches.v15_0.hide_filled_by_done_by_fields #29-12-2024-v6
+healthcare.patches.v15_0.fix_step2_physical_findings #29-12-2024-v2
+healthcare.patches.v15_0.fix_step2_table_format #29-12-2024-v3

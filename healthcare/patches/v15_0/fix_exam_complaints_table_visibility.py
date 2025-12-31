@@ -30,3 +30,4 @@ def execute():
     
     print("Updated exam_complaints table visibility")
 
+
