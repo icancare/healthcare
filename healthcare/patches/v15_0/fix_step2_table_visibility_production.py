@@ -2,40 +2,37 @@ import frappe
 
 def execute():
     """
-    Force fix Step 2 Physical Findings table visibility in production.
-    The table should always be visible (hidden=0) - JS controls show/hide based on status.
+    Fix Step 2 Physical Findings table visibility - same approach as Step 1.
+    Show table when status is Abnormal (using depends_on like Step 1 complaints table).
     """
     
-    # Update Custom Field directly in database
-    custom_field_name = "Patient Encounter-exam_physical_findings"
-    
-    if frappe.db.exists("Custom Field", custom_field_name):
-        # Force update hidden=0 and remove any depends_on
-        frappe.db.sql("""
-            UPDATE `tabCustom Field`
-            SET hidden = 0, depends_on = ''
-            WHERE name = %s
-        """, (custom_field_name,))
-        
-        print(f"✓ Updated {custom_field_name}: hidden=0, depends_on=''")
+    # Update exam_physical_findings table - same pattern as exam_complaints
+    if frappe.db.exists("Custom Field", "Patient Encounter-exam_physical_findings"):
+        frappe.db.set_value(
+            "Custom Field",
+            "Patient Encounter-exam_physical_findings",
+            {
+                "depends_on": "eval:doc.practitioner && doc.show_clinical_examination && doc.exam_step2_status=='Abnormal'",
+                "hidden": 0
+            }
+        )
+        print("✓ Updated exam_physical_findings: depends_on set for Abnormal status")
     else:
-        print(f"✗ Custom Field {custom_field_name} not found")
+        print("✗ exam_physical_findings field not found")
     
-    # Also update the section field if it exists
-    section_field_name = "Patient Encounter-exam_findings_section"
-    if frappe.db.exists("Custom Field", section_field_name):
-        frappe.db.sql("""
-            UPDATE `tabCustom Field`
-            SET hidden = 0, depends_on = ''
-            WHERE name = %s
-        """, (section_field_name,))
-        print(f"✓ Updated {section_field_name}: hidden=0, depends_on=''")
+    # Also update the section field to show when Abnormal
+    if frappe.db.exists("Custom Field", "Patient Encounter-exam_findings_section"):
+        frappe.db.set_value(
+            "Custom Field",
+            "Patient Encounter-exam_findings_section",
+            {
+                "depends_on": "eval:doc.practitioner && doc.show_clinical_examination && doc.exam_step2_status=='Abnormal'",
+                "hidden": 0
+            }
+        )
+        print("✓ Updated exam_findings_section: depends_on set for Abnormal status")
     
     frappe.db.commit()
-    
-    # Clear all caches
     frappe.clear_cache(doctype="Patient Encounter")
-    frappe.clear_cache(doctype="Custom Field")
     
-    print("✓ Step 2 Physical Findings table visibility fix applied!")
-
+    print("✓ Step 2 Physical Findings table visibility fix applied (same as Step 1)!")
