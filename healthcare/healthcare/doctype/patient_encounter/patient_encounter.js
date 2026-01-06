@@ -3329,12 +3329,14 @@ function render_step2_table_form(frm) {
 function toggle_step2_findings_table(frm) {
 	let status = frm.doc.exam_step2_status;
 	let isAbnormal = status === 'Abnormal';
+	// Also show table if it has existing data (for saved documents)
+	let hasData = frm.doc.exam_physical_findings && frm.doc.exam_physical_findings.length > 0;
 	
-	console.log('toggle_step2_findings_table: status=', status, 'isAbnormal=', isAbnormal);
+	console.log('toggle_step2_findings_table: status=', status, 'isAbnormal=', isAbnormal, 'hasData=', hasData);
 	
 	if (frm.fields_dict.exam_physical_findings) {
-		if (isAbnormal) {
-			// Show table - same as Step 1
+		if (isAbnormal || hasData) {
+			// Show table - if status is Abnormal OR if there's existing data
 			frm.set_df_property('exam_physical_findings', 'hidden', 0);
 			frm.toggle_display('exam_physical_findings', true);
 			if (frm.fields_dict.exam_physical_findings.$wrapper) {
