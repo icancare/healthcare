@@ -3326,20 +3326,30 @@ function render_step2_table_form(frm) {
 }
 
 // Toggle Step 2 findings table visibility - Same as Step 1
-// Note: depends_on in Custom Field handles visibility based on exam_step2_status=='Abnormal'
-// This function just refreshes the field to trigger ERPNext's depends_on evaluation
 function toggle_step2_findings_table(frm) {
-	let status = frm.doc.exam_step2_status;
+	let status = frm.doc.exam_step2_status || '';
 	let isAbnormal = status === 'Abnormal';
 	
 	console.log('toggle_step2_findings_table: status=', status, 'isAbnormal=', isAbnormal);
 	
-	// Just refresh the field - ERPNext depends_on will handle visibility
 	if (frm.fields_dict.exam_physical_findings) {
+		if (isAbnormal) {
+			// Show table
+			frm.set_df_property('exam_physical_findings', 'hidden', 0);
+			frm.toggle_display('exam_physical_findings', true);
+			if (frm.fields_dict.exam_physical_findings.$wrapper) {
+				frm.fields_dict.exam_physical_findings.$wrapper.show();
+				frm.fields_dict.exam_physical_findings.$wrapper.css('display', 'block');
+			}
+		} else {
+			// Hide table
+			frm.set_df_property('exam_physical_findings', 'hidden', 1);
+			frm.toggle_display('exam_physical_findings', false);
+			if (frm.fields_dict.exam_physical_findings.$wrapper) {
+				frm.fields_dict.exam_physical_findings.$wrapper.hide();
+			}
+		}
 		frm.refresh_field('exam_physical_findings');
-	}
-	if (frm.fields_dict.exam_findings_section) {
-		frm.refresh_field('exam_findings_section');
 	}
 }
 
