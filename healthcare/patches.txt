@@ -121,4 +121,4 @@ healthcare.patches.v15_0.hide_filled_by_done_by_fields #29-12-2024-v6
 healthcare.patches.v15_0.fix_step2_physical_findings #29-12-2024-v2
 healthcare.patches.v15_0.fix_step2_table_format #29-12-2024-v3
 healthcare.patches.v15_0.fix_step2_physical_findings_visibility #31-12-2024
-healthcare.patches.v15_0.fix_step2_table_visibility_production #06-01-2026-v2
+healthcare.patches.v15_0.fix_step2_table_visibility_production #06-01-2026-v3
