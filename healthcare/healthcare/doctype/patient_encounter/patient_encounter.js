@@ -724,7 +724,7 @@ function render_step2_custom_edit_form(frm, cdt, cdn) {
 	if (!config) return;
 	
 	// Get the grid row
-	let grid = frm.fields_dict.custom_physical_findings_?.grid;
+	let grid = frm.fields_dict.custom_physical_findings?.grid;
 	if (!grid) return;
 	
 	let grid_row = grid.grid_rows_by_docname[cdn];
@@ -3751,24 +3751,24 @@ function toggle_step2_findings_table(frm) {
 	
 	console.log('toggle_step2_findings_table: status=', status, 'isAbnormal=', isAbnormal);
 	
-	if (frm.fields_dict.custom_physical_findings_) {
+	if (frm.fields_dict.custom_physical_findings) {
 		if (isAbnormal) {
 			// Show table
-			frm.set_df_property('custom_physical_findings_', 'hidden', 0);
-			frm.toggle_display('custom_physical_findings_', true);
-			if (frm.fields_dict.custom_physical_findings_.$wrapper) {
-				frm.fields_dict.custom_physical_findings_.$wrapper.show();
-				frm.fields_dict.custom_physical_findings_.$wrapper.css('display', 'block');
+			frm.set_df_property('custom_physical_findings', 'hidden', 0);
+			frm.toggle_display('custom_physical_findings', true);
+			if (frm.fields_dict.custom_physical_findings.$wrapper) {
+				frm.fields_dict.custom_physical_findings.$wrapper.show();
+				frm.fields_dict.custom_physical_findings.$wrapper.css('display', 'block');
 			}
 		} else {
 			// Hide table
-			frm.set_df_property('custom_physical_findings_', 'hidden', 1);
-			frm.toggle_display('custom_physical_findings_', false);
-			if (frm.fields_dict.custom_physical_findings_.$wrapper) {
-				frm.fields_dict.custom_physical_findings_.$wrapper.hide();
+			frm.set_df_property('custom_physical_findings', 'hidden', 1);
+			frm.toggle_display('custom_physical_findings', false);
+			if (frm.fields_dict.custom_physical_findings.$wrapper) {
+				frm.fields_dict.custom_physical_findings.$wrapper.hide();
 			}
 		}
-		frm.refresh_field('custom_physical_findings_');
+		frm.refresh_field('custom_physical_findings');
 	}
 }
 
@@ -3782,35 +3782,35 @@ function setup_step2_handlers_v4(frm, wrapper) {
 		if (status === 'Normal') {
 			wrapper.find('#step2_normal_msg').show();
 			wrapper.find('#step2_body_part_section').hide();
-			frm.set_df_property('custom_physical_findings_', 'hidden', 1);
-			if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-				frm.fields_dict.custom_physical_findings_.$wrapper.hide();
+			frm.set_df_property('custom_physical_findings', 'hidden', 1);
+			if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+				frm.fields_dict.custom_physical_findings.$wrapper.hide();
 			}
 		} else if (status === 'Abnormal') {
 			wrapper.find('#step2_normal_msg').hide();
 			wrapper.find('#step2_body_part_section').show();
 			// Show Physical Findings table directly when Abnormal is selected
 			console.log('Step 2: Showing Physical Findings table');
-			console.log('Step 2: custom_physical_findings_ field exists:', !!frm.fields_dict.custom_physical_findings_);
-			console.log('Step 2: custom_physical_findings_ wrapper exists:', !!(frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper));
+			console.log('Step 2: custom_physical_findings field exists:', !!frm.fields_dict.custom_physical_findings);
+			console.log('Step 2: custom_physical_findings wrapper exists:', !!(frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper));
 			
-			frm.set_df_property('custom_physical_findings_', 'hidden', 0);
-			frm.toggle_display('custom_physical_findings_', true);
-			if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-				frm.fields_dict.custom_physical_findings_.$wrapper.show();
-				frm.fields_dict.custom_physical_findings_.$wrapper.css('display', 'block');
+			frm.set_df_property('custom_physical_findings', 'hidden', 0);
+			frm.toggle_display('custom_physical_findings', true);
+			if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+				frm.fields_dict.custom_physical_findings.$wrapper.show();
+				frm.fields_dict.custom_physical_findings.$wrapper.css('display', 'block');
 				// Also show all parent elements
-				frm.fields_dict.custom_physical_findings_.$wrapper.parents().show();
-				frm.fields_dict.custom_physical_findings_.$wrapper.parents('.section-body').show();
-				frm.fields_dict.custom_physical_findings_.$wrapper.parents('.form-section').show();
-				frm.fields_dict.custom_physical_findings_.$wrapper.closest('.frappe-control').show();
+				frm.fields_dict.custom_physical_findings.$wrapper.parents().show();
+				frm.fields_dict.custom_physical_findings.$wrapper.parents('.section-body').show();
+				frm.fields_dict.custom_physical_findings.$wrapper.parents('.form-section').show();
+				frm.fields_dict.custom_physical_findings.$wrapper.closest('.frappe-control').show();
 				console.log('Step 2: Wrapper shown');
-				console.log('Step 2: Wrapper HTML:', frm.fields_dict.custom_physical_findings_.$wrapper.html()?.substring(0, 200));
-				console.log('Step 2: Wrapper parent:', frm.fields_dict.custom_physical_findings_.$wrapper.parent().attr('class'));
+				console.log('Step 2: Wrapper HTML:', frm.fields_dict.custom_physical_findings.$wrapper.html()?.substring(0, 200));
+				console.log('Step 2: Wrapper parent:', frm.fields_dict.custom_physical_findings.$wrapper.parent().attr('class'));
 			} else {
 				console.log('Step 2: WARNING - wrapper not found!');
 			}
-			frm.refresh_field('custom_physical_findings_');
+			frm.refresh_field('custom_physical_findings');
 		} else {
 			wrapper.find('#step2_normal_msg').hide();
 			wrapper.find('#step2_body_part_section').hide();
@@ -3992,7 +3992,7 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 			
 			// Add to child table
 			findings.forEach(f => {
-				let row = frm.add_child('custom_physical_findings_');
+				let row = frm.add_child('custom_physical_findings');
 				row.body_part = f.body_part;
 				row.location = f.location;
 				row.abnormality = f.abnormality;
@@ -4000,20 +4000,20 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 			});
 
 			// Make sure table is visible and refresh - SAME AS STEP 1
-			frm.set_df_property('custom_physical_findings_', 'hidden', 0);
-			frm.toggle_display('custom_physical_findings_', true);
-			if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-				frm.fields_dict.custom_physical_findings_.$wrapper.show();
-				frm.fields_dict.custom_physical_findings_.$wrapper.css('display', 'block');
+			frm.set_df_property('custom_physical_findings', 'hidden', 0);
+			frm.toggle_display('custom_physical_findings', true);
+			if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+				frm.fields_dict.custom_physical_findings.$wrapper.show();
+				frm.fields_dict.custom_physical_findings.$wrapper.css('display', 'block');
 			}
-			frm.refresh_field('custom_physical_findings_');
+			frm.refresh_field('custom_physical_findings');
 			
 			d.hide();
 			
 			// Scroll to the table after dialog closes
 			setTimeout(() => {
-				if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-					frm.fields_dict.custom_physical_findings_.$wrapper[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+				if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+					frm.fields_dict.custom_physical_findings.$wrapper[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
 				}
 			}, 300);
 
@@ -4140,25 +4140,25 @@ function show_mouth_popup(frm) {
 			if (values.opening_mm) frm.set_value('exam_mouth_opening_mm', values.opening_mm);
 			
 			// Add to child table
-			let row = frm.add_child('custom_physical_findings_');
+			let row = frm.add_child('custom_physical_findings');
 			row.body_part = 'Mouth';
 			row.location = 'Mouth Opening';
 			row.abnormality = abnParts.join(' | ');
 			row.note = values.notes || '';
 			
 			// Show and refresh table
-			frm.set_df_property('custom_physical_findings_', 'hidden', 0);
-			if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-				frm.fields_dict.custom_physical_findings_.$wrapper.show();
+			frm.set_df_property('custom_physical_findings', 'hidden', 0);
+			if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+				frm.fields_dict.custom_physical_findings.$wrapper.show();
 			}
-			frm.refresh_field('custom_physical_findings_');
+			frm.refresh_field('custom_physical_findings');
 			
 			d.hide();
 			
 			// Scroll to table
 			setTimeout(() => {
-				if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-					frm.fields_dict.custom_physical_findings_.$wrapper[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+				if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+					frm.fields_dict.custom_physical_findings.$wrapper[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
 				}
 			}, 300);
 			
@@ -4184,8 +4184,8 @@ function show_teeth_popup(frm) {
 	
 	// Get existing teeth numbers from table
 	let existingTeeth = [];
-	if (frm.doc.custom_physical_findings_ && frm.doc.custom_physical_findings_.length > 0) {
-		frm.doc.custom_physical_findings_.forEach(f => {
+	if (frm.doc.custom_physical_findings && frm.doc.custom_physical_findings.length > 0) {
+		frm.doc.custom_physical_findings.forEach(f => {
 			if (f.location && f.location.startsWith('Teeth')) {
 				// Extract teeth numbers from location like "Teeth - Teeth #11,12,13"
 				let match = f.location.match(/Teeth #([\d,\s]+)/);
@@ -4253,25 +4253,25 @@ function show_teeth_popup(frm) {
 			}
 			
 			// Add to child table
-			let row = frm.add_child('custom_physical_findings_');
+			let row = frm.add_child('custom_physical_findings');
 			row.body_part = 'Teeth';
 			row.location = 'Teeth #' + (teethNumbers || 'Not specified');
 			row.abnormality = issues.join(', ');
 			row.note = values.notes || '';
 			
 			// Show and refresh table
-			frm.set_df_property('custom_physical_findings_', 'hidden', 0);
-			if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-				frm.fields_dict.custom_physical_findings_.$wrapper.show();
+			frm.set_df_property('custom_physical_findings', 'hidden', 0);
+			if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+				frm.fields_dict.custom_physical_findings.$wrapper.show();
 			}
-			frm.refresh_field('custom_physical_findings_');
+			frm.refresh_field('custom_physical_findings');
 			
 			d.hide();
 			
 			// Scroll to table
 			setTimeout(() => {
-				if (frm.fields_dict.custom_physical_findings_ && frm.fields_dict.custom_physical_findings_.$wrapper) {
-					frm.fields_dict.custom_physical_findings_.$wrapper[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+				if (frm.fields_dict.custom_physical_findings && frm.fields_dict.custom_physical_findings.$wrapper) {
+					frm.fields_dict.custom_physical_findings.$wrapper[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
 				}
 			}, 300);
 			

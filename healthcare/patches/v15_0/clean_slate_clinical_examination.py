@@ -230,14 +230,15 @@ def get_essential_fields():
         "hidden": 1
     })
     
-    # Physical Findings Table - NO depends_on, JS controls visibility
+    # Physical Findings Table - Using custom_physical_findings (manually created in production)
+    # NO depends_on, JS controls visibility
     fields.append({
-        "fieldname": "exam_physical_findings",
+        "fieldname": "custom_physical_findings",
         "label": "Physical Findings",
         "fieldtype": "Table",
         "options": "Clinical Exam Finding",
         "insert_after": "exam_step2_status",
-        "hidden": 1  # JS controls visibility - DO NOT add depends_on
+        "hidden": 0  # Visible - JS controls show/hide based on Abnormal status
     })
     
     # Hidden fields for Mouth popup data
@@ -246,7 +247,7 @@ def get_essential_fields():
         "label": "Mouth Opening (Fingers)",
         "fieldtype": "Select",
         "options": "\nOne\nTwo\nThree\nFour",
-        "insert_after": "exam_physical_findings",
+        "insert_after": "custom_physical_findings",
         "hidden": 1
     })
     
