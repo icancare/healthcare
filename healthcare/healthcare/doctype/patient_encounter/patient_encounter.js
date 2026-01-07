@@ -2263,9 +2263,9 @@ function get_lesion_popup_fields(location_default, side_default, diagram) {
 
 // Add lesion to ERPNext table
 function add_lesion_to_table(frm, values, diagram, region) {
-	let lesion_count = (frm.doc.exam_diagram_lesions || []).length + 1;
+	let lesion_count = (frm.doc.custom_lesion_details || []).length + 1;
 	
-	let row = frm.add_child('exam_diagram_lesions');
+	let row = frm.add_child('custom_lesion_details');
 	row.lesion_number = lesion_count;
 	row.location = values.location;
 	row.side = values.side;
@@ -2284,7 +2284,7 @@ function add_lesion_to_table(frm, values, diagram, region) {
 	row.diagram_type = diagram;
 	row.diagram_region = region;
 	
-	frm.refresh_field('exam_diagram_lesions');
+	frm.refresh_field('custom_lesion_details');
 	
 	frappe.show_alert({
 		message: __('Lesion #{0} added: {1}', [lesion_count, values.location]),
@@ -2295,9 +2295,9 @@ function add_lesion_to_table(frm, values, diagram, region) {
 // Render lesions table - Now uses ERPNext standard table
 function render_step3_lesions_table(frm) {
 	// Show the ERPNext standard table
-	if (frm.fields_dict.exam_diagram_lesions) {
-		frm.set_df_property('exam_diagram_lesions', 'hidden', 0);
-		frm.refresh_field('exam_diagram_lesions');
+	if (frm.fields_dict.custom_lesion_details) {
+		frm.set_df_property('custom_lesion_details', 'hidden', 0);
+		frm.refresh_field('custom_lesion_details');
 	}
 	
 	// Remove any old custom table containers

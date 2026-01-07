@@ -277,8 +277,9 @@ def get_essential_fields():
     })
     
     # Diagram Lesions Table - ERPNext standard table (visible)
+    # Using custom_lesion_details as it was manually created in production
     fields.append({
-        "fieldname": "exam_diagram_lesions",
+        "fieldname": "custom_lesion_details",
         "label": "Lesion Details",
         "fieldtype": "Table",
         "options": "Clinical Exam Lesion",
@@ -292,7 +293,7 @@ def get_essential_fields():
         "fieldname": "exam_step4_section",
         "label": "STEP 4 - PICTURES TO BE TAKEN FOR RECORD AND COMPARISON",
         "fieldtype": "Section Break",
-        "insert_after": "exam_diagram_lesions",
+        "insert_after": "custom_lesion_details",
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     
