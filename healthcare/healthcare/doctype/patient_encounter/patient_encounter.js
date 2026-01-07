@@ -3357,6 +3357,7 @@ function setup_step2_handlers_v4(frm, wrapper) {
 	// Status change handler
 	wrapper.find('#step2_status').on('change', function () {
 		let status = $(this).val();
+		console.log('Step 2: Status changed to:', status);
 		frm.set_value('exam_step2_status', status);
 		
 		if (status === 'Normal') {
@@ -3370,11 +3371,18 @@ function setup_step2_handlers_v4(frm, wrapper) {
 			wrapper.find('#step2_normal_msg').hide();
 			wrapper.find('#step2_body_part_section').show();
 			// Show Physical Findings table directly when Abnormal is selected
+			console.log('Step 2: Showing Physical Findings table');
+			console.log('Step 2: exam_physical_findings field exists:', !!frm.fields_dict.exam_physical_findings);
+			console.log('Step 2: exam_physical_findings wrapper exists:', !!(frm.fields_dict.exam_physical_findings && frm.fields_dict.exam_physical_findings.$wrapper));
+			
 			frm.set_df_property('exam_physical_findings', 'hidden', 0);
 			frm.toggle_display('exam_physical_findings', true);
 			if (frm.fields_dict.exam_physical_findings && frm.fields_dict.exam_physical_findings.$wrapper) {
 				frm.fields_dict.exam_physical_findings.$wrapper.show();
 				frm.fields_dict.exam_physical_findings.$wrapper.css('display', 'block');
+				console.log('Step 2: Wrapper shown');
+			} else {
+				console.log('Step 2: WARNING - wrapper not found!');
 			}
 			frm.refresh_field('exam_physical_findings');
 		} else {
