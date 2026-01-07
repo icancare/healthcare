@@ -3266,7 +3266,7 @@ function render_step2_table_form(frm) {
 	console.log('Step 2: Using HTML wrapper');
 
 	// Get current status
-	let currentStatus = frm.doc.exam_step2_status || '';
+	let currentStatus = frm.doc.exam_main_status || '';
 	let isNormal = currentStatus === 'Normal';
 	let isAbnormal = currentStatus === 'Abnormal';
 
@@ -3327,7 +3327,7 @@ function render_step2_table_form(frm) {
 
 // Toggle Step 2 findings table visibility - Same as Step 1
 function toggle_step2_findings_table(frm) {
-	let status = frm.doc.exam_step2_status || '';
+	let status = frm.doc.exam_main_status || '';
 	let isAbnormal = status === 'Abnormal';
 	
 	console.log('toggle_step2_findings_table: status=', status, 'isAbnormal=', isAbnormal);
@@ -3357,7 +3357,7 @@ function setup_step2_handlers_v4(frm, wrapper) {
 	// Status change handler
 	wrapper.find('#step2_status').on('change', function () {
 		let status = $(this).val();
-		frm.set_value('exam_step2_status', status);
+		frm.set_value('exam_main_status', status);
 		
 		if (status === 'Normal') {
 			wrapper.find('#step2_normal_msg').show();
