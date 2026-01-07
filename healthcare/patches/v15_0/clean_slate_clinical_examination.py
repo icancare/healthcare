@@ -306,22 +306,12 @@ def get_essential_fields():
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     
-    # Pictures Taken By
-    fields.append({
-        "fieldname": "exam_pictures_taken_by",
-        "label": "Pictures Taken By",
-        "fieldtype": "Select",
-        "options": "\nDoctor's Assistant\nDoctor\nPatient",
-        "insert_after": "exam_step4_section",
-        "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
-    })
-    
-    # Pictures HTML Container
+    # Pictures HTML Container (Clinical Photographs UI)
     fields.append({
         "fieldname": "exam_pictures_html",
         "label": "Pictures Upload",
         "fieldtype": "HTML",
-        "insert_after": "exam_pictures_taken_by",
+        "insert_after": "exam_step4_section",
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     

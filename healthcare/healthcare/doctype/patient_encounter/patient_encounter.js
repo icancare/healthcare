@@ -2459,10 +2459,10 @@ function render_clinical_images_section(frm) {
 
 // STEP 4 - Pictures Upload with Direct Display
 function render_step4_pictures(frm) {
-	// Find the Pictures Taken By field and render AFTER it
-	let takenByField = frm.fields_dict.exam_pictures_taken_by;
-	if (!takenByField || !takenByField.$wrapper) {
-		console.log('Step 4: exam_pictures_taken_by field not found');
+	// Find the Pictures HTML field to render Clinical Photographs UI
+	let picturesHtmlField = frm.fields_dict.exam_pictures_html;
+	if (!picturesHtmlField || !picturesHtmlField.$wrapper) {
+		console.log('Step 4: exam_pictures_html field not found');
 		return;
 	}
 
@@ -2470,9 +2470,9 @@ function render_step4_pictures(frm) {
 	$('.step4-pictures-container').remove();
 
 	// Find the section body to append full-width container
-	let sectionBody = takenByField.$wrapper.closest('.section-body');
+	let sectionBody = picturesHtmlField.$wrapper.closest('.section-body');
 	if (!sectionBody.length) {
-		sectionBody = takenByField.$wrapper.closest('.frappe-control').parent();
+		sectionBody = picturesHtmlField.$wrapper.closest('.frappe-control').parent();
 	}
 
 	console.log('Step 4: Rendering picture grid in section body');
