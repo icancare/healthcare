@@ -3380,7 +3380,14 @@ function setup_step2_handlers_v4(frm, wrapper) {
 			if (frm.fields_dict.exam_physical_findings && frm.fields_dict.exam_physical_findings.$wrapper) {
 				frm.fields_dict.exam_physical_findings.$wrapper.show();
 				frm.fields_dict.exam_physical_findings.$wrapper.css('display', 'block');
+				// Also show all parent elements
+				frm.fields_dict.exam_physical_findings.$wrapper.parents().show();
+				frm.fields_dict.exam_physical_findings.$wrapper.parents('.section-body').show();
+				frm.fields_dict.exam_physical_findings.$wrapper.parents('.form-section').show();
+				frm.fields_dict.exam_physical_findings.$wrapper.closest('.frappe-control').show();
 				console.log('Step 2: Wrapper shown');
+				console.log('Step 2: Wrapper HTML:', frm.fields_dict.exam_physical_findings.$wrapper.html()?.substring(0, 200));
+				console.log('Step 2: Wrapper parent:', frm.fields_dict.exam_physical_findings.$wrapper.parent().attr('class'));
 			} else {
 				console.log('Step 2: WARNING - wrapper not found!');
 			}

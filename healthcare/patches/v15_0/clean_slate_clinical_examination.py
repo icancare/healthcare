@@ -406,8 +406,8 @@ def get_essential_fields():
     
     fields.append({
         "fieldname": "exam_toluidine_notes",
-        "label": "Notes",
-        "fieldtype": "Small Text",
+        "label": "Note",
+        "fieldtype": "Data",
         "insert_after": "exam_toluidine_col"
     })
     
@@ -436,8 +436,8 @@ def get_essential_fields():
     
     fields.append({
         "fieldname": "exam_bluelight_notes",
-        "label": "Notes",
-        "fieldtype": "Small Text",
+        "label": "Note",
+        "fieldtype": "Data",
         "insert_after": "exam_bluelight_col"
     })
     
@@ -466,8 +466,8 @@ def get_essential_fields():
     
     fields.append({
         "fieldname": "exam_autofluor_notes",
-        "label": "Notes",
-        "fieldtype": "Small Text",
+        "label": "Note",
+        "fieldtype": "Data",
         "insert_after": "exam_autofluor_col"
     })
     
@@ -496,46 +496,37 @@ def get_essential_fields():
     
     fields.append({
         "fieldname": "exam_spectroscopy_notes",
-        "label": "Notes",
-        "fieldtype": "Small Text",
+        "label": "Note",
+        "fieldtype": "Data",
         "insert_after": "exam_spectroscopy_col"
     })
     
-    # ==================== STEP 6 - INTERPRETATION/ADVICE ====================
+    # ==================== STEP 6 - ADVICE (ONLY CAMP) ====================
     fields.append({
         "fieldname": "exam_step6_section",
-        "label": "STEP 6 - Interpretation/Advice (Provisional Diagnosis)",
+        "label": "STEP 6 - Advice - ONLY CAMP",
         "fieldtype": "Section Break",
         "insert_after": "exam_spectroscopy_notes",
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     
-    # Special Tests Summary
-    fields.append({
-        "fieldname": "exam_special_tests_summary",
-        "label": "Special Tests Summary/Notes",
-        "fieldtype": "Text",
-        "insert_after": "exam_step6_section",
-        "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
-    })
-    
-    # Interpretation Checkboxes
-    interpretation_fields = [
-        ("exam_interp_normal", "Normal, routine screening after 1 year, continue self-oral examination"),
-        ("exam_interp_normal_risk", "Normal with risk factors, close screening every six months"),
-        ("exam_interp_potentially_malignant", "Potentially Malignant lesions, precancerous lesions, need further management"),
-        ("exam_interp_high_risk", "High risk, need to see the nearest center for further evaluation"),
-        ("exam_interp_suspicious", "Suspicious for cancer, need to see the nearest center for further evaluation"),
-        ("exam_interp_frank_malignancy", "Frank malignancy, requires immediate treatment visit specialized cancer center"),
-        ("exam_interp_insufficient", "Insufficient data for any comments, repeat examination"),
-        ("exam_interp_inflammation", "Inflammation or infection or nutritional factors to be ruled out or treated and then repeat examination"),
-        ("exam_interp_tobacco_consult", "High Risk factors needs consultation for Tobacco de-addiction"),
-        ("exam_interp_alcohol_advice", "Recommend advice regarding Alcohol Use"),
-        ("exam_interp_dental_care", "Recommend Dental Care")
+    # Advice Checkboxes (as per Google Doc)
+    advice_fields = [
+        ("exam_advice_1", "Advice: Normal, routine screening after 1 year, continue self-oral examination"),
+        ("exam_advice_2", "Advice: Normal with risk factors, screening every six months"),
+        ("exam_advice_3", "Advice: Potentially malignant/precancerous lesions, requires treatment."),
+        ("exam_advice_4", "Advice: High risk for malignancy, visit the nearest ICanCare center for further evaluation"),
+        ("exam_advice_5", "Advice: Frank malignancy, requires immediate treatment, visit specialized cancer center"),
+        ("exam_advice_6", "Advice: Insufficient data, repeat examination"),
+        ("exam_advice_7", "Advice: Inflammation, requires treatment and then repeat examination"),
+        ("exam_advice_8", "Advice: Nutritional deficiency, requires treatment"),
+        ("exam_advice_9", "Advice: Recommend Dental Care"),
+        ("exam_advice_tobacco", "High Risk factors needs consultation for Tobacco de-addiction"),
+        ("exam_advice_alcohol", "Recommend advice regarding Alcohol Use")
     ]
     
-    prev_field = "exam_special_tests_summary"
-    for fieldname, label in interpretation_fields:
+    prev_field = "exam_step6_section"
+    for fieldname, label in advice_fields:
         fields.append({
             "fieldname": fieldname,
             "label": label,
