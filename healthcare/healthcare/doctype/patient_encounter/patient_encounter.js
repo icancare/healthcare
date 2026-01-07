@@ -3369,8 +3369,14 @@ function setup_step2_handlers_v4(frm, wrapper) {
 		} else if (status === 'Abnormal') {
 			wrapper.find('#step2_normal_msg').hide();
 			wrapper.find('#step2_body_part_section').show();
-			// Show table if has data
-			toggle_step2_findings_table(frm);
+			// Show Physical Findings table directly when Abnormal is selected
+			frm.set_df_property('exam_physical_findings', 'hidden', 0);
+			frm.toggle_display('exam_physical_findings', true);
+			if (frm.fields_dict.exam_physical_findings && frm.fields_dict.exam_physical_findings.$wrapper) {
+				frm.fields_dict.exam_physical_findings.$wrapper.show();
+				frm.fields_dict.exam_physical_findings.$wrapper.css('display', 'block');
+			}
+			frm.refresh_field('exam_physical_findings');
 		} else {
 			wrapper.find('#step2_normal_msg').hide();
 			wrapper.find('#step2_body_part_section').hide();
