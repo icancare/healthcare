@@ -276,25 +276,15 @@ def get_essential_fields():
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     
-    # Diagram Lesions Table
+    # Diagram Lesions Table - ERPNext standard table (visible)
     fields.append({
         "fieldname": "exam_diagram_lesions",
-        "label": "Diagram Lesions",
+        "label": "Lesion Details",
         "fieldtype": "Table",
         "options": "Clinical Exam Lesion",
         "insert_after": "exam_diagram_interactive",
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination",
-        "hidden": 1
-    })
-    
-    # Lesion Present (for Lesion Examination section)
-    fields.append({
-        "fieldname": "exam_lesion_present",
-        "label": "Lesion Present",
-        "fieldtype": "Select",
-        "options": "\nNo\nYes",
-        "insert_after": "exam_diagram_lesions",
-        "hidden": 1
+        "hidden": 0  # Visible - ERPNext standard table
     })
     
     # ==================== STEP 4 - PICTURES ====================
@@ -302,7 +292,7 @@ def get_essential_fields():
         "fieldname": "exam_step4_section",
         "label": "STEP 4 - PICTURES TO BE TAKEN FOR RECORD AND COMPARISON",
         "fieldtype": "Section Break",
-        "insert_after": "exam_lesion_present",
+        "insert_after": "exam_diagram_lesions",
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     

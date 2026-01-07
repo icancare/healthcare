@@ -5,41 +5,49 @@
     "engine": "InnoDB",
     "field_order": [
         "lesion_number",
-        "diagram_type",
         "location",
         "side",
         "column_break_1",
-        "lesion_type",
-        "size_mm",
-        "color",
+        "size_length",
+        "size_width",
         "column_break_2",
+        "color",
+        "shape",
+        "section_break_2",
+        "margin",
+        "column_break_3",
+        "description",
+        "section_break_3",
+        "palpation",
+        "column_break_4",
+        "texture",
+        "section_break_4",
+        "fixed_location",
+        "tooth_relation",
+        "distance_mm",
+        "column_break_5",
+        "note",
+        "section_break_hidden",
+        "diagram_type",
         "x_coordinate",
         "y_coordinate",
-        "diagram_region",
-        "section_break_1",
-        "description",
-        "note"
+        "diagram_region"
     ],
     "fields": [
         {
             "fieldname": "lesion_number",
             "fieldtype": "Int",
             "in_list_view": 1,
-            "label": "Lesion #",
-            "reqd": 1
-        },
-        {
-            "fieldname": "diagram_type",
-            "fieldtype": "Select",
-            "in_list_view": 1,
-            "label": "Diagram",
-            "options": "\nFace\nOral Cavity\nTeeth\nNeck\nTongue"
+            "label": "#",
+            "read_only": 1
         },
         {
             "fieldname": "location",
-            "fieldtype": "Data",
+            "fieldtype": "Select",
             "in_list_view": 1,
-            "label": "Location"
+            "label": "Location",
+            "reqd": 1,
+            "options": "\nLower lip (L)\nLower lip (R)\nUpper lip (L)\nUpper lip (R)\nAnterior Arch (L)\nAnterior Arch (R)\nUpper anterior GB sulcus (L)\nUpper anterior GB sulcus (R)\nLower anterior GB sulcus (L)\nLower anterior GB sulcus (R)\nAngle of Mouth (L)\nAngle of Mouth (R)\nUpper Alveolus & Gingivo-Buccal Sulcus (L)\nUpper Alveolus & Gingivo-Buccal Sulcus (R)\nLower Alveolus & Gingivo-Buccal Sulcus (L)\nLower Alveolus & Gingivo-Buccal Sulcus (R)\nVentral Tongue (L)\nVentral Tongue (R)\nVentral Tongue (Midline)\nRMT (L)\nRMT (R)\nDorsum Tongue\nAnterior Floor of Mouth\nLateral Tongue (L)\nLateral Tongue (R)\nFOM (L)\nFOM (R)\nBuccal mucosa (L)\nBuccal mucosa (R)\nHard palate (L)\nHard palate (R)\nHard palate (Midline)\nSoft palate (L)\nSoft palate (R)\nSoft palate (Midline)\nOropharynx (L)\nOropharynx (R)\nOropharynx (Midline)\nBase of Tongue (L)\nBase of Tongue (R)\nBase of Tongue (Midline)\nTonsil (L)\nTonsil (R)\nOther"
         },
         {
             "fieldname": "side",
@@ -53,27 +61,115 @@
             "fieldtype": "Column Break"
         },
         {
-            "fieldname": "lesion_type",
-            "fieldtype": "Select",
-            "in_list_view": 1,
-            "label": "Lesion Type",
-            "options": "\nWhite Patch (Leukoplakia)\nRed Patch (Erythroplakia)\nMixed White-Red\nUlcer - Superficial\nUlcer - Deep\nNodule/Lump\nSwelling\nFibrous Bands\nVesicle\nPapule\nPlaque\nMacule\nPustule\nPigmentation\nErosion\nFissure\nGrowth/Mass\nLymph Node\nOther"
+            "fieldname": "size_length",
+            "fieldtype": "Float",
+            "label": "Length (mm)",
+            "in_list_view": 1
         },
         {
-            "fieldname": "size_mm",
-            "fieldtype": "Data",
-            "label": "Size (mm)",
-            "description": "L x W x H in mm"
-        },
-        {
-            "fieldname": "color",
-            "fieldtype": "Select",
-            "label": "Color",
-            "options": "\nWhite\nRed\nBlack\nBrown\nMixed\nNormal"
+            "fieldname": "size_width",
+            "fieldtype": "Float",
+            "label": "Width (mm)"
         },
         {
             "fieldname": "column_break_2",
             "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "color",
+            "fieldtype": "Data",
+            "label": "Color",
+            "in_list_view": 1,
+            "description": "Uniform, Variegated, White, Red, Black, Brown, Mixed"
+        },
+        {
+            "fieldname": "shape",
+            "fieldtype": "Data",
+            "label": "Shape",
+            "description": "Round, Oval, Irregular, Rectangular"
+        },
+        {
+            "fieldname": "section_break_2",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "margin",
+            "fieldtype": "Data",
+            "label": "Margin",
+            "description": "Well-defined, Poorly-defined, Regular, Irregular borders"
+        },
+        {
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Data",
+            "label": "Lesion Type",
+            "in_list_view": 1,
+            "description": "Macule, Papule, Nodule, Plaque, Vesicle, Ulcer, Leukoplakia, Erythroplakia, etc."
+        },
+        {
+            "fieldname": "section_break_3",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "palpation",
+            "fieldtype": "Data",
+            "label": "Palpation",
+            "description": "Tender, Soft, Firm, Hard, Smooth, Rough, Bleeds on touch, etc."
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "texture",
+            "fieldtype": "Data",
+            "label": "Texture",
+            "description": "Smooth, Rough-papillary, Corrugated, Fissured, Crusted"
+        },
+        {
+            "fieldname": "section_break_4",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "fixed_location",
+            "fieldtype": "Select",
+            "label": "Fixed Location",
+            "options": "\nTip of Tongue\nBase of Tongue\nPhiltrum\nAngle of Mouth\nAnterior Pillar\nRetro Molar Trigone"
+        },
+        {
+            "fieldname": "tooth_relation",
+            "fieldtype": "Data",
+            "label": "Relation to Tooth#",
+            "description": "e.g., 23, 24, 25"
+        },
+        {
+            "fieldname": "distance_mm",
+            "fieldtype": "Float",
+            "label": "Distance (mm)",
+            "description": "Distance from fixed landmark"
+        },
+        {
+            "fieldname": "column_break_5",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "note",
+            "fieldtype": "Small Text",
+            "label": "Note"
+        },
+        {
+            "fieldname": "section_break_hidden",
+            "fieldtype": "Section Break",
+            "hidden": 1
+        },
+        {
+            "fieldname": "diagram_type",
+            "fieldtype": "Data",
+            "label": "Diagram",
+            "hidden": 1
         },
         {
             "fieldname": "x_coordinate",
@@ -92,25 +188,11 @@
             "fieldtype": "Data",
             "label": "Region ID",
             "hidden": 1
-        },
-        {
-            "fieldname": "section_break_1",
-            "fieldtype": "Section Break"
-        },
-        {
-            "fieldname": "description",
-            "fieldtype": "Small Text",
-            "label": "Description"
-        },
-        {
-            "fieldname": "note",
-            "fieldtype": "Small Text",
-            "label": "Clinical Note"
         }
     ],
     "istable": 1,
     "links": [],
-    "modified": "2024-12-16 20:00:00.000000",
+    "modified": "2026-01-07 23:30:00.000000",
     "modified_by": "Administrator",
     "module": "Healthcare",
     "name": "Clinical Exam Lesion",

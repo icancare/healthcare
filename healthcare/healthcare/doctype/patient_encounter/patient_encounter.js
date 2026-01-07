@@ -1307,8 +1307,13 @@ function render_step3_interactive_diagrams(frm) {
 			}
 			.diagrams-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-				gap: 20px;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 25px;
+			}
+			@media (max-width: 1000px) {
+				.diagrams-grid {
+					grid-template-columns: 1fr;
+				}
 			}
 			.diagram-card {
 				background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
@@ -1376,86 +1381,143 @@ function render_step3_interactive_diagrams(frm) {
 			</div>
 			
 			<div class="diagrams-grid">
-				<!-- FACE DIAGRAM -->
+				<!-- FACE & LIPS DIAGRAM - Detailed Oral Regions -->
 				<div class="diagram-card">
-					<h6><i class="fa fa-user"></i> Face & Neck - Front View</h6>
-					<svg viewBox="0 0 250 320" style="width: 100%; max-width: 280px; display: block; margin: 0 auto;">
-						<!-- Face Background with 3D effect -->
+					<h6><i class="fa fa-user"></i> Face & Lips - Oral Regions</h6>
+					<svg viewBox="0 0 400 450" style="width: 100%; display: block; margin: 0 auto;">
 						<defs>
 							<radialGradient id="skinGradient" cx="50%" cy="40%" r="60%">
 								<stop offset="0%" style="stop-color:#ffe4c4"/>
 								<stop offset="100%" style="stop-color:#deb887"/>
 							</radialGradient>
-							<filter id="shadow3d">
-								<feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.3"/>
-							</filter>
+							<linearGradient id="lipGradFace" x1="0%" y1="0%" x2="0%" y2="100%">
+								<stop offset="0%" style="stop-color:#e07070"/>
+								<stop offset="100%" style="stop-color:#cc5555"/>
+							</linearGradient>
 						</defs>
 						
-						<!-- Hair -->
-						<ellipse cx="125" cy="50" rx="70" ry="40" fill="#4a3728"/>
-						
 						<!-- Face Outline -->
-						<ellipse cx="125" cy="100" rx="65" ry="75" fill="url(#skinGradient)" stroke="#c9a77a" stroke-width="2" filter="url(#shadow3d)"/>
+						<ellipse cx="200" cy="120" rx="90" ry="100" fill="url(#skinGradient)" stroke="#c9a77a" stroke-width="2"/>
 						
-						<!-- Forehead Left -->
-						<path d="M70,50 Q90,35 110,45 L110,70 Q90,65 70,70 Z" fill="rgba(255,200,150,0.3)" stroke="#deb887" class="clickable-region" data-region="forehead" data-side="Left" data-diagram="Face"/>
-						<!-- Forehead Right -->
-						<path d="M140,45 Q160,35 180,50 L180,70 Q160,65 140,70 Z" fill="rgba(255,200,150,0.3)" stroke="#deb887" class="clickable-region" data-region="forehead" data-side="Right" data-diagram="Face"/>
+						<!-- Hair -->
+						<ellipse cx="200" cy="45" rx="95" ry="50" fill="#4a3728"/>
 						
-						<!-- Eyes -->
-						<ellipse cx="95" cy="85" rx="18" ry="10" fill="#fff" stroke="#333" stroke-width="1.5" class="clickable-region" data-region="eye" data-side="Left" data-diagram="Face"/>
-						<ellipse cx="155" cy="85" rx="18" ry="10" fill="#fff" stroke="#333" stroke-width="1.5" class="clickable-region" data-region="eye" data-side="Right" data-diagram="Face"/>
-						<circle cx="95" cy="85" r="6" fill="#4a3728"/>
-						<circle cx="155" cy="85" r="6" fill="#4a3728"/>
-						<circle cx="93" cy="83" r="2" fill="#fff"/>
-						<circle cx="153" cy="83" r="2" fill="#fff"/>
+						<!-- Eyes (decorative) -->
+						<ellipse cx="160" cy="95" rx="20" ry="12" fill="#fff" stroke="#333" stroke-width="1.5"/>
+						<ellipse cx="240" cy="95" rx="20" ry="12" fill="#fff" stroke="#333" stroke-width="1.5"/>
+						<circle cx="160" cy="95" r="7" fill="#4a3728"/>
+						<circle cx="240" cy="95" r="7" fill="#4a3728"/>
 						
-						<!-- Eyebrows -->
-						<path d="M72,70 Q95,62 115,70" fill="none" stroke="#4a3728" stroke-width="3"/>
-						<path d="M135,70 Q155,62 178,70" fill="none" stroke="#4a3728" stroke-width="3"/>
+						<!-- Nose (decorative) -->
+						<path d="M200,85 L195,125 Q200,133 205,125 L200,85" fill="#deb887" stroke="#c9a77a"/>
 						
-						<!-- Nose -->
-						<path d="M125,75 L120,110 Q125,118 130,110 L125,75" fill="#deb887" stroke="#c9a77a" stroke-width="1" class="clickable-region" data-region="nose" data-side="Midline" data-diagram="Face"/>
-						<ellipse cx="117" cy="112" rx="6" ry="4" fill="#deb887" stroke="#c9a77a"/>
-						<ellipse cx="133" cy="112" rx="6" ry="4" fill="#deb887" stroke="#c9a77a"/>
+						<!-- Buccal Mucosa (Cheeks) - maps to oral location -->
+						<ellipse cx="120" cy="140" rx="30" ry="35" fill="rgba(255,182,193,0.3)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="buccal-mucosa" data-side="Left" data-diagram="Face"/>
+						<ellipse cx="280" cy="140" rx="30" ry="35" fill="rgba(255,182,193,0.3)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="buccal-mucosa" data-side="Right" data-diagram="Face"/>
+						<text x="120" y="145" text-anchor="middle" font-size="9" fill="#993333">Buccal L</text>
+						<text x="280" y="145" text-anchor="middle" font-size="9" fill="#993333">Buccal R</text>
 						
-						<!-- Cheeks -->
-						<ellipse cx="70" cy="115" rx="22" ry="25" fill="rgba(255,182,193,0.2)" stroke="#deb887" stroke-dasharray="3,3" class="clickable-region" data-region="cheek" data-side="Left" data-diagram="Face"/>
-						<ellipse cx="180" cy="115" rx="22" ry="25" fill="rgba(255,182,193,0.2)" stroke="#deb887" stroke-dasharray="3,3" class="clickable-region" data-region="cheek" data-side="Right" data-diagram="Face"/>
+						<!-- DETAILED LIPS SECTION -->
+						<text x="200" y="175" text-anchor="middle" font-size="11" font-weight="bold" fill="#663333">LIPS & MOUTH</text>
 						
-						<!-- Parotid Region -->
-						<ellipse cx="55" cy="100" rx="12" ry="18" fill="rgba(255,220,180,0.3)" stroke="#c9a77a" stroke-dasharray="2,2" class="clickable-region" data-region="parotid" data-side="Left" data-diagram="Face"/>
-						<ellipse cx="195" cy="100" rx="12" ry="18" fill="rgba(255,220,180,0.3)" stroke="#c9a77a" stroke-dasharray="2,2" class="clickable-region" data-region="parotid" data-side="Right" data-diagram="Face"/>
+						<!-- Upper Lip Left -->
+						<path d="M145,195 Q172,180 200,190" fill="url(#lipGradFace)" stroke="#993333" stroke-width="2" class="clickable-region" data-region="upper-lip" data-side="Left" data-diagram="Face"/>
+						<text x="168" y="188" text-anchor="middle" font-size="7" fill="#fff">UL-L</text>
+						<!-- Upper Lip Right -->
+						<path d="M200,190 Q228,180 255,195" fill="url(#lipGradFace)" stroke="#993333" stroke-width="2" class="clickable-region" data-region="upper-lip" data-side="Right" data-diagram="Face"/>
+						<text x="232" y="188" text-anchor="middle" font-size="7" fill="#fff">UL-R</text>
 						
-						<!-- Ears -->
-						<ellipse cx="48" cy="95" rx="10" ry="20" fill="url(#skinGradient)" stroke="#c9a77a" stroke-width="1.5" class="clickable-region" data-region="ear" data-side="Left" data-diagram="Face"/>
-						<ellipse cx="202" cy="95" rx="10" ry="20" fill="url(#skinGradient)" stroke="#c9a77a" stroke-width="1.5" class="clickable-region" data-region="ear" data-side="Right" data-diagram="Face"/>
+						<!-- Lower Lip Left -->
+						<path d="M145,210 Q172,230 200,215" fill="url(#lipGradFace)" stroke="#993333" stroke-width="2" class="clickable-region" data-region="lower-lip" data-side="Left" data-diagram="Face"/>
+						<text x="168" y="218" text-anchor="middle" font-size="7" fill="#fff">LL-L</text>
+						<!-- Lower Lip Right -->
+						<path d="M200,215 Q228,230 255,210" fill="url(#lipGradFace)" stroke="#993333" stroke-width="2" class="clickable-region" data-region="lower-lip" data-side="Right" data-diagram="Face"/>
+						<text x="232" y="218" text-anchor="middle" font-size="7" fill="#fff">LL-R</text>
 						
-						<!-- Lips/Mouth -->
-						<path d="M100,140 Q125,130 150,140" fill="none" stroke="#cc6666" stroke-width="5" stroke-linecap="round" class="clickable-region" data-region="upper-lip" data-side="Midline" data-diagram="Face"/>
-						<path d="M100,145 Q125,158 150,145" fill="none" stroke="#cc6666" stroke-width="5" stroke-linecap="round" class="clickable-region" data-region="lower-lip" data-side="Midline" data-diagram="Face"/>
+						<!-- Angle of Mouth -->
+						<circle cx="140" cy="203" r="10" fill="rgba(255,150,100,0.6)" stroke="#ff6633" stroke-width="2" class="clickable-region" data-region="angle-of-mouth" data-side="Left" data-diagram="Face"/>
+						<circle cx="260" cy="203" r="10" fill="rgba(255,150,100,0.6)" stroke="#ff6633" stroke-width="2" class="clickable-region" data-region="angle-of-mouth" data-side="Right" data-diagram="Face"/>
+						<text x="140" y="206" text-anchor="middle" font-size="6" fill="#993300">AoM</text>
+						<text x="260" y="206" text-anchor="middle" font-size="6" fill="#993300">AoM</text>
 						
-						<!-- Chin -->
-						<ellipse cx="125" cy="165" rx="25" ry="15" fill="rgba(255,200,150,0.3)" stroke="#deb887" stroke-dasharray="3,3" class="clickable-region" data-region="chin" data-side="Midline" data-diagram="Face"/>
+						<!-- INTRA-ORAL SCHEMATIC BELOW FACE -->
+						<text x="200" y="255" text-anchor="middle" font-size="11" font-weight="bold" fill="#663333">INTRA-ORAL (Schematic)</text>
 						
-						<!-- NECK -->
-						<rect x="85" y="180" width="80" height="80" fill="url(#skinGradient)" stroke="#c9a77a" stroke-width="2" rx="5"/>
+						<!-- Mouth Opening Outline -->
+						<ellipse cx="200" cy="340" rx="140" ry="80" fill="#8b0000" stroke="#660000" stroke-width="2"/>
 						
-						<!-- Neck Regions -->
-						<rect x="85" y="185" width="35" height="35" fill="rgba(100,200,255,0.1)" stroke="#4a90d9" stroke-dasharray="3,3" class="clickable-region" data-region="neck-submandibular" data-side="Left" data-diagram="Neck"/>
-						<rect x="130" y="185" width="35" height="35" fill="rgba(100,200,255,0.1)" stroke="#4a90d9" stroke-dasharray="3,3" class="clickable-region" data-region="neck-submandibular" data-side="Right" data-diagram="Neck"/>
-						<rect x="85" y="225" width="35" height="30" fill="rgba(100,255,100,0.1)" stroke="#4ad94a" stroke-dasharray="3,3" class="clickable-region" data-region="neck-cervical" data-side="Left" data-diagram="Neck"/>
-						<rect x="130" y="225" width="35" height="30" fill="rgba(100,255,100,0.1)" stroke="#4ad94a" stroke-dasharray="3,3" class="clickable-region" data-region="neck-cervical" data-side="Right" data-diagram="Neck"/>
-						<ellipse cx="125" y="210" rx="15" ry="10" fill="rgba(255,100,100,0.2)" stroke="#d94a4a" stroke-dasharray="3,3" class="clickable-region" data-region="neck-submental" data-side="Midline" data-diagram="Neck"/>
+						<!-- Hard Palate -->
+						<ellipse cx="200" cy="290" rx="60" ry="20" fill="rgba(255,200,200,0.6)" stroke="#cc8888" stroke-width="1" class="clickable-region" data-region="hard-palate" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="293" text-anchor="middle" font-size="8" fill="#993333">Hard Palate</text>
 						
-						<!-- Labels -->
-						<text x="125" y="195" text-anchor="middle" class="region-label">Submental</text>
-						<text x="100" y="205" text-anchor="middle" class="region-label">L</text>
-						<text x="150" y="205" text-anchor="middle" class="region-label">R</text>
-						<text x="100" y="245" text-anchor="middle" class="region-label">Cervical L</text>
-						<text x="150" y="245" text-anchor="middle" class="region-label">Cervical R</text>
+						<!-- Soft Palate -->
+						<ellipse cx="200" cy="275" rx="40" ry="12" fill="rgba(255,150,150,0.6)" stroke="#cc6666" stroke-width="1" class="clickable-region" data-region="soft-palate" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="278" text-anchor="middle" font-size="7" fill="#993333">Soft Palate</text>
 						
-						<!-- Markers container -->
+						<!-- Tongue Dorsum -->
+						<ellipse cx="200" cy="340" rx="55" ry="40" fill="#ff6b6b" stroke="#cc4444" stroke-width="2" class="clickable-region" data-region="tongue-dorsum" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="345" text-anchor="middle" font-size="9" fill="#fff">Dorsum Tongue</text>
+						
+						<!-- Lateral Tongue -->
+						<ellipse cx="150" cy="340" rx="15" ry="30" fill="rgba(255,100,100,0.4)" stroke="#cc4444" class="clickable-region" data-region="tongue-lateral" data-side="Left" data-diagram="Face"/>
+						<ellipse cx="250" cy="340" rx="15" ry="30" fill="rgba(255,100,100,0.4)" stroke="#cc4444" class="clickable-region" data-region="tongue-lateral" data-side="Right" data-diagram="Face"/>
+						<text x="150" y="343" text-anchor="middle" font-size="6" fill="#993333">Lat L</text>
+						<text x="250" y="343" text-anchor="middle" font-size="6" fill="#993333">Lat R</text>
+						
+						<!-- Ventral Tongue -->
+						<path d="M165,380 Q200,395 235,380" fill="rgba(255,150,150,0.5)" stroke="#cc6666" stroke-width="2" class="clickable-region" data-region="tongue-ventral" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="388" text-anchor="middle" font-size="7" fill="#993333">Ventral</text>
+						
+						<!-- Floor of Mouth -->
+						<ellipse cx="200" cy="400" rx="50" ry="15" fill="rgba(200,100,100,0.4)" stroke="#993333" class="clickable-region" data-region="floor-of-mouth" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="403" text-anchor="middle" font-size="7" fill="#fff">Floor of Mouth</text>
+						
+						<!-- RMT -->
+						<circle cx="90" cy="320" r="12" fill="rgba(200,150,150,0.5)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="retromolar-trigone" data-side="Left" data-diagram="Face"/>
+						<circle cx="310" cy="320" r="12" fill="rgba(200,150,150,0.5)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="retromolar-trigone" data-side="Right" data-diagram="Face"/>
+						<text x="90" y="323" text-anchor="middle" font-size="6" fill="#993333">RMT</text>
+						<text x="310" y="323" text-anchor="middle" font-size="6" fill="#993333">RMT</text>
+						
+						<!-- Tonsils -->
+						<ellipse cx="100" cy="290" rx="12" ry="18" fill="rgba(255,100,150,0.5)" stroke="#cc3366" class="clickable-region" data-region="tonsil" data-side="Left" data-diagram="Face"/>
+						<ellipse cx="300" cy="290" rx="12" ry="18" fill="rgba(255,100,150,0.5)" stroke="#cc3366" class="clickable-region" data-region="tonsil" data-side="Right" data-diagram="Face"/>
+						<text x="100" y="293" text-anchor="middle" font-size="6" fill="#993366">Tonsil</text>
+						<text x="300" y="293" text-anchor="middle" font-size="6" fill="#993366">Tonsil</text>
+						
+						<!-- Oropharynx -->
+						<ellipse cx="200" cy="265" rx="25" ry="12" fill="rgba(100,50,50,0.6)" stroke="#663333" class="clickable-region" data-region="oropharynx" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="268" text-anchor="middle" font-size="6" fill="#ffcccc">Oropharynx</text>
+						
+						<!-- Alveolus Upper -->
+						<path d="M80,305 Q200,280 320,305" fill="none" stroke="#ffb6c1" stroke-width="8" class="clickable-region" data-region="upper-alveolus" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="298" text-anchor="middle" font-size="6" fill="#993333">Upper Alveolus</text>
+						
+						<!-- Alveolus Lower -->
+						<path d="M80,375 Q200,400 320,375" fill="none" stroke="#ffb6c1" stroke-width="8" class="clickable-region" data-region="lower-alveolus" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="382" text-anchor="middle" font-size="6" fill="#993333">Lower Alveolus</text>
+						
+						<!-- GB Sulcus markers -->
+						<path d="M75,310 Q85,318 95,310" fill="none" stroke="#cc6699" stroke-width="4" class="clickable-region" data-region="upper-gb-sulcus" data-side="Left" data-diagram="Face"/>
+						<path d="M305,310 Q315,318 325,310" fill="none" stroke="#cc6699" stroke-width="4" class="clickable-region" data-region="upper-gb-sulcus" data-side="Right" data-diagram="Face"/>
+						<path d="M75,370 Q85,362 95,370" fill="none" stroke="#cc6699" stroke-width="4" class="clickable-region" data-region="lower-gb-sulcus" data-side="Left" data-diagram="Face"/>
+						<path d="M305,370 Q315,362 325,370" fill="none" stroke="#cc6699" stroke-width="4" class="clickable-region" data-region="lower-gb-sulcus" data-side="Right" data-diagram="Face"/>
+						
+						<!-- Anterior Arch -->
+						<path d="M115,280 L110,300 L118,300 Z" fill="rgba(200,100,100,0.5)" stroke="#993333" class="clickable-region" data-region="anterior-arch" data-side="Left" data-diagram="Face"/>
+						<path d="M285,280 L290,300 L282,300 Z" fill="rgba(200,100,100,0.5)" stroke="#993333" class="clickable-region" data-region="anterior-arch" data-side="Right" data-diagram="Face"/>
+						<text x="115" y="295" text-anchor="middle" font-size="5" fill="#993333">AA</text>
+						<text x="285" y="295" text-anchor="middle" font-size="5" fill="#993333">AA</text>
+						
+						<!-- Base of Tongue -->
+						<ellipse cx="200" cy="310" rx="30" ry="12" fill="rgba(180,60,60,0.5)" stroke="#993333" class="clickable-region" data-region="tongue-base" data-side="Midline" data-diagram="Face"/>
+						<text x="200" y="313" text-anchor="middle" font-size="6" fill="#fff">Base</text>
+						
+						<!-- FOM Left/Right -->
+						<ellipse cx="150" cy="400" rx="20" ry="10" fill="rgba(180,80,80,0.4)" stroke="#993333" class="clickable-region" data-region="fom" data-side="Left" data-diagram="Face"/>
+						<ellipse cx="250" cy="400" rx="20" ry="10" fill="rgba(180,80,80,0.4)" stroke="#993333" class="clickable-region" data-region="fom" data-side="Right" data-diagram="Face"/>
+						<text x="150" y="403" text-anchor="middle" font-size="5" fill="#fff">FOM-L</text>
+						<text x="250" y="403" text-anchor="middle" font-size="5" fill="#fff">FOM-R</text>
+						
 						<g id="face-markers"></g>
 					</svg>
 				</div>
@@ -1485,11 +1547,21 @@ function render_step3_interactive_diagrams(frm) {
 						<!-- Inner Mouth Cavity -->
 						<ellipse cx="140" cy="130" rx="95" ry="85" fill="url(#mouthGradient)" stroke="#660000" stroke-width="2"/>
 						
-						<!-- Upper Lip -->
-						<path d="M50,70 Q140,30 230,70 L220,85 Q140,55 60,85 Z" fill="url(#lipGradient)" stroke="#993333" stroke-width="1" class="clickable-region" data-region="upper-lip" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Upper Lip Left -->
+						<path d="M50,70 Q95,45 140,65 L135,80 Q95,60 60,80 Z" fill="url(#lipGradient)" stroke="#993333" stroke-width="1" class="clickable-region" data-region="upper-lip" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Upper Lip Right -->
+						<path d="M140,65 Q185,45 230,70 L220,85 Q185,60 145,80 Z" fill="url(#lipGradient)" stroke="#993333" stroke-width="1" class="clickable-region" data-region="upper-lip" data-side="Right" data-diagram="Oral Cavity"/>
 						
-						<!-- Lower Lip -->
-						<path d="M50,190 Q140,230 230,190 L220,175 Q140,205 60,175 Z" fill="url(#lipGradient)" stroke="#993333" stroke-width="1" class="clickable-region" data-region="lower-lip" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Lower Lip Left -->
+						<path d="M50,190 Q95,215 140,195 L135,180 Q95,195 60,175 Z" fill="url(#lipGradient)" stroke="#993333" stroke-width="1" class="clickable-region" data-region="lower-lip" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Lower Lip Right -->
+						<path d="M140,195 Q185,215 230,190 L220,175 Q185,195 145,180 Z" fill="url(#lipGradient)" stroke="#993333" stroke-width="1" class="clickable-region" data-region="lower-lip" data-side="Right" data-diagram="Oral Cavity"/>
+						
+						<!-- Angle of Mouth (Commissures) -->
+						<circle cx="48" cy="130" r="8" fill="rgba(255,150,100,0.5)" stroke="#ff6633" stroke-width="2" class="clickable-region" data-region="angle-of-mouth" data-side="Left" data-diagram="Oral Cavity"/>
+						<circle cx="232" cy="130" r="8" fill="rgba(255,150,100,0.5)" stroke="#ff6633" stroke-width="2" class="clickable-region" data-region="angle-of-mouth" data-side="Right" data-diagram="Oral Cavity"/>
+						<text x="48" y="133" text-anchor="middle" font-size="6" fill="#993300">AoM</text>
+						<text x="232" y="133" text-anchor="middle" font-size="6" fill="#993300">AoM</text>
 						
 						<!-- Upper Teeth Row -->
 						<g class="clickable-region" data-region="teeth-upper" data-side="Midline" data-diagram="Teeth">
@@ -1519,11 +1591,25 @@ function render_step3_interactive_diagrams(frm) {
 							<rect x="194" y="167" width="11" height="16" fill="#f5f5f0" stroke="#ccc" rx="2"/>
 						</g>
 						
-						<!-- Gingiva/Alveolus Upper -->
-						<path d="M55,95 Q140,85 225,95 L220,100 Q140,92 60,100 Z" fill="#ffb6c1" stroke="#cc8888" class="clickable-region" data-region="upper-alveolus" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Gingiva/Alveolus Upper Left -->
+						<path d="M55,95 Q95,88 140,92 L138,98 Q95,94 60,100 Z" fill="#ffb6c1" stroke="#cc8888" class="clickable-region" data-region="upper-alveolus" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Gingiva/Alveolus Upper Right -->
+						<path d="M140,92 Q185,88 225,95 L220,100 Q185,94 142,98 Z" fill="#ffb6c1" stroke="#cc8888" class="clickable-region" data-region="upper-alveolus" data-side="Right" data-diagram="Oral Cavity"/>
 						
-						<!-- Gingiva/Alveolus Lower -->
-						<path d="M55,165 Q140,175 225,165 L220,160 Q140,168 60,160 Z" fill="#ffb6c1" stroke="#cc8888" class="clickable-region" data-region="lower-alveolus" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Upper GB Sulcus Left -->
+						<path d="M55,100 Q70,105 85,100" fill="none" stroke="#cc6699" stroke-width="3" class="clickable-region" data-region="upper-gb-sulcus" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Upper GB Sulcus Right -->
+						<path d="M195,100 Q210,105 225,100" fill="none" stroke="#cc6699" stroke-width="3" class="clickable-region" data-region="upper-gb-sulcus" data-side="Right" data-diagram="Oral Cavity"/>
+						
+						<!-- Lower GB Sulcus Left -->
+						<path d="M55,160 Q70,155 85,160" fill="none" stroke="#cc6699" stroke-width="3" class="clickable-region" data-region="lower-gb-sulcus" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Lower GB Sulcus Right -->
+						<path d="M195,160 Q210,155 225,160" fill="none" stroke="#cc6699" stroke-width="3" class="clickable-region" data-region="lower-gb-sulcus" data-side="Right" data-diagram="Oral Cavity"/>
+						
+						<!-- Gingiva/Alveolus Lower Left -->
+						<path d="M55,165 Q95,172 140,168 L138,162 Q95,166 60,160 Z" fill="#ffb6c1" stroke="#cc8888" class="clickable-region" data-region="lower-alveolus" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Gingiva/Alveolus Lower Right -->
+						<path d="M140,168 Q185,172 225,165 L220,160 Q185,166 142,162 Z" fill="#ffb6c1" stroke="#cc8888" class="clickable-region" data-region="lower-alveolus" data-side="Right" data-diagram="Oral Cavity"/>
 						
 						<!-- Buccal Mucosa Left -->
 						<ellipse cx="55" cy="130" rx="20" ry="35" fill="rgba(255,182,193,0.4)" stroke="#cc8888" stroke-width="1" class="clickable-region" data-region="buccal-mucosa" data-side="Left" data-diagram="Oral Cavity"/>
@@ -1533,25 +1619,70 @@ function render_step3_interactive_diagrams(frm) {
 						<ellipse cx="225" cy="130" rx="20" ry="35" fill="rgba(255,182,193,0.4)" stroke="#cc8888" stroke-width="1" class="clickable-region" data-region="buccal-mucosa" data-side="Right" data-diagram="Oral Cavity"/>
 						<text x="225" y="135" text-anchor="middle" class="region-label" fill="#993333">R</text>
 						
-						<!-- Hard Palate -->
-						<ellipse cx="140" cy="105" rx="50" ry="20" fill="rgba(255,200,200,0.5)" stroke="#cc8888" stroke-width="1" class="clickable-region" data-region="hard-palate" data-side="Midline" data-diagram="Oral Cavity"/>
-						<text x="140" y="108" text-anchor="middle" class="region-label" fill="#993333">Hard Palate</text>
+						<!-- Hard Palate Left -->
+						<path d="M90,105 Q115,95 140,102 L140,115 Q115,108 90,115 Z" fill="rgba(255,200,200,0.5)" stroke="#cc8888" stroke-width="1" class="clickable-region" data-region="hard-palate" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Hard Palate Midline -->
+						<ellipse cx="140" cy="105" rx="15" ry="12" fill="rgba(255,180,180,0.6)" stroke="#cc8888" stroke-width="1" class="clickable-region" data-region="hard-palate" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Hard Palate Right -->
+						<path d="M140,102 Q165,95 190,105 L190,115 Q165,108 140,115 Z" fill="rgba(255,200,200,0.5)" stroke="#cc8888" stroke-width="1" class="clickable-region" data-region="hard-palate" data-side="Right" data-diagram="Oral Cavity"/>
+						<text x="140" y="108" text-anchor="middle" class="region-label" fill="#993333">HP</text>
 						
-						<!-- Soft Palate / Uvula -->
-						<path d="M100,95 Q140,85 180,95 L175,100 Q140,92 105,100 Z" fill="rgba(255,150,150,0.5)" stroke="#cc6666" class="clickable-region" data-region="soft-palate" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Soft Palate Left -->
+						<path d="M100,90 Q120,82 140,88 L140,95 Q120,90 105,95 Z" fill="rgba(255,150,150,0.5)" stroke="#cc6666" class="clickable-region" data-region="soft-palate" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Soft Palate Midline (Uvula) -->
+						<ellipse cx="140" cy="85" rx="10" ry="8" fill="rgba(255,120,120,0.6)" stroke="#cc4444" class="clickable-region" data-region="soft-palate" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Soft Palate Right -->
+						<path d="M140,88 Q160,82 180,90 L175,95 Q160,90 140,95 Z" fill="rgba(255,150,150,0.5)" stroke="#cc6666" class="clickable-region" data-region="soft-palate" data-side="Right" data-diagram="Oral Cavity"/>
+						<text x="140" y="88" text-anchor="middle" font-size="6" fill="#993333">SP</text>
 						
-						<!-- Tongue -->
-						<ellipse cx="140" cy="140" rx="55" ry="40" fill="url(#tongueGradient)" stroke="#cc4444" stroke-width="2" class="clickable-region" data-region="tongue-dorsum" data-side="Midline" data-diagram="Tongue"/>
-						<line x1="140" y1="100" x2="140" y2="175" stroke="#cc4444" stroke-width="1" stroke-dasharray="3,3"/>
-						<text x="140" y="145" text-anchor="middle" class="region-label" fill="#fff">Tongue</text>
+						<!-- Anterior Arch (Pillars) -->
+						<path d="M95,85 L90,100 L95,100 L100,88 Z" fill="rgba(200,100,100,0.4)" stroke="#993333" class="clickable-region" data-region="anterior-arch" data-side="Left" data-diagram="Oral Cavity"/>
+						<path d="M180,88 L185,100 L190,100 L185,85 Z" fill="rgba(200,100,100,0.4)" stroke="#993333" class="clickable-region" data-region="anterior-arch" data-side="Right" data-diagram="Oral Cavity"/>
 						
-						<!-- Tongue Lateral Regions -->
-						<ellipse cx="95" cy="140" rx="15" ry="25" fill="rgba(255,100,100,0.2)" stroke="#cc4444" stroke-dasharray="2,2" class="clickable-region" data-region="tongue-lateral" data-side="Left" data-diagram="Tongue"/>
-						<ellipse cx="185" cy="140" rx="15" ry="25" fill="rgba(255,100,100,0.2)" stroke="#cc4444" stroke-dasharray="2,2" class="clickable-region" data-region="tongue-lateral" data-side="Right" data-diagram="Tongue"/>
+						<!-- Tonsils -->
+						<ellipse cx="85" cy="95" rx="8" ry="12" fill="rgba(255,100,150,0.4)" stroke="#cc3366" stroke-width="1" class="clickable-region" data-region="tonsil" data-side="Left" data-diagram="Oral Cavity"/>
+						<ellipse cx="195" cy="95" rx="8" ry="12" fill="rgba(255,100,150,0.4)" stroke="#cc3366" stroke-width="1" class="clickable-region" data-region="tonsil" data-side="Right" data-diagram="Oral Cavity"/>
+						<text x="85" y="98" text-anchor="middle" font-size="5" fill="#993366">T</text>
+						<text x="195" y="98" text-anchor="middle" font-size="5" fill="#993366">T</text>
 						
-						<!-- Floor of Mouth -->
-						<ellipse cx="140" cy="175" rx="45" ry="12" fill="rgba(200,100,100,0.3)" stroke="#993333" class="clickable-region" data-region="floor-of-mouth" data-side="Midline" data-diagram="Oral Cavity"/>
-						<text x="140" y="178" text-anchor="middle" class="region-label" fill="#fff">Floor</text>
+						<!-- Oropharynx -->
+						<ellipse cx="140" cy="75" rx="20" ry="10" fill="rgba(100,50,50,0.5)" stroke="#663333" stroke-width="1" class="clickable-region" data-region="oropharynx" data-side="Midline" data-diagram="Oral Cavity"/>
+						<text x="140" y="78" text-anchor="middle" font-size="5" fill="#ffcccc">Oropharynx</text>
+						
+						<!-- Tongue Dorsum (main body) -->
+						<ellipse cx="140" cy="140" rx="45" ry="35" fill="url(#tongueGradient)" stroke="#cc4444" stroke-width="2" class="clickable-region" data-region="tongue-dorsum" data-side="Midline" data-diagram="Tongue"/>
+						<line x1="140" y1="105" x2="140" y2="175" stroke="#cc4444" stroke-width="1" stroke-dasharray="3,3"/>
+						<text x="140" y="140" text-anchor="middle" class="region-label" fill="#fff">Dorsum</text>
+						
+						<!-- Tongue Lateral Left -->
+						<ellipse cx="100" cy="140" rx="12" ry="25" fill="rgba(255,100,100,0.3)" stroke="#cc4444" stroke-dasharray="2,2" class="clickable-region" data-region="tongue-lateral" data-side="Left" data-diagram="Tongue"/>
+						<!-- Tongue Lateral Right -->
+						<ellipse cx="180" cy="140" rx="12" ry="25" fill="rgba(255,100,100,0.3)" stroke="#cc4444" stroke-dasharray="2,2" class="clickable-region" data-region="tongue-lateral" data-side="Right" data-diagram="Tongue"/>
+						<text x="100" y="143" text-anchor="middle" font-size="6" fill="#fff">Lat L</text>
+						<text x="180" y="143" text-anchor="middle" font-size="6" fill="#fff">Lat R</text>
+						
+						<!-- Ventral Tongue Left -->
+						<path d="M110,165 Q125,175 140,170 L140,178 Q125,183 110,175 Z" fill="rgba(255,150,150,0.4)" stroke="#cc6666" class="clickable-region" data-region="tongue-ventral" data-side="Left" data-diagram="Tongue"/>
+						<!-- Ventral Tongue Midline -->
+						<ellipse cx="140" cy="172" rx="8" ry="6" fill="rgba(255,120,120,0.5)" stroke="#cc4444" class="clickable-region" data-region="tongue-ventral" data-side="Midline" data-diagram="Tongue"/>
+						<!-- Ventral Tongue Right -->
+						<path d="M140,170 Q155,175 170,165 L170,175 Q155,183 140,178 Z" fill="rgba(255,150,150,0.4)" stroke="#cc6666" class="clickable-region" data-region="tongue-ventral" data-side="Right" data-diagram="Tongue"/>
+						
+						<!-- Base of Tongue Left -->
+						<path d="M105,110 Q122,100 140,108 L140,118 Q122,112 108,118 Z" fill="rgba(200,80,80,0.4)" stroke="#993333" class="clickable-region" data-region="tongue-base" data-side="Left" data-diagram="Tongue"/>
+						<!-- Base of Tongue Midline -->
+						<ellipse cx="140" cy="112" rx="10" ry="8" fill="rgba(180,60,60,0.5)" stroke="#993333" class="clickable-region" data-region="tongue-base" data-side="Midline" data-diagram="Tongue"/>
+						<!-- Base of Tongue Right -->
+						<path d="M140,108 Q158,100 175,110 L172,118 Q158,112 140,118 Z" fill="rgba(200,80,80,0.4)" stroke="#993333" class="clickable-region" data-region="tongue-base" data-side="Right" data-diagram="Tongue"/>
+						<text x="140" y="115" text-anchor="middle" font-size="5" fill="#fff">Base</text>
+						
+						<!-- Floor of Mouth Left (FOM L) -->
+						<path d="M95,185 Q117,195 140,188 L140,195 Q117,202 95,195 Z" fill="rgba(200,100,100,0.3)" stroke="#993333" class="clickable-region" data-region="fom" data-side="Left" data-diagram="Oral Cavity"/>
+						<!-- Floor of Mouth Anterior (Midline) -->
+						<ellipse cx="140" cy="190" rx="15" ry="8" fill="rgba(180,80,80,0.4)" stroke="#993333" class="clickable-region" data-region="floor-of-mouth" data-side="Midline" data-diagram="Oral Cavity"/>
+						<!-- Floor of Mouth Right (FOM R) -->
+						<path d="M140,188 Q163,195 185,185 L185,195 Q163,202 140,195 Z" fill="rgba(200,100,100,0.3)" stroke="#993333" class="clickable-region" data-region="fom" data-side="Right" data-diagram="Oral Cavity"/>
+						<text x="140" y="193" text-anchor="middle" font-size="6" fill="#fff">FOM</text>
 						
 						<!-- Retromolar Trigone -->
 						<circle cx="75" cy="115" r="8" fill="rgba(200,150,150,0.4)" stroke="#cc8888" class="clickable-region" data-region="retromolar-trigone" data-side="Left" data-diagram="Oral Cavity"/>
@@ -1611,10 +1742,10 @@ function render_step3_interactive_diagrams(frm) {
 					</svg>
 				</div>
 				
-				<!-- NECK LYMPH NODES -->
+				<!-- NECK LYMPH NODES - Maps to "Other" location -->
 				<div class="diagram-card">
-					<h6><i class="fa fa-project-diagram"></i> Neck - Lymph Node Regions</h6>
-					<svg viewBox="0 0 250 280" style="width: 100%; max-width: 280px; display: block; margin: 0 auto;">
+					<h6><i class="fa fa-project-diagram"></i> Neck Lymph Nodes (Extra-oral)</h6>
+					<svg viewBox="0 0 400 450" style="width: 100%; display: block; margin: 0 auto;">
 						<defs>
 							<radialGradient id="neckSkin" cx="50%" cy="30%" r="70%">
 								<stop offset="0%" style="stop-color:#ffe4c4"/>
@@ -1622,58 +1753,72 @@ function render_step3_interactive_diagrams(frm) {
 							</radialGradient>
 						</defs>
 						
+						<!-- Info text -->
+						<text x="200" y="20" text-anchor="middle" font-size="10" fill="#666">Note: All neck regions map to "Other" location</text>
+						
 						<!-- Neck outline -->
-						<path d="M75,30 Q125,20 175,30 L190,250 Q125,270 60,250 Z" fill="url(#neckSkin)" stroke="#c9a77a" stroke-width="2"/>
+						<path d="M100,50 Q200,30 300,50 L320,400 Q200,430 80,400 Z" fill="url(#neckSkin)" stroke="#c9a77a" stroke-width="2"/>
 						
 						<!-- Jaw line -->
-						<path d="M60,35 Q125,50 190,35" fill="none" stroke="#c9a77a" stroke-width="2"/>
+						<path d="M80,55 Q200,80 320,55" fill="none" stroke="#c9a77a" stroke-width="3"/>
 						
 						<!-- Clavicle -->
-						<path d="M40,250 Q125,235 210,250" fill="none" stroke="#c9a77a" stroke-width="3"/>
+						<path d="M50,400 Q200,370 350,400" fill="none" stroke="#c9a77a" stroke-width="4"/>
 						
-						<!-- Level I - Submental -->
-						<ellipse cx="125" cy="55" rx="25" ry="12" fill="rgba(255,100,100,0.3)" stroke="#ff6666" stroke-width="2" class="clickable-region" data-region="level-i-submental" data-side="Midline" data-diagram="Neck"/>
-						<text x="125" y="58" text-anchor="middle" font-size="8" fill="#cc3333">Ia</text>
+						<!-- Level I - Submental (Ia) -->
+						<ellipse cx="200" cy="85" rx="40" ry="18" fill="rgba(255,100,100,0.4)" stroke="#ff6666" stroke-width="2" class="clickable-region" data-region="level-i-submental" data-side="Midline" data-diagram="Neck"/>
+						<text x="200" y="90" text-anchor="middle" font-size="11" fill="#cc3333" font-weight="bold">Level Ia</text>
+						<text x="200" y="102" text-anchor="middle" font-size="8" fill="#993333">Submental</text>
 						
-						<!-- Level I - Submandibular -->
-						<ellipse cx="85" cy="65" rx="18" ry="15" fill="rgba(255,150,100,0.3)" stroke="#ff9966" stroke-width="2" class="clickable-region" data-region="level-i-submandibular" data-side="Left" data-diagram="Neck"/>
-						<ellipse cx="165" cy="65" rx="18" ry="15" fill="rgba(255,150,100,0.3)" stroke="#ff9966" stroke-width="2" class="clickable-region" data-region="level-i-submandibular" data-side="Right" data-diagram="Neck"/>
-						<text x="85" y="68" text-anchor="middle" font-size="8" fill="#cc6633">Ib</text>
-						<text x="165" y="68" text-anchor="middle" font-size="8" fill="#cc6633">Ib</text>
+						<!-- Level I - Submandibular (Ib) -->
+						<ellipse cx="130" cy="105" rx="30" ry="25" fill="rgba(255,150,100,0.4)" stroke="#ff9966" stroke-width="2" class="clickable-region" data-region="level-i-submandibular" data-side="Left" data-diagram="Neck"/>
+						<ellipse cx="270" cy="105" rx="30" ry="25" fill="rgba(255,150,100,0.4)" stroke="#ff9966" stroke-width="2" class="clickable-region" data-region="level-i-submandibular" data-side="Right" data-diagram="Neck"/>
+						<text x="130" y="108" text-anchor="middle" font-size="10" fill="#cc6633" font-weight="bold">Ib L</text>
+						<text x="270" y="108" text-anchor="middle" font-size="10" fill="#cc6633" font-weight="bold">Ib R</text>
 						
 						<!-- Level II - Upper Jugular -->
-						<ellipse cx="80" cy="100" rx="20" ry="25" fill="rgba(255,255,100,0.3)" stroke="#cccc00" stroke-width="2" class="clickable-region" data-region="level-ii-upper-jugular" data-side="Left" data-diagram="Neck"/>
-						<ellipse cx="170" cy="100" rx="20" ry="25" fill="rgba(255,255,100,0.3)" stroke="#cccc00" stroke-width="2" class="clickable-region" data-region="level-ii-upper-jugular" data-side="Right" data-diagram="Neck"/>
-						<text x="80" y="103" text-anchor="middle" font-size="8" fill="#999900">II</text>
-						<text x="170" y="103" text-anchor="middle" font-size="8" fill="#999900">II</text>
+						<ellipse cx="120" cy="165" rx="35" ry="40" fill="rgba(255,255,100,0.4)" stroke="#cccc00" stroke-width="2" class="clickable-region" data-region="level-ii-upper-jugular" data-side="Left" data-diagram="Neck"/>
+						<ellipse cx="280" cy="165" rx="35" ry="40" fill="rgba(255,255,100,0.4)" stroke="#cccc00" stroke-width="2" class="clickable-region" data-region="level-ii-upper-jugular" data-side="Right" data-diagram="Neck"/>
+						<text x="120" y="165" text-anchor="middle" font-size="11" fill="#999900" font-weight="bold">Level II</text>
+						<text x="120" y="178" text-anchor="middle" font-size="8" fill="#666600">Upper Jugular</text>
+						<text x="280" y="165" text-anchor="middle" font-size="11" fill="#999900" font-weight="bold">Level II</text>
+						<text x="280" y="178" text-anchor="middle" font-size="8" fill="#666600">Upper Jugular</text>
 						
 						<!-- Level III - Middle Jugular -->
-						<ellipse cx="82" cy="150" rx="18" ry="25" fill="rgba(100,255,100,0.3)" stroke="#66cc66" stroke-width="2" class="clickable-region" data-region="level-iii-middle-jugular" data-side="Left" data-diagram="Neck"/>
-						<ellipse cx="168" cy="150" rx="18" ry="25" fill="rgba(100,255,100,0.3)" stroke="#66cc66" stroke-width="2" class="clickable-region" data-region="level-iii-middle-jugular" data-side="Right" data-diagram="Neck"/>
-						<text x="82" y="153" text-anchor="middle" font-size="8" fill="#339933">III</text>
-						<text x="168" y="153" text-anchor="middle" font-size="8" fill="#339933">III</text>
+						<ellipse cx="125" cy="245" rx="30" ry="40" fill="rgba(100,255,100,0.4)" stroke="#66cc66" stroke-width="2" class="clickable-region" data-region="level-iii-middle-jugular" data-side="Left" data-diagram="Neck"/>
+						<ellipse cx="275" cy="245" rx="30" ry="40" fill="rgba(100,255,100,0.4)" stroke="#66cc66" stroke-width="2" class="clickable-region" data-region="level-iii-middle-jugular" data-side="Right" data-diagram="Neck"/>
+						<text x="125" y="245" text-anchor="middle" font-size="11" fill="#339933" font-weight="bold">Level III</text>
+						<text x="125" y="258" text-anchor="middle" font-size="8" fill="#226622">Mid Jugular</text>
+						<text x="275" y="245" text-anchor="middle" font-size="11" fill="#339933" font-weight="bold">Level III</text>
+						<text x="275" y="258" text-anchor="middle" font-size="8" fill="#226622">Mid Jugular</text>
 						
 						<!-- Level IV - Lower Jugular -->
-						<ellipse cx="85" cy="200" rx="18" ry="25" fill="rgba(100,200,255,0.3)" stroke="#66aacc" stroke-width="2" class="clickable-region" data-region="level-iv-lower-jugular" data-side="Left" data-diagram="Neck"/>
-						<ellipse cx="165" cy="200" rx="18" ry="25" fill="rgba(100,200,255,0.3)" stroke="#66aacc" stroke-width="2" class="clickable-region" data-region="level-iv-lower-jugular" data-side="Right" data-diagram="Neck"/>
-						<text x="85" y="203" text-anchor="middle" font-size="8" fill="#3388aa">IV</text>
-						<text x="165" y="203" text-anchor="middle" font-size="8" fill="#3388aa">IV</text>
+						<ellipse cx="130" cy="325" rx="30" ry="40" fill="rgba(100,200,255,0.4)" stroke="#66aacc" stroke-width="2" class="clickable-region" data-region="level-iv-lower-jugular" data-side="Left" data-diagram="Neck"/>
+						<ellipse cx="270" cy="325" rx="30" ry="40" fill="rgba(100,200,255,0.4)" stroke="#66aacc" stroke-width="2" class="clickable-region" data-region="level-iv-lower-jugular" data-side="Right" data-diagram="Neck"/>
+						<text x="130" y="325" text-anchor="middle" font-size="11" fill="#3388aa" font-weight="bold">Level IV</text>
+						<text x="130" y="338" text-anchor="middle" font-size="8" fill="#226688">Lower Jugular</text>
+						<text x="270" y="325" text-anchor="middle" font-size="11" fill="#3388aa" font-weight="bold">Level IV</text>
+						<text x="270" y="338" text-anchor="middle" font-size="8" fill="#226688">Lower Jugular</text>
 						
 						<!-- Level V - Posterior Triangle -->
-						<path d="M55,90 L45,180 L70,180 Z" fill="rgba(200,100,255,0.3)" stroke="#aa66cc" stroke-width="2" class="clickable-region" data-region="level-v-posterior" data-side="Left" data-diagram="Neck"/>
-						<path d="M195,90 L205,180 L180,180 Z" fill="rgba(200,100,255,0.3)" stroke="#aa66cc" stroke-width="2" class="clickable-region" data-region="level-v-posterior" data-side="Right" data-diagram="Neck"/>
-						<text x="55" y="140" text-anchor="middle" font-size="8" fill="#8833aa">V</text>
-						<text x="195" y="140" text-anchor="middle" font-size="8" fill="#8833aa">V</text>
+						<path d="M75,140 L55,300 L95,300 Z" fill="rgba(200,100,255,0.4)" stroke="#aa66cc" stroke-width="2" class="clickable-region" data-region="level-v-posterior" data-side="Left" data-diagram="Neck"/>
+						<path d="M325,140 L345,300 L305,300 Z" fill="rgba(200,100,255,0.4)" stroke="#aa66cc" stroke-width="2" class="clickable-region" data-region="level-v-posterior" data-side="Right" data-diagram="Neck"/>
+						<text x="75" y="230" text-anchor="middle" font-size="10" fill="#8833aa" font-weight="bold">V</text>
+						<text x="325" y="230" text-anchor="middle" font-size="10" fill="#8833aa" font-weight="bold">V</text>
 						
 						<!-- Level VI - Anterior/Central -->
-						<ellipse cx="125" cy="180" rx="20" ry="30" fill="rgba(255,200,200,0.3)" stroke="#cc9999" stroke-width="2" class="clickable-region" data-region="level-vi-central" data-side="Midline" data-diagram="Neck"/>
-						<text x="125" y="183" text-anchor="middle" font-size="8" fill="#996666">VI</text>
+						<ellipse cx="200" cy="290" rx="35" ry="50" fill="rgba(255,200,200,0.4)" stroke="#cc9999" stroke-width="2" class="clickable-region" data-region="level-vi-central" data-side="Midline" data-diagram="Neck"/>
+						<text x="200" y="285" text-anchor="middle" font-size="11" fill="#996666" font-weight="bold">Level VI</text>
+						<text x="200" y="298" text-anchor="middle" font-size="8" fill="#664444">Anterior</text>
 						
 						<!-- Thyroid -->
-						<path d="M110,210 Q125,195 140,210 L145,235 Q125,245 105,235 Z" fill="rgba(100,150,255,0.3)" stroke="#6699cc" stroke-width="2" class="clickable-region" data-region="thyroid" data-side="Midline" data-diagram="Neck"/>
-						<text x="125" y="225" text-anchor="middle" font-size="7" fill="#336699">Thyroid</text>
+						<path d="M175,340 Q200,320 225,340 L235,380 Q200,400 165,380 Z" fill="rgba(100,150,255,0.4)" stroke="#6699cc" stroke-width="2" class="clickable-region" data-region="thyroid" data-side="Midline" data-diagram="Neck"/>
+						<text x="200" y="365" text-anchor="middle" font-size="10" fill="#336699" font-weight="bold">Thyroid</text>
 						
-						<!-- Markers container -->
+						<!-- Legend -->
+						<rect x="20" y="415" width="360" height="30" fill="rgba(255,255,255,0.8)" rx="5"/>
+						<text x="200" y="435" text-anchor="middle" font-size="9" fill="#666">Click any region to mark lesion → Location will be set to "Other"</text>
+						
 						<g id="neck-markers"></g>
 					</svg>
 				</div>
@@ -1704,190 +1849,463 @@ function render_step3_interactive_diagrams(frm) {
 	});
 }
 
-// Add lesion from diagram click
+// Add lesion from diagram click - Updated with all client sheet fields
 function add_lesion_marking(frm, region, side, diagram, event) {
-	// Format region name for display
+	// Format region name for display (Title Case for dialog title)
 	let region_display = region.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+	
+	// Map diagram region to location option - use original hyphenated region for mapping
+	let location_default = map_region_to_location(region, side);
 
 	let d = new frappe.ui.Dialog({
-		title: __('Mark Lesion - {0} ({1})', [region_display, side]),
-		size: 'large',
-		fields: [
-			{
-				fieldtype: 'Section Break',
-				label: 'Location Details'
-			},
-			{
-				fieldname: 'diagram_type',
-				fieldtype: 'Data',
-				label: 'Diagram',
-				default: diagram,
-				read_only: 1
-			},
-			{
-				fieldname: 'location',
-				fieldtype: 'Data',
-				label: 'Location',
-				default: region_display,
-				read_only: 1
-			},
-			{
-				fieldname: 'side',
-				fieldtype: 'Select',
-				label: 'Side',
-				options: 'Left\nRight\nMidline\nBilateral',
-				default: side
-			},
-			{
-				fieldtype: 'Section Break',
-				label: 'Lesion Characteristics'
-			},
-			{
-				fieldname: 'lesion_type',
-				fieldtype: 'Select',
-				label: 'Lesion Type',
-				options: '\nWhite Patch (Leukoplakia)\nRed Patch (Erythroplakia)\nMixed White-Red\nUlcer - Superficial\nUlcer - Deep\nNodule/Lump\nSwelling\nFibrous Bands\nVesicle\nPapule\nPlaque\nMacule\nPustule\nPigmentation\nErosion\nFissure\nGrowth/Mass\nLymph Node\nOther',
-				reqd: 1
-			},
-			{
-				fieldname: 'size_mm',
-				fieldtype: 'Data',
-				label: 'Size (L x W x H in mm)',
-				description: 'Example: 10 x 5 x 2'
-			},
-			{
-				fieldname: 'color',
-				fieldtype: 'Select',
-				label: 'Color',
-				options: '\nWhite\nRed\nBlack\nBrown\nMixed\nNormal'
-			},
-			{
-				fieldtype: 'Section Break',
-				label: 'Notes'
-			},
-			{
-				fieldname: 'description',
-				fieldtype: 'Small Text',
-				label: 'Description'
-			},
-			{
-				fieldname: 'note',
-				fieldtype: 'Small Text',
-				label: 'Clinical Note'
-			}
-		],
+		title: __('Add Lesion - {0}', [region_display]),
+		size: 'extra-large',
+		fields: get_lesion_popup_fields(location_default, side, diagram),
 		primary_action_label: __('Add Lesion'),
 		primary_action: function () {
 			let values = d.get_values();
-
-			// Get current lesion count
-			let lesion_count = (frm.doc.exam_diagram_lesions || []).length + 1;
-
-			// Add to lesions table
-			let row = frm.add_child('exam_diagram_lesions');
-			row.lesion_number = lesion_count;
-			row.diagram_type = values.diagram_type;
-			row.location = values.location;
-			row.side = values.side;
-			row.lesion_type = values.lesion_type;
-			row.size_mm = values.size_mm;
-			row.color = values.color;
-			row.description = values.description;
-			row.note = values.note;
-			row.diagram_region = region;
-
-			frm.refresh_field('exam_diagram_lesions');
+			add_lesion_to_table(frm, values, diagram, region);
 			d.hide();
-
-			// Render the lesions table
-			render_step3_lesions_table(frm);
-
-			frappe.show_alert({
-				message: __('Lesion #{0} added: {1} - {2}', [lesion_count, region_display, side]),
-				indicator: 'green'
-			});
 		}
 	});
 	d.show();
 }
 
-// Render lesions table below the diagram
+// Map diagram region to location dropdown option
+function map_region_to_location(region, side) {
+	// Convert region to lowercase for matching
+	let regionLower = region.toLowerCase().trim();
+	
+	// COMPLETE mapping from ALL SVG data-region values to location dropdown options
+	// Grouped by diagram type for clarity
+	
+	// === FACE DIAGRAM REGIONS ===
+	if (regionLower === 'lower-lip') {
+		return side === 'Left' ? 'Lower lip (L)' : (side === 'Right' ? 'Lower lip (R)' : 'Lower lip (L)');
+	}
+	if (regionLower === 'upper-lip') {
+		return side === 'Left' ? 'Upper lip (L)' : (side === 'Right' ? 'Upper lip (R)' : 'Upper lip (L)');
+	}
+	if (regionLower === 'cheek') {
+		return side === 'Left' ? 'Buccal mucosa (L)' : 'Buccal mucosa (R)';
+	}
+	// Face regions that map to Other (not oral cavity)
+	if (['forehead', 'eye', 'nose', 'ear', 'chin', 'parotid'].includes(regionLower)) {
+		return 'Other';
+	}
+	
+	// === ORAL CAVITY DIAGRAM REGIONS ===
+	if (regionLower === 'buccal-mucosa') {
+		return side === 'Left' ? 'Buccal mucosa (L)' : 'Buccal mucosa (R)';
+	}
+	if (regionLower === 'hard-palate') {
+		return side === 'Midline' ? 'Hard palate (Midline)' : (side === 'Left' ? 'Hard palate (L)' : 'Hard palate (R)');
+	}
+	if (regionLower === 'soft-palate') {
+		return side === 'Midline' ? 'Soft palate (Midline)' : (side === 'Left' ? 'Soft palate (L)' : 'Soft palate (R)');
+	}
+	if (regionLower === 'upper-alveolus') {
+		return side === 'Left' ? 'Upper Alveolus & Gingivo-Buccal Sulcus (L)' : (side === 'Right' ? 'Upper Alveolus & Gingivo-Buccal Sulcus (R)' : 'Upper Alveolus & Gingivo-Buccal Sulcus (L)');
+	}
+	if (regionLower === 'lower-alveolus') {
+		return side === 'Left' ? 'Lower Alveolus & Gingivo-Buccal Sulcus (L)' : (side === 'Right' ? 'Lower Alveolus & Gingivo-Buccal Sulcus (R)' : 'Lower Alveolus & Gingivo-Buccal Sulcus (L)');
+	}
+	if (regionLower === 'floor-of-mouth') {
+		return side === 'Midline' ? 'Anterior Floor of Mouth' : (side === 'Left' ? 'FOM (L)' : 'FOM (R)');
+	}
+	if (regionLower === 'retromolar-trigone') {
+		return side === 'Left' ? 'RMT (L)' : 'RMT (R)';
+	}
+	
+	// === TONGUE DIAGRAM REGIONS ===
+	if (regionLower === 'tongue-dorsum') {
+		return 'Dorsum Tongue';
+	}
+	if (regionLower === 'tongue-lateral') {
+		return side === 'Left' ? 'Lateral Tongue (L)' : 'Lateral Tongue (R)';
+	}
+	if (regionLower === 'tongue-ventral' || regionLower === 'tongue') {
+		return side === 'Midline' ? 'Ventral Tongue (Midline)' : (side === 'Left' ? 'Ventral Tongue (L)' : 'Ventral Tongue (R)');
+	}
+	if (regionLower === 'tongue-tip') {
+		return 'Ventral Tongue (Midline)';
+	}
+	if (regionLower === 'tongue-base') {
+		return side === 'Midline' ? 'Base of Tongue (Midline)' : (side === 'Left' ? 'Base of Tongue (L)' : 'Base of Tongue (R)');
+	}
+	
+	// === TEETH DIAGRAM REGIONS ===
+	if (regionLower === 'teeth-upper') {
+		return 'Upper Alveolus & Gingivo-Buccal Sulcus (L)';
+	}
+	if (regionLower === 'teeth-lower') {
+		return 'Lower Alveolus & Gingivo-Buccal Sulcus (L)';
+	}
+	// Individual teeth (tooth-11, tooth-21, etc.)
+	if (regionLower.startsWith('tooth-')) {
+		let toothNum = parseInt(regionLower.replace('tooth-', ''));
+		// Upper teeth (11-18, 21-28)
+		if (toothNum >= 11 && toothNum <= 18) {
+			return 'Upper Alveolus & Gingivo-Buccal Sulcus (R)';
+		}
+		if (toothNum >= 21 && toothNum <= 28) {
+			return 'Upper Alveolus & Gingivo-Buccal Sulcus (L)';
+		}
+		// Lower teeth (31-38, 41-48)
+		if (toothNum >= 31 && toothNum <= 38) {
+			return 'Lower Alveolus & Gingivo-Buccal Sulcus (L)';
+		}
+		if (toothNum >= 41 && toothNum <= 48) {
+			return 'Lower Alveolus & Gingivo-Buccal Sulcus (R)';
+		}
+		return 'Other';
+	}
+	
+	// === NECK DIAGRAM REGIONS (Level I-V) ===
+	// Level I - Submental & Submandibular
+	if (regionLower === 'level-i-submental' || regionLower === 'neck-submental') {
+		return 'Other'; // Neck region - not oral cavity
+	}
+	if (regionLower === 'level-i-submandibular' || regionLower === 'neck-submandibular') {
+		return 'Other'; // Neck region - not oral cavity
+	}
+	// Level II - Upper Jugular
+	if (regionLower === 'level-ii-upper-jugular') {
+		return 'Other';
+	}
+	// Level III - Middle Jugular
+	if (regionLower === 'level-iii-middle-jugular') {
+		return 'Other';
+	}
+	// Level IV - Lower Jugular
+	if (regionLower === 'level-iv-lower-jugular') {
+		return 'Other';
+	}
+	// Level V - Posterior Triangle
+	if (regionLower === 'level-v-posterior') {
+		return 'Other';
+	}
+	// Level VI - Anterior Compartment
+	if (regionLower === 'level-vi-anterior') {
+		return 'Other';
+	}
+	// Other neck regions
+	if (regionLower === 'neck-cervical' || regionLower === 'cervical') {
+		return 'Other';
+	}
+	if (regionLower.includes('neck') || regionLower.includes('jugular') || regionLower.includes('level-')) {
+		return 'Other';
+	}
+	
+	// === OTHER REGIONS ===
+	if (regionLower === 'tonsil') {
+		return side === 'Left' ? 'Tonsil (L)' : 'Tonsil (R)';
+	}
+	if (regionLower === 'oropharynx') {
+		return side === 'Midline' ? 'Oropharynx (Midline)' : (side === 'Left' ? 'Oropharynx (L)' : 'Oropharynx (R)');
+	}
+	if (regionLower === 'angle-of-mouth' || regionLower === 'labial-commissure') {
+		return side === 'Left' ? 'Angle of Mouth (L)' : 'Angle of Mouth (R)';
+	}
+	if (regionLower === 'anterior-arch') {
+		return side === 'Left' ? 'Anterior Arch (L)' : 'Anterior Arch (R)';
+	}
+	
+	// GB Sulcus regions
+	if (regionLower === 'upper-gb-sulcus') {
+		return side === 'Left' ? 'Upper anterior GB sulcus (L)' : 'Upper anterior GB sulcus (R)';
+	}
+	if (regionLower === 'lower-gb-sulcus') {
+		return side === 'Left' ? 'Lower anterior GB sulcus (L)' : 'Lower anterior GB sulcus (R)';
+	}
+	if (regionLower === 'gb-sulcus' || regionLower === 'sulcus') {
+		return side === 'Left' ? 'Upper anterior GB sulcus (L)' : 'Upper anterior GB sulcus (R)';
+	}
+	
+	// FOM (Floor of Mouth) Left/Right
+	if (regionLower === 'fom') {
+		return side === 'Left' ? 'FOM (L)' : 'FOM (R)';
+	}
+	
+	// Default fallback
+	return 'Other';
+}
+
+// Get all lesion popup fields as per client sheet
+function get_lesion_popup_fields(location_default, side_default, diagram) {
+	return [
+		// Location Section
+		{
+			fieldtype: 'Section Break',
+			label: 'Lesion Location'
+		},
+		{
+			fieldname: 'location',
+			fieldtype: 'Select',
+			label: 'Location',
+			reqd: 1,
+			default: location_default,
+			options: '\nLower lip (L)\nLower lip (R)\nUpper lip (L)\nUpper lip (R)\nAnterior Arch (L)\nAnterior Arch (R)\nUpper anterior GB sulcus (L)\nUpper anterior GB sulcus (R)\nLower anterior GB sulcus (L)\nLower anterior GB sulcus (R)\nAngle of Mouth (L)\nAngle of Mouth (R)\nUpper Alveolus & Gingivo-Buccal Sulcus (L)\nUpper Alveolus & Gingivo-Buccal Sulcus (R)\nLower Alveolus & Gingivo-Buccal Sulcus (L)\nLower Alveolus & Gingivo-Buccal Sulcus (R)\nVentral Tongue (L)\nVentral Tongue (R)\nVentral Tongue (Midline)\nRMT (L)\nRMT (R)\nDorsum Tongue\nAnterior Floor of Mouth\nLateral Tongue (L)\nLateral Tongue (R)\nFOM (L)\nFOM (R)\nBuccal mucosa (L)\nBuccal mucosa (R)\nHard palate (L)\nHard palate (R)\nHard palate (Midline)\nSoft palate (L)\nSoft palate (R)\nSoft palate (Midline)\nOropharynx (L)\nOropharynx (R)\nOropharynx (Midline)\nBase of Tongue (L)\nBase of Tongue (R)\nBase of Tongue (Midline)\nTonsil (L)\nTonsil (R)\nOther'
+		},
+		{
+			fieldtype: 'Column Break'
+		},
+		{
+			fieldname: 'side',
+			fieldtype: 'Select',
+			label: 'Side',
+			options: '\nLeft\nRight\nMidline\nBilateral',
+			default: side_default
+		},
+		// Size Section
+		{
+			fieldtype: 'Section Break',
+			label: 'Size'
+		},
+		{
+			fieldname: 'size_length',
+			fieldtype: 'Float',
+			label: 'Length (mm)'
+		},
+		{
+			fieldtype: 'Column Break'
+		},
+		{
+			fieldname: 'size_width',
+			fieldtype: 'Float',
+			label: 'Width (mm)'
+		},
+		// Color Section
+		{
+			fieldtype: 'Section Break',
+			label: 'Color'
+		},
+		{
+			fieldname: 'color',
+			fieldtype: 'MultiCheck',
+			label: '',
+			options: [
+				{label: 'Uniform', value: 'Uniform'},
+				{label: 'Variegated', value: 'Variegated'},
+				{label: 'White', value: 'White'},
+				{label: 'Red', value: 'Red'},
+				{label: 'Black', value: 'Black'},
+				{label: 'Brown', value: 'Brown'},
+				{label: 'Mixed', value: 'Mixed'}
+			],
+			columns: 7
+		},
+		// Shape Section
+		{
+			fieldtype: 'Section Break',
+			label: 'Shape'
+		},
+		{
+			fieldname: 'shape',
+			fieldtype: 'MultiCheck',
+			label: '',
+			options: [
+				{label: 'Round', value: 'Round'},
+				{label: 'Oval', value: 'Oval'},
+				{label: 'Irregular', value: 'Irregular'},
+				{label: 'Rectangular', value: 'Rectangular'}
+			],
+			columns: 4
+		},
+		// Margin Section (as per client sheet)
+		{
+			fieldtype: 'Section Break',
+			label: 'Margin'
+		},
+		{
+			fieldname: 'margin',
+			fieldtype: 'MultiCheck',
+			label: '',
+			options: [
+				{label: 'Well-defined (circumscribed)', value: 'Well-defined (circumscribed)'},
+				{label: 'Poorly-defined (vague)', value: 'Poorly-defined (vague)'},
+				{label: 'Regular', value: 'Regular'},
+				{label: 'Irregular borders', value: 'Irregular borders'}
+			],
+			columns: 4
+		},
+		// Description/Lesion Type Section (All 26 options from client sheet)
+		{
+			fieldtype: 'Section Break',
+			label: 'Description (Lesion Type)'
+		},
+		{
+			fieldname: 'description',
+			fieldtype: 'MultiCheck',
+			label: '',
+			options: [
+				{label: 'Foul Smell (Halitosis)', value: 'Foul Smell (Halitosis)'},
+				{label: 'Cracked', value: 'Cracked'},
+				{label: 'Macule - flat', value: 'Macule - flat'},
+				{label: 'Vesicle - elevated', value: 'Vesicle - elevated'},
+				{label: 'Pustule - purulent', value: 'Pustule - purulent'},
+				{label: 'Papule (<5mm, raised)', value: 'Papule (<5mm, raised)'},
+				{label: 'Nodule (<2cm, raised)', value: 'Nodule (<2cm, raised)'},
+				{label: 'Plaque - broad, raised', value: 'Plaque - broad, raised'},
+				{label: 'Sessile - broad based', value: 'Sessile - broad based'},
+				{label: 'Pedunculated - stalk-like', value: 'Pedunculated - stalk-like'},
+				{label: 'Leukoplakia - smooth', value: 'Leukoplakia - smooth'},
+				{label: 'Leukoplakia - verrucous', value: 'Leukoplakia - verrucous'},
+				{label: 'Leukoplakia - irregular', value: 'Leukoplakia - irregular'},
+				{label: 'Leukoplakia - lacy like', value: 'Leukoplakia - lacy like'},
+				{label: 'Erythroplakia - Smooth', value: 'Erythroplakia - Smooth'},
+				{label: 'Erythroplakia - Erosive', value: 'Erythroplakia - Erosive'},
+				{label: 'Superficial Ulcer', value: 'Superficial Ulcer'},
+				{label: 'Deep ulcer - smooth margins', value: 'Deep ulcer - smooth margins'},
+				{label: 'Deep ulcer - irregular margins', value: 'Deep ulcer - irregular margins'},
+				{label: 'Proliferative ulcer', value: 'Proliferative ulcer'},
+				{label: 'Fungal lesion (scrapable)', value: 'Fungal lesion (scrapable)'},
+				{label: 'Bleeding', value: 'Bleeding'},
+				{label: 'Marbelled Mucosa', value: 'Marbelled Mucosa'},
+				{label: 'Hypertrophic Mucosa', value: 'Hypertrophic Mucosa'},
+				{label: 'Fibrous bands', value: 'Fibrous bands'},
+				{label: 'Hypertrophic Papillae', value: 'Hypertrophic Papillae'}
+			],
+			columns: 3
+		},
+		// Palpation Section (All options from client sheet)
+		{
+			fieldtype: 'Section Break',
+			label: 'Palpation'
+		},
+		{
+			fieldname: 'palpation',
+			fieldtype: 'MultiCheck',
+			label: '',
+			options: [
+				// Tenderness
+				{label: 'Tender', value: 'Tender'},
+				{label: 'Soft', value: 'Soft'},
+				{label: 'Firm', value: 'Firm'},
+				{label: 'Hard', value: 'Hard'},
+				{label: 'Fluctuant', value: 'Fluctuant'},
+				// Surface
+				{label: 'Smooth', value: 'Smooth'},
+				{label: 'Rough-papillary', value: 'Rough-papillary'},
+				{label: 'Corrugated (rippled)', value: 'Corrugated (rippled)'},
+				{label: 'Fissured (deep crevices)', value: 'Fissured (deep crevices)'},
+				{label: 'Crusted (with scab)', value: 'Crusted (with scab)'},
+				// Other
+				{label: 'Bleeds on Touch', value: 'Bleeds on Touch'},
+				{label: 'Blanching of mucosa', value: 'Blanching of mucosa'},
+				{label: 'Scrapable white', value: 'Scrapable white'},
+				{label: 'Scrapable red', value: 'Scrapable red'},
+				{label: 'Non-Scrapable', value: 'Non-Scrapable'},
+				{label: 'No Induration', value: 'No Induration'},
+				{label: 'Mild Induration', value: 'Mild Induration'},
+				{label: 'Extensive Induration', value: 'Extensive Induration'}
+			],
+			columns: 3
+		},
+		// Texture Section (Surface texture)
+		{
+			fieldtype: 'Section Break',
+			label: 'Surface Texture'
+		},
+		{
+			fieldname: 'texture',
+			fieldtype: 'MultiCheck',
+			label: '',
+			options: [
+				{label: 'Smooth', value: 'Smooth'},
+				{label: 'Rough-papillary (finger-like)', value: 'Rough-papillary'},
+				{label: 'Corrugated (rippled)', value: 'Corrugated'},
+				{label: 'Fissured (deep crevices)', value: 'Fissured'},
+				{label: 'Crusted (with scab)', value: 'Crusted'},
+				{label: 'Granular', value: 'Granular'},
+				{label: 'Verrucous', value: 'Verrucous'}
+			],
+			columns: 4
+		},
+		// Additional Details Section
+		{
+			fieldtype: 'Section Break',
+			label: 'Additional Details'
+		},
+		{
+			fieldname: 'fixed_location',
+			fieldtype: 'Select',
+			label: 'Fixed Location',
+			options: '\nTip of Tongue\nBase of Tongue\nPhiltrum\nAngle of Mouth\nAnterior Pillar\nRetro Molar Trigone'
+		},
+		{
+			fieldtype: 'Column Break'
+		},
+		{
+			fieldname: 'tooth_relation',
+			fieldtype: 'Data',
+			label: 'Relation to Tooth#',
+			description: 'e.g., 23, 24, 25'
+		},
+		{
+			fieldname: 'distance_mm',
+			fieldtype: 'Float',
+			label: 'Distance (mm)',
+			description: 'From fixed landmark'
+		},
+		// Notes Section
+		{
+			fieldtype: 'Section Break',
+			label: 'Notes'
+		},
+		{
+			fieldname: 'note',
+			fieldtype: 'Small Text',
+			label: 'Clinical Notes'
+		}
+	];
+}
+
+// Add lesion to ERPNext table
+function add_lesion_to_table(frm, values, diagram, region) {
+	let lesion_count = (frm.doc.exam_diagram_lesions || []).length + 1;
+	
+	let row = frm.add_child('exam_diagram_lesions');
+	row.lesion_number = lesion_count;
+	row.location = values.location;
+	row.side = values.side;
+	row.size_length = values.size_length;
+	row.size_width = values.size_width;
+	row.color = Array.isArray(values.color) ? values.color.join(', ') : values.color;
+	row.shape = Array.isArray(values.shape) ? values.shape.join(', ') : values.shape;
+	row.margin = Array.isArray(values.margin) ? values.margin.join(', ') : values.margin;
+	row.description = Array.isArray(values.description) ? values.description.join(', ') : values.description;
+	row.palpation = Array.isArray(values.palpation) ? values.palpation.join(', ') : values.palpation;
+	row.texture = Array.isArray(values.texture) ? values.texture.join(', ') : values.texture;
+	row.fixed_location = values.fixed_location;
+	row.tooth_relation = values.tooth_relation;
+	row.distance_mm = values.distance_mm;
+	row.note = values.note;
+	row.diagram_type = diagram;
+	row.diagram_region = region;
+	
+	frm.refresh_field('exam_diagram_lesions');
+	
+	frappe.show_alert({
+		message: __('Lesion #{0} added: {1}', [lesion_count, values.location]),
+		indicator: 'green'
+	});
+}
+
+// Render lesions table - Now uses ERPNext standard table
 function render_step3_lesions_table(frm) {
-	// Find the diagram container
+	// Show the ERPNext standard table
+	if (frm.fields_dict.exam_diagram_lesions) {
+		frm.set_df_property('exam_diagram_lesions', 'hidden', 0);
+		frm.refresh_field('exam_diagram_lesions');
+	}
+	
+	// Remove any old custom table containers
 	let wrapper = frm.fields_dict.exam_diagram_interactive?.$wrapper;
-	if (!wrapper || wrapper.length === 0) {
-		console.log('No diagram wrapper found for lesion table');
-		return;
+	if (wrapper) {
+		wrapper.find('#step3_lesions_table_container').remove();
+		wrapper.find('#step3_lesion_examination_container').remove();
 	}
-
-	// Find or create table container after the diagram
-	let tableContainer = wrapper.find('#step3_lesions_table_container');
-	if (tableContainer.length === 0) {
-		// Create container at the end of the diagram wrapper
-		wrapper.append('<div id="step3_lesions_table_container" style="margin-top: 20px; background: var(--card-bg); border-radius: 8px; padding: 15px;"></div>');
-		tableContainer = wrapper.find('#step3_lesions_table_container');
-	}
-
-	let lesions = frm.doc.exam_diagram_lesions || [];
-
-	if (lesions.length === 0) {
-		tableContainer.html('<p style="color: var(--text-muted); text-align: center; padding: 10px;">No lesions marked yet. Click on diagram regions to add lesions.</p>');
-	} else {
-		let html = `
-			<h5 style="margin-bottom: 15px; font-size: 14px; color: var(--heading-color);">
-				<i class="fa fa-list"></i> Marked Lesions (${lesions.length})
-			</h5>
-			<table class="table table-bordered" style="font-size: 12px; margin: 0; background: var(--card-bg); color: var(--text-color);">
-				<thead>
-					<tr style="background: var(--subtle-bg); color: var(--text-color);">
-						<th style="width: 40px; color: var(--text-color);">#</th>
-						<th style="color: var(--text-color);">Diagram</th>
-						<th style="color: var(--text-color);">Location</th>
-						<th style="color: var(--text-color);">Side</th>
-						<th style="color: var(--text-color);">Lesion Type</th>
-						<th style="color: var(--text-color);">Size (mm)</th>
-						<th style="color: var(--text-color);">Color</th>
-						<th style="width: 60px; color: var(--text-color);">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					${lesions.map((l, idx) => `
-						<tr style="background: var(--card-bg);">
-							<td style="color: var(--text-color);">${l.lesion_number || idx + 1}</td>
-							<td style="color: var(--text-color);">${l.diagram_type || '-'}</td>
-							<td style="color: var(--text-color);">${l.location || '-'}</td>
-							<td style="color: var(--text-color);">${l.side || '-'}</td>
-							<td style="color: var(--text-color);">${l.lesion_type || '-'}</td>
-							<td style="color: var(--text-color);">${l.size_mm || '-'}</td>
-							<td style="color: var(--text-color);">${l.color || '-'}</td>
-							<td>
-								<button type="button" class="btn btn-xs btn-danger step3-delete-lesion" data-idx="${idx}" title="Delete">
-									<i class="fa fa-trash"></i>
-								</button>
-							</td>
-						</tr>
-					`).join('')}
-				</tbody>
-			</table>
-		`;
-		tableContainer.html(html);
-
-		// Delete handler
-		tableContainer.find('.step3-delete-lesion').on('click', function () {
-			let idx = parseInt($(this).data('idx'));
-			if (confirm('Delete this lesion?')) {
-				frm.doc.exam_diagram_lesions.splice(idx, 1);
-				// Re-number
-				frm.doc.exam_diagram_lesions.forEach((l, i) => l.lesion_number = i + 1);
-				frm.refresh_field('exam_diagram_lesions');
-				render_step3_lesions_table(frm);
-				frappe.show_alert({ message: 'Lesion deleted', indicator: 'orange' });
-			}
-		});
-	}
-
-	// Render Lesion Examination Section after the marked lesions table
-	render_step3_lesion_examination(frm, wrapper);
 }
 
 // Lesion Examination Section - moved from Step 2 to Step 3
