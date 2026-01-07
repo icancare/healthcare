@@ -203,15 +203,14 @@ def get_essential_fields():
         "hidden": 1
     })
     
-    # Complaints Table
+    # Complaints Table - NO depends_on, JS controls visibility
     fields.append({
         "fieldname": "exam_complaints",
         "label": "Complaints",
         "fieldtype": "Table",
         "options": "Clinical Exam Complaint",
         "insert_after": "exam_complaints_status",
-        "depends_on": "eval:doc.practitioner && doc.show_clinical_examination",
-        "hidden": 1  # JS controls visibility
+        "hidden": 1  # JS controls visibility - DO NOT add depends_on
     })
     
     # ==================== STEP 2 - PHYSICAL EXAMINATION ====================
@@ -242,15 +241,14 @@ def get_essential_fields():
         "hidden": 1
     })
     
-    # Physical Findings Table
+    # Physical Findings Table - NO depends_on, JS controls visibility
     fields.append({
         "fieldname": "exam_physical_findings",
         "label": "Physical Findings",
         "fieldtype": "Table",
         "options": "Clinical Exam Finding",
         "insert_after": "exam_step2_status",
-        "depends_on": "eval:doc.practitioner && doc.show_clinical_examination",
-        "hidden": 1  # JS controls visibility
+        "hidden": 1  # JS controls visibility - DO NOT add depends_on
     })
     
     # Hidden fields for Mouth popup data
