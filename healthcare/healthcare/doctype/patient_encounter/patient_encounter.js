@@ -1193,7 +1193,12 @@ function check_practitioner_examination_template(frm) {
 				// Practitioner has clinical examination template assigned
 				frm.set_value("show_clinical_examination", 1);
 
-				// Get template details
+				// Set examination template directly from practitioner's default
+				if (!frm.doc.exam_examination_template) {
+					frm.set_value("exam_examination_template", r.message.default_examination_template);
+				}
+
+				// Get template details for alert
 				frappe.call({
 					method: "frappe.client.get_value",
 					args: {
@@ -1203,10 +1208,6 @@ function check_practitioner_examination_template(frm) {
 					},
 					callback: function (template_r) {
 						if (template_r.message) {
-							// Set examination type
-							if (!frm.doc.exam_examination_type) {
-								frm.set_value("exam_examination_type", template_r.message.examination_type);
-							}
 
 							// Render diagram and images
 							setTimeout(() => {

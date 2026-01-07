@@ -147,32 +147,21 @@ def get_essential_fields():
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     
-    # Examination Type
-    fields.append({
-        "fieldname": "exam_examination_type",
-        "label": "Examination Type",
-        "fieldtype": "Select",
-        "options": "\nOral Screening\nDermatology\nGeneral Physical\nENT\nOphthalmology\nCardiology\nOther",
-        "insert_after": "exam_case_type",
-        "depends_on": "eval:doc.practitioner && doc.show_clinical_examination",
-        "read_only": 1
-    })
-    
-    # Column Break
+    # Column Break after Case Type
     fields.append({
         "fieldname": "exam_header_col_break",
         "fieldtype": "Column Break",
-        "insert_after": "exam_examination_type"
+        "insert_after": "exam_case_type"
     })
     
-    # Follow Up Status
+    # Clinical Examination Template - Link field (replaces old Examination Type)
     fields.append({
-        "fieldname": "exam_follow_up_status",
-        "label": "Follow Up Status",
-        "fieldtype": "Select",
-        "options": "\nNo New Complaints\nNo New Lesion\nNew Complaints\nNew Lesion",
+        "fieldname": "exam_examination_template",
+        "label": "Examination Template",
+        "fieldtype": "Link",
+        "options": "Clinical Examination Template",
         "insert_after": "exam_header_col_break",
-        "depends_on": "eval:doc.practitioner && doc.show_clinical_examination && doc.exam_case_type == 'Follow Up Case'"
+        "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     
     # ==================== STEP 1 - PATIENT COMPLAINTS ====================
@@ -180,7 +169,7 @@ def get_essential_fields():
         "fieldname": "exam_step1_section",
         "label": "STEP 1 - Patient Complaints",
         "fieldtype": "Section Break",
-        "insert_after": "exam_follow_up_status",
+        "insert_after": "exam_examination_template",
         "depends_on": "eval:doc.practitioner && doc.show_clinical_examination"
     })
     
