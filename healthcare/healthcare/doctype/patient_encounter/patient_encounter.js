@@ -835,12 +835,17 @@ function create_mouth_edit_form_html(row) {
 		});
 	}
 	
-	let tongueOptions = ['Normal', 'Painful', 'Deviation Left', 'Deviation Right', 'Restricted'];
-	let tongueCheckboxes = tongueOptions.map(opt => {
+	// Check if Normal or Abnormal
+	let isNormal = mouthData.tongue.includes('Normal');
+	let isAbnormal = mouthData.tongue.some(t => t !== 'Normal');
+	
+	// Abnormal conditions checkboxes (excluding Normal)
+	let abnormalConditions = ['Painful', 'Deviation Left', 'Deviation Right', 'Restricted'];
+	let conditionCheckboxes = abnormalConditions.map(opt => {
 		let isChecked = mouthData.tongue.includes(opt) ? 'checked' : '';
 		return `
 			<label style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; margin: 3px; background: ${isChecked ? 'rgba(36, 144, 239, 0.15)' : 'var(--control-bg)'}; border: 1px solid ${isChecked ? '#2490ef' : 'var(--border-color)'}; border-radius: 6px; cursor: pointer; font-size: 13px;">
-				<input type="checkbox" class="step2-edit-tongue-check" data-val="${opt}" ${isChecked} style="width: 16px; height: 16px; accent-color: #2490ef;">
+				<input type="checkbox" class="step2-edit-tongue-condition" data-val="${opt}" ${isChecked} style="width: 16px; height: 16px; accent-color: #2490ef;">
 				<span style="color: ${isChecked ? '#2490ef' : 'var(--text-color)'};">${opt}</span>
 			</label>
 		`;
@@ -883,7 +888,18 @@ function create_mouth_edit_form_html(row) {
 		</div>
 		<div style="margin-top: 15px;">
 			<label class="control-label" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: block;">Tongue Movement</label>
-			<div style="display: flex; flex-wrap: wrap;">${tongueCheckboxes}</div>
+			<div style="display: flex; gap: 20px; margin-bottom: 15px;">
+				<label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px 16px; background: var(--control-bg); border: 2px solid ${isNormal ? '#2490ef' : 'var(--border-color)'}; border-radius: 6px; font-weight: ${isNormal ? '600' : '500'};">
+					<input type="radio" name="tongue_status_edit" class="step2-edit-tongue-radio" value="normal" ${isNormal ? 'checked' : ''} style="width: 18px; height: 18px; cursor: pointer;"> Normal
+				</label>
+				<label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px 16px; background: var(--control-bg); border: 2px solid ${isAbnormal ? '#2490ef' : 'var(--border-color)'}; border-radius: 6px; font-weight: ${isAbnormal ? '600' : '500'};">
+					<input type="radio" name="tongue_status_edit" class="step2-edit-tongue-radio" value="abnormal" ${isAbnormal ? 'checked' : ''} style="width: 18px; height: 18px; cursor: pointer;"> Abnormal
+				</label>
+			</div>
+			<div class="step2-edit-tongue-conditions-wrapper" style="display: ${isAbnormal ? 'block' : 'none'}; padding: 15px; background: var(--subtle-bg); border-radius: 6px; border: 1px solid var(--border-color);">
+				<label style="font-weight: 500; display: block; margin-bottom: 10px; color: var(--heading-color);">Select Conditions:</label>
+				<div style="display: flex; flex-wrap: wrap;">${conditionCheckboxes}</div>
+			</div>
 		</div>
 		<div class="row" style="margin-top: 15px;">
 			<div class="col-md-3">
@@ -940,7 +956,7 @@ function create_teeth_edit_form_html(row) {
 		<div class="row" style="margin-top: 15px;">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label class="control-label" style="font-size: 12px; color: var(--text-muted);">Teeth Numbers</label>
+					<label class="control-label" style="font-size: 12px; color: var(--text-muted);">Teeth Numbers <span class="text-danger">*</span></label>
 					<input type="text" class="form-control step2-edit-teeth-numbers" value="${teethNumbers}" placeholder="e.g., 11, 12, 21, 22">
 					<small style="color: var(--text-muted);">Enter teeth numbers separated by commas</small>
 				</div>
@@ -992,9 +1008,18 @@ function setup_mouth_edit_handlers($form_area, cdt, cdn) {
 		let opening = $($form_area).find('.step2-edit-mouth-opening').val();
 		let measured = $($form_area).find('.step2-edit-mouth-measured').val();
 		let tongue = [];
-		$($form_area).find('.step2-edit-tongue-check:checked').each(function() {
-			tongue.push($(this).data('val'));
-		});
+		
+		// Check tongue status
+		let tongueStatus = $($form_area).find('.step2-edit-tongue-radio:checked').val();
+		if (tongueStatus === 'normal') {
+			tongue.push('Normal');
+		} else if (tongueStatus === 'abnormal') {
+			// Get selected abnormal conditions
+			$($form_area).find('.step2-edit-tongue-condition:checked').each(function() {
+				tongue.push($(this).data('val'));
+			});
+		}
+		
 		let protrusion = $($form_area).find('.step2-edit-mouth-protrusion').val();
 		let hygiene = $($form_area).find('.step2-edit-mouth-hygiene').val();
 		let prosthesis = $($form_area).find('.step2-edit-mouth-prosthesis').val();
@@ -1011,7 +1036,46 @@ function setup_mouth_edit_handlers($form_area, cdt, cdn) {
 		frappe.model.set_value(cdt, cdn, 'abnormality', parts.join(' | '));
 	}
 	
-	$($form_area).find('.step2-edit-mouth-fingers, .step2-edit-mouth-opening, .step2-edit-mouth-measured, .step2-edit-tongue-check, .step2-edit-mouth-protrusion, .step2-edit-mouth-hygiene, .step2-edit-mouth-prosthesis').on('change keyup', updateMouthData);
+	// Tongue radio button change - show/hide conditions
+	$($form_area).find('.step2-edit-tongue-radio').on('change', function() {
+		let $wrapper = $($form_area).find('.step2-edit-tongue-conditions-wrapper');
+		
+		// Update radio button styling
+		$($form_area).find('.step2-edit-tongue-radio').each(function() {
+			let $thisLabel = $(this).closest('label');
+			let isChecked = $(this).is(':checked');
+			$thisLabel.css({
+				'border-color': isChecked ? '#2490ef' : 'var(--border-color)',
+				'font-weight': isChecked ? '600' : '500'
+			});
+		});
+		
+		if ($(this).val() === 'abnormal') {
+			$wrapper.show();
+		} else {
+			$wrapper.hide();
+			// Uncheck all conditions if normal is selected
+			$wrapper.find('.step2-edit-tongue-condition').prop('checked', false);
+		}
+		updateMouthData();
+	});
+	
+	// Tongue condition checkboxes styling and update
+	$($form_area).find('.step2-edit-tongue-condition').on('change', function() {
+		let $label = $(this).closest('label');
+		let isChecked = $(this).is(':checked');
+		$label.css({
+			'background': isChecked ? 'rgba(36, 144, 239, 0.15)' : 'var(--control-bg)',
+			'border-color': isChecked ? '#2490ef' : 'var(--border-color)'
+		});
+		$label.find('span').css({
+			'color': isChecked ? '#2490ef' : 'var(--text-color)'
+		});
+		updateMouthData();
+	});
+	
+	// All other fields
+	$($form_area).find('.step2-edit-mouth-fingers, .step2-edit-mouth-opening, .step2-edit-mouth-measured, .step2-edit-mouth-protrusion, .step2-edit-mouth-hygiene, .step2-edit-mouth-prosthesis').on('change keyup', updateMouthData);
 }
 
 // Setup handlers for Teeth edit form
@@ -1334,13 +1398,23 @@ function render_step3_interactive_diagrams(frm) {
 				font-size: 14px;
 			}
 			.clickable-region {
-				cursor: pointer;
-				transition: all 0.2s ease;
-			}
-			.clickable-region:hover {
-				opacity: 0.7;
-				filter: brightness(1.1);
-			}
+			cursor: pointer;
+			transition: all 0.2s ease;
+			pointer-events: all;
+		}
+		.clickable-region:hover {
+			opacity: 0.7;
+			filter: brightness(1.1);
+		}
+		text.clickable-region {
+			cursor: pointer;
+			pointer-events: all;
+			user-select: none;
+		}
+		text.clickable-region:hover {
+			opacity: 0.8;
+			font-weight: bold;
+		}
 			.region-label {
 				font-size: 8px;
 				fill: #333;
@@ -1411,11 +1485,11 @@ function render_step3_interactive_diagrams(frm) {
 						<!-- Nose (decorative) -->
 						<path d="M200,85 L195,125 Q200,133 205,125 L200,85" fill="#deb887" stroke="#c9a77a"/>
 						
-						<!-- Buccal Mucosa (Cheeks) - maps to oral location -->
-						<ellipse cx="120" cy="140" rx="30" ry="35" fill="rgba(255,182,193,0.3)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="buccal-mucosa" data-side="Left" data-diagram="Face"/>
-						<ellipse cx="280" cy="140" rx="30" ry="35" fill="rgba(255,182,193,0.3)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="buccal-mucosa" data-side="Right" data-diagram="Face"/>
-						<text x="120" y="145" text-anchor="middle" font-size="9" fill="#993333">Buccal L</text>
-						<text x="280" y="145" text-anchor="middle" font-size="9" fill="#993333">Buccal R</text>
+					<!-- Buccal Mucosa (Cheeks) - maps to oral location -->
+					<ellipse cx="120" cy="140" rx="30" ry="35" fill="rgba(255,182,193,0.3)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="buccal-mucosa" data-side="Left" data-diagram="Face"/>
+					<ellipse cx="280" cy="140" rx="30" ry="35" fill="rgba(255,182,193,0.3)" stroke="#cc8888" stroke-width="2" class="clickable-region" data-region="buccal-mucosa" data-side="Right" data-diagram="Face"/>
+					<text x="120" y="145" text-anchor="middle" font-size="9" fill="#993333" class="clickable-region" data-region="buccal-mucosa" data-side="Left" data-diagram="Face" style="cursor: pointer; pointer-events: all;">Buccal L</text>
+					<text x="280" y="145" text-anchor="middle" font-size="9" fill="#993333" class="clickable-region" data-region="buccal-mucosa" data-side="Right" data-diagram="Face" style="cursor: pointer; pointer-events: all;">Buccal R</text>
 						
 						<!-- DETAILED LIPS SECTION -->
 						<text x="200" y="175" text-anchor="middle" font-size="11" font-weight="bold" fill="#663333">LIPS & MOUTH</text>
@@ -1864,6 +1938,25 @@ function add_lesion_marking(frm, region, side, diagram, event) {
 		primary_action_label: __('Add Lesion'),
 		primary_action: function () {
 			let values = d.get_values();
+			
+			// Collect palpation values from HTML checkboxes (3 groups)
+			let palpation_values = [];
+			d.$wrapper.find('input[name="palp_consistency"]:checked').each(function() {
+				palpation_values.push($(this).val());
+			});
+			d.$wrapper.find('input[name="palp_surface"]:checked').each(function() {
+				palpation_values.push($(this).val());
+			});
+			d.$wrapper.find('input[name="palp_findings"]:checked').each(function() {
+				palpation_values.push($(this).val());
+			});
+			
+			// Override palpation with collected values
+			values.palpation = palpation_values;
+			
+			// Remove texture field (no longer exists)
+			delete values.texture;
+			
 			add_lesion_to_table(frm, values, diagram, region);
 			d.hide();
 		}
@@ -2047,16 +2140,6 @@ function get_lesion_popup_fields(location_default, side_default, diagram) {
 			default: location_default,
 			options: '\nLower lip (L)\nLower lip (R)\nUpper lip (L)\nUpper lip (R)\nAnterior Arch (L)\nAnterior Arch (R)\nUpper anterior GB sulcus (L)\nUpper anterior GB sulcus (R)\nLower anterior GB sulcus (L)\nLower anterior GB sulcus (R)\nAngle of Mouth (L)\nAngle of Mouth (R)\nUpper Alveolus & Gingivo-Buccal Sulcus (L)\nUpper Alveolus & Gingivo-Buccal Sulcus (R)\nLower Alveolus & Gingivo-Buccal Sulcus (L)\nLower Alveolus & Gingivo-Buccal Sulcus (R)\nVentral Tongue (L)\nVentral Tongue (R)\nVentral Tongue (Midline)\nRMT (L)\nRMT (R)\nDorsum Tongue\nAnterior Floor of Mouth\nLateral Tongue (L)\nLateral Tongue (R)\nFOM (L)\nFOM (R)\nBuccal mucosa (L)\nBuccal mucosa (R)\nHard palate (L)\nHard palate (R)\nHard palate (Midline)\nSoft palate (L)\nSoft palate (R)\nSoft palate (Midline)\nOropharynx (L)\nOropharynx (R)\nOropharynx (Midline)\nBase of Tongue (L)\nBase of Tongue (R)\nBase of Tongue (Midline)\nTonsil (L)\nTonsil (R)\nOther'
 		},
-		{
-			fieldtype: 'Column Break'
-		},
-		{
-			fieldname: 'side',
-			fieldtype: 'Select',
-			label: 'Side',
-			options: '\nLeft\nRight\nMidline\nBilateral',
-			default: side_default
-		},
 		// Size Section
 		{
 			fieldtype: 'Section Break',
@@ -2171,56 +2254,48 @@ function get_lesion_popup_fields(location_default, side_default, diagram) {
 		// Palpation Section (All options from client sheet)
 		{
 			fieldtype: 'Section Break',
-			label: 'Palpation'
+			label: 'Palpation (Palpate gently using gloved finger)'
 		},
 		{
 			fieldname: 'palpation',
-			fieldtype: 'MultiCheck',
-			label: '',
-			options: [
-				// Tenderness
-				{label: 'Tender', value: 'Tender'},
-				{label: 'Soft', value: 'Soft'},
-				{label: 'Firm', value: 'Firm'},
-				{label: 'Hard', value: 'Hard'},
-				{label: 'Fluctuant', value: 'Fluctuant'},
-				// Surface
-				{label: 'Smooth', value: 'Smooth'},
-				{label: 'Rough-papillary', value: 'Rough-papillary'},
-				{label: 'Corrugated (rippled)', value: 'Corrugated (rippled)'},
-				{label: 'Fissured (deep crevices)', value: 'Fissured (deep crevices)'},
-				{label: 'Crusted (with scab)', value: 'Crusted (with scab)'},
-				// Other
-				{label: 'Bleeds on Touch', value: 'Bleeds on Touch'},
-				{label: 'Blanching of mucosa', value: 'Blanching of mucosa'},
-				{label: 'Scrapable white', value: 'Scrapable white'},
-				{label: 'Scrapable red', value: 'Scrapable red'},
-				{label: 'Non-Scrapable', value: 'Non-Scrapable'},
-				{label: 'No Induration', value: 'No Induration'},
-				{label: 'Mild Induration', value: 'Mild Induration'},
-				{label: 'Extensive Induration', value: 'Extensive Induration'}
-			],
-			columns: 3
-		},
-		// Texture Section (Surface texture)
-		{
-			fieldtype: 'Section Break',
-			label: 'Surface Texture'
-		},
-		{
-			fieldname: 'texture',
-			fieldtype: 'MultiCheck',
-			label: '',
-			options: [
-				{label: 'Smooth', value: 'Smooth'},
-				{label: 'Rough-papillary (finger-like)', value: 'Rough-papillary'},
-				{label: 'Corrugated (rippled)', value: 'Corrugated'},
-				{label: 'Fissured (deep crevices)', value: 'Fissured'},
-				{label: 'Crusted (with scab)', value: 'Crusted'},
-				{label: 'Granular', value: 'Granular'},
-				{label: 'Verrucous', value: 'Verrucous'}
-			],
-			columns: 4
+			fieldtype: 'HTML',
+			options: `
+				<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 15px;">
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Consistency</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_consistency" value="Tender" style="width: 16px; height: 16px;"> Tender</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_consistency" value="Soft" style="width: 16px; height: 16px;"> Soft</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_consistency" value="Firm" style="width: 16px; height: 16px;"> Firm</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_consistency" value="Hard" style="width: 16px; height: 16px;"> Hard</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_consistency" value="Fluctuant" style="width: 16px; height: 16px;"> Fluctuant</label>
+						</div>
+					</div>
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Surface</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_surface" value="Smooth" style="width: 16px; height: 16px;"> Smooth</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_surface" value="Rough-papillary (finger-like projections)" style="width: 16px; height: 16px;"> Rough-papillary (finger-like projections)</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_surface" value="Corrugated (rippled)" style="width: 16px; height: 16px;"> Corrugated (rippled)</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_surface" value="Fissured (deep crevices)" style="width: 16px; height: 16px;"> Fissured (deep crevices)</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_surface" value="Crusted (covered with scab)" style="width: 16px; height: 16px;"> Crusted (covered with scab)</label>
+						</div>
+					</div>
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Findings</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="Bleeds on Touch" style="width: 16px; height: 16px;"> Bleeds on Touch</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="Blanching of mucosa" style="width: 16px; height: 16px;"> Blanching of mucosa</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="Scrapable white" style="width: 16px; height: 16px;"> Scrapable white</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="Scrapable red" style="width: 16px; height: 16px;"> Scrapable red</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="Non-Scrapable" style="width: 16px; height: 16px;"> Non-Scrapable</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="No Induration" style="width: 16px; height: 16px;"> No Induration</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="Mild Induration" style="width: 16px; height: 16px;"> Mild Induration</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;"><input type="checkbox" name="palp_findings" value="Extensive Induration" style="width: 16px; height: 16px;"> Extensive Induration</label>
+						</div>
+					</div>
+				</div>
+			`
 		},
 		// Additional Details Section
 		{
@@ -2245,8 +2320,7 @@ function get_lesion_popup_fields(location_default, side_default, diagram) {
 		{
 			fieldname: 'distance_mm',
 			fieldtype: 'Float',
-			label: 'Distance (mm)',
-			description: 'From fixed landmark'
+			label: 'Distance (mm)'
 		},
 		// Notes Section
 		{
@@ -2268,7 +2342,6 @@ function add_lesion_to_table(frm, values, diagram, region) {
 	let row = frm.add_child('custom_lesion_details');
 	row.lesion_number = lesion_count;
 	row.location = values.location;
-	row.side = values.side;
 	row.size_length = values.size_length;
 	row.size_width = values.size_width;
 	row.color = Array.isArray(values.color) ? values.color.join(', ') : values.color;
@@ -2276,7 +2349,6 @@ function add_lesion_to_table(frm, values, diagram, region) {
 	row.margin = Array.isArray(values.margin) ? values.margin.join(', ') : values.margin;
 	row.description = Array.isArray(values.description) ? values.description.join(', ') : values.description;
 	row.palpation = Array.isArray(values.palpation) ? values.palpation.join(', ') : values.palpation;
-	row.texture = Array.isArray(values.texture) ? values.texture.join(', ') : values.texture;
 	row.fixed_location = values.fixed_location;
 	row.tooth_relation = values.tooth_relation;
 	row.distance_mm = values.distance_mm;
@@ -2383,8 +2455,8 @@ function show_lesion_examination_popup(frm) {
 			{ fieldtype: 'HTML', fieldname: 'location_html', options: `
 				<div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 0;">
 					${LESION_CONFIG.locations.map(loc => `
-						<label style="display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; font-size: 12px;">
-							<input type="radio" name="lesion_location" value="${loc}"> ${loc}
+						<label class="lesion-location-label" style="display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; font-size: 12px;">
+							<input type="radio" name="lesion_location" value="${loc}" style="cursor: pointer;"> <span style="cursor: pointer;">${loc}</span>
 						</label>
 					`).join('')}
 				</div>
@@ -2394,6 +2466,7 @@ function show_lesion_examination_popup(frm) {
 			{ fieldtype: 'Int', fieldname: 'size_length', label: 'Length (mm)' },
 			{ fieldtype: 'Column Break' },
 			{ fieldtype: 'Int', fieldname: 'size_width', label: 'Width (mm)' },
+			{ fieldtype: 'Column Break' },
 			{ fieldtype: 'Section Break', label: 'Color' },
 			{ fieldtype: 'HTML', fieldname: 'color_html', options: `
 				<div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 0;">
@@ -2424,7 +2497,7 @@ function show_lesion_examination_popup(frm) {
 					`).join('')}
 				</div>
 			` },
-			{ fieldtype: 'Section Break', label: 'Description' },
+			{ fieldtype: 'Section Break', label: 'Description (Lesion Type)' },
 			{ fieldtype: 'HTML', fieldname: 'desc_html', options: `
 				<div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 0;">
 					${LESION_CONFIG.descriptions.map(d => `
@@ -2435,15 +2508,55 @@ function show_lesion_examination_popup(frm) {
 				</div>
 			` },
 			{ fieldtype: 'Section Break', label: 'Palpation' },
-			{ fieldtype: 'HTML', fieldname: 'palp_html', options: `
-				<div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 0;">
-					${LESION_CONFIG.palpations.map(p => `
-						<label style="display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 12px;">
-							<input type="checkbox" name="lesion_palp" value="${p}"> ${p}
-						</label>
-					`).join('')}
+			{ fieldtype: 'HTML', fieldname: 'palpation_help', options: `
+				<div style="padding: 8px 12px; background: #e8f4fd; border-left: 3px solid #2490ef; margin-bottom: 15px; border-radius: 4px;">
+					<small style="color: #1f7ab7;"><i class="fa fa-info-circle"></i> Palpate gently using gloved finger</small>
 				</div>
 			` },
+			{ fieldtype: 'HTML', fieldname: 'palp_html', options: `
+				<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 10px 0;">
+					<!-- Consistency Column -->
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Consistency</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							${LESION_CONFIG.palpation.consistency.map(item => `
+								<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;">
+									<input type="checkbox" name="lesion_palp_consistency" value="${item}" style="width: 16px; height: 16px;"> ${item}
+								</label>
+							`).join('')}
+						</div>
+					</div>
+					<!-- Surface Column -->
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Surface</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							${LESION_CONFIG.palpation.surface.map(item => `
+								<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;">
+									<input type="checkbox" name="lesion_palp_surface" value="${item}" style="width: 16px; height: 16px;"> ${item}
+								</label>
+							`).join('')}
+						</div>
+					</div>
+					<!-- Findings Column -->
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Findings</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							${LESION_CONFIG.palpation.findings.map(item => `
+								<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;">
+									<input type="checkbox" name="lesion_palp_findings" value="${item}" style="width: 16px; height: 16px;"> ${item}
+								</label>
+							`).join('')}
+						</div>
+					</div>
+				</div>
+			` },
+			{ fieldtype: 'Section Break', label: 'Additional Details' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Select', fieldname: 'fixed_location', label: 'Fixed Location', options: '\n' + LESION_CONFIG.fixedLocations.join('\n') },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Int', fieldname: 'distance_mm', label: 'Distance in mm (from Fixed Location)' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Data', fieldname: 'relation_tooth', label: 'Relation to tooth#' },
 			{ fieldtype: 'Section Break', label: 'Notes' },
 			{ fieldtype: 'Small Text', fieldname: 'notes', label: 'Notes' }
 		],
@@ -2471,8 +2584,11 @@ function show_lesion_examination_popup(frm) {
 			let descriptions = [];
 			d.$wrapper.find('input[name="lesion_desc"]:checked').each(function() { descriptions.push($(this).val()); });
 			
+			// Get palpation values from all 3 groups
 			let palpations = [];
-			d.$wrapper.find('input[name="lesion_palp"]:checked').each(function() { palpations.push($(this).val()); });
+			d.$wrapper.find('input[name="lesion_palp_consistency"]:checked').each(function() { palpations.push($(this).val()); });
+			d.$wrapper.find('input[name="lesion_palp_surface"]:checked').each(function() { palpations.push($(this).val()); });
+			d.$wrapper.find('input[name="lesion_palp_findings"]:checked').each(function() { palpations.push($(this).val()); });
 			
 			// Add to child table (exam_lesion_details or similar)
 			if (!frm.doc.exam_lesion_examination) {
@@ -2488,6 +2604,9 @@ function show_lesion_examination_popup(frm) {
 			row.margin = margins.join(', ');
 			row.description = descriptions.join(', ');
 			row.palpation = palpations.join(', ');
+			row.fixed_location = values.fixed_location || '';
+			row.distance_mm = values.distance_mm || '';
+			row.relation_tooth = values.relation_tooth || '';
 			row.note = values.notes || '';
 			
 			frm.refresh_field('exam_lesion_examination');
@@ -2504,6 +2623,221 @@ function show_lesion_examination_popup(frm) {
 				message: 'Lesion examination added',
 				indicator: 'green'
 			});
+		}
+	});
+
+	// Make entire label clickable for location
+	d.$wrapper.on('click', '.lesion-location-label', function(e) {
+		if (e.target.tagName !== 'INPUT') {
+			$(this).find('input[type="radio"]').prop('checked', true);
+		}
+	});
+
+	d.show();
+}
+
+// Lesion Examination Edit Popup
+function show_lesion_examination_edit_popup(frm, idx, container) {
+	let lesion = frm.doc.exam_lesion_examination[idx];
+	
+	// Parse existing palpation values into groups
+	let existingPalpations = (lesion.palpation || '').split(', ').map(p => p.trim()).filter(p => p);
+	
+	let d = new frappe.ui.Dialog({
+		title: 'Edit Lesion Examination Details',
+		size: 'extra-large',
+		fields: [
+			{ fieldtype: 'Section Break', label: 'Lesion Location' },
+			{ fieldtype: 'HTML', fieldname: 'location_html', options: `
+				<div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 0;">
+					${LESION_CONFIG.locations.map(loc => `
+						<label class="lesion-location-label" style="display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; font-size: 12px;">
+							<input type="radio" name="lesion_location" value="${loc}" ${lesion.location === loc ? 'checked' : ''} style="cursor: pointer;"> <span style="cursor: pointer;">${loc}</span>
+						</label>
+					`).join('')}
+				</div>
+			` },
+			{ fieldtype: 'Section Break', label: 'Size' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Int', fieldname: 'size_length', label: 'Length (mm)', default: lesion.size_length || '' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Int', fieldname: 'size_width', label: 'Width (mm)', default: lesion.size_width || '' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Section Break', label: 'Color' },
+			{ fieldtype: 'HTML', fieldname: 'color_html', options: `
+				<div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 0;">
+					${LESION_CONFIG.colors.map(c => {
+						let isChecked = (lesion.color || '').split(', ').includes(c);
+						return `
+						<label style="display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 12px;">
+							<input type="checkbox" name="lesion_color" value="${c}" ${isChecked ? 'checked' : ''}> ${c}
+						</label>
+						`;
+					}).join('')}
+				</div>
+			` },
+			{ fieldtype: 'Section Break', label: 'Shape' },
+			{ fieldtype: 'HTML', fieldname: 'shape_html', options: `
+				<div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 0;">
+					${LESION_CONFIG.shapes.map(s => {
+						let isChecked = (lesion.shape || '').split(', ').includes(s);
+						return `
+						<label style="display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 12px;">
+							<input type="checkbox" name="lesion_shape" value="${s}" ${isChecked ? 'checked' : ''}> ${s}
+						</label>
+						`;
+					}).join('')}
+				</div>
+			` },
+			{ fieldtype: 'Section Break', label: 'Margin' },
+			{ fieldtype: 'HTML', fieldname: 'margin_html', options: `
+				<div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 0;">
+					${LESION_CONFIG.margins.map(m => {
+						let isChecked = (lesion.margin || '').split(', ').includes(m);
+						return `
+						<label style="display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 12px;">
+							<input type="checkbox" name="lesion_margin" value="${m}" ${isChecked ? 'checked' : ''}> ${m}
+						</label>
+						`;
+					}).join('')}
+				</div>
+			` },
+			{ fieldtype: 'Section Break', label: 'Description (Lesion Type)' },
+			{ fieldtype: 'HTML', fieldname: 'desc_html', options: `
+				<div style="display: flex; flex-wrap: wrap; gap: 10px; padding: 10px 0;">
+					${LESION_CONFIG.descriptions.map(desc => {
+						let isChecked = (lesion.description || '').split(', ').includes(desc);
+						return `
+						<label style="display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 12px;">
+							<input type="checkbox" name="lesion_desc" value="${desc}" ${isChecked ? 'checked' : ''}> ${desc}
+						</label>
+						`;
+					}).join('')}
+				</div>
+			` },
+			{ fieldtype: 'Section Break', label: 'Palpation' },
+			{ fieldtype: 'HTML', fieldname: 'palpation_help', options: `
+				<div style="padding: 8px 12px; background: #e8f4fd; border-left: 3px solid #2490ef; margin-bottom: 15px; border-radius: 4px;">
+					<small style="color: #1f7ab7;"><i class="fa fa-info-circle"></i> Palpate gently using gloved finger</small>
+				</div>
+			` },
+			{ fieldtype: 'HTML', fieldname: 'palp_html', options: `
+				<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 10px 0;">
+					<!-- Consistency Column -->
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Consistency</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							${LESION_CONFIG.palpation.consistency.map(item => {
+								let isChecked = existingPalpations.includes(item);
+								return `
+								<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;">
+									<input type="checkbox" name="lesion_palp_consistency" value="${item}" ${isChecked ? 'checked' : ''} style="width: 16px; height: 16px;"> ${item}
+								</label>
+								`;
+							}).join('')}
+						</div>
+					</div>
+					<!-- Surface Column -->
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Surface</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							${LESION_CONFIG.palpation.surface.map(item => {
+								let isChecked = existingPalpations.includes(item);
+								return `
+								<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;">
+									<input type="checkbox" name="lesion_palp_surface" value="${item}" ${isChecked ? 'checked' : ''} style="width: 16px; height: 16px;"> ${item}
+								</label>
+								`;
+							}).join('')}
+						</div>
+					</div>
+					<!-- Findings Column -->
+					<div>
+						<h6 style="font-weight: 600; margin-bottom: 10px; color: var(--heading-color); font-size: 13px;">Findings</h6>
+						<div style="display: flex; flex-direction: column; gap: 8px;">
+							${LESION_CONFIG.palpation.findings.map(item => {
+								let isChecked = existingPalpations.includes(item);
+								return `
+								<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px;">
+									<input type="checkbox" name="lesion_palp_findings" value="${item}" ${isChecked ? 'checked' : ''} style="width: 16px; height: 16px;"> ${item}
+								</label>
+								`;
+							}).join('')}
+						</div>
+					</div>
+				</div>
+			` },
+			{ fieldtype: 'Section Break', label: 'Additional Details' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Select', fieldname: 'fixed_location', label: 'Fixed Location', options: '\n' + LESION_CONFIG.fixedLocations.join('\n'), default: lesion.fixed_location || '' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Int', fieldname: 'distance_mm', label: 'Distance in mm (from Fixed Location)', default: lesion.distance_mm || '' },
+			{ fieldtype: 'Column Break' },
+			{ fieldtype: 'Data', fieldname: 'relation_tooth', label: 'Relation to tooth#', default: lesion.relation_tooth || '' },
+			{ fieldtype: 'Section Break', label: 'Notes' },
+			{ fieldtype: 'Small Text', fieldname: 'notes', label: 'Notes', default: lesion.note || '' }
+		],
+		primary_action_label: 'Update Lesion',
+		primary_action: function() {
+			let values = d.get_values();
+			
+			// Get location
+			let location = d.$wrapper.find('input[name="lesion_location"]:checked').val();
+			if (!location) {
+				frappe.msgprint('Please select a lesion location');
+				return;
+			}
+			
+			// Get selected values
+			let colors = [];
+			d.$wrapper.find('input[name="lesion_color"]:checked').each(function() { colors.push($(this).val()); });
+			
+			let shapes = [];
+			d.$wrapper.find('input[name="lesion_shape"]:checked').each(function() { shapes.push($(this).val()); });
+			
+			let margins = [];
+			d.$wrapper.find('input[name="lesion_margin"]:checked').each(function() { margins.push($(this).val()); });
+			
+			let descriptions = [];
+			d.$wrapper.find('input[name="lesion_desc"]:checked').each(function() { descriptions.push($(this).val()); });
+			
+			// Get palpation values from all 3 groups
+			let palpations = [];
+			d.$wrapper.find('input[name="lesion_palp_consistency"]:checked').each(function() { palpations.push($(this).val()); });
+			d.$wrapper.find('input[name="lesion_palp_surface"]:checked').each(function() { palpations.push($(this).val()); });
+			d.$wrapper.find('input[name="lesion_palp_findings"]:checked').each(function() { palpations.push($(this).val()); });
+			
+			// Update existing row
+			frm.doc.exam_lesion_examination[idx].location = location;
+			frm.doc.exam_lesion_examination[idx].size_length = values.size_length || '';
+			frm.doc.exam_lesion_examination[idx].size_width = values.size_width || '';
+			frm.doc.exam_lesion_examination[idx].color = colors.join(', ');
+			frm.doc.exam_lesion_examination[idx].shape = shapes.join(', ');
+			frm.doc.exam_lesion_examination[idx].margin = margins.join(', ');
+			frm.doc.exam_lesion_examination[idx].description = descriptions.join(', ');
+			frm.doc.exam_lesion_examination[idx].palpation = palpations.join(', ');
+			frm.doc.exam_lesion_examination[idx].fixed_location = values.fixed_location || '';
+			frm.doc.exam_lesion_examination[idx].distance_mm = values.distance_mm || '';
+			frm.doc.exam_lesion_examination[idx].relation_tooth = values.relation_tooth || '';
+			frm.doc.exam_lesion_examination[idx].note = values.notes || '';
+			
+			frm.refresh_field('exam_lesion_examination');
+			
+			// Re-render lesion exam table
+			render_step3_lesion_exam_table(frm, container);
+			
+			d.hide();
+			frappe.show_alert({
+				message: 'Lesion examination updated',
+				indicator: 'green'
+			});
+		}
+	});
+
+	// Make entire label clickable for location
+	d.$wrapper.on('click', '.lesion-location-label', function(e) {
+		if (e.target.tagName !== 'INPUT') {
+			$(this).find('input[type="radio"]').prop('checked', true);
 		}
 	});
 
@@ -2537,6 +2871,9 @@ function render_step3_lesion_exam_table(frm, container) {
 					<th>Margin</th>
 					<th>Description</th>
 					<th>Palpation</th>
+					<th>Fixed Location</th>
+					<th>Distance (mm)</th>
+					<th>Relation to tooth#</th>
 					<th>Notes</th>
 					<th>Actions</th>
 				</tr>
@@ -2552,8 +2889,14 @@ function render_step3_lesion_exam_table(frm, container) {
 						<td>${l.margin || '-'}</td>
 						<td>${l.description || '-'}</td>
 						<td>${l.palpation || '-'}</td>
+						<td>${l.fixed_location || '-'}</td>
+						<td>${l.distance_mm || '-'}</td>
+						<td>${l.relation_tooth || '-'}</td>
 						<td>${l.note || '-'}</td>
 						<td>
+							<button type="button" class="btn btn-xs btn-primary step3-edit-lesion-exam" data-idx="${idx}" style="margin-right: 5px;">
+								<i class="fa fa-edit"></i>
+							</button>
 							<button type="button" class="btn btn-xs btn-danger step3-delete-lesion-exam" data-idx="${idx}">
 								<i class="fa fa-trash"></i>
 							</button>
@@ -2565,6 +2908,12 @@ function render_step3_lesion_exam_table(frm, container) {
 	`;
 
 	tableContainer.html(html);
+
+	// Edit handler
+	tableContainer.find('.step3-edit-lesion-exam').on('click', function() {
+		let idx = parseInt($(this).data('idx'));
+		show_lesion_examination_edit_popup(frm, idx, container);
+	});
 
 	// Delete handler
 	tableContainer.find('.step3-delete-lesion-exam').on('click', function() {
@@ -3687,8 +4036,35 @@ const LESION_CONFIG = {
 	colors: ['Uniform', 'Variegated', 'White', 'Red', 'Black', 'Brown', 'Mixed'],
 	shapes: ['Round', 'Oval', 'Irregular', 'Rectangular'],
 	margins: ['Well-defined', 'Poorly-defined', 'Regular', 'Irregular borders'],
-	descriptions: ['Macule', 'Papule', 'Nodule', 'Plaque', 'Vesicle', 'Ulcer', 'Leukoplakia', 'Erythroplakia'],
-	palpations: ['Tender', 'Soft', 'Firm', 'Hard', 'Smooth', 'Rough', 'Bleeds on touch', 'Non-scrapable']
+	descriptions: ['Bleeding', 'Hypertrophic Mucosa', 'Papule (<5mm, raised)'],
+	palpation: {
+		consistency: ['Tender', 'Soft', 'Firm', 'Hard', 'Fluctuant'],
+		surface: [
+			'Smooth',
+			'Rough-papillary (finger-like projections)',
+			'Corrugated (rippled)',
+			'Fissured (deep crevices)',
+			'Crusted (covered with scab)'
+		],
+		findings: [
+			'Bleeds on Touch',
+			'Blanching of mucosa',
+			'Scrapable white',
+			'Scrapable red',
+			'Non-Scrapable',
+			'No Induration',
+			'Mild Induration',
+			'Extensive Induration'
+		]
+	},
+	fixedLocations: [
+		'Tip of Tongue',
+		'Base of Tongue',
+		'Philtrum',
+		'Angle of Mouth',
+		'Anterior Pillar',
+		'Retro Molar Trigone'
+	]
 };
 
 // Store findings in memory for this form session
@@ -4123,41 +4499,47 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 	});
 }
 
-// Mouth Special Popup - Linked with Vital Signs
+// Mouth Special Popup - Fresh form every time (no auto-fill)
 function show_mouth_popup(frm) {
-	// Get existing mouth data from exam fields if available
-	let existingFingers = frm.doc.exam_mouth_opening_fingers || '';
-	let existingOpeningMM = frm.doc.exam_mouth_opening_mm || '';
-	
 	let d = new frappe.ui.Dialog({
 		title: 'Physical Examination - Mouth',
 		size: 'large',
 		fields: [
 			{ fieldtype: 'Section Break', label: 'Mouth Opening' },
 			{ fieldtype: 'Column Break' },
-			{ fieldtype: 'Select', fieldname: 'fingers', label: 'Mouth Opening (Fingers)', options: '\nOne\nTwo\nThree\nFour', default: existingFingers },
+			{ fieldtype: 'Select', fieldname: 'fingers', label: 'Mouth Opening (Fingers)', options: '\nOne\nTwo\nThree\nFour' },
 			{ fieldtype: 'Column Break' },
-			{ fieldtype: 'Int', fieldname: 'opening_mm', label: 'Mouth Opening (mm)', default: existingOpeningMM },
+			{ fieldtype: 'Int', fieldname: 'opening_mm', label: 'Mouth Opening (mm)' },
 			{ fieldtype: 'Column Break' },
 			{ fieldtype: 'Select', fieldname: 'measured_with', label: 'Measured With', options: '\nTrisCare\nCaliper\nOther' },
 			{ fieldtype: 'Section Break', label: 'Tongue Movement' },
 			{ fieldtype: 'HTML', fieldname: 'tongue_html', options: `
-				<div style="display: flex; flex-wrap: wrap; gap: 15px; padding: 10px 0;">
-					<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
-						<input type="checkbox" id="tongue_normal" style="width: 16px; height: 16px;"> Normal
-					</label>
-					<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
-						<input type="checkbox" id="tongue_painful" style="width: 16px; height: 16px;"> Painful
-					</label>
-					<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
-						<input type="checkbox" id="tongue_dev_left" style="width: 16px; height: 16px;"> Deviation Left
-					</label>
-					<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
-						<input type="checkbox" id="tongue_dev_right" style="width: 16px; height: 16px;"> Deviation Right
-					</label>
-					<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
-						<input type="checkbox" id="tongue_restricted" style="width: 16px; height: 16px;"> Restricted
-					</label>
+				<div style="padding: 10px 0;">
+					<div style="display: flex; gap: 20px; margin-bottom: 15px;">
+						<label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px 16px; background: var(--control-bg); border: 2px solid var(--border-color); border-radius: 6px; font-weight: 500;">
+							<input type="radio" name="tongue_status" id="tongue_normal" value="normal" style="width: 18px; height: 18px; cursor: pointer;"> Normal
+						</label>
+						<label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 8px 16px; background: var(--control-bg); border: 2px solid var(--border-color); border-radius: 6px; font-weight: 500;">
+							<input type="radio" name="tongue_status" id="tongue_abnormal" value="abnormal" style="width: 18px; height: 18px; cursor: pointer;"> Abnormal
+						</label>
+					</div>
+					<div id="tongue_conditions_wrapper" style="display: none; padding: 15px; background: var(--subtle-bg); border-radius: 6px; border: 1px solid var(--border-color);">
+						<label style="font-weight: 500; display: block; margin-bottom: 10px; color: var(--heading-color);">Select Conditions:</label>
+						<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
+								<input type="checkbox" id="tongue_painful" style="width: 16px; height: 16px;"> Painful
+							</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
+								<input type="checkbox" id="tongue_dev_left" style="width: 16px; height: 16px;"> Deviation Left
+							</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
+								<input type="checkbox" id="tongue_dev_right" style="width: 16px; height: 16px;"> Deviation Right
+							</label>
+							<label style="display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; background: var(--control-bg); border: 1px solid var(--border-color); border-radius: 4px;">
+								<input type="checkbox" id="tongue_restricted" style="width: 16px; height: 16px;"> Restricted
+							</label>
+						</div>
+					</div>
 				</div>
 			` },
 			{ fieldtype: 'Section Break', label: 'Tongue Protrusion' },
@@ -4175,11 +4557,17 @@ function show_mouth_popup(frm) {
 			
 			// Get tongue values
 			let tongue = [];
-			if (d.$wrapper.find('#tongue_normal').is(':checked')) tongue.push('Normal');
-			if (d.$wrapper.find('#tongue_painful').is(':checked')) tongue.push('Painful');
-			if (d.$wrapper.find('#tongue_dev_left').is(':checked')) tongue.push('Deviation Left');
-			if (d.$wrapper.find('#tongue_dev_right').is(':checked')) tongue.push('Deviation Right');
-			if (d.$wrapper.find('#tongue_restricted').is(':checked')) tongue.push('Restricted');
+			let tongueStatus = d.$wrapper.find('input[name="tongue_status"]:checked').val();
+			
+			if (tongueStatus === 'normal') {
+				tongue.push('Normal');
+			} else if (tongueStatus === 'abnormal') {
+				// Get selected conditions only if Abnormal is selected
+				if (d.$wrapper.find('#tongue_painful').is(':checked')) tongue.push('Painful');
+				if (d.$wrapper.find('#tongue_dev_left').is(':checked')) tongue.push('Deviation Left');
+				if (d.$wrapper.find('#tongue_dev_right').is(':checked')) tongue.push('Deviation Right');
+				if (d.$wrapper.find('#tongue_restricted').is(':checked')) tongue.push('Restricted');
+			}
 			
 			// Build abnormality string
 			let abnParts = [];
@@ -4195,10 +4583,6 @@ function show_mouth_popup(frm) {
 				frappe.msgprint(__('Please fill at least one field'));
 				return;
 			}
-			
-			// Update exam fields for future reference
-			if (values.fingers) frm.set_value('exam_mouth_opening_fingers', values.fingers);
-			if (values.opening_mm) frm.set_value('exam_mouth_opening_mm', values.opening_mm);
 			
 			// Add to child table
 			let row = frm.add_child('custom_physical_findings');
@@ -4237,6 +4621,20 @@ function show_mouth_popup(frm) {
 	});
 
 	d.show();
+	
+	// Add event listeners for tongue movement radio buttons
+	d.$wrapper.find('input[name="tongue_status"]').on('change', function() {
+		let selectedValue = $(this).val();
+		if (selectedValue === 'normal') {
+			// Hide conditions wrapper
+			d.$wrapper.find('#tongue_conditions_wrapper').slideUp(200);
+			// Uncheck all condition checkboxes
+			d.$wrapper.find('#tongue_painful, #tongue_dev_left, #tongue_dev_right, #tongue_restricted').prop('checked', false);
+		} else if (selectedValue === 'abnormal') {
+			// Show conditions wrapper
+			d.$wrapper.find('#tongue_conditions_wrapper').slideDown(200);
+		}
+	});
 }
 
 // Teeth Special Popup (renamed from Dental) with duplicate validation
@@ -4265,7 +4663,7 @@ function show_teeth_popup(frm) {
 			{ fieldtype: 'Section Break', label: 'Teeth Information' },
 			{ fieldtype: 'HTML', fieldname: 'teeth_input_html', options: `
 				<div style="margin-bottom: 15px;">
-					<label style="font-weight: 500; margin-bottom: 5px; display: block;">Teeth Numbers</label>
+					<label style="font-weight: 500; margin-bottom: 5px; display: block;">Teeth Numbers <span style="color: red;">*</span></label>
 					<input type="text" id="teeth_numbers_input" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;" placeholder="e.g., 11, 12, 21, 22">
 					<small style="color: var(--text-muted);">Enter teeth numbers separated by commas</small>
 					<div id="teeth_duplicate_warning" style="display: none; margin-top: 8px; padding: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; color: #856404;">
@@ -4297,8 +4695,9 @@ function show_teeth_popup(frm) {
 				issues.push($(this).val());
 			});
 			
-			if (!teethNumbers && issues.length === 0) {
-				frappe.msgprint(__('Please fill teeth numbers or select issues'));
+			// Teeth numbers are now mandatory
+			if (!teethNumbers || !teethNumbers.trim()) {
+				frappe.msgprint(__('Please enter teeth numbers'));
 				return;
 			}
 			
