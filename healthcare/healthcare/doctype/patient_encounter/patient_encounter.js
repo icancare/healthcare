@@ -3308,115 +3308,155 @@ function render_step4_pictures(frm) {
 			@media (max-width: 600px) {
 				.pictures-grid { grid-template-columns: repeat(2, 1fr); }
 			}
-			.picture-card {
-				background: var(--card-bg);
-				border-radius: 6px;
-				overflow: hidden;
-				border: 1px solid var(--border-color);
-				transition: all 0.2s ease;
-			}
-			.picture-card:hover {
-				border-color: var(--primary);
-				box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-			}
-			.picture-card-header {
-				background: var(--subtle-bg);
-				color: var(--text-color);
-				padding: 8px;
-				font-size: 10px;
-				font-weight: 600;
-				text-align: center;
-				border-bottom: 1px solid var(--border-color);
-			}
-			.picture-card-body {
-				padding: 8px;
-				min-height: 80px;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				background: var(--control-bg);
-			}
-			.picture-placeholder {
-				width: 100%;
-				height: 60px;
-				border: 2px dashed var(--border-color);
-				border-radius: 4px;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				cursor: pointer;
-				transition: all 0.2s ease;
-				background: var(--control-bg);
-			}
-			.picture-placeholder:hover {
-				border-color: var(--primary);
-				background: var(--subtle-bg);
-			}
-			.picture-placeholder i {
-				font-size: 20px;
-				color: var(--text-muted);
-				margin-bottom: 4px;
-			}
-			.picture-placeholder span {
-				font-size: 10px;
-				color: var(--text-muted);
-			}
-			.picture-preview {
-				width: 100%;
-				position: relative;
-			}
-			.picture-preview img {
-				width: 100%;
-				height: 60px;
-				object-fit: cover;
-				border-radius: 4px;
-				cursor: pointer;
-			}
-			.picture-actions {
-				position: absolute;
-				top: 5px;
-				right: 5px;
-				display: flex;
-				gap: 5px;
-			}
-			.picture-action-btn {
-				width: 28px;
-				height: 28px;
-				border-radius: 50%;
-				border: none;
-				cursor: pointer;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 12px;
-				transition: all 0.2s ease;
-			}
-			.btn-view {
-				background: rgba(0,123,255,0.9);
-				color: #fff;
-			}
-			.btn-replace {
-				background: rgba(255,193,7,0.9);
-				color: #333;
-			}
-			.btn-delete {
-				background: rgba(220,53,69,0.9);
-				color: #fff;
-			}
-			.picture-action-btn:hover {
-				transform: scale(1.1);
-			}
-			.upload-status {
-				margin-top: 8px;
-				font-size: 10px;
-				color: #28a745;
-				display: none;
-			}
-			.upload-status.show {
-				display: block;
-			}
+		.picture-card {
+			background: var(--card-bg);
+			border-radius: 6px;
+			overflow: hidden;
+			border: 1px solid var(--border-color);
+			transition: all 0.2s ease;
+			cursor: pointer;
+		}
+		.picture-card:hover {
+			border-color: var(--primary);
+			box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+			transform: translateY(-2px);
+		}
+		.picture-card-header {
+			background: var(--subtle-bg);
+			color: var(--text-color);
+			padding: 8px;
+			font-size: 10px;
+			font-weight: 600;
+			text-align: center;
+			border-bottom: 1px solid var(--border-color);
+		}
+		.picture-card-body {
+			padding: 0;
+			aspect-ratio: 4 / 3;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			background: var(--control-bg);
+			position: relative;
+		}
+		.picture-placeholder {
+			width: 100%;
+			height: 100%;
+			border: 2px dashed var(--border-color);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			background: var(--control-bg);
+		}
+		.picture-placeholder:hover {
+			border-color: var(--primary);
+			background: var(--subtle-bg);
+		}
+		.picture-placeholder i {
+			font-size: 24px;
+			color: var(--text-muted);
+			margin-bottom: 5px;
+		}
+		.picture-placeholder span {
+			font-size: 11px;
+			color: var(--text-muted);
+			font-weight: 500;
+		}
+		.picture-preview {
+			width: 100%;
+			height: 100%;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: var(--control-bg);
+		}
+		.picture-preview img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			cursor: pointer;
+		}
+		.picture-actions {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+			display: flex;
+			gap: 5px;
+			opacity: 0;
+			transition: opacity 0.2s ease;
+			z-index: 10;
+		}
+		.picture-card:hover .picture-actions {
+			opacity: 1;
+		}
+		.picture-action-btn {
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 14px;
+			transition: all 0.2s ease;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+		}
+		.btn-view {
+			background: rgba(0,123,255,0.95);
+			color: #fff;
+		}
+		.btn-view:hover {
+			background: rgba(0,123,255,1);
+		}
+		.btn-view i {
+			color: #fff;
+		}
+		.btn-replace {
+			background: rgba(255,193,7,0.95);
+			color: #333;
+		}
+		.btn-replace:hover {
+			background: rgba(255,193,7,1);
+		}
+		.btn-replace i {
+			color: #333;
+			font-size: 14px;
+		}
+		.btn-delete {
+			background: rgba(220,53,69,0.95);
+			color: #fff;
+		}
+		.btn-delete:hover {
+			background: rgba(220,53,69,1);
+		}
+		.btn-delete i {
+			color: #fff;
+		}
+		.picture-action-btn:hover {
+			transform: scale(1.15);
+		}
+		.upload-status {
+			position: absolute;
+			bottom: 8px;
+			left: 50%;
+			transform: translateX(-50%);
+			font-size: 10px;
+			color: #28a745;
+			display: none;
+			font-weight: 500;
+			background: rgba(255,255,255,0.9);
+			padding: 3px 8px;
+			border-radius: 10px;
+		}
+		.upload-status.show {
+			display: block;
+		}
 		</style>
 		
 		<div class="step4-container">
@@ -3436,13 +3476,13 @@ function render_step4_pictures(frm) {
 							<div class="picture-card-body">
 								${existing_image ? `
 									<div class="picture-preview">
-										<img src="${existing_image}" alt="${cat.name}" class="preview-img"/>
-										<div class="picture-actions">
-											<button class="picture-action-btn btn-view" title="View Full"><i class="fa fa-expand"></i></button>
-											<button class="picture-action-btn btn-replace" title="Replace"><i class="fa fa-sync"></i></button>
-											<button class="picture-action-btn btn-delete" title="Delete"><i class="fa fa-trash"></i></button>
-										</div>
+									<img src="${existing_image}" alt="${cat.name}" class="preview-img"/>
+									<div class="picture-actions">
+										<button class="picture-action-btn btn-view" title="View Full"><i class="fa fa-expand"></i></button>
+										<button class="picture-action-btn btn-replace" title="Replace"><i class="fa fa-repeat"></i></button>
+										<button class="picture-action-btn btn-delete" title="Delete"><i class="fa fa-trash"></i></button>
 									</div>
+								</div>
 									<div class="upload-status show"><i class="fa fa-check"></i> Uploaded</div>
 								` : `
 									<div class="picture-placeholder">
@@ -3466,12 +3506,33 @@ function render_step4_pictures(frm) {
 
 
 	// Add click handlers for upload
-	container.find('.picture-placeholder').on('click', function () {
-
+	container.find('.picture-placeholder').on('click', function (e) {
+		e.stopPropagation();
 		let card = $(this).closest('.picture-card');
 		let field = card.data('field');
 		let name = card.data('name');
 		upload_picture(frm, card, field, name);
+	});
+
+	// Click on card with image - expand image
+	container.find('.picture-card').on('click', function (e) {
+		// Don't trigger if clicking on action buttons
+		if ($(e.target).closest('.picture-action-btn').length > 0) {
+			return;
+		}
+		
+		let img = $(this).find('.preview-img');
+		if (img.length > 0) {
+			let img_src = img.attr('src');
+			let name = $(this).data('name');
+
+			let d = new frappe.ui.Dialog({
+				title: name,
+				size: 'extra-large'
+			});
+			d.$body.html(`<img src="${img_src}" style="width: 100%; max-height: 80vh; object-fit: contain; background: var(--control-bg);"/>`);
+			d.show();
+		}
 	});
 
 	// View full image
@@ -3484,7 +3545,7 @@ function render_step4_pictures(frm) {
 			title: name,
 			size: 'extra-large'
 		});
-		d.$body.html(`<img src="${img_src}" style="width: 100%; max-height: 80vh; object-fit: contain;"/>`);
+		d.$body.html(`<img src="${img_src}" style="width: 100%; max-height: 80vh; object-fit: contain; background: var(--control-bg);"/>`);
 		d.show();
 	});
 
@@ -3548,13 +3609,13 @@ function upload_picture(frm, card, field, name) {
 			// Update card UI
 			card.find('.picture-card-body').html(`
 				<div class="picture-preview">
-					<img src="${file_doc.file_url}" alt="${name}" class="preview-img"/>
-					<div class="picture-actions">
-						<button class="picture-action-btn btn-view" title="View Full"><i class="fa fa-expand"></i></button>
-						<button class="picture-action-btn btn-replace" title="Replace"><i class="fa fa-sync"></i></button>
-						<button class="picture-action-btn btn-delete" title="Delete"><i class="fa fa-trash"></i></button>
-					</div>
+				<img src="${file_doc.file_url}" alt="${name}" class="preview-img"/>
+				<div class="picture-actions">
+					<button class="picture-action-btn btn-view" title="View Full"><i class="fa fa-expand"></i></button>
+					<button class="picture-action-btn btn-replace" title="Replace"><i class="fa fa-repeat"></i></button>
+					<button class="picture-action-btn btn-delete" title="Delete"><i class="fa fa-trash"></i></button>
 				</div>
+			</div>
 				<div class="upload-status show"><i class="fa fa-check"></i> Uploaded</div>
 			`);
 
