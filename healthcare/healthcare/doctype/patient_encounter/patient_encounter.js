@@ -3383,6 +3383,16 @@ function show_complaints_popup(frm, bodyPart) {
 		return;
 	}
 
+	// Get existing complaints for this body part to avoid duplicates
+	let existingComplaints = new Set();
+	if (frm.doc.exam_complaints && frm.doc.exam_complaints.length > 0) {
+		frm.doc.exam_complaints.forEach(row => {
+			if (row.body_part === bodyPart && row.complaint_type) {
+				existingComplaints.add(row.complaint_type);
+			}
+		});
+	}
+
 	// Build the popup content with checkboxes for multiple selection
 	let popup_html = `
 		<style>
@@ -3403,10 +3413,17 @@ function show_complaints_popup(frm, bodyPart) {
 				vertical-align: middle;
 			}
 			.complaint-popup-table tbody tr:hover { background: var(--subtle-bg); }
+			.complaint-popup-table tbody tr.already-added { 
+				background: var(--bg-green); 
+				opacity: 0.7;
+			}
 			.complaint-popup-table input[type="checkbox"] { 
 				width: 16px; 
 				height: 16px; 
 				cursor: pointer; 
+			}
+			.complaint-popup-table input[type="checkbox"]:disabled { 
+				cursor: not-allowed; 
 			}
 			.complaint-popup-table input[type="number"] { 
 				width: 70px; 
@@ -3443,10 +3460,15 @@ function show_complaints_popup(frm, bodyPart) {
 				</tr>
 			</thead>
 			<tbody>
-				${symptoms.map((symptom, idx) => `
-					<tr>
-						<td><input type="checkbox" class="complaint-check" data-symptom="${symptom}" data-idx="${idx}"></td>
-						<td>${symptom}</td>
+				${symptoms.map((symptom, idx) => {
+					const isAlreadyAdded = existingComplaints.has(symptom);
+					const disabledAttr = isAlreadyAdded ? 'disabled' : '';
+					const checkedAttr = isAlreadyAdded ? 'checked' : '';
+					const rowClass = isAlreadyAdded ? 'already-added' : '';
+					return `
+					<tr class="${rowClass}">
+						<td><input type="checkbox" class="complaint-check" data-symptom="${symptom}" data-idx="${idx}" ${disabledAttr} ${checkedAttr}></td>
+						<td>${symptom}${isAlreadyAdded ? ' <span style="color: var(--green-500); font-size: 11px;">(Already Added)</span>' : ''}</td>
 						<td><input type="number" class="complaint-days" data-idx="${idx}" min="0" placeholder="0" disabled></td>
 						<td>
 							<select class="complaint-option" data-idx="${idx}" disabled>
@@ -3458,7 +3480,8 @@ function show_complaints_popup(frm, bodyPart) {
 						<td style="text-align: center;"><input type="checkbox" class="complaint-treated" data-idx="${idx}" disabled></td>
 						<td><input type="text" class="complaint-notes" data-idx="${idx}" placeholder="Notes..." disabled></td>
 					</tr>
-				`).join('')}
+				`;
+				}).join('')}
 			</tbody>
 		</table>
 	`;
@@ -3534,11 +3557,15 @@ function show_complaints_popup(frm, bodyPart) {
 				indicator: 'green'
 			});
 
-			// Reset body part selection
-			let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
-			if (wrapper) {
-				wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
-			}
+			// Reset body part selection - MOVED TO AFTER DIALOG HIDE
+		}
+	});
+
+	// Reset body part selection when dialog is closed (any way - X button, ESC, or primary action)
+	d.$wrapper.on('hidden.bs.modal', function() {
+		let wrapper = frm.fields_dict.exam_step1_table_html?.$wrapper;
+		if (wrapper) {
+			wrapper.find('input[name="step1_bodypart"]').prop('checked', false);
 		}
 	});
 
@@ -3843,29 +3870,59 @@ function show_step2_popup(frm, bodyPart) {
 
 // Standard Body Part Popup (Face, Neck, Throat)
 function show_standard_body_part_popup(frm, bodyPart, config) {
-	let locationsHtml = config.locations.map((loc, idx) => `
-		<tr class="step2-popup-row" data-location="${loc}">
+	// Get existing findings for this body part to avoid duplicates
+	let existingFindings = new Map(); // Map of location -> Set of abnormalities
+	if (frm.doc.custom_physical_findings && frm.doc.custom_physical_findings.length > 0) {
+		frm.doc.custom_physical_findings.forEach(row => {
+			if (row.body_part === bodyPart && row.location) {
+				if (!existingFindings.has(row.location)) {
+					existingFindings.set(row.location, new Set());
+				}
+				// Split abnormalities if comma-separated
+				if (row.abnormality) {
+					row.abnormality.split(',').forEach(abn => {
+						existingFindings.get(row.location).add(abn.trim());
+					});
+				}
+			}
+		});
+	}
+
+	let locationsHtml = config.locations.map((loc, idx) => {
+		const isLocationAdded = existingFindings.has(loc);
+		const locationDisabled = isLocationAdded ? 'disabled' : '';
+		const locationChecked = isLocationAdded ? 'checked' : '';
+		const rowClass = isLocationAdded ? 'already-added' : '';
+		
+		return `
+		<tr class="step2-popup-row ${rowClass}" data-location="${loc}">
 			<td style="padding: 10px; border-bottom: 1px solid var(--border-color); vertical-align: top;">
 				<label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 0;">
-					<input type="checkbox" class="step2-loc-check" data-loc="${loc}">
-					<span>${loc}</span>
+					<input type="checkbox" class="step2-loc-check" data-loc="${loc}" ${locationDisabled} ${locationChecked}>
+					<span>${loc}${isLocationAdded ? ' <span style="color: var(--green-500); font-size: 11px;">(Already Added)</span>' : ''}</span>
 				</label>
 			</td>
 			<td style="padding: 10px; border-bottom: 1px solid var(--border-color);">
 				<div class="step2-abn-group" data-loc="${loc}" style="display: flex; flex-wrap: wrap; gap: 6px;">
-					${config.abnormalities.map(abn => `
-						<label class="step2-abn-label" data-loc="${loc}">
-							<input type="checkbox" class="step2-abn-check" data-loc="${loc}" data-abn="${abn}" disabled>
+					${config.abnormalities.map(abn => {
+						const isAbnAdded = isLocationAdded && existingFindings.get(loc).has(abn);
+						const abnDisabled = isLocationAdded ? 'disabled' : 'disabled';
+						const abnChecked = isAbnAdded ? 'checked' : '';
+						return `
+						<label class="step2-abn-label ${isLocationAdded ? 'enabled' : ''} ${isAbnAdded ? 'selected' : ''}" data-loc="${loc}">
+							<input type="checkbox" class="step2-abn-check" data-loc="${loc}" data-abn="${abn}" ${abnDisabled} ${abnChecked}>
 							<span>${abn}</span>
 						</label>
-					`).join('')}
+					`;
+					}).join('')}
 				</div>
 			</td>
 			<td style="padding: 10px; border-bottom: 1px solid var(--border-color); vertical-align: top;">
-				<input type="text" class="step2-notes-input" data-loc="${loc}" placeholder="Notes..." disabled>
+				<input type="text" class="step2-notes-input" data-loc="${loc}" placeholder="Notes..." ${locationDisabled}>
 			</td>
 		</tr>
-	`).join('');
+	`;
+	}).join('');
 
 	let d = new frappe.ui.Dialog({
 		title: `Physical Examination - ${bodyPart}`,
@@ -3886,6 +3943,10 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 						color: var(--heading-color); 
 					}
 					.step2-popup-row:hover { background: var(--subtle-bg); }
+					.step2-popup-row.already-added { 
+						background: var(--bg-green); 
+						opacity: 0.7;
+					}
 					.step2-popup-row .step2-loc-check {
 						width: 16px;
 						height: 16px;
