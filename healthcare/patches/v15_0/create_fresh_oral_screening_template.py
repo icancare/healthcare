@@ -72,3 +72,5 @@ def fix_physical_findings_field():
         print(f"✓ Set idx to {new_idx} (after exam_step2_table_html)")
 
 
+
+
