@@ -37,9 +37,10 @@
         {
             "fieldname": "lesion_number",
             "fieldtype": "Int",
-            "in_list_view": 1,
+            "in_list_view": 0,
             "label": "#",
-            "read_only": 1
+            "read_only": 1,
+            "hidden": 1
         },
         {
             "fieldname": "location",
@@ -52,9 +53,10 @@
         {
             "fieldname": "side",
             "fieldtype": "Select",
-            "in_list_view": 1,
+            "in_list_view": 0,
             "label": "Side",
-            "options": "\nLeft\nRight\nMidline\nBilateral"
+            "options": "\nLeft\nRight\nMidline\nBilateral",
+            "hidden": 1
         },
         {
             "fieldname": "column_break_1",
@@ -64,7 +66,7 @@
             "fieldname": "size_length",
             "fieldtype": "Float",
             "label": "Length (mm)",
-            "in_list_view": 1
+            "in_list_view": 0
         },
         {
             "fieldname": "size_width",
@@ -86,6 +88,7 @@
             "fieldname": "shape",
             "fieldtype": "Data",
             "label": "Shape",
+            "in_list_view": 1,
             "description": "Round, Oval, Irregular, Rectangular"
         },
         {
@@ -96,6 +99,7 @@
             "fieldname": "margin",
             "fieldtype": "Data",
             "label": "Margin",
+            "in_list_view": 1,
             "description": "Well-defined, Poorly-defined, Regular, Irregular borders"
         },
         {

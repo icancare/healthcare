@@ -1314,7 +1314,8 @@ function render_all_clinical_steps(frm, attempt = 0) {
 		if (step2_ready) render_step2_table_form(frm);
 		render_clinical_exam_diagram(frm);
 		render_clinical_images_section(frm);
-		if (step4_ready) render_step4_pictures(frm);
+		// Always try to render Step 4, even if field not detected
+		render_step4_pictures(frm);
 
 		// If not all ready and we haven't maxed out, retry for remaining fields
 		if ((!step1_ready || !step2_ready || !step4_ready) && attempt < maxAttempts) {
@@ -3793,12 +3794,12 @@ function show_complaints_popup(frm, bodyPart) {
 		return;
 	}
 
-	// Get existing complaints for this body part to avoid duplicates
-	let existingComplaints = new Set();
+	// Get existing complaints for this body part with full data for editing
+	let existingComplaints = new Map(); // Map of complaint_type -> row data
 	if (frm.doc.exam_complaints && frm.doc.exam_complaints.length > 0) {
 		frm.doc.exam_complaints.forEach(row => {
 			if (row.body_part === bodyPart && row.complaint_type) {
-				existingComplaints.add(row.complaint_type);
+				existingComplaints.set(row.complaint_type, row);
 			}
 		});
 	}
@@ -3872,23 +3873,29 @@ function show_complaints_popup(frm, bodyPart) {
 			<tbody>
 				${symptoms.map((symptom, idx) => {
 					const isAlreadyAdded = existingComplaints.has(symptom);
-					const disabledAttr = isAlreadyAdded ? 'disabled' : '';
-					const checkedAttr = isAlreadyAdded ? 'checked' : '';
-					const rowClass = isAlreadyAdded ? 'already-added' : '';
+					const existingData = isAlreadyAdded ? existingComplaints.get(symptom) : null;
+					
+					// Pre-fill values if already added
+					const daysValue = existingData ? existingData.duration_days || 0 : 0;
+					const optionValue = existingData ? existingData.option || '' : '';
+					const traumaChecked = existingData && existingData.trauma_related ? 'checked' : '';
+					const treatedChecked = existingData && existingData.medical_treatment_taken ? 'checked' : '';
+					const notesValue = existingData ? existingData.note || '' : '';
+					
 					return `
-					<tr class="${rowClass}">
-						<td><input type="checkbox" class="complaint-check" data-symptom="${symptom}" data-idx="${idx}" ${disabledAttr} ${checkedAttr}></td>
+					<tr class="${isAlreadyAdded ? 'already-added' : ''}">
+						<td><input type="checkbox" class="complaint-check" data-symptom="${symptom}" data-idx="${idx}" ${isAlreadyAdded ? 'checked' : ''}></td>
 						<td>${symptom}${isAlreadyAdded ? ' <span style="color: var(--green-500); font-size: 11px;">(Already Added)</span>' : ''}</td>
-						<td><input type="number" class="complaint-days" data-idx="${idx}" min="0" placeholder="0" disabled></td>
+						<td><input type="number" class="complaint-days" data-idx="${idx}" min="0" placeholder="0" value="${daysValue}" ${isAlreadyAdded ? '' : 'disabled'}></td>
 						<td>
-							<select class="complaint-option" data-idx="${idx}" disabled>
+							<select class="complaint-option" data-idx="${idx}" ${isAlreadyAdded ? '' : 'disabled'}>
 								<option value="">Select...</option>
-								${OPTION_VALUES.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+								${OPTION_VALUES.map(opt => `<option value="${opt}" ${opt === optionValue ? 'selected' : ''}>${opt}</option>`).join('')}
 							</select>
 						</td>
-						<td style="text-align: center;"><input type="checkbox" class="complaint-trauma" data-idx="${idx}" disabled></td>
-						<td style="text-align: center;"><input type="checkbox" class="complaint-treated" data-idx="${idx}" disabled></td>
-						<td><input type="text" class="complaint-notes" data-idx="${idx}" placeholder="Notes..." disabled></td>
+						<td style="text-align: center;"><input type="checkbox" class="complaint-trauma" data-idx="${idx}" ${traumaChecked} ${isAlreadyAdded ? '' : 'disabled'}></td>
+						<td style="text-align: center;"><input type="checkbox" class="complaint-treated" data-idx="${idx}" ${treatedChecked} ${isAlreadyAdded ? '' : 'disabled'}></td>
+						<td><input type="text" class="complaint-notes" data-idx="${idx}" placeholder="Notes..." value="${notesValue}" ${isAlreadyAdded ? '' : 'disabled'}></td>
 					</tr>
 				`;
 				}).join('')}
@@ -3908,7 +3915,9 @@ function show_complaints_popup(frm, bodyPart) {
 		size: 'large',
 		primary_action_label: __('Add Selected'),
 		primary_action: function() {
-			let selected = [];
+			let toAdd = [];
+			let toUpdate = [];
+			
 			d.$wrapper.find('.complaint-check:checked').each(function() {
 				let idx = $(this).data('idx');
 				let symptom = $(this).data('symptom');
@@ -3918,7 +3927,7 @@ function show_complaints_popup(frm, bodyPart) {
 				let treated = d.$wrapper.find(`.complaint-treated[data-idx="${idx}"]`).is(':checked') ? 1 : 0;
 				let notes = d.$wrapper.find(`.complaint-notes[data-idx="${idx}"]`).val() || '';
 				
-				selected.push({
+				let complaintData = {
 					body_part: bodyPart,
 					complaint_type: symptom,
 					duration_days: parseInt(days) || 0,
@@ -3926,16 +3935,38 @@ function show_complaints_popup(frm, bodyPart) {
 					trauma_related: trauma,
 					medical_treatment_taken: treated,
 					note: notes
-				});
+				};
+				
+				// Check if this complaint already exists
+				if (existingComplaints.has(symptom)) {
+					toUpdate.push(complaintData);
+				} else {
+					toAdd.push(complaintData);
+				}
 			});
 
-			if (selected.length === 0) {
+			if (toAdd.length === 0 && toUpdate.length === 0) {
 				frappe.msgprint(__('Please select at least one complaint'));
 				return;
 			}
 
-			// Add all selected complaints to the child table
-			selected.forEach(complaint => {
+			// Update existing complaints
+			toUpdate.forEach(complaint => {
+				let existingRow = frm.doc.exam_complaints.find(row => 
+					row.body_part === complaint.body_part && 
+					row.complaint_type === complaint.complaint_type
+				);
+				if (existingRow) {
+					existingRow.duration_days = complaint.duration_days;
+					existingRow.option = complaint.option;
+					existingRow.trauma_related = complaint.trauma_related;
+					existingRow.medical_treatment_taken = complaint.medical_treatment_taken;
+					existingRow.note = complaint.note;
+				}
+			});
+
+			// Add new complaints
+			toAdd.forEach(complaint => {
 				let row = frm.add_child('exam_complaints');
 				row.body_part = complaint.body_part;
 				row.complaint_type = complaint.complaint_type;
@@ -3962,8 +3993,18 @@ function show_complaints_popup(frm, bodyPart) {
 				}
 			}, 300);
 
+			let totalCount = toAdd.length + toUpdate.length;
+			let message = '';
+			if (toAdd.length > 0 && toUpdate.length > 0) {
+				message = __('Added {0} and updated {1} complaint(s)', [toAdd.length, toUpdate.length]);
+			} else if (toAdd.length > 0) {
+				message = __('Added {0} complaint(s)', [toAdd.length]);
+			} else if (toUpdate.length > 0) {
+				message = __('Updated {0} complaint(s)', [toUpdate.length]);
+			}
+			
 			frappe.show_alert({
-				message: __('Added {0} complaint(s)', [selected.length]),
+				message: message,
 				indicator: 'green'
 			});
 
@@ -4307,47 +4348,46 @@ function show_step2_popup(frm, bodyPart) {
 
 // Standard Body Part Popup (Face, Neck, Throat)
 function show_standard_body_part_popup(frm, bodyPart, config) {
-	// Get existing findings for this body part to avoid duplicates
-	let existingFindings = new Map(); // Map of location -> Set of abnormalities
+	// Get existing findings for this body part with full data for editing
+	let existingFindings = new Map(); // Map of location -> row data
 	if (frm.doc.custom_physical_findings && frm.doc.custom_physical_findings.length > 0) {
 		frm.doc.custom_physical_findings.forEach(row => {
 			if (row.body_part === bodyPart && row.location) {
-				if (!existingFindings.has(row.location)) {
-					existingFindings.set(row.location, new Set());
-				}
-				// Split abnormalities if comma-separated
-				if (row.abnormality) {
-					row.abnormality.split(',').forEach(abn => {
-						existingFindings.get(row.location).add(abn.trim());
-					});
-				}
+				existingFindings.set(row.location, row);
 			}
 		});
 	}
 
 	let locationsHtml = config.locations.map((loc, idx) => {
 		const isLocationAdded = existingFindings.has(loc);
-		const locationDisabled = isLocationAdded ? 'disabled' : '';
-		const locationChecked = isLocationAdded ? 'checked' : '';
-		const rowClass = isLocationAdded ? 'already-added' : '';
+		const existingData = isLocationAdded ? existingFindings.get(loc) : null;
+		
+		// Get existing abnormalities as Set
+		const existingAbnormalities = new Set();
+		if (existingData && existingData.abnormality) {
+			existingData.abnormality.split(',').forEach(abn => {
+				existingAbnormalities.add(abn.trim());
+			});
+		}
+		
+		// Get existing notes
+		const notesValue = existingData ? existingData.note || '' : '';
 		
 		return `
-		<tr class="step2-popup-row ${rowClass}" data-location="${loc}">
+		<tr class="step2-popup-row ${isLocationAdded ? 'already-added' : ''}" data-location="${loc}">
 			<td style="padding: 10px; border-bottom: 1px solid var(--border-color); vertical-align: top;">
 				<label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 0;">
-					<input type="checkbox" class="step2-loc-check" data-loc="${loc}" ${locationDisabled} ${locationChecked}>
+					<input type="checkbox" class="step2-loc-check" data-loc="${loc}" ${isLocationAdded ? 'checked' : ''}>
 					<span>${loc}${isLocationAdded ? ' <span style="color: var(--green-500); font-size: 11px;">(Already Added)</span>' : ''}</span>
 				</label>
 			</td>
 			<td style="padding: 10px; border-bottom: 1px solid var(--border-color);">
 				<div class="step2-abn-group" data-loc="${loc}" style="display: flex; flex-wrap: wrap; gap: 6px;">
 					${config.abnormalities.map(abn => {
-						const isAbnAdded = isLocationAdded && existingFindings.get(loc).has(abn);
-						const abnDisabled = isLocationAdded ? 'disabled' : 'disabled';
-						const abnChecked = isAbnAdded ? 'checked' : '';
+						const isAbnChecked = existingAbnormalities.has(abn);
 						return `
-						<label class="step2-abn-label ${isLocationAdded ? 'enabled' : ''} ${isAbnAdded ? 'selected' : ''}" data-loc="${loc}">
-							<input type="checkbox" class="step2-abn-check" data-loc="${loc}" data-abn="${abn}" ${abnDisabled} ${abnChecked}>
+						<label class="step2-abn-label ${isLocationAdded ? 'enabled' : ''} ${isAbnChecked ? 'selected' : ''}" data-loc="${loc}">
+							<input type="checkbox" class="step2-abn-check" data-loc="${loc}" data-abn="${abn}" ${isLocationAdded ? '' : 'disabled'} ${isAbnChecked ? 'checked' : ''}>
 							<span>${abn}</span>
 						</label>
 					`;
@@ -4355,7 +4395,7 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 				</div>
 			</td>
 			<td style="padding: 10px; border-bottom: 1px solid var(--border-color); vertical-align: top;">
-				<input type="text" class="step2-notes-input" data-loc="${loc}" placeholder="Notes..." ${locationDisabled}>
+				<input type="text" class="step2-notes-input" data-loc="${loc}" placeholder="Notes..." value="${notesValue}" ${isLocationAdded ? '' : 'disabled'}>
 			</td>
 		</tr>
 	`;
@@ -4464,7 +4504,9 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 		}],
 		primary_action_label: __('Add Selected'),
 		primary_action: function() {
-			let findings = [];
+			let toAdd = [];
+			let toUpdate = [];
+			
 			d.$wrapper.find('.step2-loc-check:checked').each(function() {
 				let loc = $(this).data('loc');
 				let abnormalities = [];
@@ -4474,22 +4516,41 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 				let notes = d.$wrapper.find(`.step2-notes-input[data-loc="${loc}"]`).val() || '';
 				
 				if (abnormalities.length > 0) {
-					findings.push({
+					let findingData = {
 						body_part: bodyPart,
 						location: loc,
 						abnormality: abnormalities.join(', '),
 						note: notes
-					});
+					};
+					
+					// Check if this location already exists
+					if (existingFindings.has(loc)) {
+						toUpdate.push(findingData);
+					} else {
+						toAdd.push(findingData);
+					}
 				}
 			});
 			
-			if (findings.length === 0) {
+			if (toAdd.length === 0 && toUpdate.length === 0) {
 				frappe.msgprint(__('Please select at least one location with abnormalities'));
 				return;
 			}
 			
-			// Add to child table
-			findings.forEach(f => {
+			// Update existing findings
+			toUpdate.forEach(finding => {
+				let existingRow = frm.doc.custom_physical_findings.find(row => 
+					row.body_part === finding.body_part && 
+					row.location === finding.location
+				);
+				if (existingRow) {
+					existingRow.abnormality = finding.abnormality;
+					existingRow.note = finding.note;
+				}
+			});
+			
+			// Add new findings
+			toAdd.forEach(f => {
 				let row = frm.add_child('custom_physical_findings');
 				row.body_part = f.body_part;
 				row.location = f.location;
@@ -4515,8 +4576,18 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 				}
 			}, 300);
 
+			let totalCount = toAdd.length + toUpdate.length;
+			let message = '';
+			if (toAdd.length > 0 && toUpdate.length > 0) {
+				message = __('Added {0} and updated {1} finding(s) for {2}', [toAdd.length, toUpdate.length, bodyPart]);
+			} else if (toAdd.length > 0) {
+				message = __('Added {0} finding(s) for {1}', [toAdd.length, bodyPart]);
+			} else if (toUpdate.length > 0) {
+				message = __('Updated {0} finding(s) for {1}', [toUpdate.length, bodyPart]);
+			}
+			
 			frappe.show_alert({
-				message: __('Added {0} finding(s) for {1}', [findings.length, bodyPart]),
+				message: message,
 				indicator: 'green'
 			});
 
@@ -4562,8 +4633,62 @@ function show_standard_body_part_popup(frm, bodyPart, config) {
 
 // Mouth Special Popup - Fresh form every time (no auto-fill)
 function show_mouth_popup(frm) {
+	// Check if Mouth entry already exists
+	let existingMouthRow = null;
+	if (frm.doc.custom_physical_findings && frm.doc.custom_physical_findings.length > 0) {
+		existingMouthRow = frm.doc.custom_physical_findings.find(row => 
+			row.body_part === 'Mouth' && row.location === 'Mouth Opening'
+		);
+	}
+	
+	// Pre-fill values if editing existing row
+	let prefilledValues = {};
+	if (existingMouthRow) {
+		// Parse the abnormality string to extract values
+		let abn = existingMouthRow.abnormality || '';
+		
+		// Extract Fingers
+		let fingersMatch = abn.match(/Fingers:\s*(\w+)/);
+		if (fingersMatch) prefilledValues.fingers = fingersMatch[1];
+		
+		// Extract Opening mm
+		let openingMatch = abn.match(/Opening:\s*(\d+)mm/);
+		if (openingMatch) prefilledValues.opening_mm = parseInt(openingMatch[1]);
+		
+		// Extract Measured With
+		let measuredMatch = abn.match(/Measured:\s*(\w+)/);
+		if (measuredMatch) prefilledValues.measured_with = measuredMatch[1];
+		
+		// Extract Tongue status
+		let tongueMatch = abn.match(/Tongue:\s*([^|]+)/);
+		if (tongueMatch) {
+			let tongueStr = tongueMatch[1].trim();
+			if (tongueStr === 'Normal') {
+				prefilledValues.tongue_status = 'normal';
+			} else {
+				prefilledValues.tongue_status = 'abnormal';
+				prefilledValues.tongue_conditions = tongueStr.split(',').map(s => s.trim());
+			}
+		}
+		
+		// Extract Protrusion
+		let protrusionMatch = abn.match(/Protrusion:\s*(\d+)mm/);
+		if (protrusionMatch) prefilledValues.tongue_protrusion = parseInt(protrusionMatch[1]);
+		
+		// Extract Hygiene
+		let hygieneMatch = abn.match(/Hygiene:\s*(\w+)/);
+		if (hygieneMatch) prefilledValues.oral_hygiene = hygieneMatch[1];
+		
+		// Extract Prosthesis
+		let prosthesisMatch = abn.match(/Prosthesis:\s*(\w+)/);
+		if (prosthesisMatch) prefilledValues.prosthesis = prosthesisMatch[1];
+		
+		// Extract Notes
+		prefilledValues.notes = existingMouthRow.note || '';
+	}
+	
 	let d = new frappe.ui.Dialog({
-		title: 'Physical Examination - Mouth',
+		title: existingMouthRow ? 'Edit Mouth Examination' : 'Physical Examination - Mouth',
 		size: 'large',
 		fields: [
 			{ fieldtype: 'Section Break', label: 'Mouth Opening' },
@@ -4645,10 +4770,17 @@ function show_mouth_popup(frm) {
 				return;
 			}
 			
-			// Add to child table
-			let row = frm.add_child('custom_physical_findings');
-			row.body_part = 'Mouth';
-			row.location = 'Mouth Opening';
+			// Update existing row or add new
+			let row;
+			if (existingMouthRow) {
+				// Update existing row
+				row = existingMouthRow;
+			} else {
+				// Add new row
+				row = frm.add_child('custom_physical_findings');
+				row.body_part = 'Mouth';
+				row.location = 'Mouth Opening';
+			}
 			row.abnormality = abnParts.join(' | ');
 			row.note = values.notes || '';
 			
@@ -4682,6 +4814,37 @@ function show_mouth_popup(frm) {
 	});
 
 	d.show();
+	
+	// Set prefilled values if editing
+	if (existingMouthRow) {
+		d.set_values({
+			fingers: prefilledValues.fingers || '',
+			opening_mm: prefilledValues.opening_mm || '',
+			measured_with: prefilledValues.measured_with || '',
+			tongue_protrusion: prefilledValues.tongue_protrusion || '',
+			oral_hygiene: prefilledValues.oral_hygiene || '',
+			prosthesis: prefilledValues.prosthesis || '',
+			notes: prefilledValues.notes || ''
+		});
+		
+		// Set tongue radio button
+		if (prefilledValues.tongue_status === 'normal') {
+			d.$wrapper.find('#tongue_normal').prop('checked', true);
+		} else if (prefilledValues.tongue_status === 'abnormal') {
+			d.$wrapper.find('#tongue_abnormal').prop('checked', true);
+			d.$wrapper.find('#tongue_conditions_wrapper').show();
+			
+			// Check condition checkboxes
+			if (prefilledValues.tongue_conditions) {
+				prefilledValues.tongue_conditions.forEach(cond => {
+					if (cond === 'Painful') d.$wrapper.find('#tongue_painful').prop('checked', true);
+					if (cond === 'Deviation Left') d.$wrapper.find('#tongue_dev_left').prop('checked', true);
+					if (cond === 'Deviation Right') d.$wrapper.find('#tongue_dev_right').prop('checked', true);
+					if (cond === 'Restricted') d.$wrapper.find('#tongue_restricted').prop('checked', true);
+				});
+			}
+		}
+	}
 	
 	// Add event listeners for tongue movement radio buttons
 	d.$wrapper.find('input[name="tongue_status"]').on('change', function() {
@@ -4726,9 +4889,21 @@ function show_teeth_popup(frm) {
 				<div style="margin-bottom: 15px;">
 					<label style="font-weight: 500; margin-bottom: 5px; display: block;">Teeth Numbers <span style="color: red;">*</span></label>
 					<input type="text" id="teeth_numbers_input" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px;" placeholder="e.g., 11, 12, 21, 22">
-					<small style="color: var(--text-muted);">Enter teeth numbers separated by commas</small>
+					<small style="color: var(--text-muted);">Enter valid teeth numbers (11-18, 21-28, 31-38, 41-48) separated by commas</small>
+					<div id="teeth_validation_error" style="display: none; margin-top: 8px; padding: 10px; background: #f8d7da; border: 1px solid #dc3545; border-radius: 4px; color: #721c24;">
+						<i class="fa fa-times-circle"></i> <span id="validation_error_text"></span>
+					</div>
 					<div id="teeth_duplicate_warning" style="display: none; margin-top: 8px; padding: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; color: #856404;">
 						<i class="fa fa-exclamation-triangle"></i> <span id="duplicate_teeth_text"></span>
+					</div>
+					<div id="teeth_help" style="margin-top: 10px; padding: 10px; background: var(--subtle-bg); border-radius: 4px; font-size: 12px;">
+						<strong>Valid Teeth Numbers:</strong><br>
+						<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 5px;">
+							<div><strong>Quadrant 1 (Upper Right):</strong> 11-18</div>
+							<div><strong>Quadrant 2 (Upper Left):</strong> 21-28</div>
+							<div><strong>Quadrant 3 (Lower Left):</strong> 31-38</div>
+							<div><strong>Quadrant 4 (Lower Right):</strong> 41-48</div>
+						</div>
 					</div>
 				</div>
 			` },
@@ -4762,21 +4937,75 @@ function show_teeth_popup(frm) {
 				return;
 			}
 			
-			// Check for duplicates
-			if (teethNumbers) {
-				let newTeeth = teethNumbers.split(',').map(n => n.trim()).filter(n => n);
-				let duplicates = newTeeth.filter(t => existingTeeth.includes(t));
-				
-				if (duplicates.length > 0) {
-					frappe.msgprint(__('Teeth {0} already exist in the table. Please edit existing entry or use different teeth numbers.', [duplicates.join(', ')]));
-					return;
+			// Validate teeth numbers
+			let newTeeth = teethNumbers.split(',').map(n => n.trim()).filter(n => n);
+			let invalidTeeth = [];
+			let validTeethNumbers = [];
+			
+			// Valid teeth ranges: 11-18, 21-28, 31-38, 41-48
+			newTeeth.forEach(tooth => {
+				let num = parseInt(tooth);
+				if (isNaN(num)) {
+					invalidTeeth.push(tooth);
+				} else {
+					let quadrant = Math.floor(num / 10);
+					let position = num % 10;
+					
+					// Check if quadrant is 1-4 and position is 1-8
+					if (quadrant >= 1 && quadrant <= 4 && position >= 1 && position <= 8) {
+						validTeethNumbers.push(tooth);
+					} else {
+						invalidTeeth.push(tooth);
+					}
 				}
+			});
+			
+			// Show error if invalid teeth found
+			if (invalidTeeth.length > 0) {
+				frappe.msgprint({
+					title: __('Invalid Teeth Numbers'),
+					message: __('Invalid teeth numbers: {0}<br><br>Valid teeth numbers are:<br>• Quadrant 1 (Upper Right): 11-18<br>• Quadrant 2 (Upper Left): 21-28<br>• Quadrant 3 (Lower Left): 31-38<br>• Quadrant 4 (Lower Right): 41-48', [invalidTeeth.join(', ')]),
+					indicator: 'red'
+				});
+				return;
+			}
+			
+			// Check for duplicate entries in the same input
+			let duplicatesInInput = [];
+			let uniqueTeeth = new Set();
+			validTeethNumbers.forEach(tooth => {
+				if (uniqueTeeth.has(tooth)) {
+					if (!duplicatesInInput.includes(tooth)) {
+						duplicatesInInput.push(tooth);
+					}
+				} else {
+					uniqueTeeth.add(tooth);
+				}
+			});
+			
+			if (duplicatesInInput.length > 0) {
+				frappe.msgprint({
+					title: __('Duplicate Teeth Numbers'),
+					message: __('You have entered the same teeth number(s) multiple times: {0}<br><br>Please enter each tooth number only once.', [duplicatesInInput.join(', ')]),
+					indicator: 'red'
+				});
+				return;
+			}
+			
+			// Remove duplicates and use unique teeth only
+			validTeethNumbers = Array.from(uniqueTeeth);
+			
+			// Check for duplicates with existing table entries
+			let duplicatesWithTable = validTeethNumbers.filter(t => existingTeeth.includes(t));
+			if (duplicatesWithTable.length > 0) {
+				frappe.msgprint(__('Teeth {0} already exist in the table. Please edit existing entry or use different teeth numbers.', [duplicatesWithTable.join(', ')]));
+				return;
 			}
 			
 			// Add to child table
 			let row = frm.add_child('custom_physical_findings');
 			row.body_part = 'Teeth';
-			row.location = 'Teeth #' + (teethNumbers || 'Not specified');
+			row.location = 'Teeth #' + validTeethNumbers.join(', ');
 			row.abnormality = issues.join(', ');
 			row.note = values.notes || '';
 			
@@ -4811,24 +5040,75 @@ function show_teeth_popup(frm) {
 
 	d.show();
 	
-	// Add real-time duplicate check on input
+	// Add real-time validation on input
 	d.$wrapper.find('#teeth_numbers_input').on('input', function() {
 		let inputVal = $(this).val();
+		let $validationError = d.$wrapper.find('#teeth_validation_error');
+		let $duplicateWarning = d.$wrapper.find('#teeth_duplicate_warning');
+		
+		// Hide both messages initially
+		$validationError.hide();
+		$duplicateWarning.hide();
+		$(this).css('border-color', 'var(--border-color)');
+		
 		if (inputVal) {
 			let newTeeth = inputVal.split(',').map(n => n.trim()).filter(n => n);
-			let duplicates = newTeeth.filter(t => existingTeeth.includes(t));
+			let invalidTeeth = [];
+			let validTeeth = [];
 			
-			if (duplicates.length > 0) {
+			// Validate each tooth number
+			newTeeth.forEach(tooth => {
+				let num = parseInt(tooth);
+				if (isNaN(num)) {
+					invalidTeeth.push(tooth);
+				} else {
+					let quadrant = Math.floor(num / 10);
+					let position = num % 10;
+					
+					if (quadrant >= 1 && quadrant <= 4 && position >= 1 && position <= 8) {
+						validTeeth.push(tooth);
+					} else {
+						invalidTeeth.push(tooth);
+					}
+				}
+			});
+			
+			// Check for duplicate entries in the same input
+			let duplicatesInInput = [];
+			let uniqueTeeth = new Set();
+			validTeeth.forEach(tooth => {
+				if (uniqueTeeth.has(tooth)) {
+					if (!duplicatesInInput.includes(tooth)) {
+						duplicatesInInput.push(tooth);
+					}
+				} else {
+					uniqueTeeth.add(tooth);
+				}
+			});
+			
+			// Show validation error if invalid teeth found
+			if (invalidTeeth.length > 0) {
 				$(this).css('border-color', '#dc3545');
-				d.$wrapper.find('#teeth_duplicate_warning').show();
-				d.$wrapper.find('#duplicate_teeth_text').text('Teeth ' + duplicates.join(', ') + ' already exist. Please edit existing entry.');
-			} else {
-				$(this).css('border-color', 'var(--border-color)');
-				d.$wrapper.find('#teeth_duplicate_warning').hide();
+				$validationError.find('#validation_error_text').text('Invalid teeth numbers: ' + invalidTeeth.join(', '));
+				$validationError.show();
 			}
-		} else {
-			$(this).css('border-color', 'var(--border-color)');
-			d.$wrapper.find('#teeth_duplicate_warning').hide();
+			
+			// Show validation error if duplicate entries in same input
+			if (duplicatesInInput.length > 0) {
+				$(this).css('border-color', '#dc3545');
+				$validationError.find('#validation_error_text').text('Duplicate teeth numbers in input: ' + duplicatesInInput.join(', ') + ' (entered multiple times)');
+				$validationError.show();
+			}
+			
+			// Check for duplicates with existing table entries (only if no duplicates in input)
+			if (duplicatesInInput.length === 0) {
+				let duplicatesWithTable = Array.from(uniqueTeeth).filter(t => existingTeeth.includes(t));
+				if (duplicatesWithTable.length > 0) {
+					$(this).css('border-color', '#ffc107');
+					$duplicateWarning.find('#duplicate_teeth_text').text('Teeth ' + duplicatesWithTable.join(', ') + ' already exist in table. Please edit existing entry.');
+					$duplicateWarning.show();
+				}
+			}
 		}
 	});
 }
