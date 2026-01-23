@@ -31,6 +31,21 @@ frappe.ui.form.on('Patient', {
 		});
 		frm.set_query('customer_group', {'is_group': 0});
 		frm.set_query('default_price_list', { 'selling': 1});
+		
+		// Set query for allergen field in patient_allergy child table based on category
+		if (frm.fields_dict.patient_allergy) {
+			frm.set_query('allergen', 'patient_allergy', function(doc, cdt, cdn) {
+				const row = locals[cdt][cdn];
+				if (row && row.allergen_category) {
+					return {
+						filters: {
+							'allergen_category': row.allergen_category
+						}
+					};
+				}
+				return {};
+			});
+		}
 
 		if (frappe.defaults.get_default('patient_name_by') != 'Naming Series') {
 			frm.toggle_display('naming_series', false);
@@ -998,3 +1013,56 @@ function setup_insurance_card_previews(frm) {
 		});
 	}
 }
+
+// Allergen Category Filtering
+frappe.ui.form.on('Patient Allergy', {
+	allergen_category: function(frm, cdt, cdn) {
+		const row = locals[cdt][cdn];
+		
+		// Check if allergen exists and validate against new category
+		if (row.allergen && row.allergen_category) {
+			frappe.db.get_value('Allergen', row.allergen, 'allergen_category', function(r) {
+				// Only clear if allergen's category doesn't match selected category
+				if (r && r.allergen_category && r.allergen_category !== row.allergen_category) {
+					// Allergen doesn't belong to selected category, clear it
+					frappe.model.set_value(cdt, cdn, 'allergen', '');
+				}
+				// If categories match, do nothing - keep the allergen
+			});
+		}
+		
+		// Always refresh allergen field when category changes to apply new filter
+		// This ensures dropdown shows only allergens from selected category
+		setTimeout(function() {
+			if (frm.fields_dict.patient_allergy && frm.fields_dict.patient_allergy.grid) {
+				const grid_row = frm.fields_dict.patient_allergy.grid.grid_rows_by_docname[cdn];
+				if (grid_row) {
+					// Refresh the field in grid form (when editing in popup)
+					if (grid_row.grid_form) {
+						grid_row.grid_form.refresh_field('allergen');
+					}
+					// Also refresh in inline grid
+					grid_row.refresh_field('allergen');
+				}
+			}
+		}, 100);
+	},
+	
+	allergen: function(frm, cdt, cdn) {
+		const row = locals[cdt][cdn];
+		
+		// When allergen is selected, auto-fill category from backend (only if category is empty)
+		if (row.allergen && !row.allergen_category) {
+			frappe.db.get_value('Allergen', row.allergen, 'allergen_category')
+				.then(r => {
+					if (r && r.message && r.message.allergen_category) {
+						frappe.model.set_value(cdt, cdn, 'allergen_category', r.message.allergen_category);
+					}
+				})
+				.catch(err => {
+					console.error('Error fetching allergen category:', err);
+				});
+		}
+	}
+	
+});

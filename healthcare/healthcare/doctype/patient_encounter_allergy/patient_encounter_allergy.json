@@ -5,6 +5,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "allergen_category",
   "allergen",
   "reaction",
   "severity",
@@ -15,6 +16,14 @@
   "comments"
  ],
  "fields": [
+  {
+   "fieldname": "allergen_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Allergen Category",
+   "options": "Allergen Category",
+   "description": "Select category to filter allergens"
+  },
   {
    "fieldname": "allergen",
    "fieldtype": "Link",

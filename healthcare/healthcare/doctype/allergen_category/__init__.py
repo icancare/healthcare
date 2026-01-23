@@ -1,0 +1,2 @@
+# Allergen Category DocType
+

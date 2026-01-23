@@ -87,6 +87,11 @@ frappe.ui.form.on("Patient Encounter", {
 			// Check if practitioner has template (for existing encounters)
 			check_practitioner_examination_template(frm);
 		}
+		
+		// Setup allergen query filter based on category (with safety check)
+		if (frm.fields_dict.custom_allergy) {
+			setup_allergen_category_filter(frm);
+		}
 	},
 
 
@@ -5112,5 +5117,59 @@ function show_teeth_popup(frm) {
 		}
 	});
 }
+
+// Setup allergen category filter
+function setup_allergen_category_filter(frm) {
+	try {
+		if (frm.fields_dict && frm.fields_dict.custom_allergy) {
+			frm.set_query('allergen', 'custom_allergy', function(doc, cdt, cdn) {
+				let row = locals[cdt][cdn];
+				if (row && row.allergen_category) {
+					return {
+						filters: {
+							'allergen_category': row.allergen_category
+						}
+					};
+				}
+				return {};
+			});
+		}
+	} catch (e) {
+		console.log("Allergen category filter setup skipped:", e.message);
+	}
+}
+
+// Allergen Category and Allergen Autocomplete Handlers
+frappe.ui.form.on("Patient Encounter Allergy", {
+	allergen_category: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		
+		// Only process if allergen exists and was set BEFORE category
+		// This prevents clearing allergen when category is auto-filled
+		if (row.allergen && row.allergen_category) {
+			frappe.db.get_value('Allergen', row.allergen, 'allergen_category', function(r) {
+				// Only clear if allergen's category doesn't match selected category
+				if (r && r.allergen_category && r.allergen_category !== row.allergen_category) {
+					// Allergen doesn't belong to selected category, clear it
+					frappe.model.set_value(cdt, cdn, 'allergen', '');
+				}
+				// If categories match, do nothing - keep the allergen
+			});
+		}
+	},
+	
+	allergen: function(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+		
+		// Auto-fill category when allergen is selected (only if category is empty)
+		if (row.allergen && !row.allergen_category) {
+			frappe.db.get_value('Allergen', row.allergen, 'allergen_category', function(r) {
+				if (r && r.allergen_category) {
+					frappe.model.set_value(cdt, cdn, 'allergen_category', r.allergen_category);
+				}
+			});
+		}
+	}
+});
 
 // Step 2 Physical Findings - Data fields, popup handles the selection
