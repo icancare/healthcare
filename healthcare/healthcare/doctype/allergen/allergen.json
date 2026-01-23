@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "allergen_name",
+  "allergen_category",
   "description"
  ],
  "fields": [
@@ -20,6 +21,14 @@
    "unique": 1
   },
   {
+   "fieldname": "allergen_category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Allergen Category",
+   "options": "Drug\nFood\nOther",
+   "reqd": 1
+  },
+  {
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description"
@@ -27,7 +36,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-27 16:00:00.000000",
+ "modified": "2026-01-23 16:30:00.000000",
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Allergen",
