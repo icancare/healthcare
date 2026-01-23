@@ -272,6 +272,7 @@ function load_patient_medical_history(frm) {
 					r.message.patient_allergy.forEach(function (allergy) {
 						let row = frm.add_child("custom_allergy");
 						// Map Patient Allergy fields to Patient Encounter Allergy fields
+						row.allergen_category = allergy.allergen_category;
 						row.allergen = allergy.allergen;
 						row.reaction = allergy.reaction;
 						row.severity = allergy.severity;

@@ -73,12 +73,12 @@ class PatientEncounter(Document):
 		
 		# Define mapping between Encounter and Patient child tables
 		history_mapping = [
-			# Allergy
-			{
-				"encounter_field": "custom_allergy",
-				"patient_field": "patient_allergy",
-				"fields": ["allergen", "reaction", "severity", "start_date", "end_date", "comments"]
-			},
+		# Allergy
+		{
+			"encounter_field": "custom_allergy",
+			"patient_field": "patient_allergy",
+			"fields": ["allergen_category", "allergen", "reaction", "severity", "start_date", "end_date", "comments"]
+		},
 			# Immunization
 			{
 				"encounter_field": "custom_immunization",
