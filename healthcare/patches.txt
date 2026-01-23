@@ -126,3 +126,4 @@ healthcare.patches.v15_0.create_fresh_oral_screening_template #06-01-2026
 healthcare.patches.v15_0.fix_step2_physical_findings_visibility #07-01-2026-v2
 healthcare.patches.v15_0.clean_slate_clinical_examination #07-01-2026-v6
 healthcare.patches.v15_0.clean_slate_clinical_examination #07-01-2026-v7-force-lesion-table
+healthcare.patches.v15_0.update_patient_fields_structure #23-01-2026-v6-final

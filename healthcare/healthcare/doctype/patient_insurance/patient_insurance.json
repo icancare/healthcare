@@ -31,11 +31,15 @@
   "policy_start_date",
   "column_break_5",
   "policy_end_date",
-  "coverage_section",
-  "coverage_amount",
-  "column_break_6",
-  "copay_percentage",
-  "notes_section",
+ "coverage_section",
+ "coverage_amount",
+ "column_break_6",
+ "copay_percentage",
+ "section_break_7",
+ "top_up_amount",
+ "column_break_8",
+ "copay_amount",
+ "notes_section",
   "notes"
  ],
  "fields": [
@@ -198,17 +202,37 @@
    "fieldname": "column_break_6",
    "fieldtype": "Column Break"
   },
-  {
-   "fieldname": "copay_percentage",
-   "fieldtype": "Percent",
-   "label": "Co-pay Percentage",
-   "description": "Percentage of cost patient needs to pay"
-  },
-  {
-   "fieldname": "notes_section",
-   "fieldtype": "Section Break",
-   "label": "Additional Notes"
-  },
+ {
+  "fieldname": "copay_percentage",
+  "fieldtype": "Percent",
+  "label": "Co-pay Percentage",
+  "description": "Percentage of cost patient needs to pay"
+ },
+ {
+  "fieldname": "section_break_7",
+  "fieldtype": "Section Break"
+ },
+ {
+  "fieldname": "top_up_amount",
+  "fieldtype": "Currency",
+  "label": "Top Up Amount",
+  "description": "Additional coverage amount on top of base coverage"
+ },
+ {
+  "fieldname": "column_break_8",
+  "fieldtype": "Column Break"
+ },
+ {
+  "fieldname": "copay_amount",
+  "fieldtype": "Currency",
+  "label": "Co-Pay Amount",
+  "description": "Fixed amount patient needs to pay"
+ },
+ {
+  "fieldname": "notes_section",
+  "fieldtype": "Section Break",
+  "label": "Additional Notes"
+ },
   {
    "fieldname": "notes",
    "fieldtype": "Small Text",
@@ -218,7 +242,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-11-29 12:00:00.000000",
+ "modified": "2026-01-23 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Healthcare",
  "name": "Patient Insurance",
