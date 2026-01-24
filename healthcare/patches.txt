@@ -133,3 +133,4 @@ healthcare.patches.v15_0.import_allergen_data_with_categories #23-01-2026
 healthcare.patches.v15_0.add_allergen_category_to_patient_allergy #23-01-2026
 healthcare.patches.v15_0.add_allergen_category_to_encounter_allergy #23-01-2026
 healthcare.patches.v15_0.fix_patient_allergen_category_filtering #23-01-2026
+healthcare.patches.v15_0.change_allergy_date_fields_to_flexible_format #24-01-2026
