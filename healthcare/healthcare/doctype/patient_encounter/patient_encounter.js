@@ -808,7 +808,7 @@ function render_step2_custom_edit_form(frm, cdt, cdn) {
 	} else if (config.special === 'teeth') {
 		customFormHtml = create_teeth_edit_form_html(row);
 	} else {
-		// Face, Neck, Throat - standard form
+		// Face, Neck - standard form
 		customFormHtml = create_standard_edit_form_html(row, bodyPart, config);
 	}
 	
@@ -828,7 +828,7 @@ function render_step2_custom_edit_form(frm, cdt, cdn) {
 	}
 }
 
-// Create HTML for standard edit form (Face, Neck, Throat)
+// Create HTML for standard edit form (Face, Neck)
 function create_standard_edit_form_html(row, bodyPart, config) {
 	let currentLocation = row.location || '';
 	let currentAbnormalities = (row.abnormality || '').split(', ').map(s => s.trim()).filter(s => s);
@@ -1026,7 +1026,7 @@ function create_teeth_edit_form_html(row) {
 	`;
 }
 
-// Setup handlers for standard edit form (Face, Neck, Throat)
+// Setup handlers for standard edit form (Face, Neck)
 function setup_standard_edit_handlers($form_area, cdt, cdn, config) {
 	// Location change
 	$($form_area).find('.step2-edit-location').on('change', function() {
@@ -3722,7 +3722,7 @@ function upload_picture(frm, card, field, name) {
 
 const BODY_PARTS_CONFIG = {
 	'Face': {
-		symptoms: ['Lump/Swelling on face', 'Pigmentation', 'Ulcer']
+		symptoms: ['Lump/Swelling on face', 'Pigmentation', 'Ulcer', 'Other']
 	},
 	'Neck': {
 		symptoms: ['Lump/Swelling in Neck (outside)', 'Swelling/lump in Throat (inside)', 'Stickiness in throat', 'Change in Voice', 'Sore throat/Hoarseness', 'Swallowing Difficulty/pain', 'Other']
@@ -3731,7 +3731,7 @@ const BODY_PARTS_CONFIG = {
 		symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Others']
 	},
 	'Teeth (Dental)': {
-		symptoms: ['Painful teeth', 'Loosening of teeth', 'Lost teeth', 'Teeth or gum problem', 'Denture problem']
+		symptoms: ['Painful teeth', 'Loosening of teeth', 'Lost teeth', 'Teeth or gum problem', 'Denture problem', 'Other']
 	},
 	'Others': {
 		symptoms: ['Earache', 'Others']
@@ -4176,11 +4176,6 @@ const STEP2_CONFIG = {
 		special: 'teeth',
 		teethIssues: ['Loose', 'Painful', 'Lost', 'Caries', 'Stained', 'Calculus', 'Missing', 'Broken', 'Abrasion', 'Irregular Alignment', 'Sharp', 'Attrition', 'Root Stump', 'Tender'],
 		tableColumns: ['Teeth #', 'Issues', 'Notes']
-	},
-	'Throat': {
-		locations: ['Throat - Left', 'Throat - Right', 'Throat - Central'],
-		abnormalities: ['Pain', 'Asymmetry', 'Swelling/Nodule', 'Lymph Nodes', 'Ulcer', 'Decreased Movement', 'Redness'],
-		tableColumns: ['Location', 'Abnormalities', 'Notes']
 	}
 };
 
@@ -4403,7 +4398,7 @@ function show_step2_popup(frm, bodyPart) {
 	}
 }
 
-// Standard Body Part Popup (Face, Neck, Throat)
+// Standard Body Part Popup (Face, Neck)
 function show_standard_body_part_popup(frm, bodyPart, config) {
 	// Get existing findings for this body part with full data for editing
 	let existingFindings = new Map(); // Map of location -> row data
