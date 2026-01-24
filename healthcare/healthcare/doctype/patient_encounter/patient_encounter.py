@@ -111,11 +111,12 @@ class PatientEncounter(Document):
 		},
 		# Social History - Smoking Tobacco
 		{
-			"encounter_field": "custom_smoking_tobacco_history",
-			"patient_field": "patient_smoking_tobacco_history",
-			"fields": ["type", "frequency", "quantity", "quantity_unit",
-			          "started_at_age", "discontinued_at_age", "used_for_years", "comment"]
-		},
+		"encounter_field": "custom_smoking_tobacco_history",
+		"patient_field": "patient_smoking_tobacco_history",
+		"fields": ["type", "frequency", "quantity", "quantity_unit",
+		          "started_at_age", "discontinued_at_age", "used_for_years",
+		          "pack_years", "bidi_pack_years", "comment"]
+	},
 	# Social History - Substance Abuse
 	{
 		"encounter_field": "custom_substance_abuse_history",

@@ -1099,6 +1099,9 @@ frappe.ui.form.on('Patient Alcohol History', {
 	},
 	years_of_use: function(frm, cdt, cdn) {
 		compute_alcohol_years(frm, cdt, cdn);
+	},
+	frequency: function(frm, cdt, cdn) {
+		compute_alcohol_years(frm, cdt, cdn);
 	}
 });
 
@@ -1106,21 +1109,33 @@ function compute_alcohol_years(frm, cdt, cdn) {
 	const row = locals[cdt][cdn];
 	
 	if (row.quantity && row.years_of_use) {
-		// Alcohol Years = Quantity (Units/Day) × Years of Use
-		const alcohol_years = row.quantity * row.years_of_use;
+		// Convert quantity to daily based on frequency
+		let daily_quantity = get_daily_quantity(row.quantity, row.frequency);
+		
+		// Alcohol Years = Daily Quantity × Years of Use
+		const alcohol_years = daily_quantity * row.years_of_use;
 		frappe.model.set_value(cdt, cdn, 'alcohol_years', alcohol_years.toFixed(2));
 	} else {
 		frappe.model.set_value(cdt, cdn, 'alcohol_years', 0);
 	}
 }
 
-// Smoking Tobacco History - Age Computation
+// Smoking Tobacco History - Age Computation and Pack Years
 frappe.ui.form.on('Patient Smoking Tobacco History', {
 	started_at_age: function(frm, cdt, cdn) {
-		compute_used_years(frm, cdt, cdn);
+		compute_used_years_smoking(frm, cdt, cdn);
 	},
 	discontinued_at_age: function(frm, cdt, cdn) {
-		compute_used_years(frm, cdt, cdn);
+		compute_used_years_smoking(frm, cdt, cdn);
+	},
+	quantity: function(frm, cdt, cdn) {
+		compute_pack_years(frm, cdt, cdn);
+	},
+	frequency: function(frm, cdt, cdn) {
+		compute_pack_years(frm, cdt, cdn);
+	},
+	type: function(frm, cdt, cdn) {
+		compute_pack_years(frm, cdt, cdn);
 	}
 });
 
@@ -1143,6 +1158,24 @@ frappe.ui.form.on('Patient Substance Abuse History', {
 		compute_used_years(frm, cdt, cdn);
 	}
 });
+
+// Helper function to convert quantity to daily based on frequency
+function get_daily_quantity(quantity, frequency) {
+	if (!quantity) return 0;
+	
+	switch(frequency) {
+		case 'Daily':
+			return quantity;
+		case 'Weekly':
+			return quantity / 7;
+		case 'Monthly':
+			return quantity / 30;
+		case 'Yearly':
+			return quantity / 365;
+		default:
+			return quantity; // Default to daily if not specified
+	}
+}
 
 function compute_used_years(frm, cdt, cdn) {
 	const row = locals[cdt][cdn];
@@ -1168,5 +1201,38 @@ function compute_used_years(frm, cdt, cdn) {
 		}
 	} else {
 		frappe.model.set_value(cdt, cdn, 'used_for_years', 0);
+	}
+}
+
+// Smoking-specific computation (includes pack years)
+function compute_used_years_smoking(frm, cdt, cdn) {
+	compute_used_years(frm, cdt, cdn);
+	compute_pack_years(frm, cdt, cdn);
+}
+
+// Pack Years computation for Smoking Tobacco
+function compute_pack_years(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	
+	// Reset both fields first
+	frappe.model.set_value(cdt, cdn, 'pack_years', 0);
+	frappe.model.set_value(cdt, cdn, 'bidi_pack_years', 0);
+	
+	if (!row.quantity || !row.used_for_years || row.used_for_years <= 0) {
+		return;
+	}
+	
+	// Convert quantity to daily
+	let daily_quantity = get_daily_quantity(row.quantity, row.frequency);
+	
+	// Check type and compute accordingly
+	if (row.type && row.type.toLowerCase().includes('cigarette')) {
+		// Pack Years = (Cigarettes per day / 20) × Years Smoked
+		const pack_years = (daily_quantity / 20) * row.used_for_years;
+		frappe.model.set_value(cdt, cdn, 'pack_years', pack_years.toFixed(2));
+	} else if (row.type && row.type.toLowerCase().includes('bidi')) {
+		// Bidi Pack Years = (Bidis per day / 4) / 20 × Years Smoked
+		const bidi_pack_years = ((daily_quantity / 4) / 20) * row.used_for_years;
+		frappe.model.set_value(cdt, cdn, 'bidi_pack_years', bidi_pack_years.toFixed(2));
 	}
 }
