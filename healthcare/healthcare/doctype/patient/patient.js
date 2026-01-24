@@ -249,17 +249,15 @@ function render_diagnosis_quick_select_panel(frm) {
 		<div class="diagnosis-quick-panel">
 			<div class="panel-header">
 				<h5>📋 Medical History & Comorbidities - Quick Selection</h5>
-				<p class="text-muted">Click on diagnosis to add. Select SELF for patient's own history or FAMILY for family history.</p>
+				<p class="text-muted">Click YES to add diagnosis. A dialog will open to enter details.</p>
 			</div>
 			<div class="diagnosis-table">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th style="width: 35%;">DIAGNOSIS</th>
-							<th class="self-column-header" style="width: 12%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF WHEN<br><small>SINCE WHEN</small></th>
-							<th class="self-column-header" style="width: 13%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF TREATMENT<br><small>ONGOING</small></th>
-							<th class="self-column-header" style="width: 20%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF<br><small>NO / YES</small></th>
-							<th class="family-column-header" style="width: 20%; text-align: center; background: rgba(34, 197, 94, 0.15);">FAMILY<br><small>NO / YES</small></th>
+							<th style="width: 50%;">DIAGNOSIS</th>
+							<th class="self-column-header" style="width: 25%; text-align: center; background: rgba(59, 130, 246, 0.15);">SELF<br><small>NO / YES</small></th>
+							<th class="family-column-header" style="width: 25%; text-align: center; background: rgba(34, 197, 94, 0.15);">FAMILY<br><small>NO / YES</small></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -273,15 +271,6 @@ function render_diagnosis_quick_select_panel(frm) {
 		panel_html += `
 			<tr class="diagnosis-row" data-diagnosis="${diag.name}" data-category="${diag.category}">
 				<td class="diagnosis-name">${display_name}</td>
-				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
-					<input type="text" class="form-control form-control-sm when-input" placeholder="e.g. 2023" title="Enter year, month and day, eg: 2023, Jan 3, 2023" style="width: 80px; margin: 0 auto;">
-				</td>
-				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
-					<div class="btn-group btn-group-sm" role="group">
-						<button type="button" class="btn btn-outline-secondary btn-treatment-no" data-value="no">N</button>
-						<button type="button" class="btn btn-outline-warning btn-treatment-yes" data-value="yes">Y</button>
-					</div>
-				</td>
 				<td class="text-center self-column" style="background: rgba(59, 130, 246, 0.05);">
 					<div class="btn-group btn-group-sm" role="group">
 						<button type="button" class="btn ${!is_self ? 'btn-outline-secondary' : 'btn-secondary'} btn-self-no" data-type="self" data-value="no">NO</button>
@@ -323,8 +312,6 @@ function attach_quick_panel_events(frm, wrapper) {
 		let row = $(this).closest('.diagnosis-row');
 		let diagnosis = row.data('diagnosis');
 		let category = row.data('category');
-		let when_val = row.find('.when-input').val();
-		let treatment = row.find('.btn-treatment-yes').hasClass('active') || row.find('.btn-treatment-yes').hasClass('btn-warning');
 		
 		// Check if already exists
 		let exists = (frm.doc.patient_medical_history || []).some(d => d.diagnosis === diagnosis);
@@ -333,12 +320,8 @@ function attach_quick_panel_events(frm, wrapper) {
 			return;
 		}
 		
-		// Add to Medical History
-		add_to_medical_history(frm, diagnosis, category, when_val, treatment);
-		
-		// Update button states
-		$(this).removeClass('btn-outline-primary').addClass('btn-primary');
-		row.find('.btn-self-no').removeClass('btn-secondary').addClass('btn-outline-secondary');
+		// Show dialog for SELF history
+		show_self_history_dialog(frm, diagnosis, category, $(this), row);
 	});
 	
 	// Handle SELF NO click
@@ -383,35 +366,74 @@ function attach_quick_panel_events(frm, wrapper) {
 		$(this).removeClass('btn-outline-secondary').addClass('btn-secondary');
 		row.find('.btn-family-yes').removeClass('btn-success').addClass('btn-outline-success');
 	});
-	
-	// Handle Treatment buttons
-	wrapper.find('.btn-treatment-yes, .btn-treatment-no').off('click').on('click', function() {
-		let row = $(this).closest('.diagnosis-row');
-		let diagnosis = row.data('diagnosis');
-		let isYes = $(this).hasClass('btn-treatment-yes');
-		
-		row.find('.btn-treatment-yes, .btn-treatment-no').removeClass('active btn-warning btn-secondary')
-			.addClass('btn-outline-secondary btn-outline-warning');
-		
-		if (isYes) {
-			$(this).removeClass('btn-outline-warning').addClass('btn-warning active');
-		} else {
-			$(this).removeClass('btn-outline-secondary').addClass('btn-secondary active');
+}
+
+function show_self_history_dialog(frm, diagnosis, category, btn, row) {
+	let d = new frappe.ui.Dialog({
+		title: __('Add to Medical History (Self)'),
+		fields: [
+			{
+				fieldname: 'diagnosis_display',
+				fieldtype: 'Data',
+				label: __('Diagnosis'),
+				default: diagnosis,
+				read_only: 1
+			},
+			{
+				fieldname: 'when',
+				fieldtype: 'Data',
+				label: __('Since When'),
+				description: __('Enter year (2023), month-year (Jan 2023), or full date')
+			},
+			{
+				fieldname: 'undergoing_treatment',
+				fieldtype: 'Check',
+				label: __('Ongoing Treatment'),
+				default: 0
+			},
+			{
+				fieldname: 'is_hereditary',
+				fieldtype: 'Check',
+				label: __('Is Hereditary'),
+				description: __('Check if this condition has hereditary/genetic factors'),
+				default: 0
+			}
+		],
+		primary_action_label: __('Add'),
+		primary_action: function(values) {
+			// Add to Medical History
+			let new_row = frm.add_child('patient_medical_history', {
+				diagnosis_category: category,
+				diagnosis: diagnosis,
+				when: values.when || '',
+				undergoing_treatment: values.undergoing_treatment ? 1 : 0,
+				is_hereditary: values.is_hereditary ? 1 : 0
+			});
+			
+			// Fetch diagnosis name
+			frappe.db.get_value('Diagnosis', diagnosis, 'diagnosis', function(r) {
+				if (r) {
+					frappe.model.set_value(new_row.doctype, new_row.name, 'diagnosis_name', r.diagnosis);
+				}
+			});
+			
+			frm.refresh_field('patient_medical_history');
+			frm.dirty();
+			
+			// Update button states
+			btn.removeClass('btn-outline-primary').addClass('btn-primary');
+			row.find('.btn-self-no').removeClass('btn-secondary').addClass('btn-outline-secondary');
+			
+			frappe.show_alert({
+				message: __('Added {0} to Medical History', [diagnosis]),
+				indicator: 'green'
+			});
+			
+			d.hide();
 		}
-		
-		// Update existing row if already added
-		update_existing_medical_history_row(frm, diagnosis, 'undergoing_treatment', isYes ? 1 : 0);
 	});
 	
-	// Handle When input change - update existing row
-	wrapper.find('.when-input').off('change blur').on('change blur', function() {
-		let row = $(this).closest('.diagnosis-row');
-		let diagnosis = row.data('diagnosis');
-		let when_val = $(this).val();
-		
-		// Update existing row if already added
-		update_existing_medical_history_row(frm, diagnosis, 'when', when_val);
-	});
+	d.show();
 }
 
 function add_to_medical_history(frm, diagnosis, category, years, treatment) {
@@ -481,10 +503,6 @@ function update_existing_medical_history_row(frm, diagnosis, field, value) {
 }
 
 function show_family_relation_dialog(frm, diagnosis, category, btn, row) {
-	// Get values from quick panel row
-	let when_val = row.find('.when-input').val();
-	let treatment = row.find('.btn-treatment-yes').hasClass('active') || row.find('.btn-treatment-yes').hasClass('btn-warning');
-	
 	let d = new frappe.ui.Dialog({
 		title: __('Add to Family Medical History'),
 		fields: [
@@ -506,15 +524,21 @@ function show_family_relation_dialog(frm, diagnosis, category, btn, row) {
 			{
 				fieldname: 'when',
 				fieldtype: 'Data',
-				label: __('When'),
-				default: when_val || '',
-				description: __('Enter approximate date or number of years')
+				label: __('Since When'),
+				description: __('Enter year (2023), month-year (Jan 2023), or full date')
 			},
 			{
 				fieldname: 'undergoing_treatment',
 				fieldtype: 'Check',
-				label: __('Undergoing Treatment'),
-				default: treatment ? 1 : 0
+				label: __('Ongoing Treatment'),
+				default: 0
+			},
+			{
+				fieldname: 'is_hereditary',
+				fieldtype: 'Check',
+				label: __('Is Hereditary'),
+				description: __('Check if this condition has hereditary/genetic factors'),
+				default: 0
 			}
 		],
 		primary_action_label: __('Add'),
@@ -525,7 +549,8 @@ function show_family_relation_dialog(frm, diagnosis, category, btn, row) {
 				diagnosis: diagnosis,
 				relation: values.relation,
 				when: values.when || '',
-				undergoing_treatment: values.undergoing_treatment ? 1 : 0
+				undergoing_treatment: values.undergoing_treatment ? 1 : 0,
+				is_hereditary: values.is_hereditary ? 1 : 0
 			});
 			
 			// Fetch diagnosis name
