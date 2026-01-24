@@ -146,3 +146,4 @@ healthcare.patches.v15_0.fix_social_history_field_positions_v2 #24-01-2026-socia
 healthcare.patches.v15_0.restructure_oral_hygiene_and_add_child_gender #24-01-2026-oral-hygiene-child-gender
 healthcare.patches.v15_0.add_oral_hygiene_direct_fields_v2 #24-01-2026-oral-hygiene-v2
 healthcare.patches.v15_0.fix_oral_hygiene_location_v3 #24-01-2026-oral-hygiene-v3-fix
+healthcare.patches.v15_0.ensure_encounter_oral_hygiene_fields #24-01-2026-encounter-oral-fix
