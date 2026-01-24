@@ -143,3 +143,6 @@ healthcare.patches.v15_0.add_age_fields_to_social_history #24-01-2026-social-his
 healthcare.patches.v15_0.fix_social_history_age_fields_layout #24-01-2026-social-history-age-v2
 healthcare.patches.v15_0.fix_all_social_history_layout_and_add_pack_years #24-01-2026-social-history-complete
 healthcare.patches.v15_0.fix_social_history_field_positions_v2 #24-01-2026-social-history-positions-fix
+healthcare.patches.v15_0.restructure_oral_hygiene_and_add_child_gender #24-01-2026-oral-hygiene-child-gender
+healthcare.patches.v15_0.add_oral_hygiene_direct_fields_v2 #24-01-2026-oral-hygiene-v2
+healthcare.patches.v15_0.fix_oral_hygiene_location_v3 #24-01-2026-oral-hygiene-v3-fix

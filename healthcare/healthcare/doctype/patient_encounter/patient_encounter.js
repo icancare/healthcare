@@ -430,9 +430,23 @@ function load_patient_medical_history(frm) {
 				frm.refresh_field("custom_alcohol_history");
 			}
 
+		// Load Oral Hygiene direct fields (in Social History section)
+			if (r.message.oral_habit_types) {
+				frm.set_value("custom_oral_habit_types", r.message.oral_habit_types);
+			}
+			if (r.message.oral_hygiene_practice) {
+				frm.set_value("custom_oral_hygiene_practice", r.message.oral_hygiene_practice);
+			}
+			if (r.message.dental_visits_frequency) {
+				frm.set_value("custom_dental_visits_frequency", r.message.dental_visits_frequency);
+			}
+			if (r.message.mouth_wash_use) {
+				frm.set_value("custom_mouth_wash_use", r.message.mouth_wash_use);
+			}
+			
 			// Auto-fill Oral Habits History
-				if (frm.fields_dict.custom_oral_habits_history && r.message.patient_oral_habits_history && r.message.patient_oral_habits_history.length > 0) {
-					console.log("Loading oral habits history:", r.message.patient_oral_habits_history.length);
+			if (frm.fields_dict.custom_oral_habits_history && r.message.patient_oral_habits_history && r.message.patient_oral_habits_history.length > 0) {
+				console.log("Loading oral habits history:", r.message.patient_oral_habits_history.length);
 					frm.clear_table("custom_oral_habits_history");
 					r.message.patient_oral_habits_history.forEach(function (history) {
 						let row = frm.add_child("custom_oral_habits_history");

@@ -135,9 +135,8 @@ class PatientEncounter(Document):
 			{
 				"encounter_field": "custom_oral_habits_history",
 				"patient_field": "patient_oral_habits_history",
-				"fields": ["type", "oral_hygiene_practice", "dental_visits_frequency",
-				          "mouth_wash_use", "restricted_mouth_opening", "comment"]
-			},
+			"fields": ["type", "comment"]
+		},
 			# Social History - Diet
 			{
 				"encounter_field": "custom_diet_history",
@@ -208,6 +207,20 @@ class PatientEncounter(Document):
 			if encounter_value is not None:
 				patient.set(patient_field, encounter_value)
 				updated = True
+		
+		# Sync Oral Hygiene direct fields (in Social History section)
+		oral_hygiene_fields = [
+			("custom_oral_habit_types", "oral_habit_types"),
+			("custom_oral_hygiene_practice", "oral_hygiene_practice"),
+			("custom_dental_visits_frequency", "dental_visits_frequency"),
+			("custom_mouth_wash_use", "mouth_wash_use")
+		]
+		
+		for encounter_field, patient_field in oral_hygiene_fields:
+			if hasattr(self, encounter_field) and getattr(self, encounter_field):
+				if getattr(patient, patient_field, None) != getattr(self, encounter_field):
+					setattr(patient, patient_field, getattr(self, encounter_field))
+					updated = True
 		
 		if updated:
 			patient.flags.ignore_permissions = True
