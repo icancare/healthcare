@@ -168,7 +168,7 @@ class PatientEncounter(Document):
 			{
 				"encounter_field": "encounter_children_details",
 				"patient_field": "patient_children_details",
-				"fields": ["child_number", "age_at_delivery", "delivery_type", "comment"]
+				"fields": ["child_number", "gender", "age_at_delivery", "delivery_type", "comment"]
 			}
 		]
 		
