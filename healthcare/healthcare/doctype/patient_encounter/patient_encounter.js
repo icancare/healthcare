@@ -60,6 +60,11 @@ frappe.ui.form.on("Patient Encounter", {
 			setup_who_field_queries(frm);
 		}
 
+		// Load Vital Signs mouth data if already linked
+		if (frm.doc.vital_signs) {
+			load_vital_signs_mouth_data(frm);
+		}
+
 		if (frm.doc.docstatus == 1) {
 			frm.add_custom_button(__("Order"), function () {
 				frappe.new_doc("Service Request");
@@ -175,6 +180,13 @@ frappe.ui.form.on("Patient Encounter", {
 					frm.set_value(values);
 				}
 			});
+		}
+	},
+
+	vital_signs: function (frm) {
+		// Load mouth examination data from Vital Signs when linked
+		if (frm.doc.vital_signs) {
+			load_vital_signs_mouth_data(frm);
 		}
 	},
 
@@ -4686,7 +4698,7 @@ function show_mouth_popup(frm) {
 		);
 	}
 	
-	// Pre-fill values if editing existing row
+	// Pre-fill values if editing existing row OR from linked Vital Signs
 	let prefilledValues = {};
 	if (existingMouthRow) {
 		// Parse the abnormality string to extract values
@@ -4730,6 +4742,17 @@ function show_mouth_popup(frm) {
 		
 		// Extract Notes
 		prefilledValues.notes = existingMouthRow.note || '';
+	} else if (frm._vital_signs_mouth_data) {
+		// If no existing mouth row but Vital Signs data is available, use it
+		if (frm._vital_signs_mouth_data.fingers) {
+			prefilledValues.fingers = frm._vital_signs_mouth_data.fingers;
+		}
+		if (frm._vital_signs_mouth_data.opening_mm) {
+			prefilledValues.opening_mm = parseInt(frm._vital_signs_mouth_data.opening_mm);
+		}
+		if (frm._vital_signs_mouth_data.measured_with) {
+			prefilledValues.measured_with = frm._vital_signs_mouth_data.measured_with;
+		}
 	}
 	
 	let d = new frappe.ui.Dialog({
@@ -4860,7 +4883,7 @@ function show_mouth_popup(frm) {
 
 	d.show();
 	
-	// Set prefilled values if editing
+	// Set prefilled values if editing existing row
 	if (existingMouthRow) {
 		d.set_values({
 			fingers: prefilledValues.fingers || '',
@@ -4889,6 +4912,15 @@ function show_mouth_popup(frm) {
 				});
 			}
 		}
+	}
+	
+	// If we have pre-filled values from Vital Signs, set them now
+	if (!existingMouthRow && (prefilledValues.fingers || prefilledValues.opening_mm || prefilledValues.measured_with)) {
+		d.set_values({
+			fingers: prefilledValues.fingers || '',
+			opening_mm: prefilledValues.opening_mm || '',
+			measured_with: prefilledValues.measured_with || ''
+		});
 	}
 	
 	// Add event listeners for tongue movement radio buttons
@@ -5369,3 +5401,36 @@ function compute_pack_years_encounter(frm, cdt, cdn) {
 }
 
 // Step 2 Physical Findings - Data fields, popup handles the selection
+
+
+// Load mouth examination data from Vital Signs into Patient Encounter Step 2
+// This function is called when vital_signs field changes
+// It does NOT automatically add rows to the table
+// It only stores the data for popup pre-fill
+function load_vital_signs_mouth_data(frm) {
+	if (!frm.doc.vital_signs) {
+		return;
+	}
+
+	frappe.call({
+		method: "frappe.client.get",
+		args: {
+			doctype: "Vital Signs",
+			name: frm.doc.vital_signs
+		},
+		callback: function (r) {
+			if (r.message) {
+				const vital_signs = r.message;
+				
+				// Store vital signs mouth data in frm for popup to use
+				if (vital_signs.mouth_opening_fingers || vital_signs.mouth_opening_mm || vital_signs.measured_with) {
+					frm._vital_signs_mouth_data = {
+						fingers: vital_signs.mouth_opening_fingers,
+						opening_mm: vital_signs.mouth_opening_mm,
+						measured_with: vital_signs.measured_with
+					};
+				}
+			}
+		}
+	});
+}

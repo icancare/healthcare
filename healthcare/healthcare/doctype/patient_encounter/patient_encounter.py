@@ -30,6 +30,9 @@ class PatientEncounter(Document):
 		if self.appointment:
 			frappe.db.set_value("Patient Appointment", self.appointment, "status", "Closed")
 		
+		# Sync mouth examination data to linked Vital Signs
+		self.sync_mouth_data_to_vital_signs()
+		
 		# Sync all medical history (allergy, immunization, medical, surgical, social) back to Patient
 		if self.patient:
 			self.sync_medical_history_to_patient()
@@ -63,6 +66,57 @@ class PatientEncounter(Document):
 		self.title = _("{0} with {1}").format(
 			self.patient_name or self.patient, self.practitioner_name or self.practitioner
 		)[:100]
+
+	def sync_mouth_data_to_vital_signs(self):
+		"""Sync mouth examination data from Patient Encounter Step 2 to linked Vital Signs"""
+		if not self.vital_signs:
+			return
+		
+		try:
+			# Get the linked Vital Signs document
+			vital_signs = frappe.get_doc("Vital Signs", self.vital_signs)
+			
+			# Find mouth examination data from Step 2 (custom_physical_findings)
+			mouth_data = None
+			if hasattr(self, "custom_physical_findings"):
+				for exam in self.custom_physical_findings:
+					if exam.body_part == "Mouth":
+						mouth_data = exam
+						break
+			
+			# Parse and sync the three fields if mouth data exists
+			if mouth_data and mouth_data.abnormality:
+				import re
+				updated = False
+				abnormality = mouth_data.abnormality
+				
+				# Extract Fingers: One/Two/Three/Four
+				fingers_match = re.search(r'Fingers:\s*(\w+)', abnormality)
+				if fingers_match:
+					vital_signs.mouth_opening_fingers = fingers_match.group(1)
+					updated = True
+				
+				# Extract Opening: XXmm
+				opening_match = re.search(r'Opening:\s*(\d+)mm', abnormality)
+				if opening_match:
+					vital_signs.mouth_opening_mm = float(opening_match.group(1))
+					updated = True
+				
+				# Extract Measured: TrisCare/Caliper/Other
+				measured_match = re.search(r'Measured:\s*(\w+)', abnormality)
+				if measured_match:
+					vital_signs.measured_with = measured_match.group(1)
+					updated = True
+				
+				# Save the vital signs if any field was updated
+				if updated:
+					vital_signs.flags.ignore_permissions = True
+					vital_signs.save()
+					frappe.db.commit()
+					
+		except Exception as e:
+			# Don't block the encounter save if vital signs sync fails
+			frappe.log_error(f"Error syncing mouth data to vital signs: {str(e)}", "Mouth Data Sync Error")
 
 	def sync_medical_history_to_patient(self):
 		"""Sync all medical history from Encounter back to Patient"""
