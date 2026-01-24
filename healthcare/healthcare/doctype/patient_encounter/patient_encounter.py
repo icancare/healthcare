@@ -116,14 +116,20 @@ class PatientEncounter(Document):
 				"fields": ["type", "frequency", "quantity", "quantity_unit",
 				          "discontinued_since", "discontinued_since_unit", "comment"]
 			},
-			# Social History - Substance Abuse
-			{
-				"encounter_field": "custom_substance_abuse_history",
-				"patient_field": "patient_substance_abuse_history",
-				"fields": ["type", "frequency", "quantity", "quantity_unit",
-				          "discontinued_since", "discontinued_since_unit", "comment"]
-			},
-			# Social History - Oral Habits
+		# Social History - Substance Abuse
+		{
+			"encounter_field": "custom_substance_abuse_history",
+			"patient_field": "patient_substance_abuse_history",
+			"fields": ["type", "frequency", "quantity", "quantity_unit", "comment"]
+		},
+		# Social History - Alcohol
+		{
+			"encounter_field": "custom_alcohol_history",
+			"patient_field": "patient_alcohol_history",
+			"fields": ["type", "frequency", "quantity", "quantity_unit", 
+			          "years_of_use", "alcohol_years", "comment"]
+		},
+		# Social History - Oral Habits
 			{
 				"encounter_field": "custom_oral_habits_history",
 				"patient_field": "patient_oral_habits_history",

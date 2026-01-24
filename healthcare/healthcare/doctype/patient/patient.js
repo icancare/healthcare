@@ -1091,3 +1091,25 @@ frappe.ui.form.on('Patient Allergy', {
 	}
 	
 });
+
+// Patient Alcohol History - Computation Logic
+frappe.ui.form.on('Patient Alcohol History', {
+	quantity: function(frm, cdt, cdn) {
+		compute_alcohol_years(frm, cdt, cdn);
+	},
+	years_of_use: function(frm, cdt, cdn) {
+		compute_alcohol_years(frm, cdt, cdn);
+	}
+});
+
+function compute_alcohol_years(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	
+	if (row.quantity && row.years_of_use) {
+		// Alcohol Years = Quantity (Units/Day) × Years of Use
+		const alcohol_years = row.quantity * row.years_of_use;
+		frappe.model.set_value(cdt, cdn, 'alcohol_years', alcohol_years.toFixed(2));
+	} else {
+		frappe.model.set_value(cdt, cdn, 'alcohol_years', 0);
+	}
+}

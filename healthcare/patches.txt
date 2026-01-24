@@ -136,3 +136,6 @@ healthcare.patches.v15_0.fix_patient_allergen_category_filtering #23-01-2026
 healthcare.patches.v15_0.change_allergy_date_fields_to_flexible_format #24-01-2026
 healthcare.patches.v15_0.add_is_hereditary_to_medical_history #24-01-2026
 healthcare.patches.v15_0.add_is_hereditary_field_v2 #24-01-2026
+healthcare.patches.v15_0.add_alcohol_history_section #24-01-2026-alcohol
+healthcare.patches.v15_0.update_alcohol_and_substance_abuse_fields #24-01-2026-alcohol-v2
+healthcare.patches.v15_0.improve_alcohol_history_layout #24-01-2026-alcohol-v3

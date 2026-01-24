@@ -392,23 +392,38 @@ function load_patient_medical_history(frm) {
 				}
 
 				// Auto-fill Substance Abuse History
-				if (frm.fields_dict.custom_substance_abuse_history && r.message.patient_substance_abuse_history && r.message.patient_substance_abuse_history.length > 0) {
-					console.log("Loading substance abuse history:", r.message.patient_substance_abuse_history.length);
-					frm.clear_table("custom_substance_abuse_history");
-					r.message.patient_substance_abuse_history.forEach(function (history) {
-						let row = frm.add_child("custom_substance_abuse_history");
-						row.type = history.type;
-						row.frequency = history.frequency;
-						row.quantity = history.quantity;
-						row.quantity_unit = history.quantity_unit;
-						row.discontinued_since = history.discontinued_since;
-						row.discontinued_since_unit = history.discontinued_since_unit;
-						row.comment = history.comment;
-					});
-					frm.refresh_field("custom_substance_abuse_history");
-				}
+			if (frm.fields_dict.custom_substance_abuse_history && r.message.patient_substance_abuse_history && r.message.patient_substance_abuse_history.length > 0) {
+				console.log("Loading substance abuse history:", r.message.patient_substance_abuse_history.length);
+				frm.clear_table("custom_substance_abuse_history");
+				r.message.patient_substance_abuse_history.forEach(function (history) {
+					let row = frm.add_child("custom_substance_abuse_history");
+					row.type = history.type;
+					row.frequency = history.frequency;
+					row.quantity = history.quantity;
+					row.quantity_unit = history.quantity_unit;
+					row.comment = history.comment;
+				});
+				frm.refresh_field("custom_substance_abuse_history");
+			}
 
-				// Auto-fill Oral Habits History
+			// Auto-fill Alcohol History
+			if (frm.fields_dict.custom_alcohol_history && r.message.patient_alcohol_history && r.message.patient_alcohol_history.length > 0) {
+				console.log("Loading alcohol history:", r.message.patient_alcohol_history.length);
+				frm.clear_table("custom_alcohol_history");
+				r.message.patient_alcohol_history.forEach(function (history) {
+					let row = frm.add_child("custom_alcohol_history");
+					row.type = history.type;
+					row.frequency = history.frequency;
+					row.quantity = history.quantity;
+					row.quantity_unit = history.quantity_unit;
+					row.years_of_use = history.years_of_use;
+					row.alcohol_years = history.alcohol_years;
+					row.comment = history.comment;
+				});
+				frm.refresh_field("custom_alcohol_history");
+			}
+
+			// Auto-fill Oral Habits History
 				if (frm.fields_dict.custom_oral_habits_history && r.message.patient_oral_habits_history && r.message.patient_oral_habits_history.length > 0) {
 					console.log("Loading oral habits history:", r.message.patient_oral_habits_history.length);
 					frm.clear_table("custom_oral_habits_history");
@@ -5174,5 +5189,27 @@ frappe.ui.form.on("Patient Encounter Allergy", {
 		}
 	}
 });
+
+// Patient Encounter Alcohol History - Computation Logic
+frappe.ui.form.on('Patient Encounter Alcohol History', {
+	quantity: function(frm, cdt, cdn) {
+		compute_alcohol_years_encounter(frm, cdt, cdn);
+	},
+	years_of_use: function(frm, cdt, cdn) {
+		compute_alcohol_years_encounter(frm, cdt, cdn);
+	}
+});
+
+function compute_alcohol_years_encounter(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	
+	if (row.quantity && row.years_of_use) {
+		// Alcohol Years = Quantity (Units/Day) × Years of Use
+		const alcohol_years = row.quantity * row.years_of_use;
+		frappe.model.set_value(cdt, cdn, 'alcohol_years', alcohol_years.toFixed(2));
+	} else {
+		frappe.model.set_value(cdt, cdn, 'alcohol_years', 0);
+	}
+}
 
 // Step 2 Physical Findings - Data fields, popup handles the selection
