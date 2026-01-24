@@ -153,3 +153,4 @@ healthcare.patches.v15_0.add_gender_to_patient_children_details #24-01-2026-pati
 healthcare.patches.v15_0.fix_gender_field_position_in_children_details #24-01-2026-fix-gender-position
 healthcare.patches.v15_0.add_measured_with_to_vital_signs #24-01-2026-vital-signs-mouth-sync
 healthcare.patches.v15_0.update_step1_step2_body_parts #24-01-2026-remove-throat-add-other
+healthcare.patches.v15_0.update_peak_flow_calculations #24-01-2026-peak-flow-formula-update
