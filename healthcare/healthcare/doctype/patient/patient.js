@@ -1113,3 +1113,60 @@ function compute_alcohol_years(frm, cdt, cdn) {
 		frappe.model.set_value(cdt, cdn, 'alcohol_years', 0);
 	}
 }
+
+// Smoking Tobacco History - Age Computation
+frappe.ui.form.on('Patient Smoking Tobacco History', {
+	started_at_age: function(frm, cdt, cdn) {
+		compute_used_years(frm, cdt, cdn);
+	},
+	discontinued_at_age: function(frm, cdt, cdn) {
+		compute_used_years(frm, cdt, cdn);
+	}
+});
+
+// Smokeless Tobacco History - Age Computation
+frappe.ui.form.on('Patient Smokeless Tobacco History', {
+	started_at_age: function(frm, cdt, cdn) {
+		compute_used_years(frm, cdt, cdn);
+	},
+	discontinued_at_age: function(frm, cdt, cdn) {
+		compute_used_years(frm, cdt, cdn);
+	}
+});
+
+// Substance Abuse History - Age Computation
+frappe.ui.form.on('Patient Substance Abuse History', {
+	started_at_age: function(frm, cdt, cdn) {
+		compute_used_years(frm, cdt, cdn);
+	},
+	discontinued_at_age: function(frm, cdt, cdn) {
+		compute_used_years(frm, cdt, cdn);
+	}
+});
+
+function compute_used_years(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	
+	if (row.started_at_age) {
+		let years_used = 0;
+		
+		if (row.discontinued_at_age) {
+			// Discontinued - calculate difference + 1
+			years_used = row.discontinued_at_age - row.started_at_age + 1;
+		} else {
+			// Ongoing - calculate from current age using patient DOB
+			if (frm.doc.dob) {
+				const current_age = Math.floor(frappe.datetime.get_diff(frappe.datetime.nowdate(), frm.doc.dob) / 365.25);
+				years_used = current_age - row.started_at_age + 1;
+			}
+		}
+		
+		if (years_used > 0) {
+			frappe.model.set_value(cdt, cdn, 'used_for_years', years_used);
+		} else {
+			frappe.model.set_value(cdt, cdn, 'used_for_years', 0);
+		}
+	} else {
+		frappe.model.set_value(cdt, cdn, 'used_for_years', 0);
+	}
+}

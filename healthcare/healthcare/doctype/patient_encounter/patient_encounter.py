@@ -104,24 +104,25 @@ class PatientEncounter(Document):
 			},
 			# Social History - Smokeless Tobacco
 			{
-				"encounter_field": "custom_smokeless_tobacco_history",
-				"patient_field": "patient_smokeless_tobacco_history",
-				"fields": ["type", "frequency", "quantity", "quantity_unit", 
-				          "discontinued_since", "discontinued_since_unit", "comment"]
-			},
-			# Social History - Smoking Tobacco
-			{
-				"encounter_field": "custom_smoking_tobacco_history",
-				"patient_field": "patient_smoking_tobacco_history",
-				"fields": ["type", "frequency", "quantity", "quantity_unit",
-				          "discontinued_since", "discontinued_since_unit", "comment"]
-			},
-		# Social History - Substance Abuse
-		{
-			"encounter_field": "custom_substance_abuse_history",
-			"patient_field": "patient_substance_abuse_history",
-			"fields": ["type", "frequency", "quantity", "quantity_unit", "comment"]
+			"encounter_field": "custom_smokeless_tobacco_history",
+			"patient_field": "patient_smokeless_tobacco_history",
+			"fields": ["type", "frequency", "quantity", "quantity_unit", 
+			          "started_at_age", "discontinued_at_age", "used_for_years", "comment"]
 		},
+		# Social History - Smoking Tobacco
+		{
+			"encounter_field": "custom_smoking_tobacco_history",
+			"patient_field": "patient_smoking_tobacco_history",
+			"fields": ["type", "frequency", "quantity", "quantity_unit",
+			          "started_at_age", "discontinued_at_age", "used_for_years", "comment"]
+		},
+	# Social History - Substance Abuse
+	{
+		"encounter_field": "custom_substance_abuse_history",
+		"patient_field": "patient_substance_abuse_history",
+		"fields": ["type", "frequency", "quantity", "quantity_unit",
+		          "started_at_age", "discontinued_at_age", "used_for_years", "comment"]
+	},
 		# Social History - Alcohol
 		{
 			"encounter_field": "custom_alcohol_history",

@@ -358,35 +358,37 @@ function load_patient_medical_history(frm) {
 				}
 
 				// Auto-fill Smokeless Tobacco History
-				if (frm.fields_dict.custom_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history.length > 0) {
-					console.log("Loading smokeless tobacco history:", r.message.patient_smokeless_tobacco_history.length);
-					frm.clear_table("custom_smokeless_tobacco_history");
-					r.message.patient_smokeless_tobacco_history.forEach(function (history) {
-						let row = frm.add_child("custom_smokeless_tobacco_history");
-						row.type = history.type;
-						row.frequency = history.frequency;
-						row.quantity = history.quantity;
-						row.quantity_unit = history.quantity_unit;
-						row.discontinued_since = history.discontinued_since;
-						row.discontinued_since_unit = history.discontinued_since_unit;
-						row.comment = history.comment;
-					});
-					frm.refresh_field("custom_smokeless_tobacco_history");
-				}
+			if (frm.fields_dict.custom_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history && r.message.patient_smokeless_tobacco_history.length > 0) {
+				console.log("Loading smokeless tobacco history:", r.message.patient_smokeless_tobacco_history.length);
+				frm.clear_table("custom_smokeless_tobacco_history");
+				r.message.patient_smokeless_tobacco_history.forEach(function (history) {
+					let row = frm.add_child("custom_smokeless_tobacco_history");
+					row.type = history.type;
+					row.frequency = history.frequency;
+					row.quantity = history.quantity;
+					row.quantity_unit = history.quantity_unit;
+					row.started_at_age = history.started_at_age;
+					row.discontinued_at_age = history.discontinued_at_age;
+					row.used_for_years = history.used_for_years;
+					row.comment = history.comment;
+				});
+				frm.refresh_field("custom_smokeless_tobacco_history");
+			}
 
-				// Auto-fill Smoking Tobacco History
-				if (frm.fields_dict.custom_smoking_tobacco_history && r.message.patient_smoking_tobacco_history && r.message.patient_smoking_tobacco_history.length > 0) {
-					console.log("Loading smoking tobacco history:", r.message.patient_smoking_tobacco_history.length);
-					frm.clear_table("custom_smoking_tobacco_history");
-					r.message.patient_smoking_tobacco_history.forEach(function (history) {
-						let row = frm.add_child("custom_smoking_tobacco_history");
-						row.type = history.type;
-						row.frequency = history.frequency;
-						row.quantity = history.quantity;
-						row.quantity_unit = history.quantity_unit;
-						row.discontinued_since = history.discontinued_since;
-						row.discontinued_since_unit = history.discontinued_since_unit;
-						row.comment = history.comment;
+			// Auto-fill Smoking Tobacco History
+			if (frm.fields_dict.custom_smoking_tobacco_history && r.message.patient_smoking_tobacco_history && r.message.patient_smoking_tobacco_history.length > 0) {
+				console.log("Loading smoking tobacco history:", r.message.patient_smoking_tobacco_history.length);
+				frm.clear_table("custom_smoking_tobacco_history");
+				r.message.patient_smoking_tobacco_history.forEach(function (history) {
+					let row = frm.add_child("custom_smoking_tobacco_history");
+					row.type = history.type;
+					row.frequency = history.frequency;
+					row.quantity = history.quantity;
+					row.quantity_unit = history.quantity_unit;
+					row.started_at_age = history.started_at_age;
+					row.discontinued_at_age = history.discontinued_at_age;
+					row.used_for_years = history.used_for_years;
+					row.comment = history.comment;
 					});
 					frm.refresh_field("custom_smoking_tobacco_history");
 				}
@@ -401,6 +403,9 @@ function load_patient_medical_history(frm) {
 					row.frequency = history.frequency;
 					row.quantity = history.quantity;
 					row.quantity_unit = history.quantity_unit;
+					row.started_at_age = history.started_at_age;
+					row.discontinued_at_age = history.discontinued_at_age;
+					row.used_for_years = history.used_for_years;
 					row.comment = history.comment;
 				});
 				frm.refresh_field("custom_substance_abuse_history");
@@ -5209,6 +5214,74 @@ function compute_alcohol_years_encounter(frm, cdt, cdn) {
 		frappe.model.set_value(cdt, cdn, 'alcohol_years', alcohol_years.toFixed(2));
 	} else {
 		frappe.model.set_value(cdt, cdn, 'alcohol_years', 0);
+	}
+}
+
+// Smoking Tobacco History - Age Computation (Encounter)
+frappe.ui.form.on('Patient Encounter Smoking Tobacco History', {
+	started_at_age: function(frm, cdt, cdn) {
+		compute_used_years_encounter(frm, cdt, cdn);
+	},
+	discontinued_at_age: function(frm, cdt, cdn) {
+		compute_used_years_encounter(frm, cdt, cdn);
+	}
+});
+
+// Smokeless Tobacco History - Age Computation (Encounter)
+frappe.ui.form.on('Patient Encounter Smokeless Tobacco History', {
+	started_at_age: function(frm, cdt, cdn) {
+		compute_used_years_encounter(frm, cdt, cdn);
+	},
+	discontinued_at_age: function(frm, cdt, cdn) {
+		compute_used_years_encounter(frm, cdt, cdn);
+	}
+});
+
+// Substance Abuse History - Age Computation (Encounter)
+frappe.ui.form.on('Patient Encounter Substance Abuse History', {
+	started_at_age: function(frm, cdt, cdn) {
+		compute_used_years_encounter(frm, cdt, cdn);
+	},
+	discontinued_at_age: function(frm, cdt, cdn) {
+		compute_used_years_encounter(frm, cdt, cdn);
+	}
+});
+
+function compute_used_years_encounter(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	
+	if (row.started_at_age) {
+		let years_used = 0;
+		
+		if (row.discontinued_at_age) {
+			// Discontinued - calculate difference + 1
+			years_used = row.discontinued_at_age - row.started_at_age + 1;
+		} else {
+			// Ongoing - get patient DOB from encounter
+			if (frm.doc.patient) {
+				frappe.db.get_value('Patient', frm.doc.patient, 'dob', function(r) {
+					if (r && r.dob) {
+						const current_age = Math.floor(frappe.datetime.get_diff(frappe.datetime.nowdate(), r.dob) / 365.25);
+						years_used = current_age - row.started_at_age + 1;
+						
+						if (years_used > 0) {
+							frappe.model.set_value(cdt, cdn, 'used_for_years', years_used);
+						} else {
+							frappe.model.set_value(cdt, cdn, 'used_for_years', 0);
+						}
+					}
+				});
+				return; // Exit early, callback will handle the rest
+			}
+		}
+		
+		if (years_used > 0) {
+			frappe.model.set_value(cdt, cdn, 'used_for_years', years_used);
+		} else {
+			frappe.model.set_value(cdt, cdn, 'used_for_years', 0);
+		}
+	} else {
+		frappe.model.set_value(cdt, cdn, 'used_for_years', 0);
 	}
 }
 

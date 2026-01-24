@@ -139,3 +139,5 @@ healthcare.patches.v15_0.add_is_hereditary_field_v2 #24-01-2026
 healthcare.patches.v15_0.add_alcohol_history_section #24-01-2026-alcohol
 healthcare.patches.v15_0.update_alcohol_and_substance_abuse_fields #24-01-2026-alcohol-v2
 healthcare.patches.v15_0.improve_alcohol_history_layout #24-01-2026-alcohol-v3
+healthcare.patches.v15_0.add_age_fields_to_social_history #24-01-2026-social-history-age
+healthcare.patches.v15_0.fix_social_history_age_fields_layout #24-01-2026-social-history-age-v2
