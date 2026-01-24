@@ -564,6 +564,7 @@ function load_patient_medical_history(frm) {
 						r.message.patient_children_details.forEach(function (child) {
 							let row = frm.add_child("encounter_children_details");
 							row.child_number = child.child_number;
+							row.gender = child.gender;
 							row.age_at_delivery = child.age_at_delivery;
 							row.delivery_type = child.delivery_type;
 							row.comment = child.comment;
