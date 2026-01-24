@@ -320,24 +320,25 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.custom_medical_history && r.message.patient_medical_history && r.message.patient_medical_history.length > 0) {
 					console.log("Loading medical history:", r.message.patient_medical_history.length);
 					frm.clear_table("custom_medical_history");
-					r.message.patient_medical_history.forEach(function (history) {
-						let row = frm.add_child("custom_medical_history");
-						row.diagnosis_category = history.diagnosis_category;
-						row.diagnosis = history.diagnosis;
-						row.diagnosis_name = history.diagnosis_name;
-						row.when = history.when;
-						row.undergoing_treatment = history.undergoing_treatment;
-						row.cardiovascular = history.cardiovascular;
-						row.metabolic = history.metabolic;
-						row.cancer_type = history.cancer_type;
-						row.genetic_disorder = history.genetic_disorder;
-						row.mental_health = history.mental_health;
-						row.neurological = history.neurological;
-						row.autoimmune = history.autoimmune;
-						row.respiratory = history.respiratory;
-						row.other_condition = history.other_condition;
-						row.comment = history.comment;
-					});
+				r.message.patient_medical_history.forEach(function (history) {
+					let row = frm.add_child("custom_medical_history");
+					row.diagnosis_category = history.diagnosis_category;
+					row.diagnosis = history.diagnosis;
+					row.diagnosis_name = history.diagnosis_name;
+					row.when = history.when;
+					row.undergoing_treatment = history.undergoing_treatment;
+					row.is_hereditary = history.is_hereditary;
+					row.cardiovascular = history.cardiovascular;
+					row.metabolic = history.metabolic;
+					row.cancer_type = history.cancer_type;
+					row.genetic_disorder = history.genetic_disorder;
+					row.mental_health = history.mental_health;
+					row.neurological = history.neurological;
+					row.autoimmune = history.autoimmune;
+					row.respiratory = history.respiratory;
+					row.other_condition = history.other_condition;
+					row.comment = history.comment;
+				});
 					frm.refresh_field("custom_medical_history");
 				}
 
@@ -466,25 +467,26 @@ function load_patient_medical_history(frm) {
 				if (frm.fields_dict.encounter_family_medical_history && r.message.patient_family_medical_history && r.message.patient_family_medical_history.length > 0) {
 					console.log("Loading family medical history:", r.message.patient_family_medical_history.length);
 					frm.clear_table("encounter_family_medical_history");
-					r.message.patient_family_medical_history.forEach(function (history) {
-						let row = frm.add_child("encounter_family_medical_history");
-						row.diagnosis_category = history.diagnosis_category;
-						row.relation = history.relation;
-						row.diagnosis = history.diagnosis;
-						row.diagnosis_name = history.diagnosis_name;
-						row.when = history.when;
-						row.undergoing_treatment = history.undergoing_treatment;
-						row.cardiovascular = history.cardiovascular;
-						row.metabolic = history.metabolic;
-						row.cancer_type = history.cancer_type;
-						row.genetic_disorder = history.genetic_disorder;
-						row.mental_health = history.mental_health;
-						row.neurological = history.neurological;
-						row.autoimmune = history.autoimmune;
-						row.respiratory = history.respiratory;
-						row.other_condition = history.other_condition;
-						row.comment = history.comment;
-					});
+				r.message.patient_family_medical_history.forEach(function (history) {
+					let row = frm.add_child("encounter_family_medical_history");
+					row.diagnosis_category = history.diagnosis_category;
+					row.relation = history.relation;
+					row.diagnosis = history.diagnosis;
+					row.diagnosis_name = history.diagnosis_name;
+					row.when = history.when;
+					row.undergoing_treatment = history.undergoing_treatment;
+					row.is_hereditary = history.is_hereditary;
+					row.cardiovascular = history.cardiovascular;
+					row.metabolic = history.metabolic;
+					row.cancer_type = history.cancer_type;
+					row.genetic_disorder = history.genetic_disorder;
+					row.mental_health = history.mental_health;
+					row.neurological = history.neurological;
+					row.autoimmune = history.autoimmune;
+					row.respiratory = history.respiratory;
+					row.other_condition = history.other_condition;
+					row.comment = history.comment;
+				});
 					frm.refresh_field("encounter_family_medical_history");
 				}
 

@@ -86,15 +86,15 @@ class PatientEncounter(Document):
 				"fields": ["vaccine_name", "manufacturer", "administered_date", "dose", "dose_uom",
 				          "route", "site", "location", "product", "lot", "ndc"]
 			},
-			# Medical History
-			{
-				"encounter_field": "custom_medical_history",
-				"patient_field": "patient_medical_history",
-				"fields": ["diagnosis_category", "diagnosis", "diagnosis_name", "when", 
-				          "undergoing_treatment", "cardiovascular", "metabolic", "cancer_type",
-				          "genetic_disorder", "mental_health", "neurological", "autoimmune",
-				          "respiratory", "other_condition", "comment"]
-			},
+		# Medical History
+		{
+			"encounter_field": "custom_medical_history",
+			"patient_field": "patient_medical_history",
+			"fields": ["diagnosis_category", "diagnosis", "diagnosis_name", "when", 
+			          "undergoing_treatment", "is_hereditary", "cardiovascular", "metabolic", "cancer_type",
+			          "genetic_disorder", "mental_health", "neurological", "autoimmune",
+			          "respiratory", "other_condition", "comment"]
+		},
 			# Surgical History
 			{
 				"encounter_field": "custom_surgical_history",
@@ -148,15 +148,15 @@ class PatientEncounter(Document):
 				"patient_field": "patient_environmental_factors_history",
 				"fields": ["type", "exposure_level", "comment"]
 			},
-			# Family Medical History
-			{
-				"encounter_field": "encounter_family_medical_history",
-				"patient_field": "patient_family_medical_history",
-				"fields": ["diagnosis_category", "relation", "diagnosis", "diagnosis_name", "when",
-				          "undergoing_treatment", "cardiovascular", "metabolic", "cancer_type",
-				          "genetic_disorder", "mental_health", "neurological", "autoimmune",
-				          "respiratory", "other_condition", "comment"]
-			},
+		# Family Medical History
+		{
+			"encounter_field": "encounter_family_medical_history",
+			"patient_field": "patient_family_medical_history",
+			"fields": ["diagnosis_category", "relation", "diagnosis", "diagnosis_name", "when",
+			          "undergoing_treatment", "is_hereditary", "cardiovascular", "metabolic", "cancer_type",
+			          "genetic_disorder", "mental_health", "neurological", "autoimmune",
+			          "respiratory", "other_condition", "comment"]
+		},
 			# Children Details (Women Health)
 			{
 				"encounter_field": "encounter_children_details",
