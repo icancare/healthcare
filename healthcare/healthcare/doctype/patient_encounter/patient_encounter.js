@@ -1373,6 +1373,9 @@ function render_all_clinical_steps(frm, attempt = 0) {
 		render_clinical_images_section(frm);
 		// Always try to render Step 4, even if field not detected
 		render_step4_pictures(frm);
+		// Render Step 5 and Step 6 (using existing exam_ fields)
+		render_step5_special_tests_existing(frm);
+		render_step6_advice_existing(frm);
 
 		// If not all ready and we haven't maxed out, retry for remaining fields
 		if ((!step1_ready || !step2_ready || !step4_ready) && attempt < maxAttempts) {
@@ -5429,6 +5432,316 @@ function load_vital_signs_mouth_data(frm) {
 					};
 				}
 			}
+		}
+	});
+}
+
+
+// ============================================================================
+// STEP 5 - SPECIAL TESTS with Multi-LED Help Button (using existing fields)
+// ============================================================================
+function render_step5_special_tests_existing(frm) {
+	// Add Help button for Multi-LED Oral Photodiagnosis table after Skip checkbox
+	if (frm.fields_dict.exam_skip_special_tests && frm.fields_dict.exam_skip_special_tests.$wrapper) {
+		let wrapper = frm.fields_dict.exam_skip_special_tests.$wrapper.closest('.form-section');
+		
+		// Check if help button already exists
+		if (wrapper.find('.multi-led-help-btn').length === 0) {
+			let sectionHead = wrapper.find('.section-head');
+			if (sectionHead.length) {
+				let helpBtn = $(`
+					<div style="padding: 10px 15px; margin-bottom: 15px;">
+						<button type="button" class="btn btn-sm btn-default multi-led-help-btn" style="display: inline-flex; align-items: center; gap: 6px;">
+							<svg class="icon icon-sm" style="width: 14px; height: 14px;">
+								<use href="#icon-help"></use>
+							</svg>
+							Multi-LED Oral Photodiagnosis Guide
+						</button>
+					</div>
+				`);
+				
+				sectionHead.after(helpBtn);
+				
+				helpBtn.find('.multi-led-help-btn').on('click', function() {
+					show_multi_led_dialog();
+				});
+			}
+		}
+	}
+}
+
+
+function show_multi_led_dialog() {
+	let dialog = new frappe.ui.Dialog({
+		title: 'Multi-LED Oral Photodiagnosis (Training Reference)',
+		size: 'extra-large',
+		fields: [{
+			fieldtype: 'HTML',
+			fieldname: 'multi_led_table'
+		}]
+	});
+	
+	// Multi-LED table data from client sheet - DARK THEME
+	const tableHTML = `
+		<style>
+			.multi-led-table {
+				width: 100%;
+				border-collapse: collapse;
+				font-size: 13px;
+				background: #1a1a1a;
+				color: #e8e8e8;
+			}
+			.multi-led-table th {
+				background: #2a2a2a;
+				color: #ffffff;
+				padding: 12px 10px;
+				text-align: left;
+				border: 1px solid #3a3a3a;
+				font-weight: 600;
+				font-size: 12px;
+				text-transform: uppercase;
+			}
+			.multi-led-table td {
+				padding: 10px;
+				border: 1px solid #3a3a3a;
+				vertical-align: top;
+				line-height: 1.5;
+			}
+			.multi-led-table tr:nth-child(even) {
+				background: #222222;
+			}
+			.multi-led-table tr:hover {
+				background: #2d2d2d;
+			}
+			.step-col {
+				width: 40px;
+				text-align: center;
+				font-weight: 700;
+				color: #4fc3f7;
+				font-size: 15px;
+			}
+			.light-mode-col {
+				width: 140px;
+				font-weight: 700;
+				color: #e879f9;
+				font-size: 13px;
+			}
+			.comment-col {
+				width: 200px;
+				color: #d1d1d1;
+			}
+			.what-to-look-col {
+				width: 180px;
+				color: #ff6b6b;
+				font-weight: 600;
+			}
+			.interpretation-col {
+				width: 180px;
+				color: #4dd0e1;
+				font-weight: 600;
+			}
+			.action-col {
+				width: 150px;
+				color: #66bb6a;
+				font-weight: 600;
+			}
+		</style>
+		
+		<div style="overflow-x: auto; max-height: 70vh; overflow-y: auto; background: #1a1a1a;">
+			<table class="multi-led-table">
+				<thead>
+					<tr>
+						<th class="step-col">Step</th>
+						<th class="light-mode-col">Light Mode</th>
+						<th class="comment-col">Comment</th>
+						<th class="what-to-look-col">What to Look For</th>
+						<th class="interpretation-col">Interpretation</th>
+						<th class="action-col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="step-col">1</td>
+						<td class="light-mode-col">Blue (~400-450 nm)</td>
+						<td class="comment-col">
+							Healthy oral mucosa → emits green autofluorescence (due to collagen, elastin, flavins).<br>
+							Dysplastic/malignant tissue → loss of autofluorescence, appears dark or reddish
+						</td>
+						<td class="what-to-look-col">Loss of autofluorescence (dark areas vs bright green normal mucosa)</td>
+						<td class="interpretation-col">Suggests dysplasia or malignant change</td>
+						<td class="action-col">Mark suspicious area for biopsy</td>
+					</tr>
+					<tr>
+						<td class="step-col">2</td>
+						<td class="light-mode-col">Green (~530-550 nm)</td>
+						<td class="comment-col">
+							Superficial vascular patterns (capillary loops, tortuous vessels).<br>
+							Abnormal vascularity → early dysplasia
+						</td>
+						<td class="what-to-look-col">Superficial vascular patterns (capillary loops, tortuous vessels)</td>
+						<td class="interpretation-col">Abnormal vascularity → early dysplasia</td>
+						<td class="action-col">Correlate with blue findings</td>
+					</tr>
+					<tr>
+						<td class="step-col">3</td>
+						<td class="light-mode-col">Amber (~590-610 nm)</td>
+						<td class="comment-col">
+							Suspicious lesion may appear dark brown/red due to hemoglobin absorption.<br>
+							Distinguish between vascular/inflammatory lesions and true dysplastic changes seen on blue light
+						</td>
+						<td class="what-to-look-col">Deeper vascular contrast, hemoglobin absorption</td>
+						<td class="interpretation-col">Dark brown/red areas → deeper vascular involvement</td>
+						<td class="action-col">Differentiate inflammation vs neoplasia</td>
+					</tr>
+					<tr>
+						<td class="step-col">4</td>
+						<td class="light-mode-col">White light (Baseline)</td>
+						<td class="comment-col">General mucosal inspection</td>
+						<td class="what-to-look-col">General mucosal inspection</td>
+						<td class="interpretation-col">Gross lesions, ulcerations, pigmentation</td>
+						<td class="action-col">Initial clinical impression</td>
+					</tr>
+					<tr>
+						<td class="step-col">5</td>
+						<td class="light-mode-col">Fluorescence Spectroscopy (405 nm excitation)</td>
+						<td class="comment-col">Emission spectra</td>
+						<td class="what-to-look-col">FAD, NADH, porphyrins</td>
+						<td class="interpretation-col">FAD reduction, porphyrin increase in cancerous tissue</td>
+						<td class="action-col">Quantitative biomarker analysis; machine learning classification</td>
+					</tr>
+					<tr>
+						<td class="step-col">6</td>
+						<td class="light-mode-col">Diffuse Reflectance Spectroscopy (400-700 nm broadband)</td>
+						<td class="comment-col">Scattering + absorption</td>
+						<td class="what-to-look-col">Water dip (~510 nm), Hemoglobin absorption</td>
+						<td class="interpretation-col">Dysplastic tissue shows higher scattering, altered absorption</td>
+						<td class="action-col">Confirms tissue optical changes</td>
+					</tr>
+					<tr>
+						<td class="step-col">7</td>
+						<td class="light-mode-col">Raman Spectroscopy (785 nm excitation)</td>
+						<td class="comment-col">Biochemical fingerprint</td>
+						<td class="what-to-look-col">Lipids, proteins, nucleic acids</td>
+						<td class="interpretation-col">Altered lipid/protein ratios in malignant tissue</td>
+						<td class="action-col">Molecular-level confirmation of diagnosis</td>
+					</tr>
+					<tr>
+						<td class="step-col">8</td>
+						<td class="light-mode-col">Multimodal Integration</td>
+						<td class="comment-col">Combined fluorescence + reflectance + Raman</td>
+						<td class="what-to-look-col">Composite spectral markers</td>
+						<td class="interpretation-col">High sensitivity & specificity</td>
+						<td class="action-col">Final diagnostic decision support</td>
+					</tr>
+					<tr>
+						<td class="step-col">9</td>
+						<td class="light-mode-col">Documentation</td>
+						<td class="comment-col">Capture images in all modes</td>
+						<td class="what-to-look-col">Capture images in all modes</td>
+						<td class="interpretation-col">Compare baseline vs follow-up</td>
+						<td class="action-col">Store in patient record</td>
+					</tr>
+					<tr>
+						<td class="step-col">10</td>
+						<td class="light-mode-col">Decision</td>
+						<td class="comment-col">Integrate findings</td>
+						<td class="what-to-look-col">Integrate findings</td>
+						<td class="interpretation-col">Concordant changes across modes → high suspicion</td>
+						<td class="action-col">Proceed to biopsy / referral</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div style="margin-top: 20px; padding: 15px; background: #2a2a2a; border-radius: 6px; border-left: 4px solid #4fc3f7;">
+			<p style="margin: 0; font-size: 13px; line-height: 1.6; color: #b0b0b0;">
+				<strong style="color: #ffffff;">Note:</strong> This table is for training and reference purposes. 
+				Multi-LED photodiagnosis combines multiple wavelengths to improve early detection of oral dysplasia and malignancy.
+			</p>
+		</div>
+	`;
+	
+	dialog.fields_dict.multi_led_table.$wrapper.html(tableHTML);
+	dialog.show();
+}
+
+
+// ============================================================================
+// STEP 6 - ADVICE with improved design (using existing exam_advice fields)
+// ============================================================================
+function render_step6_advice_existing(frm) {
+	// Improve Step 6 Advice section design (NO section description text)
+	if (frm.fields_dict.exam_advice_primary && frm.fields_dict.exam_advice_primary.$wrapper) {
+		let wrapper = frm.fields_dict.exam_advice_primary.$wrapper.closest('.form-section');
+		
+		// Add custom styling for Step 6 section
+		if (wrapper.length && !wrapper.hasClass('step6-styled')) {
+			wrapper.addClass('step6-styled');
+		}
+	}
+	
+	// Style the primary advice select field
+	if (frm.fields_dict.exam_advice_primary) {
+		let primaryField = frm.fields_dict.exam_advice_primary.$wrapper;
+		primaryField.find('.control-label').css({
+			'font-weight': '600',
+			'color': 'var(--heading-color)',
+			'font-size': '14px'
+		});
+	}
+	
+	// Style the additional recommendations heading
+	if (frm.fields_dict.exam_advice_section_b_heading) {
+		let headingWrapper = frm.fields_dict.exam_advice_section_b_heading.$wrapper;
+		headingWrapper.css({
+			'margin-top': '20px',
+			'padding-top': '15px',
+			'border-top': '2px solid var(--border-color)'
+		});
+		headingWrapper.find('label').css({
+			'font-weight': '600',
+			'color': 'var(--heading-color)',
+			'font-size': '14px'
+		});
+	}
+	
+	// Style checkboxes for Section B (options 7-10)
+	const checkboxFields = [
+		'exam_advice_7',
+		'exam_advice_8',
+		'exam_advice_9',
+		'exam_advice_tobacco',
+		'exam_advice_alcohol'
+	];
+	
+	checkboxFields.forEach(fieldname => {
+		if (frm.fields_dict[fieldname]) {
+			let checkWrapper = frm.fields_dict[fieldname].$wrapper;
+			checkWrapper.find('.checkbox').css({
+				'padding': '8px 12px',
+				'margin': '5px 0',
+				'background': 'var(--control-bg)',
+				'border': '1px solid var(--border-color)',
+				'border-radius': '6px',
+				'transition': 'all 0.2s'
+			});
+			
+			checkWrapper.find('input[type="checkbox"]').on('change', function() {
+				if ($(this).is(':checked')) {
+					$(this).closest('.checkbox').css({
+						'background': 'rgba(36, 144, 239, 0.1)',
+						'border-color': '#2490ef'
+					});
+				} else {
+					$(this).closest('.checkbox').css({
+						'background': 'var(--control-bg)',
+						'border-color': 'var(--border-color)'
+					});
+				}
+			});
+			
+			// Trigger initial state
+			checkWrapper.find('input[type="checkbox"]').trigger('change');
 		}
 	});
 }

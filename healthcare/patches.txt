@@ -156,3 +156,14 @@ healthcare.patches.v15_0.update_step1_step2_body_parts #24-01-2026-remove-throat
 healthcare.patches.v15_0.update_peak_flow_calculations #24-01-2026-peak-flow-formula-updatehealthcare.patches.v15_0.update_peak_flow_fields_v2 #28-01-2026-peak-flow-v2
 healthcare.patches.v15_0.fix_peak_flow_fields_final #28-01-2026-peak-flow-final
 healthcare.patches.v15_0.update_step1_body_parts_and_complaints #28-01-2026-step1-others-to-other-add-lungs
+healthcare.patches.v15_0.add_step5_step6_fields #28-01-2026-step5-special-tests-step6-advice
+healthcare.patches.v15_0.fix_step5_step6_use_existing_fields #28-01-2026-fix-step5-step6-duplicates
+healthcare.patches.v15_0.final_step5_step6_fixes #28-01-2026-final-step5-step6-complete
+healthcare.patches.v15_0.fix_step5_layout #28-01-2026-fix-step5-row-layout
+healthcare.patches.v15_0.fix_step5_visibility #28-01-2026-fix-step5-depends-on
+healthcare.patches.v15_0.cleanup_step5_extra_tests #28-01-2026-remove-extra-step5-tests
+healthcare.patches.v15_0.complete_step5_cleanup #28-01-2026-complete-step5-cleanup
+healthcare.patches.v15_0.rebuild_step5_production_design #28-01-2026-rebuild-step5-production
+healthcare.patches.v15_0.add_remaining_4_step5_tests #28-01-2026-add-tests-5-to-8
+healthcare.patches.v15_0.add_skip_special_tests_checkbox #28-01-2026-add-skip-checkbox
+healthcare.patches.v15_0.fix_step5_layout_single_row #28-01-2026-fix-layout-1-test-1-row
