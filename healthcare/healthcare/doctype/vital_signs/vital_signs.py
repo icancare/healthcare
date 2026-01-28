@@ -12,6 +12,7 @@ class VitalSigns(Document):
 		self.set_title()
 		self.fetch_patient_data()
 		self.calculate_anthropometrics()
+		self.calculate_peak_flow()
 		self.validate_ecog_score()
 
 	def set_title(self):
@@ -134,6 +135,74 @@ class VitalSigns(Document):
 		elif 'male' in s:
 			return 'M'
 		return None
+
+	def calculate_peak_flow(self):
+		"""Calculate Expected Peak Flow and Variability based on age, height, and gender"""
+		# Only calculate if we have current peak flow reading
+		if not self.peak_flow_current:
+			return
+		
+		# Get required parameters
+		age = self.patient_age
+		# Height is in Anthropometric section - convert to cm
+		height_cm = self.to_cm(self.height, self.height_unit) if self.height else 0
+		sex = self.get_sex()
+		
+		# Calculate Expected Peak Flow (PEFR) only if we have all required data
+		expected_pefr = 0
+		
+		if age and height_cm > 0 and sex:
+			if 5 <= age <= 7:
+				# Ages 5-7 years and any ethnicity
+				# PEFR = [(Height, cm - 100) × 5] + 100
+				expected_pefr = ((height_cm - 100) * 5) + 100
+			elif 8 <= age <= 17:
+				# Ages 8-17 years, all other ethnicities
+				# PEFR = [(Height, cm - 100) × 5] + 100
+				expected_pefr = ((height_cm - 100) * 5) + 100
+			elif 18 <= age <= 80:
+				# Ages 18-80 years, all other ethnicities
+				# Convert height from cm to meters for formula
+				height_m = height_cm / 100
+				
+				if sex == 'M':
+					# PEFR, male = {[(Height, m × 5.48) + 1.58] - [Age × 0.041]} × 60
+					expected_pefr = (((height_m * 5.48) + 1.58) - (age * 0.041)) * 60
+				elif sex == 'F':
+					# PEFR, female = {[(Height, m × 3.72) + 2.24] - [Age × 0.03]} × 60
+					expected_pefr = (((height_m * 3.72) + 2.24) - (age * 0.03)) * 60
+			
+			# Set expected peak flow (rounded to 0 decimal)
+			if expected_pefr > 0:
+				self.peak_flow_expected = round(expected_pefr, 0)
+		
+		# Calculate Peak Flow Variability if we have expected value
+		if self.peak_flow_expected and self.peak_flow_expected > 0:
+			# Peak flow variability, % = (actual peak flow rate / expected peak flow rate) × 100
+			variability = (self.peak_flow_current / self.peak_flow_expected) * 100
+			self.peak_flow_percentage = round(variability, 1)
+			
+			# Determine status based on variability
+			# Green: 80-100% or above (good control)
+			# Yellow: 50-80% (caution)
+			# Red: Below 50% (medical emergency)
+			if variability >= 80:
+				self.peak_flow_status = 'Green'
+			elif variability >= 50:
+				self.peak_flow_status = 'Yellow'
+			else:
+				self.peak_flow_status = 'Red'
+		# Fallback: Use Personal Best if Expected is not available
+		elif self.peak_flow_personal_best and self.peak_flow_personal_best > 0:
+			variability = (self.peak_flow_current / self.peak_flow_personal_best) * 100
+			self.peak_flow_percentage = round(variability, 1)
+			
+			if variability >= 80:
+				self.peak_flow_status = 'Green'
+			elif variability >= 50:
+				self.peak_flow_status = 'Yellow'
+			else:
+				self.peak_flow_status = 'Red'
 
 	def validate_ecog_score(self):
 		if self.ecog_score is None:

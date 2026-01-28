@@ -36,20 +36,21 @@ frappe.ui.form.on('Vital Signs', {
 						if (r.message.sex) {
 							frm.set_value('patient_sex', r.message.sex);
 						}
-						// Trigger calculations after values are set
-						frm.refresh_fields();
-						toggle_skinfold_fields(frm);
-						setTimeout(() => { 
-							calc_all(frm); 
-							render_table(frm); 
-						}, 300);
+					// Trigger calculations after values are set
+					frm.refresh_fields();
+					toggle_skinfold_fields(frm);
+					setTimeout(() => { 
+						calc_all(frm);
+						calc_peak_flow(frm);
+						render_table(frm); 
+					}, 300);
 					}
 				}
 			});
 		}
 	},
-	height: function(frm) { calc_all(frm); render_table(frm); },
-	height_unit: function(frm) { calc_all(frm); render_table(frm); },
+	height: function(frm) { calc_all(frm); calc_peak_flow(frm); render_table(frm); },
+	height_unit: function(frm) { calc_all(frm); calc_peak_flow(frm); render_table(frm); },
 	weight: function(frm) { calc_all(frm); render_table(frm); },
 	weight_unit: function(frm) { calc_all(frm); render_table(frm); },
 	waist_circumference: function(frm) { calc_all(frm); render_table(frm); },
@@ -94,10 +95,6 @@ frappe.ui.form.on('Vital Signs', {
 	// Peak flow
 	peak_flow_current: function(frm) { calc_peak_flow(frm); render_tobacco_health_table(frm); },
 	peak_flow_personal_best: function(frm) { calc_peak_flow(frm); render_tobacco_health_table(frm); },
-	
-	// Trigger peak flow calculation when height or patient_age_years changes
-	height: function(frm) { calc_peak_flow(frm); },
-	patient_age_years: function(frm) { calc_peak_flow(frm); },
 	// Breath & CO Monitor
 	breath_holding_time: function(frm) { render_tobacco_health_table(frm); },
 	co_reading: function(frm) { render_tobacco_health_table(frm); },
@@ -617,65 +614,82 @@ function calc_spirometer(frm) {
 	}
 }
 
-// Peak Flow calculations with Estimated Peak Flow based on age, height, gender
+// Peak Flow calculations with Expected Peak Flow based on age, height, gender
 function calc_peak_flow(frm) {
-	// Calculate Estimated Peak Flow (PEFR) based on age, height, and gender
-	if (frm.doc.height && frm.doc.patient_age_years && frm.doc.gender) {
-		let age = parseInt(frm.doc.patient_age_years);
-		let height_cm = parseFloat(frm.doc.height);
-		let gender = frm.doc.gender;
-		let estimated_pefr = 0;
-		
-		if (age >= 5 && age <= 17) {
-			// For ages 5-17 years (all ethnicities)
+	// Only calculate if we have current peak flow reading
+	if (!frm.doc.peak_flow_current) {
+		return;
+	}
+	
+	// Get required parameters
+	let age = frm.doc.patient_age;
+	// Height is in Anthropometric section - convert to cm
+	let height_cm = to_cm(frm.doc.height, frm.doc.height_unit);
+	let sex = get_sex(frm);
+	
+	// Calculate Expected Peak Flow (PEFR) only if we have all required data
+	let expected_pefr = 0;
+	
+	if (age && height_cm > 0 && sex) {
+		if (age >= 5 && age <= 7) {
+			// Ages 5-7 years and any ethnicity
 			// PEFR = [(Height, cm - 100) × 5] + 100
-			estimated_pefr = ((height_cm - 100) * 5) + 100;
+			expected_pefr = ((height_cm - 100) * 5) + 100;
+		} else if (age >= 8 && age <= 17) {
+			// Ages 8-17 years, all other ethnicities
+			// PEFR = [(Height, cm - 100) × 5] + 100
+			expected_pefr = ((height_cm - 100) * 5) + 100;
 		} else if (age >= 18 && age <= 80) {
-			// For ages 18-80 years (all ethnicities)
-			let height_m = height_cm / 100; // Convert cm to meters
+			// Ages 18-80 years, all other ethnicities
+			// Convert height from cm to meters for formula
+			let height_m = height_cm / 100;
 			
-			if (gender === 'Male') {
-				// Male: PEFR = [[(Height, m × 5.48) + 1.58] - [Age × 0.041]] × 60
-				estimated_pefr = (((height_m * 5.48) + 1.58) - (age * 0.041)) * 60;
-			} else if (gender === 'Female') {
-				// Female: PEFR = [[(Height, m × 3.72) + 2.24] - [Age × 0.03]] × 60
-				estimated_pefr = (((height_m * 3.72) + 2.24) - (age * 0.03)) * 60;
+			if (sex === 'M') {
+				// PEFR, male = {[(Height, m × 5.48) + 1.58] - [Age × 0.041]} × 60
+				expected_pefr = (((height_m * 5.48) + 1.58) - (age * 0.041)) * 60;
+			} else if (sex === 'F') {
+				// PEFR, female = {[(Height, m × 3.72) + 2.24] - [Age × 0.03]} × 60
+				expected_pefr = (((height_m * 3.72) + 2.24) - (age * 0.03)) * 60;
 			}
 		}
 		
-		// Set estimated peak flow (rounded to 1 decimal)
-		if (estimated_pefr > 0) {
-			frm.set_value('peak_flow_estimated', estimated_pefr.toFixed(1));
+		// Set expected peak flow (rounded to 0 decimal)
+		if (expected_pefr > 0) {
+			expected_pefr = Math.round(expected_pefr);
+			frm.set_value('peak_flow_expected', expected_pefr);
 		}
 	}
 	
-	// Calculate Peak Flow Variability if we have current reading and estimated value
-	if (frm.doc.peak_flow_current && frm.doc.peak_flow_estimated) {
-		// Peak flow variability, % = (actual peak flow rate / estimated peak flow rate) × 100
-		let variability = (frm.doc.peak_flow_current / frm.doc.peak_flow_estimated) * 100;
-		frm.set_value('peak_flow_percentage', variability.toFixed(1));
+	// Calculate Peak Flow Variability using the calculated expected value
+	if (expected_pefr > 0) {
+		// Peak flow variability, % = (actual peak flow rate / expected peak flow rate) × 100
+		let variability = (frm.doc.peak_flow_current / expected_pefr) * 100;
+		frm.set_value('peak_flow_percentage', parseFloat(variability.toFixed(1)));
 		
-		// Determine zone based on variability
+		// Determine status based on variability
 		// Green: 80-100% or above (good control)
 		// Yellow: 50-80% (caution)
 		// Red: Below 50% (medical emergency)
-		let zone = 'Green Zone';
+		let status = 'Green';
 		if (variability < 50) {
-			zone = 'Red Zone';
-		} else if (variability < 80) {
-			zone = 'Yellow Zone';
+			status = 'Red';
+		} else if (variability >= 50 && variability < 80) {
+			status = 'Yellow';
 		}
-		frm.set_value('peak_flow_status', zone);
+		frm.set_value('peak_flow_status', status);
 	}
-	// Fallback: Use Personal Best if Estimated is not available
-	else if (frm.doc.peak_flow_current && frm.doc.peak_flow_personal_best) {
-		let pct = (frm.doc.peak_flow_current / frm.doc.peak_flow_personal_best) * 100;
-		frm.set_value('peak_flow_percentage', pct.toFixed(1));
+	// Fallback: Use Personal Best if Expected is not available
+	else if (frm.doc.peak_flow_personal_best && frm.doc.peak_flow_personal_best > 0) {
+		let variability = (frm.doc.peak_flow_current / frm.doc.peak_flow_personal_best) * 100;
+		frm.set_value('peak_flow_percentage', parseFloat(variability.toFixed(1)));
 		
-		let zone = 'Green Zone';
-		if (pct < 50) zone = 'Red Zone';
-		else if (pct < 80) zone = 'Yellow Zone';
-		frm.set_value('peak_flow_status', zone);
+		let status = 'Green';
+		if (variability < 50) {
+			status = 'Red';
+		} else if (variability >= 50 && variability < 80) {
+			status = 'Yellow';
+		}
+		frm.set_value('peak_flow_status', status);
 	}
 }
 
@@ -749,19 +763,30 @@ function render_tobacco_health_table(frm) {
 		let v = frm.doc.peak_flow_current;
 		let st = 'Recorded';
 		let cls = 'av-g';
-		if (frm.doc.peak_flow_percentage) {
+		if (frm.doc.peak_flow_percentage && frm.doc.peak_flow_status) {
 			let pct = parseFloat(frm.doc.peak_flow_percentage);
-			if (pct >= 80) { st = 'Green Zone'; cls = 'av-g'; }
-			else if (pct >= 50) { st = 'Yellow Zone'; cls = 'av-o'; }
-			else { st = 'Red Zone'; cls = 'av-r'; }
+			let status = frm.doc.peak_flow_status;
+			
+			// Set status text and color based on status field
+			if (status === 'Green') {
+				st = 'Good Control';
+				cls = 'av-g';
+			} else if (status === 'Yellow') {
+				st = 'Caution';
+				cls = 'av-o';
+			} else if (status === 'Red') {
+				st = 'Emergency';
+				cls = 'av-r';
+			}
+			
 			v = v + ' (' + pct.toFixed(0) + '%)';
 		}
-		data.push({ p: 'Peak Flow', u: 'L/min', v: v, n: '>80% of best', st: st, cls: cls, cat: 'Peak Flow', field: 'peak_flow_current' });
+		data.push({ p: 'Peak Flow', u: 'L/min', v: v, n: '>80% expected', st: st, cls: cls, cat: 'Peak Flow', field: 'peak_flow_current' });
 	}
 	
-	// Personal Best
-	if (frm.doc.peak_flow_personal_best) {
-		data.push({ p: 'Personal Best', u: 'L/min', v: frm.doc.peak_flow_personal_best, n: 'Reference', st: 'Stored', cls: 'av-g', cat: 'Peak Flow', field: 'peak_flow_personal_best' });
+	// Expected Peak Flow
+	if (frm.doc.peak_flow_expected) {
+		data.push({ p: 'Expected Peak Flow', u: 'L/min', v: frm.doc.peak_flow_expected, n: 'Calculated', st: 'Reference', cls: 'av-g', cat: 'Peak Flow', field: 'peak_flow_expected' });
 	}
 	
 	// Breath Holding Time
