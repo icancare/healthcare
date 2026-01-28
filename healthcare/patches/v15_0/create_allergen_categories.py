@@ -54,3 +54,4 @@ def execute():
 	print(f"   - Categories created: 3 (Drug, Food, Other)")
 	print(f"   - Allergens verified: {updated_count}")
 
+

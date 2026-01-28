@@ -75,3 +75,4 @@ def execute():
 	print(f"   - Existing allergens updated: {updated_count}")
 	print(f"   - Total allergens processed: {imported_count + updated_count}")
 
+

@@ -79,3 +79,4 @@ def update_peak_flow_labels():
 	# Clear cache for the doctype
 	frappe.clear_cache(doctype="Vital Signs")
 
+

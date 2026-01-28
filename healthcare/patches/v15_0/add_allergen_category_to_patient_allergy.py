@@ -63,3 +63,4 @@ def execute():
 		print(f"❌ Error adding allergen_category field: {str(e)}")
 		frappe.log_error(f"Error in add_allergen_category_to_patient_allergy patch: {str(e)}")
 
+

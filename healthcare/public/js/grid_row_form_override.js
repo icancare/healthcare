@@ -19,6 +19,17 @@ $(document).ready(function() {
 						}
 						$gridForm.data('buttons-modified', true);
 						
+						// Get the grid row object
+						const $gridRow = $gridForm.closest('.grid-row');
+						const gridRowObj = $gridRow.data('grid_row');
+						
+						if (!gridRowObj) return;
+						
+						// Store original doc values when form opens
+						if (!gridRowObj._original_doc) {
+							gridRowObj._original_doc = JSON.parse(JSON.stringify(gridRowObj.doc));
+						}
+						
 						// 1. Keep header buttons as they are (Update & New, Update & New Before)
 						$gridForm.find('.grid-insert-row').each(function() {
 							const $btn = $(this);
@@ -39,12 +50,12 @@ $(document).ready(function() {
 						});
 						
 						// 2. Modify header collapse button to Close (X)
-						// Keep original functionality (save + close), just change icon
+						// Change functionality to discard changes without saving
 						const $collapseBtn = $gridForm.find('.grid-collapse-row');
 						if ($collapseBtn.length && !$collapseBtn.data('close-modified')) {
 							$collapseBtn.data('close-modified', true);
 							
-							// Change icon to close (X) but keep the original functionality
+							// Change icon to close (X)
 							const $icon = $collapseBtn.find('svg, .icon');
 							if ($icon.length) {
 								$icon.replaceWith(frappe.utils.icon("close"));
@@ -52,10 +63,31 @@ $(document).ready(function() {
 								$collapseBtn.empty().html(frappe.utils.icon("close"));
 							}
 							
-							// Don't modify click handler - keep original Frappe behavior (save + close)
+							// Replace click handler to discard changes and close
+							$collapseBtn.off('click');
+							$collapseBtn.on('click', function(e) {
+								e.preventDefault();
+								e.stopImmediatePropagation();
+								
+								// Restore original values from stored doc
+								if (gridRowObj._original_doc) {
+									Object.keys(gridRowObj._original_doc).forEach(function(key) {
+										gridRowObj.doc[key] = gridRowObj._original_doc[key];
+									});
+									
+									// Clear the stored original
+									delete gridRowObj._original_doc;
+								}
+								
+								// Refresh the row display and close
+								gridRowObj.refresh();
+								gridRowObj.toggle_view(false);
+								
+								return false;
+							});
 						}
 						
-						// 3. Modify footer "Insert Below" button to "Save"
+						// 3. Modify footer "Insert Below" button to "Update"
 						$gridForm.find('.grid-append-row').each(function() {
 							const $btn = $(this);
 							
@@ -64,8 +96,8 @@ $(document).ready(function() {
 							}
 							$btn.data('save-modified', true);
 							
-							// Change label to "Save"
-							$btn.text('Save');
+							// Change label to "Update"
+							$btn.text('Update');
 							
 							// Change to primary button style
 							$btn.removeClass('btn-secondary').addClass('btn-primary');
@@ -75,14 +107,16 @@ $(document).ready(function() {
 							
 							$btn.on('click', function(e) {
 								e.preventDefault();
-								e.stopPropagation();
+								e.stopImmediatePropagation();
 								
-								// Trigger the collapse button click (which saves and closes)
-								const $collapse = $gridForm.find('.grid-collapse-row');
-								if ($collapse.length) {
-									// Use native DOM click to properly trigger the event
-									$collapse[0].click();
+								// Clear stored original values since we're saving
+								if (gridRowObj._original_doc) {
+									delete gridRowObj._original_doc;
 								}
+								
+								// Refresh and close the form (this saves the changes)
+								gridRowObj.refresh();
+								gridRowObj.toggle_view(false);
 								
 								return false;
 							});
