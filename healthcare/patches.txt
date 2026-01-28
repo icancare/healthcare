@@ -155,3 +155,4 @@ healthcare.patches.v15_0.add_measured_with_to_vital_signs #24-01-2026-vital-sign
 healthcare.patches.v15_0.update_step1_step2_body_parts #24-01-2026-remove-throat-add-other
 healthcare.patches.v15_0.update_peak_flow_calculations #24-01-2026-peak-flow-formula-updatehealthcare.patches.v15_0.update_peak_flow_fields_v2 #28-01-2026-peak-flow-v2
 healthcare.patches.v15_0.fix_peak_flow_fields_final #28-01-2026-peak-flow-final
+healthcare.patches.v15_0.update_step1_body_parts_and_complaints #28-01-2026-step1-others-to-other-add-lungs

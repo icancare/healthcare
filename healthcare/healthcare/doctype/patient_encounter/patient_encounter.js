@@ -3722,19 +3722,22 @@ function upload_picture(frm, card, field, name) {
 
 const BODY_PARTS_CONFIG = {
 	'Face': {
-		symptoms: ['Lump/Swelling on face', 'Pigmentation', 'Ulcer', 'Other']
+		symptoms: ['Lump/Swelling on face', 'Swelling near ear/angle of mandible', 'Facial Asymmetry - nerve palsy', 'Facial weakness', 'Recurrent infections or abscess formation', 'Pigmentation', 'Ulcer', 'Other']
 	},
 	'Neck': {
-		symptoms: ['Lump/Swelling in Neck (outside)', 'Swelling/lump in Throat (inside)', 'Stickiness in throat', 'Change in Voice', 'Sore throat/Hoarseness', 'Swallowing Difficulty/pain', 'Other']
+		symptoms: ['Lump/swelling in Neck (outside)', 'Lump/swelling in Throat (inside)', 'Stickiness in throat, Foreign body sensation', 'Change in Voice/hoarseness', 'Sore throat/Hoarseness', 'Swallowing difficulty/pain', 'Difficulty breathing (dyspnea)', 'Chronic cough, Hemoptysis', 'Nasal regurgitation (if nasopharyngeal involvement)', 'Ear pain', 'Snoring, obstructive sleep symptoms', 'Other']
 	},
 	'Oral Cavity (Mouth and Tongue)': {
-		symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Others']
+		symptoms: ['Restricted Mouth opening', 'Restricted Tongue Movement', 'Pain', 'Painful Ulcer', 'Painless Ulcer', 'Recurrent Ulcer', 'Red patch in mouth', 'White patch in mouth', 'Nodule/Lump', 'Swelling', 'Sensitivity in mouth/teeth', 'Burning Sensation', 'Bleeding', 'Decreased Salivation', 'Increased Salivation', 'Foul Smell (Halitosis)', 'Swallowing Difficulty/pain during', 'Other']
 	},
 	'Teeth (Dental)': {
 		symptoms: ['Painful teeth', 'Loosening of teeth', 'Lost teeth', 'Teeth or gum problem', 'Denture problem', 'Other']
 	},
-	'Others': {
-		symptoms: ['Earache', 'Others']
+	'Lungs': {
+		symptoms: ['Persistent cough (≥ 3 weeks)', 'Chest pain or discomfort', 'Coughing up blood (hemoptysis) or sputum', 'Shortness of breath or difficulty breathing', 'Unexplained weight loss', 'Loss of appetite', 'Fatigue and weakness', 'Fever and chills', 'Night sweats (classic hallmark)', 'Painless swelling in cervical nodes', 'Other']
+	},
+	'Other': {
+		symptoms: ['Palpitations', 'Weight loss', 'Heat intolerance', 'Tremors', 'Fatigue', 'Weight gain', 'Cold intolerance', 'Constipation', 'Generalized weakness', 'Bone pain', 'Pathological fractures', 'Kidney stones (renal colic, hematuria)', 'Neuropsychiatric complaints: depression, confusion, memory issues', 'Abdominal pain, constipation, peptic ulcer symptom', 'Other']
 	}
 };
 
