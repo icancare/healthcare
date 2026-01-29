@@ -167,3 +167,4 @@ healthcare.patches.v15_0.rebuild_step5_production_design #28-01-2026-rebuild-ste
 healthcare.patches.v15_0.add_remaining_4_step5_tests #28-01-2026-add-tests-5-to-8
 healthcare.patches.v15_0.add_skip_special_tests_checkbox #28-01-2026-add-skip-checkbox
 healthcare.patches.v15_0.fix_step5_layout_single_row #28-01-2026-fix-layout-1-test-1-row
+healthcare.patches.v15_0.update_social_history_doctypes #30-01-2026-social-history-structure-fix

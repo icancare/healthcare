@@ -59,7 +59,7 @@
    "fieldname": "when",
    "fieldtype": "Data",
    "label": "Since When",
-   "description": "Enter year, month and day, eg: 2023, Jan 3, 2023"
+   "description": "Enter year (YYYY), month-year (MM/YYYY or M/YYYY). Year must be <= current year"
   },
   {
    "default": "0",

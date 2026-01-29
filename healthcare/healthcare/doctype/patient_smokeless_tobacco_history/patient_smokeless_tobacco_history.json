@@ -9,11 +9,11 @@
   "type",
   "column_break_3",
   "frequency",
+  "started_at_age",
+  "discontinued_at_age",
+  "used_for_years",
   "quantity",
   "quantity_unit",
-  "section_break_7",
-  "discontinued_since",
-  "discontinued_since_unit",
   "section_break_10",
   "comment"
  ],
@@ -35,7 +35,26 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Frequency",
-   "options": "Daily\nOccasionally\nWeekly\nMonthly\nYearly"
+   "options": "Daily\nWeekly\nMonthly\nYearly"
+  },
+  {
+   "fieldname": "started_at_age",
+   "fieldtype": "Int",
+   "label": "Started at Age (Year)",
+   "description": "Age when started using"
+  },
+  {
+   "fieldname": "discontinued_at_age",
+   "fieldtype": "Int",
+   "label": "Discontinued at Age (Year)",
+   "description": "Age when discontinued (leave blank if ongoing)"
+  },
+  {
+   "fieldname": "used_for_years",
+   "fieldtype": "Int",
+   "label": "Used for # Years",
+   "read_only": 1,
+   "description": "Computed as: Discontinued Age - Started Age + 1 (or Current Age - Started Age + 1 if ongoing)"
   },
   {
    "fieldname": "quantity",
@@ -47,25 +66,7 @@
    "fieldname": "quantity_unit",
    "fieldtype": "Select",
    "label": "Quantity Unit",
-   "options": "Grams\nPackets\nNumbers\nPieces"
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "section_break_7",
-   "fieldtype": "Section Break",
-   "label": "Discontinuation Details"
-  },
-  {
-   "description": "Enter date or text like '2 years ago', 'Last month', etc.",
-   "fieldname": "discontinued_since",
-   "fieldtype": "Data",
-   "label": "Discontinued Since"
-  },
-  {
-   "fieldname": "discontinued_since_unit",
-   "fieldtype": "Select",
-   "label": "Discontinued Since Unit",
-   "options": "Days\nWeeks\nMonths\nYears"
+   "options": "Nos\nGrams"
   },
   {
    "collapsible": 1,

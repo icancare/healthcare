@@ -147,6 +147,9 @@ frappe.ui.form.on('Patient Medical History', {
 				}
 			});
 		}
+	},
+	when: function(frm, cdt, cdn) {
+		validate_when_field(frm, cdt, cdn);
 	}
 });
 
@@ -171,6 +174,9 @@ frappe.ui.form.on('Patient Family Medical History', {
 				}
 			});
 		}
+	},
+	when: function(frm, cdt, cdn) {
+		validate_when_field(frm, cdt, cdn);
 	}
 });
 
@@ -383,7 +389,10 @@ function show_self_history_dialog(frm, diagnosis, category, btn, row) {
 				fieldname: 'when',
 				fieldtype: 'Data',
 				label: __('Since When'),
-				description: __('Enter year (2023), month-year (Jan 2023), or full date')
+				description: __('Enter year (YYYY), month-year (MM/YYYY or M/YYYY). Year must be <= current year'),
+				onchange: function() {
+					validate_when_field_in_dialog(d, 'when');
+				}
 			},
 			{
 				fieldname: 'undergoing_treatment',
@@ -401,6 +410,11 @@ function show_self_history_dialog(frm, diagnosis, category, btn, row) {
 		],
 		primary_action_label: __('Add'),
 		primary_action: function(values) {
+			// Validate when field before adding
+			if (values.when && !validate_when_format(values.when)) {
+				return false;
+			}
+			
 			// Add to Medical History
 			let new_row = frm.add_child('patient_medical_history', {
 				diagnosis_category: category,
@@ -525,7 +539,10 @@ function show_family_relation_dialog(frm, diagnosis, category, btn, row) {
 				fieldname: 'when',
 				fieldtype: 'Data',
 				label: __('Since When'),
-				description: __('Enter year (2023), month-year (Jan 2023), or full date')
+				description: __('Enter year (YYYY), month-year (MM/YYYY or M/YYYY). Year must be <= current year'),
+				onchange: function() {
+					validate_when_field_in_dialog(d, 'when');
+				}
 			},
 			{
 				fieldname: 'undergoing_treatment',
@@ -543,6 +560,11 @@ function show_family_relation_dialog(frm, diagnosis, category, btn, row) {
 		],
 		primary_action_label: __('Add'),
 		primary_action: function(values) {
+			// Validate when field before adding
+			if (values.when && !validate_when_format(values.when)) {
+				return false;
+			}
+			
 			// Add to Family Medical History
 			let new_row = frm.add_child('patient_family_medical_history', {
 				diagnosis_category: category,
@@ -1136,6 +1158,10 @@ frappe.ui.form.on('Patient Smoking Tobacco History', {
 	},
 	type: function(frm, cdt, cdn) {
 		compute_pack_years(frm, cdt, cdn);
+		toggle_pack_years_visibility(frm, cdt, cdn);
+	},
+	form_render: function(frm, cdt, cdn) {
+		toggle_pack_years_visibility(frm, cdt, cdn);
 	}
 });
 
@@ -1234,5 +1260,111 @@ function compute_pack_years(frm, cdt, cdn) {
 		// Bidi Pack Years = (Bidis per day / 4) / 20 × Years Smoked
 		const bidi_pack_years = ((daily_quantity / 4) / 20) * row.used_for_years;
 		frappe.model.set_value(cdt, cdn, 'bidi_pack_years', bidi_pack_years.toFixed(2));
+	}
+}
+
+// Toggle Pack Years field visibility based on type
+function toggle_pack_years_visibility(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	
+	if (!row) return;
+	
+	// Get the grid row
+	const grid_row = frm.fields_dict.patient_smoking_tobacco_history?.grid.grid_rows_by_docname[cdn];
+	
+	if (grid_row) {
+		if (row.type) {
+			const type_lower = row.type.toLowerCase();
+			
+			if (type_lower.includes('cigarette')) {
+				// Show pack_years, hide bidi_pack_years
+				grid_row.toggle_display('pack_years', true);
+				grid_row.toggle_display('bidi_pack_years', false);
+			} else if (type_lower.includes('bidi')) {
+				// Show bidi_pack_years, hide pack_years
+				grid_row.toggle_display('pack_years', false);
+				grid_row.toggle_display('bidi_pack_years', true);
+			} else {
+				// Hide both if type is something else
+				grid_row.toggle_display('pack_years', false);
+				grid_row.toggle_display('bidi_pack_years', false);
+			}
+		} else {
+			// No type selected, hide both
+			grid_row.toggle_display('pack_years', false);
+			grid_row.toggle_display('bidi_pack_years', false);
+		}
+	}
+}
+
+// Validate 'when' field format for Medical History
+function validate_when_field(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	
+	if (!row.when) return true;
+	
+	return validate_when_format(row.when, function(valid) {
+		if (!valid) {
+			frappe.model.set_value(cdt, cdn, 'when', '');
+		}
+	});
+}
+
+// Common validation function for 'when' field format
+function validate_when_format(value, callback) {
+	if (!value) return true;
+	
+	const trimmed_value = value.trim();
+	const current_year = new Date().getFullYear();
+	
+	// Pattern 1: YYYY (4 digits)
+	const pattern_year = /^(\d{4})$/;
+	// Pattern 2: MM/YYYY or M/YYYY
+	const pattern_month_year = /^(\d{1,2})\/(\d{4})$/;
+	
+	const match_year = trimmed_value.match(pattern_year);
+	const match_month_year = trimmed_value.match(pattern_month_year);
+	
+	if (match_year) {
+		const year = parseInt(match_year[1]);
+		if (year > current_year) {
+			frappe.msgprint(__("Year in 'Since When' field cannot be greater than current year ({0})", [current_year]));
+			if (callback) callback(false);
+			return false;
+		}
+	} else if (match_month_year) {
+		const month = parseInt(match_month_year[1]);
+		const year = parseInt(match_month_year[2]);
+		
+		if (month < 1 || month > 12) {
+			frappe.msgprint(__("Month in 'Since When' field must be between 1 and 12"));
+			if (callback) callback(false);
+			return false;
+		}
+		
+		if (year > current_year) {
+			frappe.msgprint(__("Year in 'Since When' field cannot be greater than current year ({0})", [current_year]));
+			if (callback) callback(false);
+			return false;
+		}
+	} else {
+		frappe.msgprint(__("'Since When' field must be in format YYYY (e.g., 2023) or MM/YYYY (e.g., 01/2023, 1/2023)"));
+		if (callback) callback(false);
+		return false;
+	}
+	
+	if (callback) callback(true);
+	return true;
+}
+
+// Validate 'when' field in dialog
+function validate_when_field_in_dialog(dialog, fieldname) {
+	const value = dialog.get_value(fieldname);
+	if (value) {
+		validate_when_format(value, function(valid) {
+			if (!valid) {
+				dialog.set_value(fieldname, '');
+			}
+		});
 	}
 }

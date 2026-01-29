@@ -64,7 +64,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "description": "Enter approximate date or number of years",
+   "description": "Enter year (YYYY), month-year (MM/YYYY or M/YYYY). Year must be <= current year",
    "fieldname": "when",
    "fieldtype": "Data",
    "label": "When"
