@@ -10,7 +10,6 @@
   "oral_hygiene_practice",
   "dental_visits_frequency",
   "mouth_wash_use",
-  "restricted_mouth_opening",
   "comment"
  ],
  "fields": [
@@ -44,12 +43,6 @@
    "fieldname": "mouth_wash_use",
    "fieldtype": "Select",
    "label": "Use of Mouth Wash",
-   "options": "\nNo\nYes"
-  },
-  {
-   "fieldname": "restricted_mouth_opening",
-   "fieldtype": "Select",
-   "label": "Restricted Mouth Opening",
    "options": "\nNo\nYes"
   },
   {
