@@ -35,7 +35,7 @@
  "coverage_amount",
  "column_break_6",
  "copay_percentage",
- "section_break_7",
+ "column_break_7",
  "top_up_amount",
  "column_break_8",
  "copay_amount",
@@ -209,8 +209,8 @@
   "description": "Percentage of cost patient needs to pay"
  },
  {
-  "fieldname": "section_break_7",
-  "fieldtype": "Section Break"
+  "fieldname": "column_break_7",
+  "fieldtype": "Column Break"
  },
  {
   "fieldname": "top_up_amount",
