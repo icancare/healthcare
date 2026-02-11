@@ -169,4 +169,16 @@ healthcare.patches.v15_0.add_skip_special_tests_checkbox #28-01-2026-add-skip-ch
 healthcare.patches.v15_0.fix_step5_layout_single_row #28-01-2026-fix-layout-1-test-1-row
 healthcare.patches.v15_0.update_social_history_doctypes #30-01-2026-social-history-structure-fix
 healthcare.patches.v15_0.fix_social_history_data_and_oral_habits #30-01-2026-fix-data-and-oral-habits
-healthcare.patches.v15_0.update_patient_insurance_coverage_layout #30-01-2026-merge-coverage-fields
+healthcare.patches.v15_0.update_patient_insurance_coverage_layout #30-01-2026-merge-coverage-fieldshealthcare.patches.v15_0.setup_tobacco_cessation_templates
+healthcare.patches.v15_0.fix_tobacco_template_dependencies
+healthcare.patches.v15_0.fix_tobacco_dependencies_v2
+healthcare.patches.v15_0.fix_tobacco_subsections
+healthcare.patches.v15_0.cleanup_tobacco_fields
+healthcare.patches.v15_0.setup_tobacco_first_visit_v2
+healthcare.patches.v15_0.setup_tobacco_fv_3col
+healthcare.patches.v15_0.setup_tobacco_followup_fields
+#healthcare.patches.v15_0.setup_tobacco_fv_grid
+#healthcare.patches.v15_0.setup_tobacco_complete
+#healthcare.patches.v15_0.convert_tobacco_html
+healthcare.patches.v15_0.refactor_tobacco_table
+healthcare.patches.v15_0.setup_tobacco_json_layout
