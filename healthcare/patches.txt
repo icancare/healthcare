@@ -184,3 +184,4 @@ healthcare.patches.v15_0.refactor_tobacco_table
 healthcare.patches.v15_0.setup_tobacco_json_layout
 healthcare.patches.v15_0.force_setup_tobacco_v1
 healthcare.patches.v15_0.fix_tobacco_dependencies_final
+healthcare.patches.v15_0.force_create_templates
